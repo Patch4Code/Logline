@@ -12,6 +12,7 @@ import com.moritz.movieappuitest.userinterface.SocialView
 fun Navigation(){
 
     val navController = rememberNavController()
+
     NavHost(navController = navController, startDestination = Screen.MainScreen.route){
         composable(route = Screen.MainScreen.route){
             MainView(navController = navController)

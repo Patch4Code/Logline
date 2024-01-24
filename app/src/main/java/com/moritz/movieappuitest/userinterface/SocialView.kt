@@ -38,79 +38,16 @@ import com.moritz.movieappuitest.dataclasses.BottomNavigationItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SocialView(navController: NavController){
-    val bottomBarItems = listOf(
-        BottomNavigationItem(
-            title = "Home",
-            selectedIcon = Icons.Filled.Home,
-            unselectedIcon = Icons.Outlined.Home
-        ),
-        BottomNavigationItem(
-            title = "Profile",
-            selectedIcon = Icons.Filled.AccountCircle,
-            unselectedIcon = Icons.Outlined.AccountCircle,
-        ),
-        BottomNavigationItem(
-            title = "Social",
-            selectedIcon = Icons.Filled.Email,
-            unselectedIcon = Icons.Outlined.Email,
-        ),
-    )
-    var selectedItemIndex by rememberSaveable {
-        mutableStateOf(2)
-    }
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar (
-                title = {
-                    androidx.compose.material.Text(text = "Home", color = Color.White, fontWeight = FontWeight.Bold)
-                },
-                navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Open Navigation Drawer")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
-                    }
-                },
-                scrollBehavior = scrollBehavior
-            )
+            TopBar(scrollBehavior)
         },
-        bottomBar = {
-            NavigationBar {
-                bottomBarItems.forEachIndexed { index, item ->
-                    NavigationBarItem(
-                        selected = selectedItemIndex == index,
-                        onClick = {
-                            selectedItemIndex = index
-
-                            Log.d("YourTag", selectedItemIndex.toString())
-                            //Navigation
-                            when (selectedItemIndex){
-                                0 -> navController.navigate(Screen.MainScreen.route) //navigate to Home
-                                1 -> navController.navigate(Screen.ProfileScreen.route) //navigate to Profile
-                                2 -> navController.navigate(Screen.SocialScreen.route) //navigate to Social
-                            }
-                        },
-                        label = {
-                            androidx.compose.material.Text(text = item.title, color = Color.White)
-                        },
-                        alwaysShowLabel = false,
-                        icon = {
-                            Icon(
-                                imageVector = if (index == selectedItemIndex) {
-                                    item.selectedIcon
-                                } else item.unselectedIcon,
-                                contentDescription = item.title
-                            )
-                        }
-                    )
-                }
-            }
+        bottomBar =
+        {
+            BottomBar(navController, screenIndex = 2)
         },
         content = { padding ->
             //Profile Layout
