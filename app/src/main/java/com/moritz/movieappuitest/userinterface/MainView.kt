@@ -57,37 +57,25 @@ fun MainView(navController: NavController){
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            TopBar(scrollBehavior)
-        },
-        bottomBar = {
-            BottomBar(navController, screenIndex = 0)
-        },
-        content = { padding ->
-            //Home Layout
-            LazyColumn(
-                modifier = Modifier.padding(padding)
-            ){
-                groups.forEach{ group ->
-                    item {
-                        Text(
-                            text = group,
-                            modifier = Modifier.padding(top = 16.dp, start = 16.dp),
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold)
-                        LazyRow {
-                            items(categories){
-                                    cat->
-                                BrowserItem(cat = cat, drawable = R.drawable.apps)
-                            }
-                        }
+    LazyColumn(
+
+    ){
+        groups.forEach{ group ->
+            item {
+                Text(
+                    text = group,
+                    modifier = Modifier.padding(top = 16.dp, start = 16.dp),
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold)
+                LazyRow {
+                    items(categories){
+                            cat->
+                        BrowserItem(cat = cat, drawable = R.drawable.apps)
                     }
                 }
             }
         }
-    )
+    }
 }
 
 

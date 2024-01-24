@@ -44,27 +44,11 @@ import com.moritz.movieappuitest.dataclasses.BottomNavigationItem
 @Composable
 fun ProfileView(navController: NavController){
 
-
-
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            TopBar(scrollBehavior)
-        },
-        bottomBar =
-        {
-            BottomBar(navController, screenIndex = 1)
-        },
-        content = { padding ->
-            //Profile Layout
-            Column(
-                modifier = Modifier.padding(padding)
-            ){
-               Text(text = "Profile View")
-            }
-        }
-    )
+    //Profile Layout
+    Column()
+    {
+        Text(text = "Profile View")
+    }
 }
 
 

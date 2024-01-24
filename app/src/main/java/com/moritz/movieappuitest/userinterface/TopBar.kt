@@ -13,13 +13,15 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavController
+import com.moritz.movieappuitest.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(scrollBehavior: TopAppBarScrollBehavior){
+fun TopBar(navController: NavController, screenTitle: String, scrollBehavior: TopAppBarScrollBehavior){
     TopAppBar (
         title = {
-            Text(text = "Home", color = Color.White, fontWeight = FontWeight.Bold)
+            Text(text = screenTitle, color = Color.White, fontWeight = FontWeight.Bold)
         },
         navigationIcon = {
             IconButton(onClick = { /*TODO*/ }) {
@@ -27,7 +29,7 @@ fun TopBar(scrollBehavior: TopAppBarScrollBehavior){
             }
         },
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { navController.navigate(Screen.SearchScreen.route) }) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
             }
         },

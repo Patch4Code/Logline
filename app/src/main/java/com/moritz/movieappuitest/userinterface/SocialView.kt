@@ -39,25 +39,11 @@ import com.moritz.movieappuitest.dataclasses.BottomNavigationItem
 @Composable
 fun SocialView(navController: NavController){
 
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            TopBar(scrollBehavior)
-        },
-        bottomBar =
-        {
-            BottomBar(navController, screenIndex = 2)
-        },
-        content = { padding ->
-            //Profile Layout
-            Column(
-                modifier = Modifier.padding(padding)
-            ){
-                Text(text = "Social View")
-            }
-        }
-    )
+    //Profile Layout
+    Column()
+    {
+        Text(text = "Social View")
+    }
 }
 
 
