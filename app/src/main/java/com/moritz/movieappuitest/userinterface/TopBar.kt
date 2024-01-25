@@ -24,7 +24,6 @@ fun TopBar(
     onDrawerStateChanged: () -> Unit
 )
 {
-
     TopAppBar (
         title = {
             Text(text = screenTitle, color = Color.White, fontWeight = FontWeight.Bold)
