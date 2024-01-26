@@ -27,18 +27,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.moritz.movieappuitest.dataclasses.DrawerNavigationItem
-import com.moritz.movieappuitest.userinterface.BottomBar
-import com.moritz.movieappuitest.userinterface.MainView
-import com.moritz.movieappuitest.userinterface.MovieView
-import com.moritz.movieappuitest.userinterface.ProfileView
-import com.moritz.movieappuitest.userinterface.SearchView
-import com.moritz.movieappuitest.userinterface.SettingsView
-import com.moritz.movieappuitest.userinterface.SocialView
-import com.moritz.movieappuitest.userinterface.TopBar
+import com.moritz.movieappuitest.userinterface.ui_elements.BottomBar
+import com.moritz.movieappuitest.userinterface.views.MainView
+import com.moritz.movieappuitest.userinterface.views.MovieView
+import com.moritz.movieappuitest.userinterface.views.ProfileView
+import com.moritz.movieappuitest.userinterface.views.SearchView
+import com.moritz.movieappuitest.userinterface.views.SettingsView
+import com.moritz.movieappuitest.userinterface.views.SocialView
+import com.moritz.movieappuitest.userinterface.ui_elements.TopBar
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -62,7 +64,7 @@ fun Navigation(){
             )
             {
                 Spacer(modifier = Modifier.height(16.dp))
-                DrawerNavigationItem().getDrawerNavigationItems().forEachIndexed { index, drawerNavigationItem ->
+                DrawerNavigationItem().getDrawerNavigationItems().forEach {drawerNavigationItem ->
                     NavigationDrawerItem(
                         label = { Text(text = drawerNavigationItem.title) },
                         selected = drawerNavigationItem.title == currentScreenTitle,
@@ -149,8 +151,18 @@ fun Navigation(){
                     }
                 }
 
-                composable(route = Screen.MovieScreen.route){
-                    MovieView(navController = navController)
+                composable(
+                    route = Screen.MovieScreen.route + "/{movie}",
+                    arguments = listOf(
+                        navArgument("movie"){
+                            type = NavType.StringType
+                            defaultValue = ""
+                            nullable = true
+                        }
+                    )
+                )
+                {parsedMovie->
+                    MovieView(navController = navController, movieString = parsedMovie.arguments?.getString("movie"))
                     LaunchedEffect(Unit) {
                         currentScreenTitle = Screen.MovieScreen.title
                     }

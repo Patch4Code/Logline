@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.userinterface
+package com.moritz.movieappuitest.userinterface.views
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,20 +14,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.dataclasses.DummyMovie
+import com.moritz.movieappuitest.utils.JSONHelper
+import java.net.URLDecoder
 
 @Composable
-fun MovieView(navController: NavController){ //, movieData: DummyMovie
+fun MovieView(navController: NavController, movieString: String?){
 
-    //(only for test)
-    val movieData: DummyMovie? = DummyMovie().getHomeMoviesDummy()["New Movies"]?.firstOrNull()
+    val decodedMovieString = URLDecoder.decode(movieString, "UTF-8")
+    val movieData: DummyMovie = JSONHelper.fromJson(decodedMovieString)
 
-    val movieTitle = movieData?.title
-    val movieYear = movieData?.year.toString()
+    val movieTitle = movieData.title
+    val movieYear = movieData.year.toString()
 
     Column (modifier = Modifier.padding(16.dp)){
-        if (movieTitle != null) {
-            Text(text = "$movieTitle ($movieYear)", color = Color.White)
-        }
+        Text(text = "$movieTitle ($movieYear)", color = Color.White)
         Spacer(modifier = Modifier.padding(8.dp))
         Card (modifier = Modifier
             .height(200.dp)
@@ -35,13 +35,10 @@ fun MovieView(navController: NavController){ //, movieData: DummyMovie
             backgroundColor = Color.DarkGray
         )
         {
-            if (movieData != null) {
-                AsyncImage(
-                    model = movieData.posterUrl,
-                    contentDescription = "$movieTitle-Poster"
-                )
-            }
+            AsyncImage(
+                model = movieData.posterUrl,
+                contentDescription = "$movieTitle-Poster"
+            )
         }
     }
-
 }

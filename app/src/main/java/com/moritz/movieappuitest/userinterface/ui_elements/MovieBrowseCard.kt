@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.userinterface
+package com.moritz.movieappuitest.userinterface.ui_elements
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -19,6 +19,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.DummyMovie
+import com.moritz.movieappuitest.utils.JSONHelper.toJson
+import java.net.URLEncoder
 
 @Composable
 fun MovieBrowseCard(navController: NavController, movie: DummyMovie) {
@@ -27,12 +29,15 @@ fun MovieBrowseCard(navController: NavController, movie: DummyMovie) {
     val year = movie.year
     val posterUrl = movie.posterUrl
 
+    val jsonMovie = movie.toJson()
+    val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
+
     Card(modifier = Modifier
         .padding(16.dp)
         .height(260.dp)
         .width(133.dp)
         .clickable {
-            navController.navigate(Screen.MovieScreen.route)
+            navController.navigate(Screen.MovieScreen.withArgs(encodedJsonMovie))
         },
         border = BorderStroke(3.dp, color = Color.DarkGray),
         backgroundColor = Color.DarkGray)

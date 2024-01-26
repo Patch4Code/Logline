@@ -61,6 +61,9 @@ dependencies {
     //Load Images from URL
     implementation("io.coil-kt:coil-compose:2.4.0")
 
+    //Json module
+    implementation("com.google.code.gson:gson:2.8.9")
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.1")

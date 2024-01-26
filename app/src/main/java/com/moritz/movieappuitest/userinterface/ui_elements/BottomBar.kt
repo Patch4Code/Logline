@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.userinterface
+package com.moritz.movieappuitest.userinterface.ui_elements
 
 import androidx.compose.material.Text
 import androidx.compose.material3.Icon

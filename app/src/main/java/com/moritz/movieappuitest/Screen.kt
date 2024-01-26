@@ -9,4 +9,14 @@ sealed class Screen(val route: String, val title: String) {
     object SettingsScreen : Screen ("settings_screen", "Settings")
     object MovieScreen : Screen ("movie_screen", "Movie")
 
+
+    //helper to attach data for navigation
+    fun withArgs(vararg args: String): String{
+        return buildString {
+            append(route)
+            args.forEach {arg->
+                append("/$arg")
+            }
+        }
+    }
 }

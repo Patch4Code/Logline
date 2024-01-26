@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.userinterface
+package com.moritz.movieappuitest.userinterface.views
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.dataclasses.DummyMovie
+import com.moritz.movieappuitest.userinterface.ui_elements.MovieBrowseCard
 
 @Composable
 fun MainView(navController: NavController){
