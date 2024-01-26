@@ -27,7 +27,7 @@ fun MainView(navController: NavController){
                 LazyRow {
                     items(movies){
                             movie->
-                        MovieBrowseCard(title = movie.title, year = movie.year, posterUrl = movie.posterUrl)
+                        MovieBrowseCard(navController, movie)
                     }
                 }
             }

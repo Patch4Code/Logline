@@ -1,6 +1,7 @@
 package com.moritz.movieappuitest.userinterface
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -14,14 +15,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.dataclasses.DummyMovie
 
 @Composable
-fun MovieBrowseCard(title: String, year: Int, posterUrl: String) {
+fun MovieBrowseCard(navController: NavController, movie: DummyMovie) {
+
+    val title = movie.title
+    val year = movie.year
+    val posterUrl = movie.posterUrl
+
     Card(modifier = Modifier
         .padding(16.dp)
         .height(260.dp)
-        .width(133.dp),
+        .width(133.dp)
+        .clickable {
+            navController.navigate(Screen.MovieScreen.route)
+        },
         border = BorderStroke(3.dp, color = Color.DarkGray),
         backgroundColor = Color.DarkGray)
     {

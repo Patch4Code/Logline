@@ -7,5 +7,6 @@ sealed class Screen(val route: String, val title: String) {
     object SocialScreen : Screen("social_view", "Social")
     object SearchScreen : Screen("search_screen", "Search")
     object SettingsScreen : Screen ("settings_screen", "Settings")
+    object MovieScreen : Screen ("movie_screen", "Movie")
 
 }

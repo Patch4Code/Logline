@@ -33,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.moritz.movieappuitest.dataclasses.DrawerNavigationItem
 import com.moritz.movieappuitest.userinterface.BottomBar
 import com.moritz.movieappuitest.userinterface.MainView
+import com.moritz.movieappuitest.userinterface.MovieView
 import com.moritz.movieappuitest.userinterface.ProfileView
 import com.moritz.movieappuitest.userinterface.SearchView
 import com.moritz.movieappuitest.userinterface.SettingsView
@@ -145,6 +146,13 @@ fun Navigation(){
                     SettingsView(navController = navController)
                     LaunchedEffect(Unit) {
                         currentScreenTitle = Screen.SettingsScreen.title
+                    }
+                }
+
+                composable(route = Screen.MovieScreen.route){
+                    MovieView(navController = navController)
+                    LaunchedEffect(Unit) {
+                        currentScreenTitle = Screen.MovieScreen.title
                     }
                 }
             }
