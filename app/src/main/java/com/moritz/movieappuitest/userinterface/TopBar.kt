@@ -24,20 +24,22 @@ fun TopBar(
     onDrawerStateChanged: () -> Unit
 )
 {
-    TopAppBar (
-        title = {
-            Text(text = screenTitle, color = Color.White, fontWeight = FontWeight.Bold)
-        },
-        navigationIcon = {
-            IconButton(onClick = {onDrawerStateChanged()}) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "Open Navigation Drawer")
-            }
-        },
-        actions = {
-            IconButton(onClick = { navController.navigate(Screen.SearchScreen.route) }) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
-            }
-        },
-        scrollBehavior = scrollBehavior
-    )
+    if(screenTitle != "Search"){
+        TopAppBar (
+            title = {
+                Text(text = screenTitle, color = Color.White, fontWeight = FontWeight.Bold)
+            },
+            navigationIcon = {
+                IconButton(onClick = {onDrawerStateChanged()}) {
+                    Icon(imageVector = Icons.Default.Menu, contentDescription = "Open Navigation Drawer")
+                }
+            },
+            actions = {
+                IconButton(onClick = { navController.navigate(Screen.SearchScreen.route) }) {
+                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+                }
+            },
+            scrollBehavior = scrollBehavior
+        )
+    }
 }

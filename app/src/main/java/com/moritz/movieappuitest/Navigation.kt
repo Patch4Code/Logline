@@ -94,19 +94,15 @@ fun Navigation(){
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             bottomBar = {
-                if(currentScreenTitle != "Search"){
-                    BottomBar(navController, currentScreenTitle)
-                }
+                BottomBar(navController, currentScreenTitle)
             },
             topBar = {
-                if(currentScreenTitle != "Search"){
                     TopBar(navController, currentScreenTitle, scrollBehavior
                     ) {
                         scope.launch{
                             drawerState.open()
                         }
                     }
-                }
             }
         )
         {padding ->
