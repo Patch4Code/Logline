@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -41,6 +42,8 @@ import com.moritz.movieappuitest.userinterface.views.SearchView
 import com.moritz.movieappuitest.userinterface.views.SettingsView
 import com.moritz.movieappuitest.userinterface.views.SocialView
 import com.moritz.movieappuitest.userinterface.ui_elements.TopBar
+import com.moritz.movieappuitest.viewmodels.NavigationViewModel
+import com.moritz.movieappuitest.viewmodels.updateScreenTitle
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -50,8 +53,12 @@ fun Navigation(){
 
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val navigationViewModel: NavigationViewModel = viewModel()
+    var currentScreenTitle by remember {
+        mutableStateOf(navigationViewModel.currentScreenTitle.value)
+    }
+    //var currentScreenTitle by remember { mutableStateOf("") }
 
-    var currentScreenTitle by remember { mutableStateOf("") }
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -67,7 +74,7 @@ fun Navigation(){
                 DrawerNavigationItem().getDrawerNavigationItems().forEach {drawerNavigationItem ->
                     NavigationDrawerItem(
                         label = { Text(text = drawerNavigationItem.title) },
-                        selected = drawerNavigationItem.title == currentScreenTitle,
+                        selected = drawerNavigationItem.title == navigationViewModel.currentScreenTitle.value,
                         onClick = {
                             scope.launch{
                                 drawerState.close()
@@ -77,7 +84,7 @@ fun Navigation(){
                         },
                         icon = {
                             Icon(
-                                imageVector = if(drawerNavigationItem.title == currentScreenTitle) {
+                                imageVector = if(drawerNavigationItem.title == navigationViewModel.currentScreenTitle.value) {
                                     drawerNavigationItem.selectedIcon
                                 } else {drawerNavigationItem.unselectedIcon},
                                 contentDescription = drawerNavigationItem.title
@@ -97,10 +104,10 @@ fun Navigation(){
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             bottomBar = {
-                BottomBar(navController, currentScreenTitle)
+                BottomBar(navController, navigationViewModel,currentScreenTitle)
             },
             topBar = {
-                    TopBar(navController, currentScreenTitle, scrollBehavior
+                    TopBar(navController, navigationViewModel, currentScreenTitle, scrollBehavior
                     ) {
                         scope.launch{
                             drawerState.open()
@@ -119,35 +126,40 @@ fun Navigation(){
                 composable(route = Screen.MainScreen.route){
                     MainView(navController = navController)
                     LaunchedEffect(Unit) {
-                        currentScreenTitle = Screen.MainScreen.title
+                        updateScreenTitle(navigationViewModel, Screen.MainScreen.title)
+                        //currentScreenTitle = Screen.MainScreen.title
                     }
                 }
 
                 composable(route = Screen.ProfileScreen.route){
                     ProfileView(navController = navController)
                     LaunchedEffect(Unit) {
-                        currentScreenTitle = Screen.ProfileScreen.title
+                    updateScreenTitle(navigationViewModel, Screen.ProfileScreen.title)
+                    //currentScreenTitle = Screen.ProfileScreen.title
                     }
                 }
 
                 composable(route = Screen.SocialScreen.route){
                     SocialView(navController = navController)
                     LaunchedEffect(Unit) {
-                        currentScreenTitle = Screen.SocialScreen.title
+                        updateScreenTitle(navigationViewModel, Screen.SocialScreen.title)
+                        //currentScreenTitle = Screen.SocialScreen.title
                     }
                 }
 
                 composable(route = Screen.SearchScreen.route){
                     SearchView(navController = navController)
                     LaunchedEffect(Unit) {
-                        currentScreenTitle = Screen.SearchScreen.title
+                        updateScreenTitle(navigationViewModel, Screen.SearchScreen.title)
+                        //currentScreenTitle = Screen.SearchScreen.title
                     }
                 }
                 
                 composable(route = Screen.SettingsScreen.route){
                     SettingsView(navController = navController)
                     LaunchedEffect(Unit) {
-                        currentScreenTitle = Screen.SettingsScreen.title
+                        updateScreenTitle(navigationViewModel, Screen.SettingsScreen.title)
+                        //currentScreenTitle = Screen.SettingsScreen.title
                     }
                 }
 
@@ -162,9 +174,10 @@ fun Navigation(){
                     )
                 )
                 {parsedMovie->
-                    MovieView(navController = navController, movieString = parsedMovie.arguments?.getString("movie"))
+                    MovieView(navController = navController, navViewModel = navigationViewModel, movieString = parsedMovie.arguments?.getString("movie"))
                     LaunchedEffect(Unit) {
-                        currentScreenTitle = Screen.MovieScreen.title
+                        //updateScreenTitle(navigationViewModel, Screen.MovieScreen.title)
+                        //currentScreenTitle = Screen.MovieScreen.title
                     }
                 }
             }

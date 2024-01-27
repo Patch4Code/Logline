@@ -8,22 +8,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.dataclasses.BottomNavigationItem
+import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 
 @Composable
-fun BottomBar(navController: NavController, currentScreenTitle: String){
+fun BottomBar(navController: NavController, navViewModel: NavigationViewModel,currentScreenTitle: String){
 
     NavigationBar {
         BottomNavigationItem().getBottomNavigationItems().forEachIndexed { index, item ->
             NavigationBarItem(
 
-                selected = item.title == currentScreenTitle,
+                selected = item.title == navViewModel.currentScreenTitle.value,
                 label = {
                     Text(text = item.title, color = Color.White)
                 },
                 alwaysShowLabel = false,
                 icon = {
                     Icon(
-                        imageVector = if (item.title == currentScreenTitle) {
+                        imageVector = if (item.title == navViewModel.currentScreenTitle.value) {
                             item.selectedIcon
                         } else item.unselectedIcon,
                         contentDescription = item.title
