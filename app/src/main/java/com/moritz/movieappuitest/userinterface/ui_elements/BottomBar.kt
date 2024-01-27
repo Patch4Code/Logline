@@ -11,10 +11,10 @@ import com.moritz.movieappuitest.dataclasses.BottomNavigationItem
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 
 @Composable
-fun BottomBar(navController: NavController, navViewModel: NavigationViewModel,currentScreenTitle: String){
+fun BottomBar(navController: NavController, navViewModel: NavigationViewModel){
 
     NavigationBar {
-        BottomNavigationItem().getBottomNavigationItems().forEachIndexed { index, item ->
+        BottomNavigationItem().getBottomNavigationItems().forEach {item ->
             NavigationBarItem(
 
                 selected = item.title == navViewModel.currentScreenTitle.value,

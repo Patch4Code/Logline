@@ -1,7 +1,6 @@
 package com.moritz.movieappuitest.userinterface.views
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -12,11 +11,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import coil.compose.AsyncImage
-import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.DummyMovie
 import com.moritz.movieappuitest.utils.JSONHelper
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
@@ -34,12 +30,9 @@ fun MovieView(navController: NavController, navViewModel: NavigationViewModel, m
     val movieLength = movieData.length.toString()
 
     LaunchedEffect(movieTitle) {
-        updateScreenTitle(navViewModel, movieTitle)
+        updateScreenTitle(navViewModel, "$movieTitle ($movieYear)")
     }
-
     Column (modifier = Modifier.padding(16.dp)){
-        Text(text = "$movieTitle ($movieYear)", color = Color.White)
-        Spacer(modifier = Modifier.padding(8.dp))
         Card (modifier = Modifier
             .height(200.dp)
             .width(133.dp),
@@ -51,10 +44,8 @@ fun MovieView(navController: NavController, navViewModel: NavigationViewModel, m
                 contentDescription = "$movieTitle-Poster"
             )
         }
-        
         Text(text = movieData.director, color = Color.White, modifier = Modifier.padding(top = 8.dp))
         Text(text = "$movieLength min", color = Color.White, modifier = Modifier.padding(top = 8.dp))
         Text(text = movieData.description, color = Color.White, modifier = Modifier.padding(top = 8.dp))
-
     }
 }

@@ -4,7 +4,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TopAppBar
@@ -13,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -21,7 +19,6 @@ import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 fun TopBar(
     navController: NavController,
     navViewModel: NavigationViewModel,
-    screenTitle: String,
     scrollBehavior: TopAppBarScrollBehavior,
     onDrawerStateChanged: () -> Unit
 )

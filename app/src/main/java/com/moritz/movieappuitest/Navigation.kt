@@ -19,11 +19,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
@@ -35,13 +31,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.moritz.movieappuitest.dataclasses.DrawerNavigationItem
 import com.moritz.movieappuitest.userinterface.ui_elements.BottomBar
+import com.moritz.movieappuitest.userinterface.ui_elements.TopBar
 import com.moritz.movieappuitest.userinterface.views.MainView
 import com.moritz.movieappuitest.userinterface.views.MovieView
 import com.moritz.movieappuitest.userinterface.views.ProfileView
 import com.moritz.movieappuitest.userinterface.views.SearchView
 import com.moritz.movieappuitest.userinterface.views.SettingsView
 import com.moritz.movieappuitest.userinterface.views.SocialView
-import com.moritz.movieappuitest.userinterface.ui_elements.TopBar
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.viewmodels.updateScreenTitle
 import kotlinx.coroutines.launch
@@ -54,11 +50,6 @@ fun Navigation(){
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val navigationViewModel: NavigationViewModel = viewModel()
-    var currentScreenTitle by remember {
-        mutableStateOf(navigationViewModel.currentScreenTitle.value)
-    }
-    //var currentScreenTitle by remember { mutableStateOf("") }
-
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -104,10 +95,10 @@ fun Navigation(){
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             bottomBar = {
-                BottomBar(navController, navigationViewModel,currentScreenTitle)
+                BottomBar(navController, navigationViewModel)
             },
             topBar = {
-                    TopBar(navController, navigationViewModel, currentScreenTitle, scrollBehavior
+                    TopBar(navController, navigationViewModel, scrollBehavior
                     ) {
                         scope.launch{
                             drawerState.open()
@@ -127,7 +118,6 @@ fun Navigation(){
                     MainView(navController = navController)
                     LaunchedEffect(Unit) {
                         updateScreenTitle(navigationViewModel, Screen.MainScreen.title)
-                        //currentScreenTitle = Screen.MainScreen.title
                     }
                 }
 
@@ -135,7 +125,6 @@ fun Navigation(){
                     ProfileView(navController = navController)
                     LaunchedEffect(Unit) {
                     updateScreenTitle(navigationViewModel, Screen.ProfileScreen.title)
-                    //currentScreenTitle = Screen.ProfileScreen.title
                     }
                 }
 
@@ -143,7 +132,6 @@ fun Navigation(){
                     SocialView(navController = navController)
                     LaunchedEffect(Unit) {
                         updateScreenTitle(navigationViewModel, Screen.SocialScreen.title)
-                        //currentScreenTitle = Screen.SocialScreen.title
                     }
                 }
 
@@ -151,7 +139,6 @@ fun Navigation(){
                     SearchView(navController = navController)
                     LaunchedEffect(Unit) {
                         updateScreenTitle(navigationViewModel, Screen.SearchScreen.title)
-                        //currentScreenTitle = Screen.SearchScreen.title
                     }
                 }
                 
@@ -159,7 +146,6 @@ fun Navigation(){
                     SettingsView(navController = navController)
                     LaunchedEffect(Unit) {
                         updateScreenTitle(navigationViewModel, Screen.SettingsScreen.title)
-                        //currentScreenTitle = Screen.SettingsScreen.title
                     }
                 }
 
@@ -175,10 +161,7 @@ fun Navigation(){
                 )
                 {parsedMovie->
                     MovieView(navController = navController, navViewModel = navigationViewModel, movieString = parsedMovie.arguments?.getString("movie"))
-                    LaunchedEffect(Unit) {
-                        //updateScreenTitle(navigationViewModel, Screen.MovieScreen.title)
-                        //currentScreenTitle = Screen.MovieScreen.title
-                    }
+                    //ScreenTitle Update happens in MovieView
                 }
             }
         }
