@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.userinterface.views
+package com.moritz.movieappuitest.views
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,10 +12,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.dataclasses.DummyMovie
-import com.moritz.movieappuitest.userinterface.ui_elements.MovieBrowseCard
+import com.moritz.movieappuitest.views.moviecards.MovieBrowseCard
 
 @Composable
-fun MainView(navController: NavController){
+fun HomeView(navController: NavController){
 
     LazyColumn {
         DummyMovie().getHomeMoviesDummy().forEach{ (groupName, movies) ->

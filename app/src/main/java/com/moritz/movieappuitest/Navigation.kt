@@ -1,20 +1,12 @@
 package com.moritz.movieappuitest
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -22,24 +14,29 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.moritz.movieappuitest.dataclasses.DrawerNavigationItem
-import com.moritz.movieappuitest.userinterface.ui_elements.BottomBar
-import com.moritz.movieappuitest.userinterface.ui_elements.TopBar
-import com.moritz.movieappuitest.userinterface.views.MainView
-import com.moritz.movieappuitest.userinterface.views.MovieView
-import com.moritz.movieappuitest.userinterface.views.ProfileView
-import com.moritz.movieappuitest.userinterface.views.SearchView
-import com.moritz.movieappuitest.userinterface.views.SettingsView
-import com.moritz.movieappuitest.userinterface.views.SocialView
+import com.moritz.movieappuitest.views.global.BottomBar
+import com.moritz.movieappuitest.views.global.TopBar
+import com.moritz.movieappuitest.views.HomeView
+import com.moritz.movieappuitest.views.MovieView
+import com.moritz.movieappuitest.views.ProfileView
+import com.moritz.movieappuitest.views.SearchView
+import com.moritz.movieappuitest.views.SettingsView
+import com.moritz.movieappuitest.views.WatchlistView
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.viewmodels.updateScreenTitle
+import com.moritz.movieappuitest.views.DiaryView
+import com.moritz.movieappuitest.views.FriendsView
+import com.moritz.movieappuitest.views.ListsView
+import com.moritz.movieappuitest.views.MyMoviesView
+import com.moritz.movieappuitest.views.ProfileEditView
+import com.moritz.movieappuitest.views.ReviewsView
+import com.moritz.movieappuitest.views.global.DrawerContent
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -55,115 +52,118 @@ fun Navigation(){
     val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
-        //Navigation Drawer
-        drawerContent = {
-            ModalDrawerSheet (
-                modifier = Modifier.width(300.dp)
+        drawerState = drawerState,
+        drawerContent = { DrawerContent(navController, drawerState, scope, navigationViewModel) },
+        content = {
+            Scaffold (
+                modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+                bottomBar = { BottomBar(navController, navigationViewModel) },
+                topBar = {
+                    TopBar(navController, navigationViewModel, scrollBehavior) {
+                        scope.launch{ drawerState.open() }
+                    }
+                }
             )
-            {
-                Spacer(modifier = Modifier.height(16.dp))
-                DrawerNavigationItem().getDrawerNavigationItems().forEach {drawerNavigationItem ->
-                    NavigationDrawerItem(
-                        label = { Text(text = drawerNavigationItem.title) },
-                        selected = drawerNavigationItem.title == navigationViewModel.currentScreenTitle.value,
-                        onClick = {
-                            scope.launch{
-                                drawerState.close()
+            {padding ->
+                //Navigation handling
+                NavHost(
+                    navController = navController,
+                    startDestination = Screen.MainScreen.route,
+                    modifier = Modifier.padding(padding))
+                {
+
+                    composable(route = Screen.MainScreen.route){
+                        HomeView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.MainScreen.title)
+                        }
+                    }
+
+                    composable(route = Screen.ProfileScreen.route){
+                        ProfileView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.ProfileScreen.title)
+                        }
+                    }
+
+                    composable(route = Screen.WatchlistScreen.route){
+                        WatchlistView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.WatchlistScreen.title)
+                        }
+                    }
+
+                    composable(route = Screen.SearchScreen.route){
+                        SearchView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.SearchScreen.title)
+                        }
+                    }
+
+                    composable(route = Screen.SettingsScreen.route){
+                        SettingsView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.SettingsScreen.title)
+                        }
+                    }
+
+                    composable(
+                        route = Screen.MovieScreen.route + "/{movie}",
+                        arguments = listOf(
+                            navArgument("movie"){
+                                type = NavType.StringType
+                                defaultValue = ""
+                                nullable = true
                             }
-                            navController.navigate(drawerNavigationItem.route)
+                        )
+                    ){parsedMovie->
+                        MovieView(navController = navController, navViewModel = navigationViewModel, movieString = parsedMovie.arguments?.getString("movie"))
+                        //ScreenTitle Update happens in MovieView
+                    }
 
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = if(drawerNavigationItem.title == navigationViewModel.currentScreenTitle.value) {
-                                    drawerNavigationItem.selectedIcon
-                                } else {drawerNavigationItem.unselectedIcon},
-                                contentDescription = drawerNavigationItem.title
-                            )
-                        },
-                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                    )
-                }
-            }
-        },
-        drawerState = drawerState
-    )
-    {
-        //Screen Content
-        Scaffold (
-            modifier = Modifier
-                .fillMaxSize()
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
-            bottomBar = {
-                BottomBar(navController, navigationViewModel)
-            },
-            topBar = {
-                    TopBar(navController, navigationViewModel, scrollBehavior
-                    ) {
-                        scope.launch{
-                            drawerState.open()
+                    composable(route = Screen.MyMoviesScreen.route){
+                        MyMoviesView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.MyMoviesScreen.title)
                         }
                     }
-            }
-        )
-        {padding ->
-            //Navigation handling
-            NavHost(
-                navController = navController,
-                startDestination = Screen.MainScreen.route,
-                modifier = Modifier.padding(padding))
-            {
 
-                composable(route = Screen.MainScreen.route){
-                    MainView(navController = navController)
-                    LaunchedEffect(Unit) {
-                        updateScreenTitle(navigationViewModel, Screen.MainScreen.title)
-                    }
-                }
-
-                composable(route = Screen.ProfileScreen.route){
-                    ProfileView(navController = navController)
-                    LaunchedEffect(Unit) {
-                    updateScreenTitle(navigationViewModel, Screen.ProfileScreen.title)
-                    }
-                }
-
-                composable(route = Screen.SocialScreen.route){
-                    SocialView(navController = navController)
-                    LaunchedEffect(Unit) {
-                        updateScreenTitle(navigationViewModel, Screen.SocialScreen.title)
-                    }
-                }
-
-                composable(route = Screen.SearchScreen.route){
-                    SearchView(navController = navController)
-                    LaunchedEffect(Unit) {
-                        updateScreenTitle(navigationViewModel, Screen.SearchScreen.title)
-                    }
-                }
-                
-                composable(route = Screen.SettingsScreen.route){
-                    SettingsView(navController = navController)
-                    LaunchedEffect(Unit) {
-                        updateScreenTitle(navigationViewModel, Screen.SettingsScreen.title)
-                    }
-                }
-
-                composable(
-                    route = Screen.MovieScreen.route + "/{movie}",
-                    arguments = listOf(
-                        navArgument("movie"){
-                            type = NavType.StringType
-                            defaultValue = ""
-                            nullable = true
+                    composable(route = Screen.DiaryScreen.route){
+                        DiaryView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.DiaryScreen.title)
                         }
-                    )
-                )
-                {parsedMovie->
-                    MovieView(navController = navController, navViewModel = navigationViewModel, movieString = parsedMovie.arguments?.getString("movie"))
-                    //ScreenTitle Update happens in MovieView
+                    }
+
+                    composable(route = Screen.ReviewsScreen.route){
+                        ReviewsView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.ReviewsScreen.title)
+                        }
+                    }
+
+                    composable(route = Screen.ListsScreen.route){
+                        ListsView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.ListsScreen.title)
+                        }
+                    }
+
+                    composable(route = Screen.ProfileEditScreen.route){
+                        ProfileEditView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.ProfileEditScreen.title)
+                        }
+                    }
+
+                    composable(route = Screen.FriendsScreen.route){
+                        FriendsView(navController = navController)
+                        LaunchedEffect(Unit) {
+                            updateScreenTitle(navigationViewModel, Screen.FriendsScreen.title)
+                        }
+                    }
                 }
             }
         }
-    }
+    )
 }

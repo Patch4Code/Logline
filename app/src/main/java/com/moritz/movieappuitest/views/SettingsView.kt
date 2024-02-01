@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.userinterface.views
+package com.moritz.movieappuitest.views
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text

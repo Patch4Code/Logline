@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.userinterface.ui_elements
+package com.moritz.movieappuitest.views.moviecards
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable

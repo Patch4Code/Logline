@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.userinterface.ui_elements
+package com.moritz.movieappuitest.views.profile
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -36,5 +36,4 @@ fun MovieFavouriteRow(navController: NavController, movies: List<DummyMovie>){
             Spacer(modifier = Modifier.padding(4.dp))
         }
     }
-
 }

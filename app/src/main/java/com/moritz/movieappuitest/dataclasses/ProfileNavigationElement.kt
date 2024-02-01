@@ -1,11 +1,13 @@
 package com.moritz.movieappuitest.dataclasses
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.FeaturedPlayList
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.moritz.movieappuitest.Screen
 
 data class ProfileNavigationElement(
     val title: String = "",
@@ -17,23 +19,23 @@ data class ProfileNavigationElement(
         return listOf(
             ProfileNavigationElement(
                 title = "Movies",
-                navIcon = Icons.Filled.AccountBox,
-                //route = Screen..route
+                navIcon = Icons.Default.Movie,
+                route = Screen.MyMoviesScreen.route
             ),
             ProfileNavigationElement(
                 title = "Diary",
-                navIcon = Icons.Filled.DateRange,
-                //route = Screen..route
+                navIcon = Icons.Default.DateRange,
+                route = Screen.DiaryScreen.route
             ),
             ProfileNavigationElement(
-                title = "Watchlist",
-                navIcon = Icons.Filled.Menu,
-                //route = Screen..route
+                title = "Reviews",
+                navIcon = Icons.Default.Reviews,
+                route = Screen.ReviewsScreen.route
             ),
             ProfileNavigationElement(
                 title = "Lists",
-                navIcon = Icons.Filled.List,
-                //route = Screen..route
+                navIcon = Icons.AutoMirrored.Filled.FeaturedPlayList,
+                route = Screen.ListsScreen.route
             )
         )
     }

@@ -22,7 +22,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isShrinkResources = true
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -63,6 +64,10 @@ dependencies {
 
     //Json module
     implementation("com.google.code.gson:gson:2.8.9")
+
+    //More Icons
+    implementation("androidx.compose.material:material-icons-extended-android:1.6.0")
+
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

@@ -4,10 +4,16 @@ package com.moritz.movieappuitest
 sealed class Screen(val route: String, val title: String) {
     object MainScreen : Screen("main_view", "Home")
     object ProfileScreen : Screen("profile_view", "Profile")
-    object SocialScreen : Screen("social_view", "Social")
+    object WatchlistScreen : Screen("watchlist_view", "Watchlist")
     object SearchScreen : Screen("search_screen", "Search")
     object SettingsScreen : Screen ("settings_screen", "Settings")
     object MovieScreen : Screen ("movie_screen", "Movie")
+    object MyMoviesScreen : Screen ("my_movies_screen", "Movies")
+    object DiaryScreen : Screen ("diary_screen", "Diary")
+    object ReviewsScreen : Screen ("reviews_screen", "Reviews")
+    object ListsScreen : Screen ("lists_screen", "Lists")
+    object ProfileEditScreen : Screen ("profile_edit_screen", "Edit Profile")
+    object FriendsScreen : Screen ("friends_screen","Friends")
 
 
     //helper to attach data for navigation

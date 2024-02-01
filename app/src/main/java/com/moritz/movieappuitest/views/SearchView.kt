@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.userinterface.views
+package com.moritz.movieappuitest.views
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
