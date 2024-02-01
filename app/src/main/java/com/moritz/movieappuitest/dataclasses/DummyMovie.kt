@@ -7,7 +7,8 @@ data class DummyMovie(
     val director: String = "",
     val length: Int = 0,
     val genre: List<String> = listOf(),
-    val description: String = ""
+    val description: String = "",
+    val rating: Int = 0
 )
 {
     fun getHomeMoviesDummy(): Map<String, List<DummyMovie>> {
@@ -33,6 +34,32 @@ data class DummyMovie(
                 DummyMovie("The Godfather", 1972, "https://xl.movieposterdb.com/22_07/1972/68646/xl_68646_8c811dec.jpg"),
                 DummyMovie("The Dark Knight", 2008, "https://xl.movieposterdb.com/08_05/2008/468569/xl_468569_f0e2cd63.jpg"),
             )
+        )
+    }
+
+    fun getWatchlistDummy(): List<DummyMovie>{
+        return listOf(
+            DummyMovie("The Unbearable Weight of Massive Talent", 2022, "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/yblAI3CPDGQtVU3ZafeprDAa2f6.jpg"),
+            DummyMovie("The Banshees of Inisherin", 2022, "https://xl.movieposterdb.com/23_04/2022/11813216/xl_the-banshees-of-inisherin-movie-poster_e2668375.jpg"),
+            DummyMovie("Limbo", 2021, "https://xl.movieposterdb.com/22_07/2021/14032696/xl_14032696_25962eba.jpg"),
+            DummyMovie("The Grand Budapest Hotel", 2014, "https://xl.movieposterdb.com/14_08/2014/2278388/xl_2278388_52b919fb.jpg"),
+            DummyMovie("Searching", 2018, "https://xl.movieposterdb.com/21_02/2020/6723592/xl_6723592_a3c6809d.jpg"),
+            DummyMovie("Saltburn", 2023, "https://xl.movieposterdb.com/23_10/0/17351924/xl_saltburn-movie-poster_6f9e747f.jpg"),
+            DummyMovie("Mad Max: Fury Road", 2015, "https://xl.movieposterdb.com/15_07/2015/1392190/xl_1392190_50142848.jpg"),
+            DummyMovie("The Banshees of Inisherin", 2022, "https://xl.movieposterdb.com/23_04/2022/11813216/xl_the-banshees-of-inisherin-movie-poster_e2668375.jpg"),
+            DummyMovie("Limbo", 2021, "https://xl.movieposterdb.com/22_07/2021/14032696/xl_14032696_25962eba.jpg"),
+            DummyMovie("The Grand Budapest Hotel", 2014, "https://xl.movieposterdb.com/14_08/2014/2278388/xl_2278388_52b919fb.jpg"),
+            DummyMovie("Searching", 2018, "https://xl.movieposterdb.com/21_02/2020/6723592/xl_6723592_a3c6809d.jpg"),
+            DummyMovie("Saltburn", 2023, "https://xl.movieposterdb.com/23_10/0/17351924/xl_saltburn-movie-poster_6f9e747f.jpg"),
+        )
+    }
+
+    fun getRatedDummy(): List<DummyMovie>{
+        return listOf(
+            DummyMovie("A Clockwork Orange", 1971 , "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/4sHeTAp65WrSSuc05nRBKddhBxO.jpg", rating=10),
+            DummyMovie("American Psycho", 2000 , "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/9uGHEgsiUXjCNq8wdq4r49YL8A1.jpg", rating=8),
+            DummyMovie("Taxi Driver", 1976  , "https://xl.movieposterdb.com/21_06/1976/75314/xl_75314_a3d1031e.jpg", rating=9),
+            DummyMovie("Who am I", 2014  , "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/oR3tbNzJMJmCKS5O5fanU9yxIOk.jpg", rating=7)
         )
     }
 }

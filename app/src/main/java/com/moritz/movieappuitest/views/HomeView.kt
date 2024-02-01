@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.dataclasses.DummyMovie
-import com.moritz.movieappuitest.views.moviecards.MovieBrowseCard
+import com.moritz.movieappuitest.views.moviecards.MovieHomeBrowseCard
 
 @Composable
 fun HomeView(navController: NavController){
@@ -28,7 +28,7 @@ fun HomeView(navController: NavController){
                 LazyRow {
                     items(movies){
                             movie->
-                        MovieBrowseCard(navController, movie)
+                        MovieHomeBrowseCard(navController, movie)
                     }
                 }
             }

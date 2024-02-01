@@ -23,7 +23,7 @@ import com.moritz.movieappuitest.utils.JSONHelper.toJson
 import java.net.URLEncoder
 
 @Composable
-fun MovieBrowseCard(navController: NavController, movie: DummyMovie) {
+fun MovieHomeBrowseCard(navController: NavController, movie: DummyMovie) {
 
     val title = movie.title
     val year = movie.year
