@@ -84,12 +84,17 @@ fun MovieRatedBrowseCard(navController: NavController, movie: DummyMovie) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.Bottom
             ){
-                Icon(imageVector = Icons.Default.StarRate,
+                Icon(
+                    imageVector = Icons.Default.StarRate,
                     contentDescription = "StarRate",
                     tint = Color.Yellow,
-                    modifier = Modifier.size(15.dp)
+                    modifier = Modifier.size(15.dp).align(Alignment.CenterVertically)
                 )
-                Text(text = movie.rating.toString(), color = Color.White)
+                Text(
+                    text = "${movie.rating}",
+                    color = Color.White,
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
             }
         }
     }
