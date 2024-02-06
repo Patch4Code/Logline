@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -20,9 +22,10 @@ android {
             useSupportLibrary = true
         }
 
+        //save api key from local.properties in BuildConfig
         android.buildFeatures.buildConfig = true
-
-        //buildConfigField("String", "apiKey", "\"${properties.getProperty("apiKey")}\"")
+        val key: String = gradleLocalProperties(rootDir).getProperty("apiKey")
+        buildConfigField("String", "apiKey", "\"$key\"")
 
     }
 
