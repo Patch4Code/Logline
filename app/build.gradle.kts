@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+
 android {
     namespace = "com.moritz.movieappuitest"
     compileSdk = 34
@@ -18,6 +19,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        android.buildFeatures.buildConfig = true
+
+        //buildConfigField("String", "apiKey", "\"${properties.getProperty("apiKey")}\"")
+
     }
 
     buildTypes {
@@ -63,11 +69,17 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     //Json module
-    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.code.gson:gson:2.10")
 
     //More Icons
     implementation("androidx.compose.material:material-icons-extended-android:1.6.0")
 
+    // Retrofit for API calls and Json to Kotlin object mapping
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //Image Loading
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
