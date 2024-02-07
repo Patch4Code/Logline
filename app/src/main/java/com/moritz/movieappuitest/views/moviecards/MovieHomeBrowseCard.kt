@@ -18,16 +18,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
-import com.moritz.movieappuitest.dataclasses.DummyMovie
+import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.utils.JSONHelper.toJson
+import com.moritz.movieappuitest.utils.TmdbCredentials
 import java.net.URLEncoder
 
 @Composable
-fun MovieHomeBrowseCard(navController: NavController, movie: DummyMovie) {
+fun MovieHomeBrowseCard(navController: NavController, movie: Movie) {
 
     val title = movie.title
-    val year = movie.year
-    val posterUrl = movie.posterUrl
+    val year = movie.releaseDate.split("-")[0]
+    val posterUrl = TmdbCredentials.POSTER_URL + movie.posterPath
 
     val jsonMovie = movie.toJson()
     val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
@@ -65,7 +66,7 @@ fun MovieHomeBrowseCard(navController: NavController, movie: DummyMovie) {
                 modifier = Modifier.padding(start = 4.dp, end = 4.dp)
             )
             Text(
-                text = year.toString(),
+                text = year,
                 color = Color.White,
                 modifier = Modifier.padding(4.dp)
             )

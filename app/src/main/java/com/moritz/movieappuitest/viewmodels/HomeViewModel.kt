@@ -18,23 +18,55 @@ class HomeViewModel : ViewModel(){
     }
 
     private val _popularMovies = MutableLiveData<List<Movie>>()
-    val popularMovies: LiveData<List<Movie>> get() = _popularMovies
+    private val _topRatedMovies = MutableLiveData<List<Movie>>()
+    private val _upcomingMovies = MutableLiveData<List<Movie>>()
+    private val _homeMoviesMap = MutableLiveData<Map<String, List<Movie>>>()
+    val homeMoviesMap: LiveData<Map<String, List<Movie>>> get() = _homeMoviesMap
 
-    fun loadPopularMovies(){
-       viewModelScope.launch {
-           try {
-               val response = tmdbApiService.getPopularMovies()//.body()?.results
-               if(response.isSuccessful){
-                   _popularMovies.value = response.body()?.results
-               }
-           }
-           catch (e: Exception) {
-               Log.e("HomeViewModel", "Error loading popular movies", e)
-           }
-       }
-
+    init {
+        loadHomeViewData()
     }
 
+    private fun updateHomeMovieMap() {
+        val popularMovies = _popularMovies.value ?: emptyList()
+        val topRatedMovies = _topRatedMovies.value ?: emptyList()
+        val upcomingMovies = _upcomingMovies.value ?: emptyList()
+
+        // Combine individual lists into a map
+        val newMovieMap = mapOf(
+            "Popular Movies" to popularMovies,
+            "Top Rated Movies" to topRatedMovies,
+            "Upcoming Movies" to upcomingMovies
+        )
+
+        _homeMoviesMap.value = newMovieMap
+        Log.e("updateHomeMovieMap", homeMoviesMap.value.toString())
+    }
+
+    private fun loadHomeViewData(){
+        viewModelScope.launch {
+            try {
+                Log.e("loadHomeViewData", "test")
+
+                val popularResponse = tmdbApiService.getPopularMovies()
+                if(popularResponse.isSuccessful){
+                    _popularMovies.value = popularResponse.body()?.results
+                }
+
+                val topRatedResponse = tmdbApiService.getTopRated()
+                if(topRatedResponse.isSuccessful){
+                    _topRatedMovies.value = topRatedResponse.body()?.results
+                }
+
+                val upcomingResponse = tmdbApiService.getUpcoming()
+                if(upcomingResponse.isSuccessful){
+                    _upcomingMovies.value = upcomingResponse.body()?.results
+                }
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Error loading data", e)
+            } finally {
+                updateHomeMovieMap()
+            }
+        }
+    }
 }
-
-
