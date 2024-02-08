@@ -21,7 +21,10 @@ class HomeViewModel : ViewModel(){
     private val _topRatedMovies = MutableLiveData<List<Movie>>()
     private val _upcomingMovies = MutableLiveData<List<Movie>>()
     private val _homeMoviesMap = MutableLiveData<Map<String, List<Movie>>>()
-    val homeMoviesMap: LiveData<Map<String, List<Movie>>> get() = _homeMoviesMap
+
+    val homeMoviesMap: LiveData<Map<String, List<Movie>>>
+        get() = _homeMoviesMap
+
 
     init {
         loadHomeViewData()
@@ -40,13 +43,13 @@ class HomeViewModel : ViewModel(){
         )
 
         _homeMoviesMap.value = newMovieMap
-        Log.e("updateHomeMovieMap", homeMoviesMap.value.toString())
+        //Log.e("updateHomeMovieMap", homeMoviesMap.value.toString())
     }
 
     private fun loadHomeViewData(){
         viewModelScope.launch {
             try {
-                Log.e("loadHomeViewData", "test")
+                //Log.e("loadHomeViewData", "test")
 
                 val popularResponse = tmdbApiService.getPopularMovies()
                 if(popularResponse.isSuccessful){
@@ -63,7 +66,7 @@ class HomeViewModel : ViewModel(){
                     _upcomingMovies.value = upcomingResponse.body()?.results
                 }
             } catch (e: Exception) {
-                Log.e("HomeViewModel", "Error loading data", e)
+                //Log.e("HomeViewModel", "Error loading data", e)
             } finally {
                 updateHomeMovieMap()
             }

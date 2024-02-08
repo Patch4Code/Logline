@@ -7,8 +7,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -22,9 +21,8 @@ import com.moritz.movieappuitest.views.moviecards.MovieHomeBrowseCard
 @Composable
 fun HomeView(navController: NavController, homeViewModel: HomeViewModel = viewModel()){
 
-    //val homeMoviesMap: Map<String, List<Movie>>?// = homeViewModel.homeMoviesMap.value
-    val homeMoviesMap by rememberUpdatedState(newValue = homeViewModel.homeMoviesMap.value)
-    Log.e("Home map", homeMoviesMap.toString())
+    val homeMoviesMap  = homeViewModel.homeMoviesMap.observeAsState().value
+    //Log.e("Home map", homeMoviesMap.toString())
 
     LazyColumn {
         Log.e("HomeView map", homeMoviesMap.toString())
