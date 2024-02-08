@@ -17,6 +17,10 @@ class HomeViewModel : ViewModel(){
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)
     }
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     private val _popularMovies = MutableLiveData<List<Movie>>()
     private val _topRatedMovies = MutableLiveData<List<Movie>>()
     private val _upcomingMovies = MutableLiveData<List<Movie>>()
@@ -43,13 +47,12 @@ class HomeViewModel : ViewModel(){
         )
 
         _homeMoviesMap.value = newMovieMap
-        //Log.e("updateHomeMovieMap", homeMoviesMap.value.toString())
     }
 
     private fun loadHomeViewData(){
         viewModelScope.launch {
             try {
-                //Log.e("loadHomeViewData", "test")
+                _isLoading.value = true
 
                 val popularResponse = tmdbApiService.getPopularMovies()
                 if(popularResponse.isSuccessful){
@@ -65,8 +68,9 @@ class HomeViewModel : ViewModel(){
                 if(upcomingResponse.isSuccessful){
                     _upcomingMovies.value = upcomingResponse.body()?.results
                 }
+                _isLoading.value = false
             } catch (e: Exception) {
-                //Log.e("HomeViewModel", "Error loading data", e)
+                Log.e("HomeViewModel", "Error loading data", e)
             } finally {
                 updateHomeMovieMap()
             }
