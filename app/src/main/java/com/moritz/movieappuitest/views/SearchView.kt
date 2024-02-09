@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -21,6 +23,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -33,6 +37,7 @@ import com.moritz.movieappuitest.views.moviecards.MovieSearchCard
 fun SearchView(navController: NavController, searchViewModel: SearchViewModel = viewModel()){
 
     val textInput = remember { mutableStateOf("")}
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val searchResult = searchViewModel.searchedMovies.observeAsState().value
 
@@ -50,12 +55,22 @@ fun SearchView(navController: NavController, searchViewModel: SearchViewModel = 
             OutlinedTextField(
                 value = textInput.value,
                 onValueChange = {textInput.value = it},
-                label = { Text(text = "Search Movie/Series")}
+                label = { Text(text = "Search Movie")},
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(
+                    onSearch = {
+                        if(textInput.value.isNotBlank()){
+                            keyboardController?.hide()
+                            searchViewModel.searchMovie(textInput.value)
+                        }
+                    }
+                )
             )
 
             IconButton(
                 onClick = {
                     if(textInput.value.isNotBlank()){
+                        keyboardController?.hide()
                         searchViewModel.searchMovie(textInput.value)
                     }
                 },
@@ -65,7 +80,6 @@ fun SearchView(navController: NavController, searchViewModel: SearchViewModel = 
         }
         Spacer(modifier = Modifier.padding(4.dp))
         LazyColumn {
-            //Text(text = searchResult.toString(), color = Color.White)
             searchResult?.results?.forEach{ movie->
                 item{
                     //Text(text = movie.title)

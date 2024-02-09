@@ -21,12 +21,12 @@ class SearchViewModel: ViewModel(){
     val searchedMovies: LiveData<MovieList>
         get() = _searchedMovies
 
-    fun searchMovie(searchQuery: String){
+    fun searchMovie(searchQuery: String, page: Int = 1){
         viewModelScope.launch {
             try {
                 Log.e("Search Word", searchQuery)
 
-                val searchResponse = tmdbApiService.searchMovie(searchQuery = searchQuery)
+                val searchResponse = tmdbApiService.searchMovie(searchQuery = searchQuery, page = page)
                 if(searchResponse.isSuccessful){
                     _searchedMovies.value = searchResponse.body()
                     Log.e("Search Sucessfull", _searchedMovies.value.toString())
