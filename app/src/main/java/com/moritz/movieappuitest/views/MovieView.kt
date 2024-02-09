@@ -13,8 +13,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.moritz.movieappuitest.dataclasses.DummyMovie
+import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.utils.JSONHelper
+import com.moritz.movieappuitest.utils.TmdbCredentials
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.viewmodels.updateScreenTitle
 import java.net.URLDecoder
@@ -23,11 +24,12 @@ import java.net.URLDecoder
 fun MovieView(navController: NavController, navViewModel: NavigationViewModel, movieString: String?){
 
     val decodedMovieString = URLDecoder.decode(movieString, "UTF-8")
-    val movieData: DummyMovie = JSONHelper.fromJson(decodedMovieString)
+    val movieData: Movie = JSONHelper.fromJson(decodedMovieString)
 
     val movieTitle = movieData.title
-    val movieYear = movieData.year.toString()
-    val movieLength = movieData.length.toString()
+    val movieYear = movieData.releaseDate.split("-")[0]
+    val moviePosterUrl = TmdbCredentials.POSTER_URL + movieData.posterUrl
+
 
     LaunchedEffect(movieTitle) {
         updateScreenTitle(navViewModel, "$movieTitle ($movieYear)")
@@ -40,12 +42,12 @@ fun MovieView(navController: NavController, navViewModel: NavigationViewModel, m
         )
         {
             AsyncImage(
-                model = movieData.posterUrl,
+                model = moviePosterUrl,
                 contentDescription = "$movieTitle-Poster"
             )
         }
-        Text(text = movieData.director, color = Color.White, modifier = Modifier.padding(top = 8.dp))
-        Text(text = "$movieLength min", color = Color.White, modifier = Modifier.padding(top = 8.dp))
+        //Text(text = movieData.director, color = Color.White, modifier = Modifier.padding(top = 8.dp))
+        //Text(text = "$movieLength min", color = Color.White, modifier = Modifier.padding(top = 8.dp))
         Text(text = movieData.description, color = Color.White, modifier = Modifier.padding(top = 8.dp))
     }
 }

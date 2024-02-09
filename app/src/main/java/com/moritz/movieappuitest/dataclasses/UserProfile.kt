@@ -5,7 +5,7 @@ data class UserProfile(
     val profileImageUrl: String,
     val bannerImageUrl: String,
     val bioText: String,
-    val favouriteMovies: List<DummyMovie>,
+    val favouriteMovies: List<Movie>,
     val numberOfFriends: Int
 )
 
@@ -22,10 +22,10 @@ fun getUserProfileData(): UserProfile{
                 "revolutionary by night\n" +
                 "Reject consumerism. Embrace anarchy.",
         favouriteMovies = listOf(
-            DummyMovie("A Clockwork Orange", 1971 , "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/4sHeTAp65WrSSuc05nRBKddhBxO.jpg",),
-            DummyMovie("American Psycho", 2000 , "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/9uGHEgsiUXjCNq8wdq4r49YL8A1.jpg",),
-            DummyMovie("Taxi Driver", 1976  , "https://xl.movieposterdb.com/21_06/1976/75314/xl_75314_a3d1031e.jpg",),
-            DummyMovie("Taxi Driver", 1976  , "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/oR3tbNzJMJmCKS5O5fanU9yxIOk.jpg",)
+            Movie("A Clockwork Orange",1, "1971-01-01", mutableListOf(1, 2, 3), "/4sHeTAp65WrSSuc05nRBKddhBxO.jpg",3.2f,"bla"),
+            Movie("American Psycho", 1, "2000-01-01", mutableListOf(1, 2, 3),"/9uGHEgsiUXjCNq8wdq4r49YL8A1.jpg", 3.2f,"bla"),
+            Movie("Taxi Driver", 1,"1976-01-01", mutableListOf(1, 2, 3),"/8FbDLFGRPdWaEz5hWC9wyG0d2il.jpg", 3.2f,"bla"),
+            Movie("Taxi Driver", 1, "1976-01-01",mutableListOf(1, 2, 3), "/oR3tbNzJMJmCKS5O5fanU9yxIOk.jpg",3.2f,"bla")
         ),
         numberOfFriends = 2
     )

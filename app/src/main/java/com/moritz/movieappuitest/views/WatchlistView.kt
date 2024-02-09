@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.dataclasses.DummyMovie
+import com.moritz.movieappuitest.dataclasses.getWatchlistDummy
 import com.moritz.movieappuitest.views.moviecards.MovieWatchlistBrowseCard
 
 @Composable
@@ -17,7 +17,7 @@ fun WatchlistView(navController: NavController){
         modifier = Modifier.padding(8.dp),
         columns = GridCells.Fixed(3),
         content = {
-            DummyMovie().getWatchlistDummy().forEach{ movie ->
+            getWatchlistDummy().forEach{ movie ->
                 item {
                     MovieWatchlistBrowseCard(navController, movie)
                 }

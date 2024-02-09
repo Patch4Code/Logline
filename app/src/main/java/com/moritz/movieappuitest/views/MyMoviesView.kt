@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.dataclasses.DummyMovie
+import com.moritz.movieappuitest.dataclasses.getRatedDummy
 import com.moritz.movieappuitest.views.moviecards.MovieRatedBrowseCard
 
 @Composable
@@ -18,7 +18,7 @@ fun MyMoviesView(navController: NavController){
         modifier = Modifier.padding(8.dp),
         columns = GridCells.Fixed(3),
         content = {
-            DummyMovie().getRatedDummy().forEach{ movie ->
+            getRatedDummy().forEach{ movie ->
                 item {
                     MovieRatedBrowseCard(navController, movie)
                 }
