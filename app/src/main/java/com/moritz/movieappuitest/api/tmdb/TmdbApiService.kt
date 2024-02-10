@@ -33,7 +33,7 @@ interface TmdbApiService {
 
     @GET("search/movie")
     suspend fun searchMovie(
-        @Query("query") searchQuery: String,
+        @Query("query") searchQuery: String?,
         @Query("include_adult") includeAdult: Boolean = false,
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1,

@@ -1,6 +1,7 @@
 package com.moritz.movieappuitest.views
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -80,14 +81,20 @@ fun SearchView(navController: NavController, searchViewModel: SearchViewModel = 
         }
         Spacer(modifier = Modifier.padding(4.dp))
         LazyColumn {
-            searchResult?.results?.forEach{ movie->
+            searchResult?.forEachIndexed(){ index, movie->
                 item{
                     //Text(text = movie.title)
-                    if(movie.posterUrl != null){
-                        MovieSearchCard(navController ,movie)
+                    if(movie.posterUrl != null && movie.releaseDate != ""){
+                        MovieSearchCard(navController, movie)
                     }
+                    if(index == searchResult?.lastIndex){
+                        Log.e("Last Index", index.toString())
+                        searchViewModel.loadMoreMovies()
+                    }
+                    Log.e("Index", searchResult?.lastIndex.toString() + " "+ index)
                 }
             }
         }
+
     }
 }

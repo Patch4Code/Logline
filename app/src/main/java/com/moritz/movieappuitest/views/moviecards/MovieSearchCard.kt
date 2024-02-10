@@ -25,7 +25,9 @@ import java.net.URLEncoder
 fun MovieSearchCard(navController: NavController, movie: Movie){
 
     val title = movie.title
-    val year = movie.releaseDate.split("-")[0]
+    val releaseDate = movie.releaseDate
+    val year = releaseDate.split("-")[0]
+
     val posterUrl = TmdbCredentials.POSTER_URL + movie.posterUrl
 
     val jsonMovie = movie.toJson()

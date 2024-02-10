@@ -28,6 +28,7 @@ fun MovieView(navController: NavController, navViewModel: NavigationViewModel, m
 
     val movieTitle = movieData.title
     val movieYear = movieData.releaseDate.split("-")[0]
+
     val moviePosterUrl = TmdbCredentials.POSTER_URL + movieData.posterUrl
 
 
