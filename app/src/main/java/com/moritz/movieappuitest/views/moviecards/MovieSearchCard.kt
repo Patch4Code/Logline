@@ -25,23 +25,9 @@ import java.net.URLEncoder
 fun MovieSearchCard(navController: NavController, movie: Movie){
 
     val title = movie.title
-
-
-    val year: String = if(movie.releaseDate.isNullOrEmpty()){
-        "N/A"
-    }
-    else{
-        movie.releaseDate.split("-")[0]
-    }
-
-
-    val posterUrl: String = if(movie.posterUrl.isNullOrEmpty()){
-        TmdbCredentials.POSTER_PLACEHOLDER_URL
-    }
-    else{
-        TmdbCredentials.POSTER_URL + movie.posterUrl
-    }
-
+    val year: String = movie.releaseDate.takeIf { !it.isNullOrEmpty() }?.split("-")?.get(0) ?: "N/A"
+    val posterUrl: String = (movie.posterUrl.takeIf { !it.isNullOrEmpty() }?.let { TmdbCredentials.POSTER_URL + it }
+        ?: TmdbCredentials.POSTER_PLACEHOLDER_URL)
 
     val jsonMovie = movie.toJson()
     val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
