@@ -27,9 +27,22 @@ fun MovieView(navController: NavController, navViewModel: NavigationViewModel, m
     val movieData: Movie = JSONHelper.fromJson(decodedMovieString)
 
     val movieTitle = movieData.title
-    val movieYear = movieData.releaseDate.split("-")[0]
 
-    val moviePosterUrl = TmdbCredentials.POSTER_URL + movieData.posterUrl
+
+    val movieYear: String = if(movieData.releaseDate == ""){
+        "N/A"
+    }
+    else{
+        movieData.releaseDate.split("-")[0]
+    }
+
+
+    val moviePosterUrl: String = if(movieData.posterUrl == ""){
+        TmdbCredentials.POSTER_PLACEHOLDER_URL
+    }
+    else{
+        TmdbCredentials.POSTER_URL + movieData.posterUrl
+    }
 
 
     LaunchedEffect(movieTitle) {

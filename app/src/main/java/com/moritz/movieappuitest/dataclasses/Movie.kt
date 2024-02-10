@@ -3,16 +3,16 @@ package com.moritz.movieappuitest.dataclasses
 import com.google.gson.annotations.SerializedName
 
 data class Movie(
-    @SerializedName("title") val title: String,
-    @SerializedName("id") val id: Int,
+    @SerializedName("title") val title: String = "N/A",
+    @SerializedName("id") val id: Int = -1,
 
-    @SerializedName("release_date") val releaseDate: String,
-    @SerializedName("genre_ids") val genreIds: List<Int>,
+    @SerializedName("release_date") val releaseDate: String = "N/A-date",
+    @SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
 
-    @SerializedName("poster_path") val posterUrl: String,
+    @SerializedName("poster_path") val posterUrl: String = "",
 
-    @SerializedName("vote_average") val voteAverage: Float,
-    @SerializedName("overview") val description: String
+    @SerializedName("vote_average") val voteAverage: Float = 0.0f,
+    @SerializedName("overview") val description: String = "N/A"
 )
 
 

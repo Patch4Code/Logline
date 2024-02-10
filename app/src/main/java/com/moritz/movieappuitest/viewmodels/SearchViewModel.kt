@@ -23,10 +23,10 @@ class SearchViewModel: ViewModel(){
 
     private var highestLoadedPage = 1
     private var pageAmount = 1
-    private var currentSearchQuery = MutableLiveData<String>()
+    private var currentSearchQuery = ""
 
     fun searchMovie(searchQuery: String){
-        currentSearchQuery.value = searchQuery
+        currentSearchQuery = searchQuery
 
         viewModelScope.launch {
             try {
@@ -34,8 +34,6 @@ class SearchViewModel: ViewModel(){
                 if(searchResponse.isSuccessful){
                     pageAmount = searchResponse.body()?.totalPages!!
                     _searchedMovies.value = searchResponse.body()?.results
-                    //Log.e("SearchViewModel - Search Sucessfull", _searchedMovies.value.toString())
-                    //Log.e("SearchViewModel - page number", " Pagenumber: $pageNumber")
                 }
             } catch (e: Exception) {
                 Log.e("SearchViewModel", "Error searching movies", e)
@@ -47,29 +45,21 @@ class SearchViewModel: ViewModel(){
     }
 
     fun loadMoreMovies(){
-        Log.e("PageNumer index", "CureentPage: $highestLoadedPage, MaxPage: $pageAmount")
-        if(highestLoadedPage <= pageAmount){
+        if(highestLoadedPage < pageAmount){
             highestLoadedPage++
-            //Log.e("SearchViewModel - loadMoreMovies " ,"if erfüllt")
+            //Log.e("Page-Number index", "CurrentPage: $highestLoadedPage, MaxPage: $pageAmount")
             val currentMovies = _searchedMovies.value?.toMutableList() ?: mutableListOf()
-            //Log.e("SearchViewModel - currentMovies" , "Current Movies: $currentMovies")
-            //Log.e("SearchViewModel - load more currentSearchQuery", "${currentSearchQuery.value}")
 
             viewModelScope.launch {
                 try {
-                    val loadMoreResponse = tmdbApiService.searchMovie(searchQuery = currentSearchQuery.value, page = highestLoadedPage)
+                    val loadMoreResponse = tmdbApiService.searchMovie(searchQuery = currentSearchQuery, page = highestLoadedPage)
 
-                    //Log.e("SearchViewModel - loadMoreResponse", loadMoreResponse.body().toString())
                     if(loadMoreResponse.isSuccessful){
-                        //Log.e("SearchViewModel - loadMoreMovies" ,"is sucessfull")
                         val newLoadedMovies = loadMoreResponse.body()?.results
+
                         if (newLoadedMovies != null) {
                             currentMovies.addAll(newLoadedMovies)
-                            //Log.e("SearchViewModel - loadMoreMovies movies added" , "Current Movies: $currentMovies")
                         }
-                        //_searchedMovies.value = searchResponse.body()
-                        //Log.e("Search Sucessfull", _searchedMovies.value.toString())
-
                         _searchedMovies.value = currentMovies
                     }
                 } catch (e: Exception) {
