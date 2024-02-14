@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -30,7 +31,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.DummyMovie
+import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -42,7 +45,7 @@ data class LoggedMovie(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DiaryView(navController: NavController){
+fun DiaryView(navController: NavController, navViewModel: NavigationViewModel){
 
     val dummyLogs: List<LoggedMovie> = listOf(
         LoggedMovie(
@@ -71,6 +74,10 @@ fun DiaryView(navController: NavController){
             9
         )
     )
+
+    LaunchedEffect(Unit) {
+        navViewModel.updateScreen(Screen.DiaryScreen)
+    }
 
     LazyColumn(
         modifier = Modifier

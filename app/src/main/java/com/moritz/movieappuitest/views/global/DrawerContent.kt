@@ -12,9 +12,12 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.DrawerNavigationItem
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +25,9 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrawerContent(navController: NavController, drawerState: DrawerState, scope: CoroutineScope, navigationViewModel: NavigationViewModel){
+fun DrawerContent(navController: NavController, navViewModel: NavigationViewModel,drawerState: DrawerState, scope: CoroutineScope, navigationViewModel: NavigationViewModel){
+
+    val currentScreen by navViewModel.currentScreen.observeAsState(Screen.HomeScreen)
 
     ModalDrawerSheet (
         modifier = Modifier.width(300.dp)
@@ -32,7 +37,7 @@ fun DrawerContent(navController: NavController, drawerState: DrawerState, scope:
         DrawerNavigationItem().getDrawerNavigationItems().forEach { drawerNavigationItem ->
             NavigationDrawerItem(
                 label = { Text(text = drawerNavigationItem.title) },
-                selected = drawerNavigationItem.title == navigationViewModel.currentScreenTitle.value,
+                selected = drawerNavigationItem.title == currentScreen.title,
                 onClick = {
                     scope.launch{
                         drawerState.close()
@@ -42,7 +47,7 @@ fun DrawerContent(navController: NavController, drawerState: DrawerState, scope:
                 },
                 icon = {
                     Icon(
-                        imageVector = if(drawerNavigationItem.title == navigationViewModel.currentScreenTitle.value) {
+                        imageVector = if(drawerNavigationItem.title == currentScreen.title) {
                             drawerNavigationItem.selectedIcon
                         } else {drawerNavigationItem.unselectedIcon},
                         contentDescription = drawerNavigationItem.title

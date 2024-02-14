@@ -11,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -22,15 +23,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.getUserProfileData
+import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.profile.ExpandableBio
 import com.moritz.movieappuitest.views.profile.MovieFavouriteRow
 import com.moritz.movieappuitest.views.profile.ProfileHead
 import com.moritz.movieappuitest.views.profile.ProfileNavigation
 
 @Composable
-fun ProfileView(navController: NavController) {
+fun ProfileView(navController: NavController, navViewModel: NavigationViewModel) {
 
     val userData = remember { mutableStateOf(getUserProfileData()) }
+
+    LaunchedEffect(Unit) {
+        navViewModel.updateScreen(Screen.ProfileScreen)
+    }
 
     //Profile Layout
     Column(horizontalAlignment = CenterHorizontally)

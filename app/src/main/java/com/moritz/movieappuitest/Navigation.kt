@@ -12,7 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -31,7 +30,6 @@ import com.moritz.movieappuitest.views.SearchView
 import com.moritz.movieappuitest.views.SettingsView
 import com.moritz.movieappuitest.views.WatchlistView
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
-import com.moritz.movieappuitest.viewmodels.updateScreenTitle
 import com.moritz.movieappuitest.views.DiaryView
 import com.moritz.movieappuitest.views.FriendsView
 import com.moritz.movieappuitest.views.ListsView
@@ -56,7 +54,7 @@ fun Navigation(){
 
     ModalNavigationDrawer(
         drawerState = drawerState,
-        drawerContent = { DrawerContent(navController, drawerState, scope, navigationViewModel) },
+        drawerContent = { DrawerContent(navController, navigationViewModel,drawerState, scope, navigationViewModel) },
         content = {
             Scaffold (
                 modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -71,43 +69,28 @@ fun Navigation(){
                 //Navigation handling
                 NavHost(
                     navController = navController,
-                    startDestination = Screen.MainScreen.route,
+                    startDestination = Screen.HomeScreen.route,
                     modifier = Modifier.padding(padding))
                 {
 
-                    composable(route = Screen.MainScreen.route){
-                        HomeView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.MainScreen.title)
-                        }
+                    composable(route = Screen.HomeScreen.route){
+                        HomeView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.ProfileScreen.route){
-                        ProfileView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.ProfileScreen.title)
-                        }
+                        ProfileView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.WatchlistScreen.route){
-                        WatchlistView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.WatchlistScreen.title)
-                        }
+                        WatchlistView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.SearchScreen.route){
-                        SearchView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.SearchScreen.title)
-                        }
+                        SearchView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.SettingsScreen.route){
-                        SettingsView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.SettingsScreen.title)
-                        }
+                        SettingsView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(
@@ -121,49 +104,30 @@ fun Navigation(){
                         )
                     ){parsedMovie->
                         MovieView(navController = navController, navViewModel = navigationViewModel, movieString = parsedMovie.arguments?.getString("movie"))
-                        //ScreenTitle Update happens in MovieView
                     }
 
                     composable(route = Screen.MyMoviesScreen.route){
-                        MyMoviesView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.MyMoviesScreen.title)
-                        }
+                        MyMoviesView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.DiaryScreen.route){
-                        DiaryView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.DiaryScreen.title)
-                        }
+                        DiaryView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.ReviewsScreen.route){
-                        ReviewsView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.ReviewsScreen.title)
-                        }
+                        ReviewsView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.ListsScreen.route){
-                        ListsView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.ListsScreen.title)
-                        }
+                        ListsView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.ProfileEditScreen.route){
-                        ProfileEditView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.ProfileEditScreen.title)
-                        }
+                        ProfileEditView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.FriendsScreen.route){
-                        FriendsView(navController = navController)
-                        LaunchedEffect(Unit) {
-                            updateScreenTitle(navigationViewModel, Screen.FriendsScreen.title)
-                        }
+                        FriendsView(navController = navController, navViewModel = navigationViewModel)
                     }
                 }
             }

@@ -28,7 +28,7 @@ data class DrawerNavigationItem(
                 title = "Home",
                 selectedIcon = Icons.Filled.Home,
                 unselectedIcon = Icons.Outlined.Home,
-                route = Screen.MainScreen.route
+                route = Screen.HomeScreen.route
             ),
             DrawerNavigationItem(
                 title = "Search",

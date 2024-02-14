@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,18 +29,28 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.viewmodels.SearchViewModel
 import com.moritz.movieappuitest.views.moviecards.MovieSearchCard
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchView(navController: NavController, searchViewModel: SearchViewModel = viewModel()){
+fun SearchView(
+    navController: NavController,
+    searchViewModel: SearchViewModel = viewModel(),
+    navViewModel: NavigationViewModel
+){
 
     val textInput = remember { mutableStateOf("")}
     val keyboardController = LocalSoftwareKeyboardController.current
 
     val searchResult = searchViewModel.searchedMovies.observeAsState().value
+
+    LaunchedEffect(Unit) {
+        navViewModel.updateScreen(Screen.SearchScreen)
+    }
 
     Column(modifier = Modifier
             .fillMaxWidth()

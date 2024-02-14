@@ -1,12 +1,17 @@
 package com.moritz.movieappuitest.viewmodels
 
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.moritz.movieappuitest.Screen
 
 class NavigationViewModel: ViewModel() {
-    val currentScreenTitle = mutableStateOf("")
-}
-fun updateScreenTitle(viewModel: NavigationViewModel, newTitle: String) {
-    viewModel.currentScreenTitle.value = newTitle
-    //Log.e("updateScreenTitle", viewModel.currentScreenTitle.value)
+
+    private var _currentScreen = MutableLiveData<Screen>(Screen.HomeScreen)
+    val currentScreen: LiveData<Screen>
+        get() =_currentScreen
+
+    fun updateScreen(newScreen: Screen) {
+        _currentScreen.value = newScreen
+    }
 }

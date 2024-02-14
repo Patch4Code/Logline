@@ -9,9 +9,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,9 +26,15 @@ fun TopBar(
     onDrawerStateChanged: () -> Unit
 )
 {
+    val currentScreen by navViewModel.currentScreen.observeAsState(Screen.HomeScreen)
+
     TopAppBar (
         title = {
-            Text(text = navViewModel.currentScreenTitle.value, color = Color.White, fontWeight = FontWeight.Bold)
+            Text(
+                text = currentScreen.title,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+            )
         },
         navigationIcon = {
             IconButton(onClick = {onDrawerStateChanged()}) {
