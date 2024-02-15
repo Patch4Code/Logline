@@ -1,6 +1,5 @@
 package com.moritz.movieappuitest.views
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +11,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ImageNotSupported
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -26,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.dataclasses.Genre
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.utils.JSONHelper
 import com.moritz.movieappuitest.utils.TmdbCredentials
@@ -46,14 +49,20 @@ fun MovieView(
     val decodedMovieString = URLDecoder.decode(movieString, "UTF-8")
     val movieData: Movie = JSONHelper.fromJson(decodedMovieString)
 
-    movieViewModel.getMovieCredits(movieData.id)
+    movieViewModel.loadMovieDetails(movieData.id)
+    val movieDetails = movieViewModel.detailsData.observeAsState().value
+    movieViewModel.loadMovieCredits(movieData.id)
     val movieCredits = movieViewModel.creditsData.observeAsState().value
 
-    val movieTitle = movieData.title
-
-    val movieYear: String = movieData.releaseDate.takeIf { !it.isNullOrEmpty() }?.split("-")?.get(0) ?: "N/A"
-    val moviePosterUrl: String = (movieData.posterUrl.takeIf { !it.isNullOrEmpty() }?.let { TmdbCredentials.POSTER_URL + it }
-        ?: TmdbCredentials.POSTER_PLACEHOLDER_URL)
+    val movieTitle = movieDetails?.title ?: "N/A"
+    val movieYear: String = movieDetails?.releaseDate.takeIf { !it.isNullOrEmpty() }?.split("-")?.get(0) ?: "N/A"
+    val moviePosterUrl: String = (movieDetails?.posterPath.takeIf { !it.isNullOrEmpty() }?.let { TmdbCredentials.POSTER_URL + it }
+        ?: "")
+    val runtime: String = movieDetails?.runtime.toString() ?: "N/A"
+    val tagline: String = movieDetails?.tagline ?: ""
+    val description: String = movieDetails?.overview ?: ""
+    val voteAverageTmdb: String = String.format("%.1f", movieDetails?.voteAverage) ?: "N/A"
+    val genres: List<Genre>? = movieDetails?.genres
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MovieScreen)
@@ -62,26 +71,32 @@ fun MovieView(
     LazyColumn (modifier = Modifier.padding(16.dp)){
         item {
             Row{
+                //Poster
                 Card (modifier = Modifier
                     .height(200.dp)
                     .width(133.dp),
                     backgroundColor = Color.DarkGray
                 )
                 {
-                    AsyncImage(
-                        model = moviePosterUrl,
-                        contentDescription = "$movieTitle-Poster"
-                    )
+                    if(moviePosterUrl.isNotEmpty()){
+                        AsyncImage(
+                            model = moviePosterUrl,
+                            contentDescription = "$movieTitle-Poster"
+                        )
+                    }
+                    else{
+                        Icon(imageVector = Icons.Default.ImageNotSupported, contentDescription ="$movieTitle-Poster")
+                    }
                 }
                 Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)){
                     Text(text = movieTitle, color = Color.White, style = MaterialTheme.typography.titleLarge)
                     Spacer(modifier = Modifier.padding(4.dp))
-                    Text(text = "$movieYear | 200min", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                    Text(text = "$movieYear | $runtime min", color = Color.White, style = MaterialTheme.typography.bodyMedium)
                 }
             }
 
-            Text(text = "Bla Bla Bla", color = Color.White, modifier = Modifier.padding(top = 8.dp))
-            ExpandableText(text =  movieData.description, maxLinesCollapsed = 3)
+            Text(text = tagline, color = Color.White, modifier = Modifier.padding(top = 8.dp), fontWeight = FontWeight.Bold)
+            ExpandableText(text =  description, maxLinesCollapsed = 3)
 
             Divider(color = Color.DarkGray, thickness = 1.dp, modifier = Modifier
                 .fillMaxWidth()
@@ -91,7 +106,7 @@ fun MovieView(
                 Text(text = "Average Rating:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Row {
                     Column {
-                        Text(text = "6.8", color = Color.White, style = MaterialTheme.typography.titleLarge)
+                        Text(text = voteAverageTmdb, color = Color.White, style = MaterialTheme.typography.titleLarge)
                         Text(text = "TMDB", color = Color.White)
                     }
                 }
@@ -103,7 +118,11 @@ fun MovieView(
 
             //Genre
             Text(text = "Genres:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
-            Text(text = "Action, Comedy, Horror", color = Color.White)
+            Row {
+                genres?.let {
+                    Text(text = it.joinToString { genre -> genre.name }, color = Color.White)
+                }
+            }
             Spacer(modifier = Modifier.padding(8.dp))
 
             //Cast + Crew
@@ -117,7 +136,6 @@ fun MovieView(
                 if (movieCredits != null) {
                     items(movieCredits.cast) { castMember ->
                         CastMemberElement(castMember)
-                        Log.e("Cast", castMember.toString())
                         Spacer(modifier = Modifier.padding(4.dp))
                     }
                 }
@@ -142,6 +160,5 @@ fun MovieView(
 
             //More like this
         }
-
     }
 }
