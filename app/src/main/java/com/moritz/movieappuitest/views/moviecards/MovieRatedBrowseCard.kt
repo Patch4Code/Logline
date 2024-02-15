@@ -26,19 +26,15 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
-import com.moritz.movieappuitest.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.utils.TmdbCredentials
-import java.net.URLEncoder
 
 @Composable
 fun MovieRatedBrowseCard(navController: NavController, movie: Movie) {
 
+    val movieId = movie.id.toString()
     val title = movie.title
     val year = movie.releaseDate.split("-")[0]
     val posterUrl = TmdbCredentials.POSTER_URL + movie.posterUrl
-
-    val jsonMovie = movie.toJson()
-    val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
 
     val rating = 10
 
@@ -47,7 +43,7 @@ fun MovieRatedBrowseCard(navController: NavController, movie: Movie) {
         .height(240.dp)
         .width(120.dp)
         .clickable {
-            navController.navigate(Screen.MovieScreen.withArgs(encodedJsonMovie))
+            navController.navigate(Screen.MovieScreen.withArgs(movieId))
         },
         border = BorderStroke(3.dp, color = Color.DarkGray),
         backgroundColor = Color.DarkGray)

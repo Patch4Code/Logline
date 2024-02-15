@@ -25,43 +25,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Genre
-import com.moritz.movieappuitest.dataclasses.Movie
-import com.moritz.movieappuitest.utils.JSONHelper
 import com.moritz.movieappuitest.utils.TmdbCredentials
 import com.moritz.movieappuitest.viewmodels.MovieViewModel
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.general.ExpandableText
 import com.moritz.movieappuitest.views.movie.CastMemberElement
 import com.moritz.movieappuitest.views.movie.CrewMemberElement
-import java.net.URLDecoder
 
 @Composable
 fun MovieView(
-    navController: NavController,
     movieViewModel: MovieViewModel = viewModel(),
     navViewModel: NavigationViewModel,
-    movieString: String?
+    id: String?
 ){
-    val decodedMovieString = URLDecoder.decode(movieString, "UTF-8")
-    val movieData: Movie = JSONHelper.fromJson(decodedMovieString)
-
-    movieViewModel.loadMovieDetails(movieData.id)
+    val movieId = id?.toInt() ?: 0
+    movieViewModel.loadMovieDetails(movieId)
     val movieDetails = movieViewModel.detailsData.observeAsState().value
-    movieViewModel.loadMovieCredits(movieData.id)
+    movieViewModel.loadMovieCredits(movieId)
     val movieCredits = movieViewModel.creditsData.observeAsState().value
 
     val movieTitle = movieDetails?.title ?: "N/A"
     val movieYear: String = movieDetails?.releaseDate.takeIf { !it.isNullOrEmpty() }?.split("-")?.get(0) ?: "N/A"
     val moviePosterUrl: String = (movieDetails?.posterPath.takeIf { !it.isNullOrEmpty() }?.let { TmdbCredentials.POSTER_URL + it }
         ?: "")
-    val runtime: String = movieDetails?.runtime.toString() ?: "N/A"
+    val runtime: String = movieDetails?.runtime.toString()
     val tagline: String = movieDetails?.tagline ?: ""
     val description: String = movieDetails?.overview ?: ""
-    val voteAverageTmdb: String = String.format("%.1f", movieDetails?.voteAverage) ?: "N/A"
+    val voteAverageTmdb: String = String.format("%.1f", movieDetails?.voteAverage)
     val genres: List<Genre>? = movieDetails?.genres
 
     LaunchedEffect(Unit) {
@@ -156,7 +149,7 @@ fun MovieView(
                 }
             }
 
-            //More Infos -> Studio, Countrie, Budget,
+            //More information -> Studio, Country, Budget, Revenue, Status, Spoken Languages
 
             //More like this
         }

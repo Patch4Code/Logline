@@ -17,20 +17,16 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
-import com.moritz.movieappuitest.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.utils.TmdbCredentials
-import java.net.URLEncoder
 
 @Composable
 fun MovieSearchCard(navController: NavController, movie: Movie){
 
+    val movieId = movie.id.toString()
     val title = movie.title
     val year: String = movie.releaseDate.takeIf { !it.isNullOrEmpty() }?.split("-")?.get(0) ?: "N/A"
     val posterUrl: String = (movie.posterUrl.takeIf { !it.isNullOrEmpty() }?.let { TmdbCredentials.POSTER_URL + it }
         ?: TmdbCredentials.POSTER_PLACEHOLDER_URL)
-
-    val jsonMovie = movie.toJson()
-    val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
 
     Column {
         Row (
@@ -39,7 +35,7 @@ fun MovieSearchCard(navController: NavController, movie: Movie){
                 .fillMaxWidth()
                 .padding(8.dp)
                 .clickable {
-                    navController.navigate(Screen.MovieScreen.withArgs(encodedJsonMovie))
+                    navController.navigate(Screen.MovieScreen.withArgs(movieId))
                 },
 
             ){

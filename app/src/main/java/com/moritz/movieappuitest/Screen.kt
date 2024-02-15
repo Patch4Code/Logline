@@ -1,5 +1,7 @@
 package com.moritz.movieappuitest
 
+import android.util.Log
+
 //to define the Screens for the Navigation
 sealed class Screen(val route: String, val title: String) {
     object HomeScreen : Screen("home_view", "Home")
@@ -21,6 +23,7 @@ sealed class Screen(val route: String, val title: String) {
             append(route)
             args.forEach {arg->
                 append("/$arg")
+                Log.e("Screen", "Arg: $arg")
             }
         }
     }

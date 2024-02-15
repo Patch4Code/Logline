@@ -21,22 +21,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.moritz.movieappuitest.views.global.BottomBar
-import com.moritz.movieappuitest.views.global.TopBar
-import com.moritz.movieappuitest.views.HomeView
-import com.moritz.movieappuitest.views.MovieView
-import com.moritz.movieappuitest.views.ProfileView
-import com.moritz.movieappuitest.views.SearchView
-import com.moritz.movieappuitest.views.SettingsView
-import com.moritz.movieappuitest.views.WatchlistView
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.DiaryView
 import com.moritz.movieappuitest.views.FriendsView
+import com.moritz.movieappuitest.views.HomeView
 import com.moritz.movieappuitest.views.ListsView
+import com.moritz.movieappuitest.views.MovieView
 import com.moritz.movieappuitest.views.MyMoviesView
 import com.moritz.movieappuitest.views.ProfileEditView
+import com.moritz.movieappuitest.views.ProfileView
 import com.moritz.movieappuitest.views.ReviewsView
+import com.moritz.movieappuitest.views.SearchView
+import com.moritz.movieappuitest.views.SettingsView
+import com.moritz.movieappuitest.views.WatchlistView
+import com.moritz.movieappuitest.views.global.BottomBar
 import com.moritz.movieappuitest.views.global.DrawerContent
+import com.moritz.movieappuitest.views.global.TopBar
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -94,16 +94,20 @@ fun Navigation(){
                     }
 
                     composable(
-                        route = Screen.MovieScreen.route + "/{movie}",
+                        route = Screen.MovieScreen.route + "/{movie_id}",
                         arguments = listOf(
-                            navArgument("movie"){
+                            navArgument("movie_id"){
                                 type = NavType.StringType
-                                defaultValue = ""
+                                defaultValue = "0"
                                 nullable = true
                             }
                         )
-                    ){parsedMovie->
-                        MovieView(navController = navController, navViewModel = navigationViewModel, movieString = parsedMovie.arguments?.getString("movie"))
+                    ){parsedId->
+                        val movieId = parsedId.arguments?.getString("movie_id")
+                        MovieView(
+                            navViewModel = navigationViewModel,
+                            id = movieId
+                        )
                     }
 
                     composable(route = Screen.MyMoviesScreen.route){
