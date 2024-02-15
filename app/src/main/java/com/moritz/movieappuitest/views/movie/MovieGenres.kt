@@ -14,7 +14,7 @@ import com.moritz.movieappuitest.dataclasses.Genre
 @Composable
 fun MovieGenres(genres: List<Genre>?){
 
-    Text(text = "Genres:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+    Text(text = "Genre:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
     Row {
         genres?.let {
             Text(text = it.joinToString { genre -> genre.name }, color = Color.White)
