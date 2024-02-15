@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.dataclasses.Cast
-import com.moritz.movieappuitest.dataclasses.Crew
 import com.moritz.movieappuitest.utils.TmdbCredentials
 
 @Composable
@@ -54,38 +53,5 @@ fun CastMemberElement(castMember: Cast) {
         }
         Text(text = castMember.name, style = MaterialTheme.typography.bodyMedium)
         Text(text = castMember.character, style = MaterialTheme.typography.bodySmall, modifier = Modifier.width(95.dp), textAlign = TextAlign.Center)
-    }
-}
-
-@Composable
-fun CrewMemberElement(crewMember: Crew){
-    Column (modifier = Modifier.padding(top = 8.dp, bottom = 8.dp), horizontalAlignment = Alignment.CenterHorizontally){
-        if(!crewMember.profilePath.isNullOrEmpty()){
-            AsyncImage(
-                model = TmdbCredentials.OTHER_IMAGE_URL + crewMember.profilePath,
-                modifier = Modifier
-                    .height(80.dp)
-                    .width(80.dp)
-                    .padding(4.dp)
-                    .clip(CircleShape)
-                    .border(width = 2.dp, color = Color.DarkGray, shape = CircleShape),
-                contentDescription = "Crew Member Image of ${crewMember.name}",
-                contentScale = ContentScale.Crop
-            )
-        }
-        else{
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                modifier = Modifier
-                    .height(80.dp)
-                    .width(80.dp)
-                    .padding(4.dp)
-                    .clip(CircleShape)
-                    .border(width = 2.dp, color = Color.DarkGray, shape = CircleShape),
-                contentDescription = "Cast Member Image of ${crewMember.name}"
-            )
-        }
-        Text(text = crewMember.name, style = MaterialTheme.typography.bodyMedium)
-        Text(text = crewMember.job, style = MaterialTheme.typography.bodySmall, modifier = Modifier.width(95.dp), textAlign = TextAlign.Center)
     }
 }
