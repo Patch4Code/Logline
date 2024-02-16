@@ -105,6 +105,7 @@ fun Navigation(){
                     ){parsedId->
                         val movieId = parsedId.arguments?.getString("movie_id")
                         MovieView(
+                            navController = navController,
                             navViewModel = navigationViewModel,
                             id = movieId
                         )

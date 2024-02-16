@@ -1,5 +1,6 @@
 package com.moritz.movieappuitest.api.tmdb
 
+import com.moritz.movieappuitest.dataclasses.MovieCollection
 import com.moritz.movieappuitest.dataclasses.MovieCredits
 import com.moritz.movieappuitest.dataclasses.MovieDetails
 import com.moritz.movieappuitest.dataclasses.MovieList
@@ -56,4 +57,11 @@ interface TmdbApiService {
         @Query("language") language: String = "en-US",
         @Query("api_key") apiKey: String = TmdbCredentials.API_KEY
     ): Response<MovieDetails>
+
+    @GET("collection/{collection_id}")
+    suspend fun getMoviesFromCollection(
+        @Path("collection_id") collectionId: Int?,
+        @Query("language") language: String = "en-US",
+        @Query("api_key") apiKey: String = TmdbCredentials.API_KEY
+    ): Response<MovieCollection>
 }

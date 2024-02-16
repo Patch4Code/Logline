@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moritz.movieappuitest.api.tmdb.RetrofitHelper
 import com.moritz.movieappuitest.api.tmdb.TmdbApiService
+import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.dataclasses.MovieCredits
 import com.moritz.movieappuitest.dataclasses.MovieDetails
 import com.moritz.movieappuitest.utils.TmdbCredentials
@@ -26,18 +27,18 @@ class MovieViewModel: ViewModel(){
     val creditsData: LiveData<MovieCredits>
         get() = _creditsData
 
+    private val _collectionMovies = MutableLiveData<List<Movie>>()
+    val collectionMovies: LiveData<List<Movie>>
+        get() = _collectionMovies
+
 
     fun loadMovieDetails(movieId: Int){
         viewModelScope.launch {
             try {
-                Log.e("MovieViewModel", "try started")
                 val movieDetailsResponse = tmdbApiService.getMovieDetails(movieId = movieId)
-                Log.e("MovieViewModel", "movieDetailsResponse: $movieDetailsResponse")
                 if(movieDetailsResponse.isSuccessful){
                     _detailsData.value = movieDetailsResponse.body()
-                    Log.e("MovieViewModel", "Data recieved: ${_detailsData.value}")
                 }
-                else Log.e("MovieViewModel", "Data not received: ${_detailsData.value}")
             } catch (e: Exception) {
                 Log.e("MovieViewModel", "Error getting movie details", e)
             }
@@ -53,6 +54,20 @@ class MovieViewModel: ViewModel(){
                 }
             } catch (e: Exception) {
                 Log.e("MovieViewModel", "Error getting movie credits", e)
+            }
+        }
+    }
+
+    fun loadMovieCollection(collectionId: Int){
+        Log.e("MovieViewModel","collectionId: $collectionId")
+        viewModelScope.launch {
+            try {
+                val movieCollectionResponse = tmdbApiService.getMoviesFromCollection(collectionId = collectionId)
+                if(movieCollectionResponse.isSuccessful){
+                    _collectionMovies.value = movieCollectionResponse.body()?.movies
+                }
+            } catch (e: Exception) {
+                Log.e("MovieViewModel", "Error getting movie collection", e)
             }
         }
     }
