@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.movie
+package com.moritz.movieappuitest.views.movie.contentelement
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

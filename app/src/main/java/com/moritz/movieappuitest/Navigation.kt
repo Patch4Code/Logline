@@ -34,6 +34,7 @@ import com.moritz.movieappuitest.views.ReviewsView
 import com.moritz.movieappuitest.views.SearchView
 import com.moritz.movieappuitest.views.SettingsView
 import com.moritz.movieappuitest.views.WatchlistView
+import com.moritz.movieappuitest.views.diary.DiaryEditElementView
 import com.moritz.movieappuitest.views.global.BottomBar
 import com.moritz.movieappuitest.views.global.DrawerContent
 import com.moritz.movieappuitest.views.global.TopBar
@@ -117,6 +118,18 @@ fun Navigation(){
 
                     composable(route = Screen.DiaryScreen.route){
                         DiaryView(navController = navController, navViewModel = navigationViewModel)
+                    }
+
+                    composable(route = Screen.DiaryEditElementScreen.route + "/{loggedElement}",
+                        arguments = listOf(
+                            navArgument("loggedElement"){
+                                type = NavType.StringType
+                                defaultValue = ""
+                                nullable = true
+                            }
+                        )
+                    ){parsedLoggedElement->
+                        DiaryEditElementView(navController = navController, navViewModel = navigationViewModel, loggedElement = parsedLoggedElement.arguments?.getString("loggedElement"))
                     }
 
                     composable(route = Screen.ReviewsScreen.route){

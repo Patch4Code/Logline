@@ -12,6 +12,7 @@ sealed class Screen(val route: String, val title: String) {
     object MovieScreen : Screen ("movie_screen", "")
     object MyMoviesScreen : Screen ("my_movies_screen", "Movies")
     object DiaryScreen : Screen ("diary_screen", "Diary")
+    object DiaryEditElementScreen: Screen ("diary_edit_element_screen", "Edit Diary-Entry")
     object ReviewsScreen : Screen ("reviews_screen", "Reviews")
     object ListsScreen : Screen ("lists_screen", "Lists")
     object ProfileEditScreen : Screen ("profile_edit_screen", "Edit Profile")

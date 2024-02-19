@@ -25,16 +25,15 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
-import com.moritz.movieappuitest.utils.TmdbCredentials
+import com.moritz.movieappuitest.utils.MovieHelper
 
 @Composable
 fun MovieSearchCard(navController: NavController, movie: Movie){
 
     val movieId = movie.id.toString()
     val title = movie.title
-    val year: String = movie.releaseDate.takeIf { !it.isNullOrEmpty() }?.split("-")?.get(0) ?: "N/A"
-    val posterUrl: String = (movie.posterUrl.takeIf { !it.isNullOrEmpty() }?.let { TmdbCredentials.POSTER_URL + it }
-        ?: "")
+    val year: String = MovieHelper.extractYear(movie.releaseDate)
+    val posterUrl: String = MovieHelper.processPosterUrl(movie.posterUrl)
 
     Column {
         Row (

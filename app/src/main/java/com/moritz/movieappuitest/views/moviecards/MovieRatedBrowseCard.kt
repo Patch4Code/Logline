@@ -26,15 +26,15 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
-import com.moritz.movieappuitest.utils.TmdbCredentials
+import com.moritz.movieappuitest.utils.MovieHelper
 
 @Composable
 fun MovieRatedBrowseCard(navController: NavController, movie: Movie) {
 
     val movieId = movie.id.toString()
     val title = movie.title
-    val year = movie.releaseDate.split("-")[0]
-    val posterUrl = TmdbCredentials.POSTER_URL + movie.posterUrl
+    val year = MovieHelper.extractYear(movie.releaseDate)
+    val posterUrl = MovieHelper.processPosterUrl(movie.posterUrl)
 
     val rating = 10
 
