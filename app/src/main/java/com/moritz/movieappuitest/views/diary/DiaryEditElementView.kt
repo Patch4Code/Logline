@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.StarRate
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
@@ -67,6 +68,9 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
     var watchDate by remember { mutableStateOf(loggedElementData.date) }
     val openDatePickerDialog = remember { mutableStateOf(false)}
 
+    var rating by remember { mutableStateOf(loggedElementData.rating)}
+    val openRatingDialog = remember { mutableStateOf(false)}
+    
 
     val movieTitle = loggedElementData.movie.title
     val movieYear = MovieHelper.extractYear(loggedElementData.movie.releaseDate)
@@ -92,12 +96,19 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
         }
 
         Spacer(modifier = Modifier.padding(16.dp))
-        Text(text = "Edit Rating", style = MaterialTheme.typography.titleMedium)
+        
+        TextButton(onClick = { openRatingDialog.value = true }) {
+            Row (modifier = Modifier.weight(1f)){
+                Text(text = "Rating $rating" , style = MaterialTheme.typography.titleLarge)
+                Icon(imageVector = Icons.Default.StarRate, contentDescription = null)
+            }
+            Icon(imageVector = Icons.Default.Edit, contentDescription = null)
+        }
 
-        Spacer(modifier = Modifier.padding(32.dp))
+        Spacer(modifier = Modifier.padding(8.dp))
 
         TextButton(onClick = { openDatePickerDialog.value = true }) {
-            Text(text = "Watched ${DateHelper.formatDateToDisplay(watchDate)}", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text(text = "Watched ${DateHelper.formatDateToDisplay(watchDate)}", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
             Icon(imageVector = Icons.Default.Edit, contentDescription = null)
         }
 
@@ -196,6 +207,29 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
             ) {
                 DatePicker(state = datePickerState)
             }
+        }
+
+        if(openRatingDialog.value){
+            AlertDialog(
+                onDismissRequest = { openRatingDialog.value = false },
+                title = {Text(text = "Change Rating")},
+                text = {
+                       Text(text = "Here comes element to change stars")
+                },
+                confirmButton = {
+                    Button(onClick = {
+                        openRatingDialog.value = false }
+                    ) {
+                        Text(text = "OK")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { openRatingDialog.value = false }) {
+                        Text(text = "Cancel")
+                    }
+
+                }
+            )
         }
     }
 }
