@@ -15,14 +15,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DismissDirection
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DismissState
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.StarRate
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -53,7 +58,6 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
     val movieTitle = loggedElement.movie.title
     val movieYear = MovieHelper.extractYear(loggedElement.movie.releaseDate)
     val moviePosterUrl = MovieHelper.processPosterUrl(loggedElement.movie.posterUrl)
-
 
     Row(
         modifier = Modifier

@@ -24,7 +24,7 @@ fun DiaryEditSaveChangesSection(onSaveChanges: () -> Unit, onDiscardChanges: () 
             .padding(top = 16.dp),
         thickness = 1.dp, color = Color.DarkGray
     )
-    Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,) {
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         IconButton(onClick = { onSaveChanges() }) {
             Icon(imageVector = Icons.Default.Check, contentDescription = "Save Changes")
         }

@@ -62,6 +62,7 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
         openDiscardDialog.value = true
     }
 
+
     Column(modifier = Modifier.padding(16.dp)) {
 
         DiaryEditHeader(
@@ -92,8 +93,12 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
                     }
                     //----------------------------------
 
-                    //navigate back to DiaryView
-                    navController.navigate(Screen.DiaryScreen.route)
+                    //navigate back to DiaryView and clear backstack
+                    navController.navigate(Screen.DiaryScreen.route){
+                        popUpTo(Screen.DiaryScreen.route) {
+                            inclusive = true
+                        }
+                    }
                     Toast.makeText(context, "Diary Entry updated", Toast.LENGTH_LONG).show()
                 },
                 onDiscardChanges = {openDiscardDialog.value = true}
@@ -104,7 +109,11 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
         DiaryEditDiscardDialog(
             openDiscardDialog = openDiscardDialog.value,
             onDiscard = { openDiscardDialog.value = false
-                navController.navigate(Screen.DiaryScreen.route)
+                navController.navigate(Screen.DiaryScreen.route){
+                    popUpTo(Screen.DiaryScreen.route) {
+                        inclusive = true
+                    }
+                }
             },
             onCancel = { openDiscardDialog.value = false }
         )
@@ -138,7 +147,11 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
                 //here just with dummy data with movie title as identifier
                 LoggedMoviesDummy.removeIf { it.movie.title == movieTitle }
 
-                navController.navigate(Screen.DiaryScreen.route)
+                navController.navigate(Screen.DiaryScreen.route){
+                    popUpTo(Screen.DiaryScreen.route) {
+                        inclusive = true
+                    }
+                }
             },
             onCancel = {openDeleteDialog.value = false}
         )
