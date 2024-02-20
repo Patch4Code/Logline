@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
-import androidx.compose.material3.Divider
+import androidx.compose.material3.Text
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,9 +26,10 @@ fun MovieRatings(voteAverage: Double?){
             }
         }
     }
-    Divider(color = Color.DarkGray, thickness = 1.dp, modifier = Modifier
-        .fillMaxWidth()
-        .padding(top = 16.dp, bottom = 16.dp)
+    HorizontalDivider(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp, bottom = 16.dp),
+        thickness = 1.dp, color = Color.DarkGray
     )
-
 }
