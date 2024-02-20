@@ -6,7 +6,7 @@ import androidx.annotation.RequiresApi
 data class LoggedMovie(
     val movie: Movie,
     var date: String,
-    val rating: Int
+    var rating: Int
 )
 
 @RequiresApi(Build.VERSION_CODES.O)

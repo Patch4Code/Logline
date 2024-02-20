@@ -1,6 +1,7 @@
 package com.moritz.movieappuitest.views.diary
 
 import android.os.Build
+import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
@@ -11,10 +12,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material.icons.filled.StarRate
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -35,8 +39,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -51,7 +58,7 @@ import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import java.net.URLDecoder
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun DiaryEditElementView(navController: NavController, navViewModel: NavigationViewModel, loggedElement: String?){
 
@@ -133,6 +140,7 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
                         val updatedElement = LoggedMoviesDummy.find { it.movie.title == movieTitle }
                         updatedElement?.let {
                             it.date = watchDate
+                            it.rating = rating
                         }
                         //----------------------------------
 
@@ -212,9 +220,31 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
         if(openRatingDialog.value){
             AlertDialog(
                 onDismissRequest = { openRatingDialog.value = false },
-                title = {Text(text = "Change Rating")},
+                title = {
+                    Text(text = "Change Rating")
+                    Spacer(modifier = Modifier.padding(32.dp))
+                        },
                 text = {
-                       Text(text = "Here comes element to change stars")
+                    Row (verticalAlignment = Alignment.CenterVertically){
+                        for(index in 1 .. 10){
+                            Icon(
+                                modifier = Modifier
+                                    //.clickable{ rating = index }
+                                    .pointerInteropFilter {
+                                        when (it.action) {
+                                            MotionEvent.ACTION_DOWN -> {
+                                                rating = index
+                                            }
+                                        }
+                                        true
+                                    }
+                                    .size(27.dp),
+                                imageVector = if(index <= rating){Icons.Default.StarRate}else Icons.Default.StarOutline,
+                                contentDescription = null,
+                                tint = Color.Yellow)
+                        }
+                    }
+                    Spacer(modifier = Modifier.padding(32.dp))
                 },
                 confirmButton = {
                     Button(onClick = {
@@ -228,7 +258,10 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
                         Text(text = "Cancel")
                     }
 
-                }
+                },
+                modifier = Modifier.padding(0.dp).width(500.dp),
+
+
             )
         }
     }
