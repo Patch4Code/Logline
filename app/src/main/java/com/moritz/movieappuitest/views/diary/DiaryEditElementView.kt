@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material.icons.filled.StarRate
@@ -46,6 +47,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
@@ -78,6 +80,7 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
     var rating by remember { mutableStateOf(loggedElementData.rating)}
     val openRatingDialog = remember { mutableStateOf(false)}
     
+    val openDeleteDialog = remember { mutableStateOf(false)}
 
     val movieTitle = loggedElementData.movie.title
     val movieYear = MovieHelper.extractYear(loggedElementData.movie.releaseDate)
@@ -119,6 +122,12 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
             Icon(imageVector = Icons.Default.Edit, contentDescription = null)
         }
 
+        Spacer(modifier = Modifier.padding(16.dp))
+
+        TextButton(onClick = { openDeleteDialog.value = true }) {
+            Text(text = "Delete Diary-Entry", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+            Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+        }
 
         Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.weight(1f)){
             HorizontalDivider(
@@ -221,7 +230,11 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
             AlertDialog(
                 onDismissRequest = { openRatingDialog.value = false },
                 title = {
-                    Text(text = "Change Rating")
+                    Row {
+                        Text(text = "Change Rating", modifier = Modifier.weight(1f))
+                        Text(text = rating.toString(),  fontSize = 40.sp, style = MaterialTheme.typography.headlineLarge )
+                    }
+                   
                     Spacer(modifier = Modifier.padding(32.dp))
                         },
                 text = {
@@ -259,9 +272,35 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
                     }
 
                 },
-                modifier = Modifier.padding(0.dp).width(500.dp),
+                modifier = Modifier
+                    .padding(0.dp)
+                    .width(500.dp),
+            )
+        }
+
+        if(openDeleteDialog.value){
+            AlertDialog(
+                onDismissRequest = { openDeleteDialog.value = false },
+                title = {Text(text = "Delete Diary-Entry")},
+                text = { Text(text = "Are you sure you want to delete the diary entry?") },
+                confirmButton = {
+                    Button(onClick = {
+                        openDeleteDialog.value = false
+
+                        //Delete Diary Element here
+                        //here just with dummy data with movie title as identifier
+                        LoggedMoviesDummy.removeIf { it.movie.title == movieTitle }
 
 
+                        navController.navigate(Screen.DiaryScreen.route) }) {
+                        Text(text = "Delete")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { openDeleteDialog.value = false }) {
+                        Text(text = "Cancel")
+                    }
+                }
             )
         }
     }
