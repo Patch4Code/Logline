@@ -10,11 +10,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.StarRate
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,17 +27,20 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
+import com.moritz.movieappuitest.dataclasses.MovieUserData
 import com.moritz.movieappuitest.utils.MovieHelper
 
 @Composable
-fun MovieRatedBrowseCard(navController: NavController, movie: Movie) {
+fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserData) {
+
+    val movie: Movie = movieUserData.movie ?: Movie()
 
     val movieId = movie.id.toString()
     val title = movie.title
     val year = MovieHelper.extractYear(movie.releaseDate)
     val posterUrl = MovieHelper.processPosterUrl(movie.posterUrl)
 
-    val rating = 10
+    val rating = movieUserData.rating
 
     Card(modifier = Modifier
         .padding(4.dp)
@@ -46,7 +50,8 @@ fun MovieRatedBrowseCard(navController: NavController, movie: Movie) {
             navController.navigate(Screen.MovieScreen.withArgs(movieId))
         },
         border = BorderStroke(3.dp, color = Color.DarkGray),
-        backgroundColor = Color.DarkGray)
+        colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
+    )
     {
         Column(
             verticalArrangement = Arrangement.Top,
@@ -55,7 +60,7 @@ fun MovieRatedBrowseCard(navController: NavController, movie: Movie) {
             Card (modifier = Modifier
                 .height(150.dp)
                 .width(100.dp),
-                backgroundColor = Color.DarkGray
+                colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
             )
             {
                 AsyncImage(

@@ -9,11 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BookmarkAdd
-import androidx.compose.material.icons.filled.BookmarkAdded
+import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.ImageNotSupported
 import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material.icons.filled.StarRate
+import androidx.compose.material.icons.filled.WatchLater
+import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -90,19 +91,27 @@ fun MovieHeader(
                 }
                 IconButton(onClick = { movieViewModel.changeOnWatchlist(id, !(onWatchlist ?: false)) }) {
                     if(onWatchlist == true){
-                        Icon(imageVector = Icons.Default.BookmarkAdded,
+                        Icon(imageVector = Icons.Default.WatchLater,
                             contentDescription = "Movie is on Watchlist",
                             tint = Color.White,
                             modifier = Modifier.size(30.dp)
                         )
                     }
                     else{
-                        Icon(imageVector = Icons.Default.BookmarkAdd,
+                        Icon(imageVector = Icons.Outlined.WatchLater,
                             contentDescription = "Movie is not on Watchlist",
-                            tint = Color.Gray,
+                            tint = Color.DarkGray,
                             modifier = Modifier.size(30.dp))
                     }
 
+                }
+
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
+                        contentDescription = "Add to List",
+                        tint = Color.White,
+                        modifier = Modifier.size(30.dp)
+                    )
                 }
 
                 if(openRatingDialog.value){

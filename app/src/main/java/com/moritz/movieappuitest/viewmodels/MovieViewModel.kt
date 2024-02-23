@@ -94,7 +94,7 @@ class MovieViewModel: ViewModel(){
             movieUserData.rating = rating
         }else{
             val newMovieUserData = MovieUserData(
-                movie = Movie(title = "New Movie", id = id ?: -1, releaseDate = "", posterUrl = ""),
+                movie = Movie(title = _detailsData.value?.title ?: "N/A", id = id ?: -1, releaseDate = _detailsData.value?.releaseDate ?: "N/A", posterUrl = _detailsData.value?.posterPath ?: ""),
                 onWatchlist = false,
                 rating = rating
             )

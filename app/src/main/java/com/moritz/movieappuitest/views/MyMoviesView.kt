@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
-import com.moritz.movieappuitest.dataclasses.getRatedDummy
+import com.moritz.movieappuitest.dataclasses.userDataList
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.moviecards.MovieRatedBrowseCard
 
@@ -19,15 +19,15 @@ fun MyMoviesView(navController: NavController, navViewModel: NavigationViewModel
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MyMoviesScreen)
     }
-
     //Profile Layout
     LazyVerticalGrid(
         modifier = Modifier.padding(8.dp),
         columns = GridCells.Fixed(3),
         content = {
-            getRatedDummy().forEach{ movie ->
+            val ratedItems = userDataList.filter {it.rating > 0}
+            ratedItems.forEach{ ratedItem ->
                 item {
-                    MovieRatedBrowseCard(navController, movie)
+                    MovieRatedBrowseCard(navController, ratedItem)
                 }
             }
         }

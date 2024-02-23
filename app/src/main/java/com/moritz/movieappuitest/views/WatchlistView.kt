@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
-import com.moritz.movieappuitest.dataclasses.getWatchlistDummy
+import com.moritz.movieappuitest.dataclasses.userDataList
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.moviecards.MovieWatchlistBrowseCard
 
@@ -24,9 +24,12 @@ fun WatchlistView(navController: NavController, navViewModel: NavigationViewMode
         modifier = Modifier.padding(8.dp),
         columns = GridCells.Fixed(3),
         content = {
-            getWatchlistDummy().forEach{ movie ->
+            val watchlistItems = userDataList.filter {it.onWatchlist}
+            watchlistItems.forEach{ userData ->
                 item {
-                    MovieWatchlistBrowseCard(navController, movie)
+                    if(userData.onWatchlist){
+                        userData.movie?.let { MovieWatchlistBrowseCard(navController, it) }
+                    }
                 }
             }
         }
