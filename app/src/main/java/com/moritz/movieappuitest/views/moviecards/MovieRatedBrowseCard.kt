@@ -10,12 +10,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Card
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Icon
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.StarRate
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,8 +52,7 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
             navController.navigate(Screen.MovieScreen.withArgs(movieId))
         },
         border = BorderStroke(3.dp, color = Color.DarkGray),
-        colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
-    )
+        backgroundColor = Color.DarkGray)
     {
         Column(
             verticalArrangement = Arrangement.Top,
@@ -60,7 +61,7 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
             Card (modifier = Modifier
                 .height(150.dp)
                 .width(100.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
+                backgroundColor = Color.DarkGray
             )
             {
                 AsyncImage(

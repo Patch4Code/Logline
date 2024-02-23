@@ -1,5 +1,6 @@
 package com.moritz.movieappuitest.views.moviecards
 
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,7 +9,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Card
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,15 +24,15 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
-import com.moritz.movieappuitest.utils.TmdbCredentials
+import com.moritz.movieappuitest.utils.MovieHelper
 
 @Composable
 fun MovieWatchlistBrowseCard(navController: NavController, movie: Movie) {
 
     val movieId = movie.id.toString()
     val title = movie.title
-    val year = movie.releaseDate.split("-")[0]
-    val posterUrl = TmdbCredentials.POSTER_URL + movie.posterUrl
+    val year = MovieHelper.extractYear(movie.releaseDate)
+    val posterUrl = MovieHelper.processPosterUrl(movie.posterUrl)
 
     Card(modifier = Modifier
         .padding(4.dp)
