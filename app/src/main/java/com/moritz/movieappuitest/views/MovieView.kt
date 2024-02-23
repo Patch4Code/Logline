@@ -24,10 +24,12 @@ fun MovieView(
         navViewModel.updateScreen(Screen.MovieScreen)
         movieViewModel.loadMovieDetails(movieId)
         movieViewModel.loadMovieCredits(movieId)
+        movieViewModel.loadRatingAndWatchlistStatusById(movieId)
     }
 
     val movieDetails = movieViewModel.detailsData.observeAsState().value
     val movieCredits = movieViewModel.creditsData.observeAsState().value
+
 
     DisposableEffect(movieDetails) {
         if (movieDetails != null) {
@@ -39,5 +41,5 @@ fun MovieView(
 
     val collectionMovies = movieViewModel.collectionMovies.observeAsState().value
 
-    MovieContent(movieDetails, movieCredits, collectionMovies, navController)
+    MovieContent(movieDetails, movieCredits, collectionMovies, navController, movieViewModel)
 }

@@ -46,22 +46,20 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
     val loggedElementData: LoggedMovie = JSONHelper.fromJson(decodedLoggedElementString)
 
     val context = LocalContext.current
-    val openDiscardDialog = remember { mutableStateOf(false)  }
+
 
     val movieTitle = loggedElementData.movie.title
-
     var watchDate by remember { mutableStateOf(loggedElementData.date) }
-    val openDatePickerDialog = remember { mutableStateOf(false)}
-
     var rating by remember { mutableStateOf(loggedElementData.rating)}
+
+    val openDiscardDialog = remember { mutableStateOf(false)  }
+    val openDatePickerDialog = remember { mutableStateOf(false)}
     val openRatingDialog = remember { mutableStateOf(false)}
-    
     val openDeleteDialog = remember { mutableStateOf(false)}
 
     BackHandler {
         openDiscardDialog.value = true
     }
-
 
     Column(modifier = Modifier.padding(16.dp)) {
 
@@ -134,9 +132,8 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
             onAccept = { newRating->
                 openRatingDialog.value = false
                 rating = newRating
-            },
-            onCancel = { openRatingDialog.value = false }
-        )
+            }
+        ) { openRatingDialog.value = false }
 
         DiaryEditDeleteDialog(
             openDeleteDialog = openDeleteDialog.value,

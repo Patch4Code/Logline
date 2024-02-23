@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.dataclasses.MovieCredits
 import com.moritz.movieappuitest.dataclasses.MovieDetails
+import com.moritz.movieappuitest.viewmodels.MovieViewModel
 import com.moritz.movieappuitest.views.movie.contentelement.MovieCastAndCrew
 import com.moritz.movieappuitest.views.movie.contentelement.MovieDescription
 import com.moritz.movieappuitest.views.movie.contentelement.MovieGenres
@@ -22,11 +23,19 @@ fun MovieContent(
     movieDetails: MovieDetails?,
     movieCredits: MovieCredits?,
     collectionMovies: List<Movie>?,
-    navController: NavController
+    navController: NavController,
+    movieViewModel: MovieViewModel
 ) {
     LazyColumn (modifier = Modifier.padding(16.dp)){
         item {
-            MovieHeader(movieDetails?.title, movieDetails?.posterPath, movieDetails?.releaseDate, movieDetails?.runtime)
+            MovieHeader(
+                id = movieDetails?.id,
+                title = movieDetails?.title,
+                url = movieDetails?.posterPath,
+                releaseDate = movieDetails?.releaseDate,
+                runtime = movieDetails?.runtime,
+                movieViewModel = movieViewModel
+            )
             MovieDescription(movieDetails?.tagline, movieDetails?.overview)
             MovieRatings(movieDetails?.voteAverage)
             MovieGenres(movieDetails?.genres)
