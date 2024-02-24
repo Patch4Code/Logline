@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.dataclasses
+package com.moritz.movieappuitest.dataclasses.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle

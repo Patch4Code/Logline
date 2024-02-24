@@ -22,22 +22,22 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
-import com.moritz.movieappuitest.views.DiaryView
 import com.moritz.movieappuitest.views.FriendsView
 import com.moritz.movieappuitest.views.HomeView
 import com.moritz.movieappuitest.views.ListsView
-import com.moritz.movieappuitest.views.MovieView
 import com.moritz.movieappuitest.views.MyMoviesView
 import com.moritz.movieappuitest.views.ProfileEditView
-import com.moritz.movieappuitest.views.ProfileView
 import com.moritz.movieappuitest.views.ReviewsView
 import com.moritz.movieappuitest.views.SearchView
 import com.moritz.movieappuitest.views.SettingsView
 import com.moritz.movieappuitest.views.WatchlistView
 import com.moritz.movieappuitest.views.diary.DiaryEditElementView
+import com.moritz.movieappuitest.views.diary.DiaryView
 import com.moritz.movieappuitest.views.global.BottomBar
 import com.moritz.movieappuitest.views.global.DrawerContent
 import com.moritz.movieappuitest.views.global.TopBar
+import com.moritz.movieappuitest.views.movie.MovieView
+import com.moritz.movieappuitest.views.profile.ProfileView
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)

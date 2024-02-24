@@ -10,13 +10,13 @@ import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.dataclasses.MovieCredits
 import com.moritz.movieappuitest.dataclasses.MovieDetails
 import com.moritz.movieappuitest.viewmodels.MovieViewModel
-import com.moritz.movieappuitest.views.movie.contentelement.MovieCastAndCrew
 import com.moritz.movieappuitest.views.movie.contentelement.MovieDescription
 import com.moritz.movieappuitest.views.movie.contentelement.MovieGenres
-import com.moritz.movieappuitest.views.movie.contentelement.MovieHeader
 import com.moritz.movieappuitest.views.movie.contentelement.MovieMoreDetails
 import com.moritz.movieappuitest.views.movie.contentelement.MovieMoreLikeThis
 import com.moritz.movieappuitest.views.movie.contentelement.MovieRatings
+import com.moritz.movieappuitest.views.movie.contentelement.castcrew.MovieCastAndCrew
+import com.moritz.movieappuitest.views.movie.contentelement.header.MovieHeader
 
 @Composable
 fun MovieContent(

@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views
+package com.moritz.movieappuitest.views.diary
 
 import android.os.Build
 import androidx.annotation.RequiresApi

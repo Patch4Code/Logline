@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views
+package com.moritz.movieappuitest.views.profile
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,10 +24,10 @@ import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.getUserProfileData
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
-import com.moritz.movieappuitest.views.profile.ExpandableBio
-import com.moritz.movieappuitest.views.profile.MovieFavouriteRow
-import com.moritz.movieappuitest.views.profile.ProfileHead
-import com.moritz.movieappuitest.views.profile.ProfileNavigation
+import com.moritz.movieappuitest.views.profile.elements.ExpandableBio
+import com.moritz.movieappuitest.views.profile.elements.MovieFavouriteRow
+import com.moritz.movieappuitest.views.profile.elements.ProfileHead
+import com.moritz.movieappuitest.views.profile.elements.ProfileNavigation
 
 @Composable
 fun ProfileView(navController: NavController, navViewModel: NavigationViewModel) {

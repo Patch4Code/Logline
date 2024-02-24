@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.profile
+package com.moritz.movieappuitest.views.profile.elements
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween

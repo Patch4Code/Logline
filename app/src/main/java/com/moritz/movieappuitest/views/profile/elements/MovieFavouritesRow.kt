@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.profile
+package com.moritz.movieappuitest.views.profile.elements
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row

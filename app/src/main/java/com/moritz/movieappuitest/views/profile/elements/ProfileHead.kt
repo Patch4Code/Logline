@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.profile
+package com.moritz.movieappuitest.views.profile.elements
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box

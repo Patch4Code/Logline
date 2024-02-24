@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.profile
+package com.moritz.movieappuitest.views.profile.elements
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.dataclasses.ProfileNavigationElement
+import com.moritz.movieappuitest.dataclasses.navigation.ProfileNavigationElement
 
 @Composable
 fun ProfileNavigation(navController: NavController){

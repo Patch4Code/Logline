@@ -1,5 +1,6 @@
 package com.moritz.movieappuitest.views.global
 
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -10,7 +11,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
-import com.moritz.movieappuitest.dataclasses.BottomNavigationItem
+import com.moritz.movieappuitest.dataclasses.navigation.BottomNavigationItem
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 
 @Composable
@@ -19,7 +20,7 @@ fun BottomBar(navController: NavController, navViewModel: NavigationViewModel){
     val currentScreen by navViewModel.currentScreen.observeAsState(Screen.HomeScreen)
 
     NavigationBar {
-        BottomNavigationItem().getBottomNavigationItems().forEach {item ->
+        BottomNavigationItem().getBottomNavigationItems().forEach { item ->
             NavigationBarItem(
 
                 selected = item.title == currentScreen.title,

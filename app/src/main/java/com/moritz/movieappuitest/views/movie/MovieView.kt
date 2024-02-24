@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views
+package com.moritz.movieappuitest.views.movie
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -9,7 +9,6 @@ import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.viewmodels.MovieViewModel
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
-import com.moritz.movieappuitest.views.movie.MovieContent
 
 @Composable
 fun MovieView(

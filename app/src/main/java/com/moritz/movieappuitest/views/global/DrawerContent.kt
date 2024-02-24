@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
-import com.moritz.movieappuitest.dataclasses.DrawerNavigationItem
+import com.moritz.movieappuitest.dataclasses.navigation.DrawerNavigationItem
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

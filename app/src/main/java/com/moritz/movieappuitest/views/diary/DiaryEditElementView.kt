@@ -24,15 +24,15 @@ import com.moritz.movieappuitest.dataclasses.LoggedMoviesDummy
 import com.moritz.movieappuitest.utils.JSONHelper
 import com.moritz.movieappuitest.utils.MovieHelper
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
+import com.moritz.movieappuitest.views.dialogs.DiaryEditDatePickerDialog
+import com.moritz.movieappuitest.views.dialogs.DiaryEditDeleteDialog
+import com.moritz.movieappuitest.views.dialogs.DiaryEditDiscardDialog
+import com.moritz.movieappuitest.views.dialogs.DiaryEditRatingDialog
 import com.moritz.movieappuitest.views.diary.editelement.DiaryEditDateSection
 import com.moritz.movieappuitest.views.diary.editelement.DiaryEditDeleteSection
 import com.moritz.movieappuitest.views.diary.editelement.DiaryEditHeader
 import com.moritz.movieappuitest.views.diary.editelement.DiaryEditRatingSection
 import com.moritz.movieappuitest.views.diary.editelement.DiaryEditSaveChangesSection
-import com.moritz.movieappuitest.views.diary.editelement.dialogs.DiaryEditDatePickerDialog
-import com.moritz.movieappuitest.views.diary.editelement.dialogs.DiaryEditDeleteDialog
-import com.moritz.movieappuitest.views.diary.editelement.dialogs.DiaryEditDiscardDialog
-import com.moritz.movieappuitest.views.diary.editelement.dialogs.DiaryEditRatingDialog
 import java.net.URLDecoder
 
 @RequiresApi(Build.VERSION_CODES.O)
