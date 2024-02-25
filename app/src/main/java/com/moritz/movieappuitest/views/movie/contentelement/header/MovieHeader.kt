@@ -1,5 +1,6 @@
 package com.moritz.movieappuitest.views.movie.contentelement.header
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,7 +30,8 @@ fun MovieHeader(
     url: String?,
     releaseDate: String?,
     runtime: Int?,
-    movieViewModel: MovieViewModel
+    movieViewModel: MovieViewModel,
+    onPosterClick:() ->Unit
 ){
     val movieTitle = title ?: "N/A"
     val moviePosterUrl: String = MovieHelper.processPosterUrl(url)
@@ -40,7 +42,8 @@ fun MovieHeader(
         //Poster
         Card (modifier = Modifier
             .height(200.dp)
-            .width(133.dp),
+            .width(133.dp)
+            .clickable { onPosterClick() },
             colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
         )
         {
