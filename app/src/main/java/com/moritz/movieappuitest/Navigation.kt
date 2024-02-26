@@ -24,7 +24,6 @@ import androidx.navigation.navArgument
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.FriendsView
 import com.moritz.movieappuitest.views.HomeView
-import com.moritz.movieappuitest.views.ListsView
 import com.moritz.movieappuitest.views.MyMoviesView
 import com.moritz.movieappuitest.views.ProfileEditView
 import com.moritz.movieappuitest.views.ReviewsView
@@ -36,6 +35,7 @@ import com.moritz.movieappuitest.views.diary.DiaryView
 import com.moritz.movieappuitest.views.global.BottomBar
 import com.moritz.movieappuitest.views.global.DrawerContent
 import com.moritz.movieappuitest.views.global.TopBar
+import com.moritz.movieappuitest.views.list.ListsView
 import com.moritz.movieappuitest.views.movie.MovieView
 import com.moritz.movieappuitest.views.profile.ProfileView
 import kotlinx.coroutines.launch
