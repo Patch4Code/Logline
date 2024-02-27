@@ -17,8 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.dataclasses.MovieList
 import com.moritz.movieappuitest.dataclasses.userMovieListsDummy
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
+import com.moritz.movieappuitest.views.list.item.ListsItem
+import com.moritz.movieappuitest.views.swipe.swipeToDeleteContainer
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -42,15 +45,32 @@ fun ListsView(navController: NavController, navViewModel: NavigationViewModel){
                     .fillMaxSize()
                     .padding(16.dp),
                 content = {
-
                     userMovieListsDummy.forEach{ list ->
                         item {
-                            ListsItem(navController, list)
+                            swipeToDeleteContainer(
+                                item = list,
+                                onDelete = {
+                                    //delete list (here only dummy lists)
+                                    val listToRemove = userMovieListsDummy.find { it.name == list.name }
+                                    listToRemove?.let { userMovieListsDummy.remove(it) }
+
+                                }
+                            ){
+                                ListsItem(navController, list)
+                            }
                         }
                     }
                 }
             )
-            AddListDialog(openAddListDialog.value, onSave = {openAddListDialog.value = false}, onCancel = {openAddListDialog.value = false})
+            AddListDialog(
+                openAddListDialog = openAddListDialog.value,
+                onSave = { listName, isPublic ->
+                    openAddListDialog.value = false
+                    //add new List (here only to dummy list)
+                    userMovieListsDummy.add( MovieList(listName, isPublic,  mutableListOf() ))
+                },
+                onCancel = {openAddListDialog.value = false}
+            )
         }
     )
 }

@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddListDialog(openAddListDialog: Boolean, onSave:()->Unit, onCancel:()->Unit){
+fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String, isPublic: Boolean)->Unit, onCancel:()->Unit){
 
     if(openAddListDialog){
 
@@ -43,11 +43,10 @@ fun AddListDialog(openAddListDialog: Boolean, onSave:()->Unit, onCancel:()->Unit
                             Alignment.CenterVertically
                         ), )
                     }
-
                 }
             },
             confirmButton = {
-                Button(onClick = { onSave() }) {
+                Button(onClick = { onSave(textInput.value, isPublic.value) }) {
                     Text(text = "Save")
                 }
             },
@@ -58,5 +57,4 @@ fun AddListDialog(openAddListDialog: Boolean, onSave:()->Unit, onCancel:()->Unit
             }
         )
     }
-
 }

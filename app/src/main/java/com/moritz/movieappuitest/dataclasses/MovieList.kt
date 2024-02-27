@@ -25,4 +25,11 @@ val userMovieListsDummy = mutableListOf(
             //Movie("The Grand Budapest Hotel", 120467, "2014-01-01", "/cnYv3px6xOUryhCvasKO40v3fPD.jpg")
         )
     ),
+    MovieList(
+        name = "More Movies I really like and even more of that",
+        isPublic = false,
+        movies = mutableListOf(
+            Movie("Limbo", 591222, "2021-01-01", "/7Hh2w1ei26DTJ3JWmW8qcGQUI1n.jpg"),
+        )
+    ),
 )

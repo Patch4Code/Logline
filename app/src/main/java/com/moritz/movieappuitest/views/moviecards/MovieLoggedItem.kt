@@ -1,43 +1,28 @@
 package com.moritz.movieappuitest.views.moviecards
 
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.DismissDirection
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.DismissState
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.DismissValue
-import androidx.compose.material.ExperimentalMaterialApi
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.StarRate
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,7 +33,6 @@ import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.LoggedMovie
 import com.moritz.movieappuitest.utils.MovieHelper
-import kotlinx.coroutines.delay
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -106,61 +90,5 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
         }
         Spacer(modifier = Modifier.height(4.dp))
 
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun <T> swipeToEditContainer(
-    item: T,
-    onEdit: (T) -> Unit,
-    animationDuration: Int = 500,
-    content: @Composable (T) -> Unit
-){
-    var editActivated by remember {
-        mutableStateOf(false)
-    }
-    val state = rememberDismissState(
-        confirmStateChange = {value->
-            if (value == DismissValue.DismissedToStart){
-                editActivated = true
-                true
-            }else{
-                false
-            }
-        }
-    )
-    
-    LaunchedEffect(key1 = editActivated){
-        if(editActivated){
-            delay(animationDuration.toLong())
-            onEdit(item)
-        }
-    }
-
-    SwipeToDismiss(
-        state = state,
-        background = {
-            SwipeEditBackground(swipeDismissState = state)
-        },
-        dismissContent = {content(item)},
-        directions = setOf(DismissDirection.EndToStart)
-    )
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun SwipeEditBackground(swipeDismissState: DismissState){
-
-    if(swipeDismissState.dismissDirection == DismissDirection.EndToStart){
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Gray)
-                .padding(16.dp),
-            contentAlignment = Alignment.CenterEnd
-        ){
-            Icon(imageVector = Icons.Default.Edit, contentDescription = null, tint = Color.White)
-        }
     }
 }

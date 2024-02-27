@@ -18,7 +18,7 @@ import com.moritz.movieappuitest.dataclasses.LoggedMoviesDummy
 import com.moritz.movieappuitest.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.moviecards.MovieLoggedItem
-import com.moritz.movieappuitest.views.moviecards.swipeToEditContainer
+import com.moritz.movieappuitest.views.swipe.swipeToEditContainer
 import java.net.URLEncoder
 import java.time.LocalDate
 import java.time.ZoneOffset
