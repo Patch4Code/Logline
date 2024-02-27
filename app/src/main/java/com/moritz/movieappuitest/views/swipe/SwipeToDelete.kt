@@ -1,10 +1,6 @@
 package com.moritz.movieappuitest.views.swipe
 
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,14 +29,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T> swipeToDeleteContainer(
     item: T,
     onDelete: (T) -> Unit,
-    animationDuration: Int = 500,
     content: @Composable (T) -> Unit
 ){
     var isRemoved by remember {
@@ -56,31 +50,22 @@ fun <T> swipeToDeleteContainer(
             }
         }
     )
-
     LaunchedEffect(key1 = isRemoved){
         if(isRemoved){
-            delay(animationDuration.toLong())
             onDelete(item)
+
+            //isRemoved = false
+
         }
     }
-
-    AnimatedVisibility(
-        visible = !isRemoved,
-        exit = shrinkVertically(
-            animationSpec = tween(durationMillis = animationDuration),
-            shrinkTowards = Alignment.Top
-        ) + fadeOut()
-    ) {
-        SwipeToDismiss(
-            state = state,
-            background = {
-                SwipeDeleteBackground(swipeDismissState = state)
-            },
-            dismissContent = {content(item)},
-            directions = setOf(DismissDirection.EndToStart)
-        )
-    }
-
+    SwipeToDismiss(
+        state = state,
+        background = {
+            SwipeDeleteBackground(swipeDismissState = state)
+        },
+        dismissContent = {content(item)},
+        directions = setOf(DismissDirection.EndToStart)
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
