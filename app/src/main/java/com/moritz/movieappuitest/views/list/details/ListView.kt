@@ -1,6 +1,7 @@
 package com.moritz.movieappuitest.views.list.details
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,11 +18,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.dataclasses.MovieList
 import com.moritz.movieappuitest.utils.JSONHelper
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
@@ -42,6 +46,10 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
     val isPublic = movieListData.isPublic
     val movies = movieListData.movies
 
+    val openAddMovieDialog = remember { mutableStateOf(false)  }
+    val openDeleteMovieDialog = remember { mutableStateOf(false)  }
+    val movieToDelete = remember { mutableStateOf<Movie?>(null) }
+
     Scaffold (
         floatingActionButton = {
             FloatingActionButton(onClick = {  }) {
@@ -49,34 +57,48 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
             }
         }
     ){
-        Row (modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically){
-            Text(text = listName, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
-            Icon(
-                imageVector = if(isPublic) Icons.Default.Public else Icons.Default.Lock,
-                contentDescription = if(isPublic) "Public List" else "Private List",
-            )
-        }
+        Column {
+            Row (modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically){
+                Text(text = listName, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
+                Icon(
+                    imageVector = if(isPublic) Icons.Default.Public else Icons.Default.Lock,
+                    contentDescription = if(isPublic) "Public List" else "Private List",
+                )
+            }
 
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)){
-            itemsIndexed(
-                items = movies,
-                key = { _, item -> item.hashCode() }
-            ) { _, list ->
-                swipeToDeleteContainer(
-                    item = list,
-                    onDelete = {
-
+            LazyColumn(modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)){
+                itemsIndexed(
+                    items = movies,
+                    key = { _, item -> item.hashCode() }
+                ) { _, movie ->
+                    swipeToDeleteContainer(
+                        item = movie,
+                        onDelete = {
+                            movieToDelete.value = movie
+                            openDeleteMovieDialog.value = true
+                        }
+                    ) {
+                        ListItem(navController, movie)
                     }
-                ) {
-
                 }
             }
         }
+        DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
+            onDelete = {
+                //delete movie from list
+
+                movieToDelete.value = null
+                openDeleteMovieDialog.value = false
+            },
+            onCancel = {
+
+                openDeleteMovieDialog.value = false
+
+                //workaround with scene reload
+
+            }
+        )
     }
-
-
-
-
-
-
 }

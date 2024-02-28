@@ -21,14 +21,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.MovieList
-import com.moritz.movieappuitest.viewmodels.ListsViewModel
+import com.moritz.movieappuitest.viewmodels.ListsTableTableViewModel
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.list.overview.item.ListsTableItem
 import com.moritz.movieappuitest.views.swipe.swipeToDeleteContainer
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListsTableView(navController: NavController, navViewModel: NavigationViewModel, listsViewModel: ListsViewModel = viewModel()){
+fun ListsTableView(navController: NavController, navViewModel: NavigationViewModel, listsTableTableViewModel: ListsTableTableViewModel = viewModel()){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.ListsTableScreen)
@@ -38,7 +38,7 @@ fun ListsTableView(navController: NavController, navViewModel: NavigationViewMod
     val openDeleteListDialog = remember { mutableStateOf(false)  }
     val listToDelete = remember { mutableStateOf<MovieList?>(null) }
 
-    val myUserMovieLists = listsViewModel.userMovieLists.observeAsState().value
+    val myUserMovieLists = listsTableTableViewModel.userMovieLists.observeAsState().value
 
     Scaffold (
         floatingActionButton = {
@@ -67,7 +67,7 @@ fun ListsTableView(navController: NavController, navViewModel: NavigationViewMod
                 openAddListDialog = openAddListDialog.value,
                 onSave = { listName, isPublic ->
                     openAddListDialog.value = false
-                    listsViewModel.addUserMovieList(MovieList(listName, isPublic, mutableListOf()))
+                    listsTableTableViewModel.addUserMovieList(MovieList(listName, isPublic, mutableListOf()))
                 },
                 onCancel = {openAddListDialog.value = false}
             )
@@ -75,13 +75,13 @@ fun ListsTableView(navController: NavController, navViewModel: NavigationViewMod
                 openDeleteListDialog = openDeleteListDialog.value,
                 onDelete = {
                     listToDelete.value?.let { listToDelete ->
-                        listsViewModel.removeUserMovieList(listToDelete)
+                        listsTableTableViewModel.removeUserMovieList(listToDelete)
                     }
                     listToDelete.value = null
                     openDeleteListDialog.value = false
                 },
                 onCancel = {
-                    listsViewModel.updateUserMovieLists()
+                    listsTableTableViewModel.updateUserMovieLists()
                     openDeleteListDialog.value = false
 
                     //workaround with scene reload

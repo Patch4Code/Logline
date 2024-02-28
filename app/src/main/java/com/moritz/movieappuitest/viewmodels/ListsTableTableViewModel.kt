@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.moritz.movieappuitest.dataclasses.MovieList
 import com.moritz.movieappuitest.dataclasses.userMovieListsDummy
 
-class ListsViewModel : ViewModel(){
+class ListsTableTableViewModel : ViewModel(){
 
     private val _userMovieLists = MutableLiveData<List<MovieList>>()
     val userMovieLists: LiveData<List<MovieList>> get() = _userMovieLists
