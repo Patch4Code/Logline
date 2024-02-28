@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list.item
+package com.moritz.movieappuitest.views.list.overview.item
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource

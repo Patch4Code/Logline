@@ -1,10 +1,6 @@
-package com.moritz.movieappuitest.views.moviecards
+package com.moritz.movieappuitest.views.diary
 
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable

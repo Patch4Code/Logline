@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list
+package com.moritz.movieappuitest.views.list.overview
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,15 +23,15 @@ import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.MovieList
 import com.moritz.movieappuitest.viewmodels.ListsViewModel
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
-import com.moritz.movieappuitest.views.list.item.ListsItem
+import com.moritz.movieappuitest.views.list.overview.item.ListsTableItem
 import com.moritz.movieappuitest.views.swipe.swipeToDeleteContainer
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListsView(navController: NavController, navViewModel: NavigationViewModel, listsViewModel: ListsViewModel = viewModel()){
+fun ListsTableView(navController: NavController, navViewModel: NavigationViewModel, listsViewModel: ListsViewModel = viewModel()){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.ListsScreen)
+        navViewModel.updateScreen(Screen.ListsTableScreen)
     }
 
     val openAddListDialog = remember { mutableStateOf(false)  }
@@ -59,7 +59,7 @@ fun ListsView(navController: NavController, navViewModel: NavigationViewModel, l
                             openDeleteListDialog.value = true
                         }
                     ) {
-                        ListsItem(navController, list)
+                        ListsTableItem(navController, list)
                     }
                 }
             }
@@ -85,8 +85,8 @@ fun ListsView(navController: NavController, navViewModel: NavigationViewModel, l
                     openDeleteListDialog.value = false
 
                     //workaround with scene reload
-                    navController.navigate(Screen.ListsScreen.route){
-                        popUpTo(Screen.ListsScreen.route){
+                    navController.navigate(Screen.ListsTableScreen.route){
+                        popUpTo(Screen.ListsTableScreen.route){
                             inclusive = true
                         }
                     }

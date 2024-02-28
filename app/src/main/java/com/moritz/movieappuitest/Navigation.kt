@@ -23,21 +23,22 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.FriendsView
-import com.moritz.movieappuitest.views.HomeView
-import com.moritz.movieappuitest.views.MyMoviesView
 import com.moritz.movieappuitest.views.ProfileEditView
 import com.moritz.movieappuitest.views.ReviewsView
-import com.moritz.movieappuitest.views.SearchView
 import com.moritz.movieappuitest.views.SettingsView
-import com.moritz.movieappuitest.views.WatchlistView
 import com.moritz.movieappuitest.views.diary.DiaryEditElementView
 import com.moritz.movieappuitest.views.diary.DiaryView
 import com.moritz.movieappuitest.views.global.BottomBar
 import com.moritz.movieappuitest.views.global.DrawerContent
 import com.moritz.movieappuitest.views.global.TopBar
-import com.moritz.movieappuitest.views.list.ListsView
+import com.moritz.movieappuitest.views.home.HomeView
+import com.moritz.movieappuitest.views.list.details.ListView
+import com.moritz.movieappuitest.views.list.overview.ListsTableView
 import com.moritz.movieappuitest.views.movie.MovieView
+import com.moritz.movieappuitest.views.mymovies.MyMoviesView
 import com.moritz.movieappuitest.views.profile.ProfileView
+import com.moritz.movieappuitest.views.search.SearchView
+import com.moritz.movieappuitest.views.watchlist.WatchlistView
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -58,7 +59,9 @@ fun Navigation(){
         drawerContent = { DrawerContent(navController, navigationViewModel,drawerState, scope, navigationViewModel) },
         content = {
             Scaffold (
-                modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
                 bottomBar = { BottomBar(navController, navigationViewModel) },
                 topBar = {
                     TopBar(navController, navigationViewModel, scrollBehavior) {
@@ -136,8 +139,20 @@ fun Navigation(){
                         ReviewsView(navController = navController, navViewModel = navigationViewModel)
                     }
 
-                    composable(route = Screen.ListsScreen.route){
-                        ListsView(navController = navController, navViewModel = navigationViewModel)
+                    composable(route = Screen.ListsTableScreen.route){
+                        ListsTableView(navController = navController, navViewModel = navigationViewModel)
+                    }
+
+                    composable(route = Screen.ListScreen.route + "/{movieList}",
+                        arguments = listOf(
+                            navArgument("movieList"){
+                                type = NavType.StringType
+                                defaultValue = ""
+                                nullable = true
+                            }
+                        )
+                    ){parsedMovieList->
+                        ListView(navController = navController, navViewModel = navigationViewModel, movieListString = parsedMovieList.arguments?.getString("movieList"))
                     }
 
                     composable(route = Screen.ProfileEditScreen.route){

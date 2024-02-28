@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views
+package com.moritz.movieappuitest.views.watchlist
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -11,23 +11,24 @@ import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.userDataList
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
-import com.moritz.movieappuitest.views.moviecards.MovieRatedBrowseCard
 
 @Composable
-fun MyMoviesView(navController: NavController, navViewModel: NavigationViewModel){
+fun WatchlistView(navController: NavController, navViewModel: NavigationViewModel){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.MyMoviesScreen)
+        navViewModel.updateScreen(Screen.WatchlistScreen)
     }
-    //Profile Layout
+
     LazyVerticalGrid(
         modifier = Modifier.padding(8.dp),
         columns = GridCells.Fixed(3),
         content = {
-            val ratedItems = userDataList.filter {it.rating > 0}
-            ratedItems.forEach{ ratedItem ->
+            val watchlistItems = userDataList.filter {it.onWatchlist}
+            watchlistItems.forEach{ userData ->
                 item {
-                    MovieRatedBrowseCard(navController, ratedItem)
+                    if(userData.onWatchlist){
+                        userData.movie?.let { MovieWatchlistBrowseCard(navController, it) }
+                    }
                 }
             }
         }

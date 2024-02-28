@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views
+package com.moritz.movieappuitest.views.search
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -32,7 +33,6 @@ import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.viewmodels.SearchViewModel
-import com.moritz.movieappuitest.views.moviecards.MovieSearchCard
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)

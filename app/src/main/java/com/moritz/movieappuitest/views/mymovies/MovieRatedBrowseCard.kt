@@ -1,18 +1,23 @@
-package com.moritz.movieappuitest.views.moviecards
-
+package com.moritz.movieappuitest.views.mymovies
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Card
 //noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Icon
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.StarRate
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,20 +29,25 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
+import com.moritz.movieappuitest.dataclasses.MovieUserData
 import com.moritz.movieappuitest.utils.MovieHelper
 
 @Composable
-fun MovieWatchlistBrowseCard(navController: NavController, movie: Movie) {
+fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserData) {
+
+    val movie: Movie = movieUserData.movie ?: Movie()
 
     val movieId = movie.id.toString()
     val title = movie.title
     val year = MovieHelper.extractYear(movie.releaseDate)
     val posterUrl = MovieHelper.processPosterUrl(movie.posterUrl)
 
+    val rating = movieUserData.rating
+
     Card(modifier = Modifier
         .padding(4.dp)
-        .height(220.dp)
-        .width(110.dp)
+        .height(240.dp)
+        .width(120.dp)
         .clickable {
             navController.navigate(Screen.MovieScreen.withArgs(movieId))
         },
@@ -73,6 +83,24 @@ fun MovieWatchlistBrowseCard(navController: NavController, movie: Movie) {
                 color = Color.White,
                 modifier = Modifier.padding(4.dp)
             )
+            Spacer(modifier = Modifier.weight(1f))
+            Row (
+                modifier = Modifier.padding(4.dp, bottom = 8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom
+            ){
+                Icon(
+                    imageVector = Icons.Default.StarRate,
+                    contentDescription = "StarRate",
+                    tint = Color.Yellow,
+                    modifier = Modifier.size(15.dp).align(Alignment.CenterVertically)
+                )
+                Text(
+                    text = "$rating",
+                    color = Color.White,
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+            }
         }
     }
 }

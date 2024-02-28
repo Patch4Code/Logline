@@ -1,4 +1,5 @@
-package com.moritz.movieappuitest.views.moviecards
+package com.moritz.movieappuitest.views.search
+
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -8,11 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ImageNotSupported
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -85,10 +87,10 @@ fun MovieSearchCard(navController: NavController, movie: Movie){
                 )
             }
         }
-        Divider(
-            color = Color.Gray,
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(),
             thickness = 1.dp,
-            modifier = Modifier.fillMaxWidth()
+            color = Color.Gray
         )
     }
 }

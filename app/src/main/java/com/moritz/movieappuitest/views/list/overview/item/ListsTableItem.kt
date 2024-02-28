@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list.item
+package com.moritz.movieappuitest.views.list.overview.item
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,10 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.MovieList
+import com.moritz.movieappuitest.utils.JSONHelper.toJson
+import java.net.URLEncoder
 
 @Composable
-fun ListsItem(navController: NavController, list: MovieList){
+fun ListsTableItem(navController: NavController, list: MovieList){
+
+    val jsonMovieList = list.toJson()
+    val encodedJsonMovieList = URLEncoder.encode(jsonMovieList, "UTF-8")
 
     Row(
         modifier = Modifier
@@ -29,7 +35,8 @@ fun ListsItem(navController: NavController, list: MovieList){
             .height(110.dp)
             .padding(8.dp)
             .clickable {
-                //navController.navigate(Screen.)
+                //navController.navigate(Screen.ListScreen.route)
+                navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList))
             }
     ){
         ListsItemPreviewImages(list)

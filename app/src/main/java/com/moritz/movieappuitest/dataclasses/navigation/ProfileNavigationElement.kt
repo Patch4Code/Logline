@@ -35,7 +35,7 @@ data class ProfileNavigationElement(
             ProfileNavigationElement(
                 title = "Lists",
                 navIcon = Icons.AutoMirrored.Filled.FeaturedPlayList,
-                route = Screen.ListsScreen.route
+                route = Screen.ListsTableScreen.route
             )
         )
     }
