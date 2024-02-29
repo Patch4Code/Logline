@@ -57,7 +57,7 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
 
     Scaffold (
         floatingActionButton = {
-            FloatingActionButton(onClick = {  }) {
+            FloatingActionButton(onClick = { openAddMovieDialog.value = true }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add new movie to list")
             }
         }
@@ -110,6 +110,16 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
                         inclusive = true
                     }
                 }
+            }
+        )
+
+        AddMovieToListDialog(
+            openAddMovieDialog = openAddMovieDialog.value,
+            onAdd = {
+                openAddMovieDialog.value = false
+            },
+            onCancel = {
+                openAddMovieDialog.value = false
             }
         )
     }
