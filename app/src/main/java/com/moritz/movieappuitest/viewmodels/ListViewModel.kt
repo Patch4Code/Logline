@@ -22,14 +22,13 @@ class ListViewModel: ViewModel() {
 
     fun removeMovieFromList(movieId: Int) {
 
+        val updatedMovies = movieList.value?.movies.orEmpty().toMutableList()
+        updatedMovies.removeIf {it.id == movieId}
+        _movieList.value?.movies = updatedMovies
+        //Log.e("ListViewModel", "_movieList: ${_movieList.value}")
+
         val listName = _movieList.value?.name
-        val listToRemoveFrom = userMovieListsDummy.find { it.name == listName }
-        //listToRemoveFrom?.movies?.removeAll { it.id == movieId }
-
-
-
-        //remove from dummy list
-
+        userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
     }
 
 

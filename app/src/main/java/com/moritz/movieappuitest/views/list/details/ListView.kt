@@ -91,7 +91,9 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
         DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
             onDelete = {
                 //delete movie from list
-
+                movieToDelete.value?.id?.let { movieToDelete->
+                    listViewModel.removeMovieFromList(movieToDelete)
+                }
                 movieToDelete.value = null
                 openDeleteMovieDialog.value = false
             },
