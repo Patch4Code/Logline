@@ -115,10 +115,8 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
 
         AddMovieToListDialog(
             openAddMovieDialog = openAddMovieDialog.value,
-            onAdd = {
-                openAddMovieDialog.value = false
-            },
-            onCancel = {
+            listViewModel = listViewModel,
+            closeDialog = {
                 openAddMovieDialog.value = false
             }
         )

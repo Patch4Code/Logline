@@ -4,14 +4,28 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.moritz.movieappuitest.api.tmdb.RetrofitHelper
+import com.moritz.movieappuitest.api.tmdb.TmdbApiService
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.dataclasses.MovieList
 import com.moritz.movieappuitest.dataclasses.userMovieListsDummy
+import com.moritz.movieappuitest.utils.TmdbCredentials
+import kotlinx.coroutines.launch
 
 class ListViewModel: ViewModel() {
 
     private val _movieList = MutableLiveData<MovieList>()
     val movieList: LiveData<MovieList> get() = _movieList
+
+    private val tmdbApiService: TmdbApiService by lazy {
+        RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)
+    }
+    private val _searchedMovies = MutableLiveData<List<Movie>>()
+    val searchedMovies: LiveData<List<Movie>>
+        get() = _searchedMovies
+
+
 
     fun setList(movieList: MovieList) {
         Log.e("ListViewModel", "setList to: $movieList")
@@ -19,7 +33,13 @@ class ListViewModel: ViewModel() {
     }
 
     fun addMovieToList(movie: Movie) {
+        val updatedMovies = _movieList.value?.movies.orEmpty().toMutableList()
+        val listName = _movieList.value?.name
+        updatedMovies.add(movie)
 
+        // Change Dummy-Data and accordingly the local ViewModel Data
+        userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
+        userMovieListsDummy.find { it.name == listName }?.let { setList(it) }
     }
 
     fun removeMovieFromList(movieId: Int) {
@@ -31,4 +51,19 @@ class ListViewModel: ViewModel() {
         userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
         userMovieListsDummy.find { it.name == listName }?.let { setList(it) }
     }
+
+
+    fun searchMovie(searchQuery: String){
+        viewModelScope.launch {
+            try {
+                val searchResponse = tmdbApiService.searchMovie(searchQuery = searchQuery)
+                if(searchResponse.isSuccessful){
+                    _searchedMovies.value = searchResponse.body()?.results
+                }
+            } catch (e: Exception) {
+                Log.e("SearchViewModel", "Error searching movies", e)
+            }
+        }
+    }
+
 }
