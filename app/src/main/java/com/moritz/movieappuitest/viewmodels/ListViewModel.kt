@@ -1,5 +1,6 @@
 package com.moritz.movieappuitest.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ class ListViewModel: ViewModel() {
     val movieList: LiveData<MovieList> get() = _movieList
 
     fun setList(movieList: MovieList) {
+        Log.e("ListViewModel", "setList to: $movieList")
         _movieList.value = movieList
     }
 
@@ -21,17 +23,12 @@ class ListViewModel: ViewModel() {
     }
 
     fun removeMovieFromList(movieId: Int) {
-
-        val updatedMovies = movieList.value?.movies.orEmpty().toMutableList()
-        updatedMovies.removeIf {it.id == movieId}
-        _movieList.value?.movies = updatedMovies
-        //Log.e("ListViewModel", "_movieList: ${_movieList.value}")
-
+        val updatedMovies = _movieList.value?.movies.orEmpty().toMutableList()
         val listName = _movieList.value?.name
+        updatedMovies.removeIf {it.id == movieId}
+
+        // Change Dummy-Data and accordingly the local ViewModel Data
         userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
+        userMovieListsDummy.find { it.name == listName }?.let { setList(it) }
     }
-
-
-
-
 }

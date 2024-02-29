@@ -1,6 +1,7 @@
 package com.moritz.movieappuitest.views.list.details
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,13 +40,13 @@ import java.net.URLDecoder
 @Composable
 fun ListView(navController: NavController, navViewModel: NavigationViewModel, movieListString: String?, listViewModel: ListViewModel = viewModel()){
 
-    LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.ListScreen)
-    }
     val decodedMovieListString = URLDecoder.decode(movieListString, "UTF-8")
     val movieListData: MovieList = JSONHelper.fromJson(decodedMovieListString)
 
-    listViewModel.setList(movieListData)
+    LaunchedEffect(Unit) {
+        navViewModel.updateScreen(Screen.ListScreen)
+        listViewModel.setList(movieListData)
+    }
     val movieList = listViewModel.movieList.observeAsState().value
 
     val openAddMovieDialog = remember { mutableStateOf(false)  }
@@ -96,6 +97,7 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
                 }
                 movieToDelete.value = null
                 openDeleteMovieDialog.value = false
+                Log.e("ListView","movieList-observed: $movieList")
             },
             onCancel = {
 
