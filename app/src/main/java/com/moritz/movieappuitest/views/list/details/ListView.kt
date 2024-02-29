@@ -31,10 +31,12 @@ import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.dataclasses.MovieList
 import com.moritz.movieappuitest.utils.JSONHelper
+import com.moritz.movieappuitest.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.viewmodels.ListViewModel
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.swipe.swipeToDeleteContainer
 import java.net.URLDecoder
+import java.net.URLEncoder
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -52,7 +54,6 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
     val openAddMovieDialog = remember { mutableStateOf(false)  }
     val openDeleteMovieDialog = remember { mutableStateOf(false)  }
     val movieToDelete = remember { mutableStateOf<Movie?>(null) }
-
 
     Scaffold (
         floatingActionButton = {
@@ -91,7 +92,6 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
         }
         DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
             onDelete = {
-                //delete movie from list
                 movieToDelete.value?.id?.let { movieToDelete->
                     listViewModel.removeMovieFromList(movieToDelete)
                 }
@@ -100,11 +100,16 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
                 Log.e("ListView","movieList-observed: $movieList")
             },
             onCancel = {
-
                 openDeleteMovieDialog.value = false
 
                 //workaround with scene reload
-
+                val jsonMovieList = movieList?.toJson()
+                val encodedJsonMovieList = URLEncoder.encode(jsonMovieList, "UTF-8")
+                navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList)){
+                    popUpTo(Screen.ListScreen.withArgs(encodedJsonMovieList)){
+                        inclusive = true
+                    }
+                }
             }
         )
     }
