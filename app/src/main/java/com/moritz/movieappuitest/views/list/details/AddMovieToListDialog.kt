@@ -33,7 +33,6 @@ fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewMod
     if(openAddMovieDialog){
 
         val textInput = remember { mutableStateOf("") }
-        val keyboardController = LocalSoftwareKeyboardController.current
 
         val searchResult = listViewModel.searchedMovies.observeAsState().value
 
@@ -44,6 +43,7 @@ fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewMod
             onDismissRequest = { closeDialog() },
             title = { Text(text = "Search Movie to add to list") },
             text = {
+                val keyboardController = LocalSoftwareKeyboardController.current
                 Column {
                     OutlinedTextField(
                         value = textInput.value,
@@ -54,6 +54,7 @@ fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewMod
                             onSearch = {
                                 if(textInput.value.isNotBlank()){
                                     keyboardController?.hide()
+                                    selectedMovie.value = null
 
                                     listViewModel.searchMovie(textInput.value)
                                 }
@@ -63,6 +64,7 @@ fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewMod
                             IconButton(onClick = {
                                 if(textInput.value.isNotBlank()){
                                     keyboardController?.hide()
+                                    selectedMovie.value = null
 
                                     listViewModel.searchMovie(textInput.value)
                                 }
@@ -105,6 +107,5 @@ fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewMod
                 }
             }
         )
-
     }
 }
