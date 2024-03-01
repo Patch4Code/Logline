@@ -106,8 +106,8 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
                 val jsonMovieList = movieList?.toJson()
                 val encodedJsonMovieList = URLEncoder.encode(jsonMovieList, "UTF-8")
                 navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList)){
-                    popUpTo(Screen.ListScreen.withArgs(encodedJsonMovieList)){
-                        inclusive = true
+                    popUpTo(Screen.ListsTableScreen.route){
+                        inclusive = false
                     }
                 }
             }

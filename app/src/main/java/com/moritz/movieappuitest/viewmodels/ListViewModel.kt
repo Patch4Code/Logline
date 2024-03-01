@@ -26,9 +26,15 @@ class ListViewModel: ViewModel() {
         get() = _searchedMovies
 
 
-
     fun setList(movieList: MovieList) {
-        Log.e("ListViewModel", "setList to: $movieList")
+        //set according to Dummy
+
+        val foundMovieList = userMovieListsDummy.find { it.name == movieList.name }
+        _movieList.value = foundMovieList ?: movieList
+    }
+
+
+    private fun updateList(movieList: MovieList) {
         _movieList.value = movieList
     }
 
@@ -39,7 +45,7 @@ class ListViewModel: ViewModel() {
 
         // Change Dummy-Data and accordingly the local ViewModel Data
         userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
-        userMovieListsDummy.find { it.name == listName }?.let { setList(it) }
+        userMovieListsDummy.find { it.name == listName }?.let { updateList(it) }
     }
 
     fun removeMovieFromList(movieId: Int) {
@@ -49,7 +55,7 @@ class ListViewModel: ViewModel() {
 
         // Change Dummy-Data and accordingly the local ViewModel Data
         userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
-        userMovieListsDummy.find { it.name == listName }?.let { setList(it) }
+        userMovieListsDummy.find { it.name == listName }?.let { updateList(it) }
     }
 
 
@@ -65,5 +71,4 @@ class ListViewModel: ViewModel() {
             }
         }
     }
-
 }
