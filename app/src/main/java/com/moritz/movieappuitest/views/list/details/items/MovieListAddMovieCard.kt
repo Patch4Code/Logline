@@ -34,13 +34,11 @@ fun MovieListAddMovieCard(movie: Movie, selectMovie:(movie: Movie) ->Unit){
     val posterUrl: String = MovieHelper.processPosterUrl(movie.posterUrl)
 
     Column {
-        Row (
-            modifier = Modifier.height(100.dp).fillMaxWidth().padding(8.dp)
+        Row (modifier = Modifier.height(100.dp).fillMaxWidth().padding(8.dp)
                 .clickable {
                     selectMovie(movie)
-                },
-
-            ){
+                }
+        ){
             if(posterUrl.isNotEmpty()){
                 AsyncImage(
                     model = posterUrl,
@@ -82,5 +80,4 @@ fun MovieListAddMovieCard(movie: Movie, selectMovie:(movie: Movie) ->Unit){
         }
         HorizontalDivider()
     }
-
 }

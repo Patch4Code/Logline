@@ -1,120 +1,40 @@
 package com.moritz.movieappuitest.views.list.details.dialogs
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.viewmodels.ListViewModel
-import com.moritz.movieappuitest.views.list.details.items.MovieListAddMovieCard
+import com.moritz.movieappuitest.views.list.details.dialogs.addElements.AddMovieToListConfirmButton
+import com.moritz.movieappuitest.views.list.details.dialogs.addElements.AddMovieToListLazyColumn
+import com.moritz.movieappuitest.views.list.details.dialogs.addElements.AddMovieToListTextField
 
 @Composable
 fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewModel, closeDialog:()->Unit){
 
-    if(openAddMovieDialog){
+    if (!openAddMovieDialog) return
 
-        val textInput = remember { mutableStateOf("") }
-        val searchResult = listViewModel.searchedMovies.observeAsState().value
-        val selectedMovie = remember { mutableStateOf<Movie?>(null) }
+    val textInput = remember { mutableStateOf("") }
+    val searchResult = listViewModel.searchedMovies.observeAsState().value
+    val selectedMovie = remember { mutableStateOf<Movie?>(null) }
 
-        val context = LocalContext.current
-
-        AlertDialog(
-            onDismissRequest = { closeDialog() },
-            title = { Text(text = "Search Movie to add to list") },
-            text = {
-                val keyboardController = LocalSoftwareKeyboardController.current
-                Column {
-                    OutlinedTextField(
-                        value = textInput.value,
-                        onValueChange = {textInput.value = it},
-                        label = { Text(text = "Search Movie")},
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                        keyboardActions = KeyboardActions(
-                            onSearch = {
-                                if(textInput.value.isNotBlank()){
-                                    keyboardController?.hide()
-                                    selectedMovie.value = null
-
-                                    listViewModel.searchMovie(textInput.value)
-                                }
-                            }
-                        ),
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                if(textInput.value.isNotBlank()){
-                                    keyboardController?.hide()
-                                    selectedMovie.value = null
-
-                                    listViewModel.searchMovie(textInput.value)
-                                }
-                            }) {
-                                Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
-                            }
-                        }
-                    )
-                    LazyColumn (modifier = Modifier.padding(top = 8.dp)) {
-                        searchResult?.forEach{ movie->
-                            item{
-                                Card(colors = CardDefaults.cardColors(containerColor = if(selectedMovie.value == movie) Color.Gray else Color.Transparent)) {
-                                    MovieListAddMovieCard(
-                                        movie = movie,
-                                        selectMovie = {clickedMovie->
-                                            selectedMovie.value = clickedMovie
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        selectedMovie.value?.let {movie->
-                            if (listViewModel.isMovieAlreadyOnList(movie)){
-                                Toast.makeText(context, "Movie already on the list!", Toast.LENGTH_LONG).show()
-                            }else{
-                                listViewModel.addMovieToList(
-                                    movie = movie,
-                                )
-                                closeDialog()
-                            }
-                        }
-                    },
-                    enabled = selectedMovie.value != null
-                ) {
-                    Text(text = "Add Movie")
-                }
-            },
-            dismissButton = {
-                Button(onClick = { closeDialog() }) {
-                    Text(text = "Cancel")
-                }
+    AlertDialog(
+        onDismissRequest = { closeDialog() },
+        title = { Text(text = "Search Movie to add to list") },
+        text = {
+            val keyboardController = LocalSoftwareKeyboardController.current
+            Column {
+                AddMovieToListTextField(textInput, keyboardController, selectedMovie, listViewModel)
+                AddMovieToListLazyColumn(searchResult, selectedMovie)
             }
-        )
-    }
+        },
+        confirmButton = { AddMovieToListConfirmButton(selectedMovie, listViewModel, onConfirmSuccessful = {closeDialog()}) },
+        dismissButton = { Button(onClick = { closeDialog() }) { Text(text = "Cancel") } }
+    )
 }
