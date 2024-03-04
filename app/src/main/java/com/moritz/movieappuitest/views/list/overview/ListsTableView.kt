@@ -1,6 +1,7 @@
 package com.moritz.movieappuitest.views.list.overview
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -39,6 +41,8 @@ fun ListsTableView(navController: NavController, navViewModel: NavigationViewMod
     val listToDelete = remember { mutableStateOf<MovieList?>(null) }
 
     val myUserMovieLists = listsTableViewModel.userMovieLists.observeAsState().value
+
+    val context = LocalContext.current
 
     Scaffold (
         floatingActionButton = {
@@ -66,8 +70,13 @@ fun ListsTableView(navController: NavController, navViewModel: NavigationViewMod
             AddListDialog(
                 openAddListDialog = openAddListDialog.value,
                 onSave = { listName, isPublic ->
-                    openAddListDialog.value = false
-                    listsTableViewModel.addUserMovieList(MovieList(listName, isPublic, mutableListOf()))
+                    if(listsTableViewModel.isListNameUnique(listName)){
+                        openAddListDialog.value = false
+                        listsTableViewModel.addUserMovieList(MovieList(listName, isPublic, mutableListOf()))
+                    }else{
+                        Toast.makeText(context, "List name already exists!", Toast.LENGTH_LONG).show()
+                    }
+
                 },
                 onCancel = {openAddListDialog.value = false}
             )

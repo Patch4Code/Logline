@@ -30,4 +30,8 @@ class ListsTableViewModel : ViewModel(){
         userMovieListsDummy.remove(movieList)
         updateUserMovieLists()
     }
+
+    fun isListNameUnique(listName: String): Boolean {
+        return !userMovieListsDummy.any { it.name == listName }
+    }
 }

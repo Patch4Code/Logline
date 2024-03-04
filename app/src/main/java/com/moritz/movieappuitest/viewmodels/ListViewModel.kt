@@ -48,6 +48,12 @@ class ListViewModel: ViewModel() {
         userMovieListsDummy.find { it.name == listName }?.let { updateList(it) }
     }
 
+    fun isMovieAlreadyOnList(movie: Movie): Boolean{
+        val movieList = _movieList.value?.movies
+        return movieList?.contains(movie) ?: false
+    }
+
+
     fun removeMovieFromList(movieId: Int) {
         val updatedMovies = _movieList.value?.movies.orEmpty().toMutableList()
         val listName = _movieList.value?.name
@@ -70,5 +76,22 @@ class ListViewModel: ViewModel() {
                 Log.e("SearchViewModel", "Error searching movies", e)
             }
         }
+    }
+
+    fun editList(newTitle: String, newIsPublicState: Boolean){
+        val listName = _movieList.value?.name
+
+        userMovieListsDummy.find { it.name == listName }?.isPublic = newIsPublicState
+        userMovieListsDummy.find { it.name == listName }?.name = newTitle
+
+        userMovieListsDummy.find { it.name == newTitle }?.let { updateList(it) }
+    }
+
+    fun deleteList(){
+        userMovieListsDummy.remove(_movieList.value)
+    }
+
+    fun isListNameUnique(newName: String): Boolean{
+        return !userMovieListsDummy.any { it.name == newName }
     }
 }

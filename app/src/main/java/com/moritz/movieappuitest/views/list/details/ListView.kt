@@ -1,7 +1,8 @@
 package com.moritz.movieappuitest.views.list.details
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,9 +12,12 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -34,10 +39,12 @@ import com.moritz.movieappuitest.utils.JSONHelper
 import com.moritz.movieappuitest.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.viewmodels.ListViewModel
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
+import com.moritz.movieappuitest.views.list.overview.DeleteListDialog
 import com.moritz.movieappuitest.views.swipe.swipeToDeleteContainer
 import java.net.URLDecoder
 import java.net.URLEncoder
 
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListView(navController: NavController, navViewModel: NavigationViewModel, movieListString: String?, listViewModel: ListViewModel = viewModel()){
@@ -54,6 +61,11 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
     val openAddMovieDialog = remember { mutableStateOf(false)  }
     val openDeleteMovieDialog = remember { mutableStateOf(false)  }
     val movieToDelete = remember { mutableStateOf<Movie?>(null) }
+    val showBottomSheet = remember { mutableStateOf(false)  }
+    val openEditListDialog = remember { mutableStateOf(false)  }
+    val openDeleteListDialog = remember { mutableStateOf(false)  }
+
+    val context = LocalContext.current
 
     Scaffold (
         floatingActionButton = {
@@ -63,12 +75,18 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
         }
     ){
         Column {
-            Row (modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically){
+            Row (
+                modifier = Modifier.padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
                 Text(text = movieList?.name ?: "N/A", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
                 Icon(
                     imageVector = if(movieList?.isPublic == true) Icons.Default.Public else Icons.Default.Lock,
                     contentDescription = if(movieList?.isPublic == true) "Public List" else "Private List",
                 )
+                IconButton(onClick = { showBottomSheet.value = true }) {
+                    Icon(imageVector = Icons.Default.MoreVert, contentDescription = "Open List Settings")
+                }
             }
 
             LazyColumn(modifier = Modifier
@@ -97,7 +115,6 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
                 }
                 movieToDelete.value = null
                 openDeleteMovieDialog.value = false
-                Log.e("ListView","movieList-observed: $movieList")
             },
             onCancel = {
                 openDeleteMovieDialog.value = false
@@ -119,6 +136,50 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
             closeDialog = {
                 openAddMovieDialog.value = false
             }
+        )
+
+        ListSettingsBottomSheet(
+            showBottomSheet = showBottomSheet.value,
+            onClose = {showBottomSheet.value = false},
+            onEdit = {
+                showBottomSheet.value = false
+                openEditListDialog.value = true
+            },
+            onDelete = {
+                showBottomSheet.value = false
+                openDeleteListDialog.value = true
+            }
+        )
+
+        EditListDialog(
+            initialMovieTitle = movieList?.name ?: "",
+            initialIsPublic = movieList?.isPublic ?: true,
+            openEditListDialog = openEditListDialog.value,
+            onSave = {newName, isPublic->
+                if(listViewModel.isListNameUnique(newName)){
+                    openEditListDialog.value = false
+                    listViewModel.editList(newName, isPublic)
+                }else{
+                    Toast.makeText(context, "List name already exists!", Toast.LENGTH_LONG).show()
+                }
+
+
+            },
+            onCancel = {openEditListDialog.value = false}
+        )
+
+        DeleteListDialog(
+            openDeleteListDialog = openDeleteListDialog.value,
+            onDelete = {
+                listViewModel.deleteList()
+                openDeleteListDialog.value = false
+                navController.navigate(Screen.ListsTableScreen.route){
+                    popUpTo(Screen.ListsTableScreen.route){
+                        inclusive = true
+                    }
+                }
+            },
+            onCancel = { openDeleteListDialog.value = false }
         )
     }
 }

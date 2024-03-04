@@ -1,8 +1,8 @@
 package com.moritz.movieappuitest.dataclasses
 
 data class MovieList(
-    val name: String,
-    val isPublic: Boolean,
+    var name: String,
+    var isPublic: Boolean,
     var movies: List<Movie>
 )
 

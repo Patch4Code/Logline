@@ -1,5 +1,6 @@
 package com.moritz.movieappuitest.views.list.details
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -33,11 +35,10 @@ fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewMod
     if(openAddMovieDialog){
 
         val textInput = remember { mutableStateOf("") }
-
         val searchResult = listViewModel.searchedMovies.observeAsState().value
-
         val selectedMovie = remember { mutableStateOf<Movie?>(null) }
 
+        val context = LocalContext.current
 
         AlertDialog(
             onDismissRequest = { closeDialog() },
@@ -84,7 +85,6 @@ fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewMod
                                         }
                                     )
                                 }
-
                             }
                         }
                     }
@@ -93,8 +93,16 @@ fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewMod
             confirmButton = {
                 Button(
                     onClick = {
-                        selectedMovie.value?.let { listViewModel.addMovieToList(it) }
-                        closeDialog()
+                        selectedMovie.value?.let {movie->
+                            if (listViewModel.isMovieAlreadyOnList(movie)){
+                                Toast.makeText(context, "Movie already on the list!", Toast.LENGTH_LONG).show()
+                            }else{
+                                listViewModel.addMovieToList(
+                                    movie = movie,
+                                )
+                                closeDialog()
+                            }
+                        }
                     },
                     enabled = selectedMovie.value != null
                 ) {
