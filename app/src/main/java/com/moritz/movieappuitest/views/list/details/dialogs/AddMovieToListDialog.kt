@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list.details
+package com.moritz.movieappuitest.views.list.details.dialogs
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.viewmodels.ListViewModel
+import com.moritz.movieappuitest.views.list.details.items.MovieListAddMovieCard
 
 @Composable
 fun AddMovieToListDialog(openAddMovieDialog: Boolean, listViewModel: ListViewModel, closeDialog:()->Unit){

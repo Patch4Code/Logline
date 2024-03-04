@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list.details
+package com.moritz.movieappuitest.views.list.details.items
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -80,11 +80,7 @@ fun MovieListAddMovieCard(movie: Movie, selectMovie:(movie: Movie) ->Unit){
                 )
             }
         }
-        HorizontalDivider(
-            modifier = Modifier.fillMaxWidth(),
-            thickness = 1.dp,
-            color = Color.Gray
-        )
+        HorizontalDivider()
     }
 
 }

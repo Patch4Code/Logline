@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list.details
+package com.moritz.movieappuitest.views.list.details.dialogs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EditListDialog(initialMovieTitle: String, initialIsPublic: Boolean, openEditListDialog: Boolean, onSave:(listName: String, isPublic: Boolean)->Unit, onCancel:()->Unit){
+fun EditListDialog(
+    initialMovieTitle: String,
+    initialIsPublic: Boolean,
+    openEditListDialog: Boolean,
+    onSave:(listName: String, isPublic: Boolean)->Unit,
+    onCancel:()->Unit
+){
 
     if(openEditListDialog){
 

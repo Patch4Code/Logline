@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list.details
+package com.moritz.movieappuitest.views.list.details.dialogs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -2,34 +2,17 @@ package com.moritz.movieappuitest.views.list.details
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Public
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.Screen
@@ -39,12 +22,15 @@ import com.moritz.movieappuitest.utils.JSONHelper
 import com.moritz.movieappuitest.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.viewmodels.ListViewModel
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
+import com.moritz.movieappuitest.views.list.details.dialogs.AddMovieToListDialog
+import com.moritz.movieappuitest.views.list.details.dialogs.DeleteMovieFromListDialog
+import com.moritz.movieappuitest.views.list.details.dialogs.EditListDialog
+import com.moritz.movieappuitest.views.list.details.dialogs.ListSettingsBottomSheet
+import com.moritz.movieappuitest.views.list.details.pagecontent.ListContent
 import com.moritz.movieappuitest.views.list.overview.dialogs.DeleteListDialog
-import com.moritz.movieappuitest.views.swipe.swipeToDeleteContainer
 import java.net.URLDecoder
 import java.net.URLEncoder
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListView(navController: NavController, navViewModel: NavigationViewModel, movieListString: String?, listViewModel: ListViewModel = viewModel()){
@@ -61,9 +47,9 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
     val openAddMovieDialog = remember { mutableStateOf(false)  }
     val openDeleteMovieDialog = remember { mutableStateOf(false)  }
     val movieToDelete = remember { mutableStateOf<Movie?>(null) }
-    val showBottomSheet = remember { mutableStateOf(false)  }
     val openEditListDialog = remember { mutableStateOf(false)  }
     val openDeleteListDialog = remember { mutableStateOf(false)  }
+    val showBottomSheet = remember { mutableStateOf(false)  }
 
     val context = LocalContext.current
 
@@ -74,40 +60,8 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
             }
         }
     ){
-        Column {
-            Row (
-                modifier = Modifier.padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(text = movieList?.name ?: "N/A", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
-                Icon(
-                    imageVector = if(movieList?.isPublic == true) Icons.Default.Public else Icons.Default.Lock,
-                    contentDescription = if(movieList?.isPublic == true) "Public List" else "Private List",
-                )
-                IconButton(onClick = { showBottomSheet.value = true }) {
-                    Icon(imageVector = Icons.Default.MoreVert, contentDescription = "Open List Settings")
-                }
-            }
+        ListContent(movieList, showBottomSheet, openDeleteMovieDialog, movieToDelete, navController)
 
-            LazyColumn(modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp)){
-                itemsIndexed(
-                    items = movieList?.movies ?: emptyList(),
-                    key = { _, item -> item.hashCode() }
-                ) { _, movie ->
-                    swipeToDeleteContainer(
-                        item = movie,
-                        onDelete = {
-                            movieToDelete.value = movie
-                            openDeleteMovieDialog.value = true
-                        }
-                    ) {
-                        ListItem(navController, movie)
-                    }
-                }
-            }
-        }
         DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
             onDelete = {
                 movieToDelete.value?.id?.let { movieToDelete->

@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list.details
+package com.moritz.movieappuitest.views.list.details.dialogs
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
