@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list.overview
+package com.moritz.movieappuitest.views.list.overview.dialogs
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 fun DeleteListDialog(openDeleteListDialog: Boolean, onDelete:()->Unit, onCancel:()->Unit){
 
     if(openDeleteListDialog){
-
         AlertDialog(
             onDismissRequest = { onCancel() },//openDiscardDialog.value = false
             title = { Text(text = "Delete List") },
@@ -26,5 +25,4 @@ fun DeleteListDialog(openDeleteListDialog: Boolean, onDelete:()->Unit, onCancel:
             }
         )
     }
-
 }

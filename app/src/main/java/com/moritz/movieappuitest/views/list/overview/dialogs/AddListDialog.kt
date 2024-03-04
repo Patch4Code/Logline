@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.list.overview
+package com.moritz.movieappuitest.views.list.overview.dialogs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,7 +24,7 @@ fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String, isPublic
         val isPublic = remember { mutableStateOf(true) }
 
         AlertDialog(
-            onDismissRequest = { onCancel() },//openDiscardDialog.value = false
+            onDismissRequest = { onCancel() },
             title = { Text(text = "New List") },
             text = {
                 Column {

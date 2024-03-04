@@ -39,7 +39,7 @@ import com.moritz.movieappuitest.utils.JSONHelper
 import com.moritz.movieappuitest.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.viewmodels.ListViewModel
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
-import com.moritz.movieappuitest.views.list.overview.DeleteListDialog
+import com.moritz.movieappuitest.views.list.overview.dialogs.DeleteListDialog
 import com.moritz.movieappuitest.views.swipe.swipeToDeleteContainer
 import java.net.URLDecoder
 import java.net.URLEncoder

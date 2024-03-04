@@ -35,7 +35,6 @@ fun ListsTableItem(navController: NavController, list: MovieList){
             .height(110.dp)
             .padding(8.dp)
             .clickable {
-                //navController.navigate(Screen.ListScreen.route)
                 navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList))
             }
     ){

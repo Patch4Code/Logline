@@ -15,7 +15,7 @@ class ListsTableViewModel : ViewModel(){
         updateUserMovieLists()
     }
 
-    fun updateUserMovieLists(){
+    private fun updateUserMovieLists(){
         _userMovieLists.value = userMovieListsDummy.toList() //dummy data
     }
 
