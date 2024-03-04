@@ -1,7 +1,6 @@
 package com.moritz.movieappuitest.views.list.details
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
@@ -19,7 +18,6 @@ import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.dataclasses.MovieList
 import com.moritz.movieappuitest.utils.JSONHelper
-import com.moritz.movieappuitest.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.viewmodels.ListViewModel
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import com.moritz.movieappuitest.views.list.details.dialogs.AddMovieToListDialog
@@ -27,9 +25,14 @@ import com.moritz.movieappuitest.views.list.details.dialogs.DeleteMovieFromListD
 import com.moritz.movieappuitest.views.list.details.dialogs.EditListDialog
 import com.moritz.movieappuitest.views.list.details.dialogs.ListSettingsBottomSheet
 import com.moritz.movieappuitest.views.list.details.pagecontent.ListContent
+import com.moritz.movieappuitest.views.list.details.pagecontent.onCancelDeleteMovieFromList
+import com.moritz.movieappuitest.views.list.details.pagecontent.onDeleteList
+import com.moritz.movieappuitest.views.list.details.pagecontent.onDeleteListBottomSheet
+import com.moritz.movieappuitest.views.list.details.pagecontent.onDeleteMovieFromList
+import com.moritz.movieappuitest.views.list.details.pagecontent.onEditListBottomSheet
+import com.moritz.movieappuitest.views.list.details.pagecontent.onSaveEditList
 import com.moritz.movieappuitest.views.list.overview.dialogs.DeleteListDialog
 import java.net.URLDecoder
-import java.net.URLEncoder
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -62,78 +65,32 @@ fun ListView(navController: NavController, navViewModel: NavigationViewModel, mo
     ){
         ListContent(movieList, showBottomSheet, openDeleteMovieDialog, movieToDelete, navController)
 
+
+        //Dialogs and BottomSheet
+
         DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
-            onDelete = {
-                movieToDelete.value?.id?.let { movieToDelete->
-                    listViewModel.removeMovieFromList(movieToDelete)
-                }
-                movieToDelete.value = null
-                openDeleteMovieDialog.value = false
-            },
-            onCancel = {
-                openDeleteMovieDialog.value = false
+            onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog) },
+            onCancel = { onCancelDeleteMovieFromList(openDeleteMovieDialog, movieList, navController) })
 
-                //workaround with scene reload
-                val jsonMovieList = movieList?.toJson()
-                val encodedJsonMovieList = URLEncoder.encode(jsonMovieList, "UTF-8")
-                navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList)){
-                    popUpTo(Screen.ListsTableScreen.route){
-                        inclusive = false
-                    }
-                }
-            }
-        )
-
-        AddMovieToListDialog(
-            openAddMovieDialog = openAddMovieDialog.value,
+        AddMovieToListDialog(openAddMovieDialog = openAddMovieDialog.value,
             listViewModel = listViewModel,
-            closeDialog = {
-                openAddMovieDialog.value = false
-            }
-        )
+            closeDialog = { openAddMovieDialog.value = false })
 
-        ListSettingsBottomSheet(
-            showBottomSheet = showBottomSheet.value,
+        ListSettingsBottomSheet(showBottomSheet = showBottomSheet.value,
             onClose = {showBottomSheet.value = false},
-            onEdit = {
-                showBottomSheet.value = false
-                openEditListDialog.value = true
-            },
-            onDelete = {
-                showBottomSheet.value = false
-                openDeleteListDialog.value = true
-            }
-        )
+            onEdit = { onEditListBottomSheet(showBottomSheet, openEditListDialog) },
+            onDelete = { onDeleteListBottomSheet(showBottomSheet, openDeleteListDialog) })
 
         EditListDialog(
             initialMovieTitle = movieList?.name ?: "",
             initialIsPublic = movieList?.isPublic ?: true,
             openEditListDialog = openEditListDialog.value,
-            onSave = {newName, isPublic->
-                if(listViewModel.isListNameUnique(newName)){
-                    openEditListDialog.value = false
-                    listViewModel.editList(newName, isPublic)
-                }else{
-                    Toast.makeText(context, "List name already exists!", Toast.LENGTH_LONG).show()
-                }
-
-
-            },
-            onCancel = {openEditListDialog.value = false}
-        )
+            onSave = {newName, isPublic-> listViewModel.onSaveEditList(newName, isPublic, openEditListDialog, context) },
+            onCancel = {openEditListDialog.value = false})
 
         DeleteListDialog(
             openDeleteListDialog = openDeleteListDialog.value,
-            onDelete = {
-                listViewModel.deleteList()
-                openDeleteListDialog.value = false
-                navController.navigate(Screen.ListsTableScreen.route){
-                    popUpTo(Screen.ListsTableScreen.route){
-                        inclusive = true
-                    }
-                }
-            },
-            onCancel = { openDeleteListDialog.value = false }
-        )
+            onDelete = { listViewModel.onDeleteList(openDeleteListDialog, navController) },
+            onCancel = { openDeleteListDialog.value = false })
     }
 }
