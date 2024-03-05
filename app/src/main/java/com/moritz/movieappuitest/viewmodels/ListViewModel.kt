@@ -46,6 +46,8 @@ class ListViewModel: ViewModel() {
         // Change Dummy-Data and accordingly the local ViewModel Data
         userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
         userMovieListsDummy.find { it.name == listName }?.let { updateList(it) }
+
+        Log.e("ListViewModel","_movieList.value: ${_movieList.value}")
     }
 
     fun isMovieAlreadyOnList(movie: Movie): Boolean{

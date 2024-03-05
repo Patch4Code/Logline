@@ -13,11 +13,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.moritz.movieappuitest.R
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.utils.MovieHelper
@@ -42,18 +43,16 @@ fun ListItem(navController: NavController, movie: Movie){
         ){
             AsyncImage(
                 model = moviePosterUrl,
-                contentDescription = "${movieTitle}-Poster"
+                contentDescription = "${movieTitle}-Poster",
+                error = painterResource(id = R.drawable.movie_poster_placeholder)
             )
-            Column (modifier = Modifier
-                .padding(start = 8.dp, end = 8.dp)
-                .width(140.dp)){
+            Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp).width(140.dp))
+            {
                 Text(text = movie.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = movieYear, style = MaterialTheme.typography.titleSmall)
             }
         }
-        HorizontalDivider(color = Color.DarkGray, thickness = 1.dp, modifier = Modifier.fillMaxWidth())
+        HorizontalDivider()
     }
-
-
 }
