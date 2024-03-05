@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.Navigation
 import com.moritz.movieappuitest.ui.theme.MovieAppUiTestTheme
 
 class MainActivity : ComponentActivity() {
