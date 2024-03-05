@@ -11,9 +11,9 @@ import androidx.navigation.NavController
 import com.moritz.movieappuitest.features.core.domain.model.Movie
 import com.moritz.movieappuitest.features.movie.domain.model.MovieCredits
 import com.moritz.movieappuitest.features.movie.domain.model.MovieDetails
-import com.moritz.movieappuitest.features.movie.presentation.screen_movie.MovieViewModel
 import com.moritz.movieappuitest.features.movie.presentation.components.cast_and_crew.MovieCastAndCrew
 import com.moritz.movieappuitest.features.movie.presentation.components.header.MovieHeader
+import com.moritz.movieappuitest.features.movie.presentation.screen_movie.MovieViewModel
 
 @Composable
 fun MovieContent(
@@ -28,11 +28,7 @@ fun MovieContent(
     LazyColumn (modifier = Modifier.padding(16.dp)){
         item {
             MovieHeader(
-                id = movieDetails?.id,
-                title = movieDetails?.title,
-                url = movieDetails?.posterPath,
-                releaseDate = movieDetails?.releaseDate,
-                runtime = movieDetails?.runtime,
+                movieDetails = movieDetails,
                 movieViewModel = movieViewModel,
                 onPosterClick = { openPosterPopup.value = true }
             )

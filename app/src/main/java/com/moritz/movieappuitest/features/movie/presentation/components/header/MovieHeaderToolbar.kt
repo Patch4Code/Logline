@@ -23,12 +23,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.moritz.movieappuitest.features.core.presentation.components.DiaryEditRatingDialog
+import com.moritz.movieappuitest.features.movie.domain.model.MovieDetails
+import com.moritz.movieappuitest.features.movie.presentation.components.dialogs.AddToListDialog
 import com.moritz.movieappuitest.features.movie.presentation.screen_movie.MovieViewModel
 
 @Composable
-fun MovieHeaderToolbar(id: Int?, movieViewModel: MovieViewModel){
+fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewModel){
+
+    val id = movieDetails?.id
 
     val openRatingDialog = remember { mutableStateOf(false)  }
+    val openAddToListDialog = remember { mutableStateOf(false)  }
+
     val rating = movieViewModel.myRating.observeAsState().value
     val onWatchlist = movieViewModel.onWatchlist.observeAsState().value
 
@@ -54,7 +60,7 @@ fun MovieHeaderToolbar(id: Int?, movieViewModel: MovieViewModel){
                 modifier = Modifier.size(30.dp)
             )
         }
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { openAddToListDialog.value = true }) {
             Icon(imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
                 contentDescription = "Add to List",
                 tint = Color.White,
@@ -72,5 +78,7 @@ fun MovieHeaderToolbar(id: Int?, movieViewModel: MovieViewModel){
                 }
             ) { openRatingDialog.value = false }
         }
+
+        AddToListDialog(openAddToListDialog, movieDetails)
     }
 }
