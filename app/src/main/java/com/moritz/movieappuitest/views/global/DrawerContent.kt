@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
@@ -23,16 +22,19 @@ import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrawerContent(navController: NavController, navViewModel: NavigationViewModel,drawerState: DrawerState, scope: CoroutineScope, navigationViewModel: NavigationViewModel){
-
+fun DrawerContent(
+    navController: NavController,
+    navViewModel: NavigationViewModel,
+    drawerState: DrawerState,
+    scope: CoroutineScope,
+    navigationViewModel: NavigationViewModel
+){
     val currentScreen by navViewModel.currentScreen.observeAsState(Screen.HomeScreen)
 
     ModalDrawerSheet (
         modifier = Modifier.width(300.dp)
-    )
-    {
+    ) {
         Spacer(modifier = Modifier.height(16.dp))
         DrawerNavigationItem().getDrawerNavigationItems().forEach { drawerNavigationItem ->
             NavigationDrawerItem(

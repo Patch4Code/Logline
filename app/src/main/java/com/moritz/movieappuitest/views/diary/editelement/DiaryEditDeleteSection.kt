@@ -12,7 +12,14 @@ import androidx.compose.ui.Modifier
 @Composable
 fun DiaryEditDeleteSection(onButtonPressed:() -> Unit ){
     TextButton(onClick = { onButtonPressed() }) {
-        Text(text = "Delete Diary-Entry", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-        Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+        Text(
+            text = "Delete Diary-Entry",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.weight(1f)
+        )
+        Icon(
+            imageVector = Icons.Default.Delete,
+            contentDescription = null
+        )
     }
 }

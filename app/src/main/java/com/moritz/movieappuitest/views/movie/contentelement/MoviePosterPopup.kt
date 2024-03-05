@@ -26,9 +26,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.moritz.movieappuitest.R
 import com.moritz.movieappuitest.dataclasses.MovieDetails
 import com.moritz.movieappuitest.utils.MovieHelper
 import kotlinx.coroutines.delay
@@ -79,12 +81,11 @@ fun MoviePosterPopup(openPosterPopup: Boolean, movieDetails: MovieDetails?, onPo
                 AsyncImage(
                     model = moviePosterUrl,
                     contentDescription = "$movieTitle-Poster",
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    error = painterResource(id = R.drawable.movie_poster_placeholder)
                 )
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
                     FilledTonalIconButton(

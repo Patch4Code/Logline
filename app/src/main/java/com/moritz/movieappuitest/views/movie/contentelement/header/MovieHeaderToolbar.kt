@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.moritz.movieappuitest.viewmodels.MovieViewModel
-import com.moritz.movieappuitest.views.dialogs.DiaryEditRatingDialog
+import com.moritz.movieappuitest.views.diary.dialogs.DiaryEditRatingDialog
 
 @Composable
 fun MovieHeaderToolbar(id: Int?, movieViewModel: MovieViewModel){

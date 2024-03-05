@@ -12,7 +12,7 @@ import com.moritz.movieappuitest.viewmodels.NavigationViewModel
 fun SettingsView(navController: NavController, navViewModel: NavigationViewModel){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.SearchScreen)
+        navViewModel.updateScreen(Screen.SettingsScreen)
     }
 
     Column()

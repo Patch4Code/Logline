@@ -31,7 +31,7 @@ fun ExpandableBio(text: String, maxLinesCollapsed: Int = 2) {
             ) { showMore = !showMore }) {
 
             if (showMore) {
-                Text(text = text, textAlign = TextAlign.Center,)
+                Text(text = text, textAlign = TextAlign.Center)
             } else {
                 Text(text = text, textAlign = TextAlign.Center, maxLines = maxLinesCollapsed, overflow = TextOverflow.Ellipsis)
             }

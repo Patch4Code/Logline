@@ -22,10 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.moritz.movieappuitest.R
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.LoggedMovie
 import com.moritz.movieappuitest.utils.MovieHelper
@@ -57,7 +59,8 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
 
         AsyncImage(
             model = moviePosterUrl,
-            contentDescription = "${movieTitle}-Poster"
+            contentDescription = "${movieTitle}-Poster",
+            error = painterResource(id = R.drawable.movie_poster_placeholder)
         )
         Column (modifier = Modifier
             .padding(start = 8.dp, end = 8.dp)

@@ -13,7 +13,14 @@ import com.moritz.movieappuitest.utils.DateHelper
 @Composable
 fun DiaryEditDateSection(watchDate: String, onButtonPressed: () -> Unit){
     TextButton(onClick = { onButtonPressed() }) {
-        Text(text = "Watched ${DateHelper.formatDateToDisplay(watchDate)}", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-        Icon(imageVector = Icons.Default.Edit, contentDescription = null)
+        Text(
+            text = "Watched ${DateHelper.formatDateToDisplay(watchDate)}",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.weight(1f)
+        )
+        Icon(
+            imageVector = Icons.Default.Edit,
+            contentDescription = null
+        )
     }
 }

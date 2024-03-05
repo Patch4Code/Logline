@@ -22,11 +22,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.moritz.movieappuitest.R
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.dataclasses.MovieUserData
@@ -44,10 +46,7 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
 
     val rating = movieUserData.rating
 
-    Card(modifier = Modifier
-        .padding(4.dp)
-        .height(240.dp)
-        .width(120.dp)
+    Card(modifier = Modifier.padding(4.dp).height(240.dp).width(120.dp)
         .clickable {
             navController.navigate(Screen.MovieScreen.withArgs(movieId))
         },
@@ -58,15 +57,14 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Card (modifier = Modifier
-                .height(150.dp)
-                .width(100.dp),
+            Card (modifier = Modifier.height(150.dp).width(100.dp),
                 backgroundColor = Color.DarkGray
             )
             {
                 AsyncImage(
                     model = posterUrl,
-                    contentDescription = "$title-Poster"
+                    contentDescription = "$title-Poster",
+                    error = painterResource(id = R.drawable.movie_poster_placeholder)
                 )
             }
             Spacer(modifier = Modifier.padding(4.dp))
@@ -93,7 +91,9 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
                     imageVector = Icons.Default.StarRate,
                     contentDescription = "StarRate",
                     tint = Color.Yellow,
-                    modifier = Modifier.size(15.dp).align(Alignment.CenterVertically)
+                    modifier = Modifier
+                        .size(15.dp)
+                        .align(Alignment.CenterVertically)
                 )
                 Text(
                     text = "$rating",

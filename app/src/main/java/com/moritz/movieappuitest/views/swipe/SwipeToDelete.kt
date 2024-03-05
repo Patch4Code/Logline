@@ -53,9 +53,6 @@ fun <T> swipeToDeleteContainer(
     LaunchedEffect(key1 = isRemoved){
         if(isRemoved){
             onDelete(item)
-
-            //isRemoved = false
-
         }
     }
     SwipeToDismiss(

@@ -24,10 +24,10 @@ import com.moritz.movieappuitest.dataclasses.LoggedMoviesDummy
 import com.moritz.movieappuitest.utils.JSONHelper
 import com.moritz.movieappuitest.utils.MovieHelper
 import com.moritz.movieappuitest.viewmodels.NavigationViewModel
-import com.moritz.movieappuitest.views.dialogs.DiaryEditDatePickerDialog
-import com.moritz.movieappuitest.views.dialogs.DiaryEditDeleteDialog
-import com.moritz.movieappuitest.views.dialogs.DiaryEditDiscardDialog
-import com.moritz.movieappuitest.views.dialogs.DiaryEditRatingDialog
+import com.moritz.movieappuitest.views.diary.dialogs.DiaryEditDatePickerDialog
+import com.moritz.movieappuitest.views.diary.dialogs.DiaryEditDeleteDialog
+import com.moritz.movieappuitest.views.diary.dialogs.DiaryEditDiscardDialog
+import com.moritz.movieappuitest.views.diary.dialogs.DiaryEditRatingDialog
 import com.moritz.movieappuitest.views.diary.editelement.DiaryEditDateSection
 import com.moritz.movieappuitest.views.diary.editelement.DiaryEditDeleteSection
 import com.moritz.movieappuitest.views.diary.editelement.DiaryEditHeader
@@ -46,7 +46,6 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
     val loggedElementData: LoggedMovie = JSONHelper.fromJson(decodedLoggedElementString)
 
     val context = LocalContext.current
-
 
     val movieTitle = loggedElementData.movie.title
     var watchDate by remember { mutableStateOf(loggedElementData.date) }

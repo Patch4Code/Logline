@@ -17,11 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.moritz.movieappuitest.R
 import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.dataclasses.Movie
 import com.moritz.movieappuitest.utils.MovieHelper
@@ -56,7 +58,8 @@ fun MovieWatchlistBrowseCard(navController: NavController, movie: Movie) {
             {
                 AsyncImage(
                     model = posterUrl,
-                    contentDescription = "$title-Poster"
+                    contentDescription = "$title-Poster",
+                    error = painterResource(id = R.drawable.movie_poster_placeholder)
                 )
             }
             Spacer(modifier = Modifier.padding(4.dp))

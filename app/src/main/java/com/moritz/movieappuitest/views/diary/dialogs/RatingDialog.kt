@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.dialogs
+package com.moritz.movieappuitest.views.diary.dialogs
 
 import android.view.MotionEvent
 import androidx.compose.foundation.layout.Row

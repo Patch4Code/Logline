@@ -1,4 +1,4 @@
-package com.moritz.movieappuitest.views.dialogs
+package com.moritz.movieappuitest.views.diary.dialogs
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog

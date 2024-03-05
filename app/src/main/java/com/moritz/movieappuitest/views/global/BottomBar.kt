@@ -1,7 +1,6 @@
 package com.moritz.movieappuitest.views.global
 
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -36,10 +35,7 @@ fun BottomBar(navController: NavController, navViewModel: NavigationViewModel){
                         contentDescription = item.title
                     )
                 },
-                onClick = {
-                    //Navigation
-                    navController.navigate(item.route)
-                }
+                onClick = { navController.navigate(item.route) }
             )
         }
     }
