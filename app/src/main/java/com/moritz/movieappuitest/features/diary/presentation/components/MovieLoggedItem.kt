@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.StarRate
+import androidx.compose.material.icons.outlined.Reviews
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,8 +30,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.R
 import com.moritz.movieappuitest.Screen
-import com.moritz.movieappuitest.features.diary.domain.model.LoggedMovie
 import com.moritz.movieappuitest.features.core.presentation.utils.MovieHelper
+import com.moritz.movieappuitest.features.diary.domain.model.LoggedMovie
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -41,13 +42,15 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
     val movieYear = MovieHelper.extractYear(loggedElement.movie.releaseDate)
     val moviePosterUrl = MovieHelper.processPosterUrl(loggedElement.movie.posterUrl)
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(120.dp)
-            .padding(8.dp)
+    val loggedItemHasReview = loggedElement.review.isNotEmpty()
+
+    Row(modifier = Modifier.fillMaxWidth().height(120.dp).padding(8.dp)
             .clickable {
-                navController.navigate(Screen.MovieScreen.withArgs(movieId))
+                if(loggedItemHasReview){
+
+                }else{
+                    navController.navigate(Screen.MovieScreen.withArgs(movieId))
+                }
             }
     ){
         val parsedDate = MovieHelper.formatDate(dateString = loggedElement.date)
@@ -62,31 +65,44 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
             contentDescription = "${movieTitle}-Poster",
             error = painterResource(id = R.drawable.movie_poster_placeholder)
         )
-        Column (modifier = Modifier
-            .padding(start = 8.dp, end = 8.dp)
-            .width(140.dp)){
-            Text(text = loggedElement.movie.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = movieYear, style = MaterialTheme.typography.titleSmall)
-            Spacer(modifier = Modifier.height(8.dp))
-            Row (
-                modifier = Modifier.padding(4.dp, bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.Bottom
+        Row {
+            Column (modifier = Modifier
+                .padding(start = 8.dp, end = 8.dp)
+                .width(140.dp)
             ){
-                Icon(
-                    imageVector = Icons.Default.StarRate,
-                    contentDescription = "StarRate",
-                    tint = Color.Yellow,
-                    modifier = Modifier
-                        .size(15.dp)
-                        .align(Alignment.CenterVertically)
-                )
-                Text(text = "${loggedElement.rating}", color = Color.White, modifier = Modifier.align(
-                    Alignment.CenterVertically
-                ))
+                Text(text = loggedElement.movie.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Row {
+                    Text(text = movieYear, style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(end = 4.dp))
+                    if(loggedItemHasReview){
+                        Icon(imageVector = Icons.Outlined.Reviews, contentDescription = null, modifier = Modifier.size(20.dp))
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+                Row (
+                    modifier = Modifier.padding(4.dp, bottom = 8.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.Bottom
+                ){
+                    Icon(
+                        imageVector = Icons.Default.StarRate,
+                        contentDescription = "StarRate",
+                        tint = Color.Yellow,
+                        modifier = Modifier
+                            .size(15.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                    Text(text = "${loggedElement.rating}",
+                        color = Color.White,
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
             }
         }
+
         Spacer(modifier = Modifier.height(4.dp))
 
     }
