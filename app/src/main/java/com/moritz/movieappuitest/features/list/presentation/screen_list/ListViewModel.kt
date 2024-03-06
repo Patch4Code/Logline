@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.moritz.movieappuitest.api.RetrofitHelper
 import com.moritz.movieappuitest.api.TmdbApiService
 import com.moritz.movieappuitest.features.core.domain.model.Movie
+import com.moritz.movieappuitest.features.core.presentation.utils.TmdbCredentials
 import com.moritz.movieappuitest.features.list.domain.model.MovieList
 import com.moritz.movieappuitest.features.list.domain.model.userMovieListsDummy
-import com.moritz.movieappuitest.features.core.presentation.utils.TmdbCredentials
 import kotlinx.coroutines.launch
 
 class ListViewModel: ViewModel() {
@@ -47,7 +47,7 @@ class ListViewModel: ViewModel() {
         userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
         userMovieListsDummy.find { it.name == listName }?.let { updateList(it) }
 
-        Log.e("ListViewModel","_movieList.value: ${_movieList.value}")
+        //Log.e("ListViewModel","_movieList.value: ${_movieList.value}")
     }
 
     fun isMovieAlreadyOnList(movie: Movie): Boolean{
