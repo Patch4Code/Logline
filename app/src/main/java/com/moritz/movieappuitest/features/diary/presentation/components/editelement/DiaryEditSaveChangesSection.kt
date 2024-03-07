@@ -1,5 +1,6 @@
 package com.moritz.movieappuitest.features.diary.presentation.components.editelement
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,10 +14,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun DiaryEditSaveChangesSection(onSaveChanges: () -> Unit, onDiscardChanges: () -> Unit){
+
+    val context = LocalContext.current
 
     HorizontalDivider(
         modifier = Modifier
@@ -25,7 +29,12 @@ fun DiaryEditSaveChangesSection(onSaveChanges: () -> Unit, onDiscardChanges: () 
         thickness = 1.dp, color = Color.DarkGray
     )
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        IconButton(onClick = { onSaveChanges() }) {
+        IconButton(
+            onClick = {
+            Toast.makeText(context, "Diary Entry updated", Toast.LENGTH_LONG).show()
+            onSaveChanges()
+            }
+        ){
             Icon(imageVector = Icons.Default.Check, contentDescription = "Save Changes")
         }
         IconButton(onClick = { onDiscardChanges() }) {

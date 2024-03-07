@@ -10,12 +10,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.features.core.presentation.components.swipe.swipeToEditContainer
 import com.moritz.movieappuitest.features.core.presentation.utils.JSONHelper.toJson
-import com.moritz.movieappuitest.features.diary.domain.model.LoggedMoviesDummy
 import com.moritz.movieappuitest.features.diary.presentation.components.MovieLoggedItem
 import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
@@ -26,11 +27,13 @@ import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DiaryView(navController: NavController, navViewModel: NavigationViewModel){
+fun DiaryView(navController: NavController, navViewModel: NavigationViewModel, diaryViewModel: DiaryViewModel = viewModel()){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.DiaryScreen)
     }
+
+    val diaryLogs = diaryViewModel.diaryLogs.observeAsState().value
 
     LazyColumn(
         modifier = Modifier
@@ -38,12 +41,12 @@ fun DiaryView(navController: NavController, navViewModel: NavigationViewModel){
             .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
-        items(LoggedMoviesDummy.sortedByDescending { loggedItem->
+        items(diaryLogs?.sortedByDescending { loggedItem->
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             val localDate = LocalDate.parse(loggedItem.date, formatter)
-            localDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
-
-        }) { loggedItem ->
+            localDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli() } ?: emptyList()
+        )
+        { loggedItem ->
             val jsonLoggedItem = loggedItem.toJson()
             val encodedJsonLoggedItem = URLEncoder.encode(jsonLoggedItem, "UTF-8")
             swipeToEditContainer(

@@ -6,17 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.moritz.movieappuitest.features.diary.domain.model.LoggedMovie
 import com.moritz.movieappuitest.features.diary.domain.model.LoggedMoviesDummy
 
-class ReviewsViewModel: ViewModel(){
+class ReviewDetailsViewModel: ViewModel() {
 
-    private val _reviewedLogs = MutableLiveData<List<LoggedMovie>>()
-    val reviewedLogs: LiveData<List<LoggedMovie>> get() = _reviewedLogs
+    private val _currentReviewedLog = MutableLiveData<LoggedMovie>()
+    val currentReviewedLog: LiveData<LoggedMovie> get() = _currentReviewedLog
 
-
-    init{
-        getReviewedLogs()
+    fun setCurrentReviewedLog(reviewedLogId: String){
+        _currentReviewedLog.value = LoggedMoviesDummy.find { it.id == reviewedLogId }
     }
 
-    private fun getReviewedLogs(){
-        _reviewedLogs.value = LoggedMoviesDummy.filter { it.review.isNotEmpty() }
-    }
 }

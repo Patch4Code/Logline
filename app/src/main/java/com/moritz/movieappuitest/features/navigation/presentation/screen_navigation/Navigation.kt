@@ -149,7 +149,7 @@ fun Navigation(){
                             }
                         )
                     ){parsedLoggedElement->
-                        ReviewDetailsView(navController = navController, navViewModel = navigationViewModel, loggedElement = parsedLoggedElement.arguments?.getString("loggedElement"))
+                        ReviewDetailsView(navController = navController, navViewModel = navigationViewModel, loggedElementId = parsedLoggedElement.arguments?.getString("loggedElement"))
                     }
 
                     composable(route = Screen.ListsTableScreen.route){

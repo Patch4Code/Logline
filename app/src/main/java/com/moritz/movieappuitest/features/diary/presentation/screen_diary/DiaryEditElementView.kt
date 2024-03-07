@@ -1,7 +1,6 @@
 package com.moritz.movieappuitest.features.diary.presentation.screen_diary
 
 import android.os.Build
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
@@ -11,12 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.features.core.presentation.components.DiaryEditRatingDialog
 import com.moritz.movieappuitest.features.core.presentation.utils.JSONHelper
@@ -31,23 +31,30 @@ import com.moritz.movieappuitest.features.diary.presentation.components.editelem
 import com.moritz.movieappuitest.features.diary.presentation.components.editelement.DiaryEditHeader
 import com.moritz.movieappuitest.features.diary.presentation.components.editelement.DiaryEditRatingSection
 import com.moritz.movieappuitest.features.diary.presentation.components.editelement.DiaryEditSaveChangesSection
+import com.moritz.movieappuitest.features.diary.presentation.utils.navigateOnDiaryEditSaveChanges
 import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 import java.net.URLDecoder
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DiaryEditElementView(navController: NavController, navViewModel: NavigationViewModel, loggedElement: String?){
+fun DiaryEditElementView(
+    navController: NavController,
+    navViewModel: NavigationViewModel,
+    loggedElement: String?,
+    diaryEditElementViewModel: DiaryEditElementViewModel = viewModel()
+    ){
 
-    LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.DiaryEditElementScreen)
-    }
     val decodedLoggedElementString = URLDecoder.decode(loggedElement, "UTF-8")
     val loggedElementData: LoggedMovie = JSONHelper.fromJson(decodedLoggedElementString)
 
-    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        navViewModel.updateScreen(Screen.DiaryEditElementScreen)
+        diaryEditElementViewModel.setDiaryEntryToEdit(loggedElementData)
+    }
 
-    val movieTitle = loggedElementData.movie.title
+    val diaryEntry = diaryEditElementViewModel.diaryEntry.observeAsState().value
+
     var watchDate by remember { mutableStateOf(loggedElementData.date) }
     var rating by remember { mutableStateOf(loggedElementData.rating)}
 
@@ -63,7 +70,7 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
     Column(modifier = Modifier.padding(16.dp)) {
 
         DiaryEditHeader(
-            movieTitle = movieTitle,
+            movieTitle = loggedElementData.movie.title,
             moviePosterUrl = MovieHelper.processPosterUrl(loggedElementData.movie.posterUrl),
             movieYear = MovieHelper.extractYear(loggedElementData.movie.releaseDate)
         )
@@ -78,25 +85,11 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
         DiaryEditDeleteSection(onButtonPressed = {openDeleteDialog.value = true})
 
         Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.weight(1f)){
+
             DiaryEditSaveChangesSection(
                 onSaveChanges = {
-                    //Update Data with Changes
-
-                    //Here only updates dummy temporary (later probably use an id for identification)
-                    val updatedElement = LoggedMoviesDummy.find { it.movie.title == movieTitle }
-                    updatedElement?.let {
-                        it.date = watchDate
-                        it.rating = rating
-                    }
-                    //----------------------------------
-
-                    //navigate back to DiaryView and clear backstack
-                    navController.navigate(Screen.DiaryScreen.route){
-                        popUpTo(Screen.DiaryScreen.route) {
-                            inclusive = true
-                        }
-                    }
-                    Toast.makeText(context, "Diary Entry updated", Toast.LENGTH_LONG).show()
+                    diaryEditElementViewModel.updatedDiaryEntry(rating, watchDate)
+                    diaryEntry?.let { navigateOnDiaryEditSaveChanges(navController, it) }
                 },
                 onDiscardChanges = {openDiscardDialog.value = true}
             )
@@ -141,7 +134,7 @@ fun DiaryEditElementView(navController: NavController, navViewModel: NavigationV
 
                 //Delete Diary Element here
                 //here just with dummy data with movie title as identifier
-                LoggedMoviesDummy.removeIf { it.movie.title == movieTitle }
+                LoggedMoviesDummy.removeIf { it.movie.title == loggedElementData.movie.title }
 
                 navController.navigate(Screen.DiaryScreen.route){
                     popUpTo(Screen.DiaryScreen.route) {
