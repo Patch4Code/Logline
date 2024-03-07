@@ -16,7 +16,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.navigation.domain.model.DrawerNavigationItem
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 import kotlinx.coroutines.CoroutineScope

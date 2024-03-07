@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.profile.domain.model.getUserProfileData
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.moritz.movieappuitest.features.profile.presentation.components.ExpandableBio

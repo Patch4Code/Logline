@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.R
-import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.core.domain.model.Movie
 import com.moritz.movieappuitest.features.core.presentation.utils.MovieHelper
 

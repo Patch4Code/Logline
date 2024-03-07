@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.moritz.movieappuitest.features.core.presentation.components.LoadingIndicator
 import com.moritz.movieappuitest.features.home.presentation.components.MovieHomeBrowseCard

@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.core.domain.model.Movie
 import com.moritz.movieappuitest.features.core.presentation.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.features.list.domain.model.MovieList

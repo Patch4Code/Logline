@@ -10,7 +10,6 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.moritz.movieappuitest.Screen
 
 data class BottomNavigationItem(
     val title: String = "",

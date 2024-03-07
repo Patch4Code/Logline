@@ -1,15 +1,15 @@
 package com.moritz.movieappuitest.features.reviews.presentation.screen_reviews
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.StarRate
@@ -30,10 +30,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.R
-import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.features.core.presentation.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.features.core.presentation.utils.MovieHelper
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
+import java.net.URLEncoder
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ReviewsView(navController: NavController, navViewModel: NavigationViewModel, reviewsViewModel: ReviewsViewModel = viewModel()){
 
@@ -47,28 +50,31 @@ fun ReviewsView(navController: NavController, navViewModel: NavigationViewModel,
     LazyColumn(modifier = Modifier.padding(16.dp)){
         reviewedLogs?.forEach { loggedItem ->
             item {
+                val jsonLoggedItem = loggedItem.toJson()
+                val encodedJsonLoggedItem = URLEncoder.encode(jsonLoggedItem, "UTF-8")
+
                 Column (modifier = Modifier
                     .fillMaxSize()
-                    .clickable { }){
-                    Row (modifier = Modifier
-                        .padding(top = 16.dp, bottom = 8.dp)
-                        .wrapContentWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                    .clickable { navController.navigate(Screen.ReviewDetailScreen.withArgs(encodedJsonLoggedItem)) }
+                ){
 
+                    FlowRow (modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
                     ){
                         Text(
                             text = "${loggedItem.movie.title} (${MovieHelper.extractYear(loggedItem.movie.releaseDate)})",
                             style = MaterialTheme.typography.titleMedium)
-                        Spacer(modifier = Modifier.padding(4.dp))
-                        Row {
-                            Text(text = "${loggedItem.rating}", style = MaterialTheme.typography.bodyMedium)
+                        Spacer(modifier = Modifier.padding(start = 8.dp))
+                        Row{
                             Icon(
                                 imageVector = Icons.Default.StarRate,
                                 contentDescription = "StarRate",
                                 tint = Color.Yellow,
-                                modifier = Modifier.size(15.dp)
+                                modifier = Modifier
+                                    .size(15.dp)
+                                    .align(Alignment.CenterVertically)
                             )
+                            Text(text = "${loggedItem.rating}", style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.align(Alignment.CenterVertically))
                         }
                     }
 
@@ -92,5 +98,4 @@ fun ReviewsView(navController: NavController, navViewModel: NavigationViewModel,
             }
         }
     }
-
 }

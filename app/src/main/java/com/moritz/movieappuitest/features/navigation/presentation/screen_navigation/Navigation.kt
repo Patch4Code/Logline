@@ -21,23 +21,24 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.moritz.movieappuitest.Screen
-import com.moritz.movieappuitest.features.friends.presentation.screen_friends.FriendsView
-import com.moritz.movieappuitest.features.profile.presentation.screen_profile.ProfileEditView
-import com.moritz.movieappuitest.features.reviews.presentation.screen_reviews.ReviewsView
-import com.moritz.movieappuitest.features.settings.presentation.screen_settings.SettingsView
 import com.moritz.movieappuitest.features.diary.presentation.screen_diary.DiaryEditElementView
 import com.moritz.movieappuitest.features.diary.presentation.screen_diary.DiaryView
-import com.moritz.movieappuitest.features.navigation.presentation.components.BottomBar
-import com.moritz.movieappuitest.features.navigation.presentation.components.DrawerContent
-import com.moritz.movieappuitest.features.navigation.presentation.components.TopBar
+import com.moritz.movieappuitest.features.friends.presentation.screen_friends.FriendsView
 import com.moritz.movieappuitest.features.home.presentation.screen_home.HomeView
 import com.moritz.movieappuitest.features.list.presentation.screen_list.ListView
 import com.moritz.movieappuitest.features.list.presentation.screen_list.ListsTableView
 import com.moritz.movieappuitest.features.movie.presentation.screen_movie.MovieView
 import com.moritz.movieappuitest.features.my_movies.presentation.screen_my_movies.MyMoviesView
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
+import com.moritz.movieappuitest.features.navigation.presentation.components.BottomBar
+import com.moritz.movieappuitest.features.navigation.presentation.components.DrawerContent
+import com.moritz.movieappuitest.features.navigation.presentation.components.TopBar
+import com.moritz.movieappuitest.features.profile.presentation.screen_profile.ProfileEditView
 import com.moritz.movieappuitest.features.profile.presentation.screen_profile.ProfileView
+import com.moritz.movieappuitest.features.reviews.presentation.screen_reviews.ReviewDetailsView
+import com.moritz.movieappuitest.features.reviews.presentation.screen_reviews.ReviewsView
 import com.moritz.movieappuitest.features.search.presentation.screen_search.SearchView
+import com.moritz.movieappuitest.features.settings.presentation.screen_settings.SettingsView
 import com.moritz.movieappuitest.features.watchlist.presentation.screen_watchlist.WatchlistView
 import kotlinx.coroutines.launch
 
@@ -137,6 +138,18 @@ fun Navigation(){
 
                     composable(route = Screen.ReviewsScreen.route){
                         ReviewsView(navController = navController, navViewModel = navigationViewModel)
+                    }
+
+                    composable(route = Screen.ReviewDetailScreen.route + "/{loggedElement}",
+                        arguments = listOf(
+                            navArgument("loggedElement"){
+                                type = NavType.StringType
+                                defaultValue = ""
+                                nullable = true
+                            }
+                        )
+                    ){parsedLoggedElement->
+                        ReviewDetailsView(navController = navController, navViewModel = navigationViewModel, loggedElement = parsedLoggedElement.arguments?.getString("loggedElement"))
                     }
 
                     composable(route = Screen.ListsTableScreen.route){

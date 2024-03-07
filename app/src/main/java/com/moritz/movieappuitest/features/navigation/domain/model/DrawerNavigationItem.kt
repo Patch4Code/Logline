@@ -14,7 +14,6 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.moritz.movieappuitest.Screen
 
 data class DrawerNavigationItem(
     val title: String = "",

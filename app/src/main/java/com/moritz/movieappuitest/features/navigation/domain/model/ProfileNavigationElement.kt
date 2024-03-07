@@ -7,7 +7,6 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.moritz.movieappuitest.Screen
 
 data class ProfileNavigationElement(
     val title: String = "",

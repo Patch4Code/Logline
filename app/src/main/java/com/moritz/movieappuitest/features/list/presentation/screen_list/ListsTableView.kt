@@ -14,7 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.list.domain.model.MovieList
 import com.moritz.movieappuitest.features.list.presentation.components.lists_table.ListsTableContent
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel

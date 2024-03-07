@@ -12,8 +12,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.Screen
 import com.moritz.movieappuitest.features.movie.presentation.components.MovieContent
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

@@ -18,21 +18,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.Screen
-import com.moritz.movieappuitest.features.diary.domain.model.LoggedMovie
-import com.moritz.movieappuitest.features.diary.domain.model.LoggedMoviesDummy
+import com.moritz.movieappuitest.features.core.presentation.components.DiaryEditRatingDialog
 import com.moritz.movieappuitest.features.core.presentation.utils.JSONHelper
 import com.moritz.movieappuitest.features.core.presentation.utils.MovieHelper
-import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.moritz.movieappuitest.features.diary.domain.model.LoggedMovie
+import com.moritz.movieappuitest.features.diary.domain.model.LoggedMoviesDummy
 import com.moritz.movieappuitest.features.diary.presentation.components.dialogs.DiaryEditDatePickerDialog
 import com.moritz.movieappuitest.features.diary.presentation.components.dialogs.DiaryEditDeleteDialog
 import com.moritz.movieappuitest.features.diary.presentation.components.dialogs.DiaryEditDiscardDialog
-import com.moritz.movieappuitest.features.core.presentation.components.DiaryEditRatingDialog
 import com.moritz.movieappuitest.features.diary.presentation.components.editelement.DiaryEditDateSection
 import com.moritz.movieappuitest.features.diary.presentation.components.editelement.DiaryEditDeleteSection
 import com.moritz.movieappuitest.features.diary.presentation.components.editelement.DiaryEditHeader
 import com.moritz.movieappuitest.features.diary.presentation.components.editelement.DiaryEditRatingSection
 import com.moritz.movieappuitest.features.diary.presentation.components.editelement.DiaryEditSaveChangesSection
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
+import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 import java.net.URLDecoder
 
 @RequiresApi(Build.VERSION_CODES.O)

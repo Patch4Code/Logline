@@ -8,7 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.Screen
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.core.domain.model.userDataList
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.moritz.movieappuitest.features.watchlist.presentation.components.MovieWatchlistBrowseCard
