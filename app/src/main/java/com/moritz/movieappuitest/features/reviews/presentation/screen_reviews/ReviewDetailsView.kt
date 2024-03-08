@@ -26,20 +26,14 @@ fun ReviewDetailsView(
     navController: NavController,
     navViewModel: NavigationViewModel,
     loggedElementId: String?,
-    reviewDetailsViewModel: ReviewDetailsViewModel = viewModel()){
-
-    //val decodedLoggedElementString = URLDecoder.decode(loggedElement, "UTF-8")
-    //val loggedElementData: LoggedMovie = JSONHelper.fromJson(decodedLoggedElementString)
-
+    reviewDetailsViewModel: ReviewDetailsViewModel = viewModel()
+){
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.ReviewDetailScreen)
         loggedElementId?.let { reviewDetailsViewModel.setCurrentReviewedLog(it) }
     }
 
     val reviewedLog = reviewDetailsViewModel.currentReviewedLog.observeAsState().value
-
-
-
     val review: String = reviewedLog?.review ?: ""
 
     LazyColumn (modifier = Modifier.padding(16.dp)){
@@ -56,7 +50,7 @@ fun ReviewDetailsView(
 
                 if (reviewedLog != null) {
                     ReviewDetailsInfo(
-                        loggedElementData = reviewedLog,
+                        reviewedLog = reviewedLog,
                         onEditPressed = {encodedJsonLoggedItem->
                             navController.navigate(Screen.DiaryEditElementScreen.withArgs(encodedJsonLoggedItem))
                         }

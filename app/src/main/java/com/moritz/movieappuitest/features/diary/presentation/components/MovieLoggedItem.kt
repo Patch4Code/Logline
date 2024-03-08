@@ -47,7 +47,7 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
     Row(modifier = Modifier.fillMaxWidth().height(120.dp).padding(8.dp)
             .clickable {
                 if(loggedItemHasReview){
-
+                    navController.navigate(Screen.ReviewDetailScreen.withArgs(loggedElement.id))
                 }else{
                     navController.navigate(Screen.MovieScreen.withArgs(movieId))
                 }

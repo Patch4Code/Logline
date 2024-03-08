@@ -16,11 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.features.core.presentation.components.swipe.swipeToEditContainer
-import com.moritz.movieappuitest.features.core.presentation.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.features.diary.presentation.components.MovieLoggedItem
 import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
-import java.net.URLEncoder
 import java.time.LocalDate
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -47,12 +45,10 @@ fun DiaryView(navController: NavController, navViewModel: NavigationViewModel, d
             localDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli() } ?: emptyList()
         )
         { loggedItem ->
-            val jsonLoggedItem = loggedItem.toJson()
-            val encodedJsonLoggedItem = URLEncoder.encode(jsonLoggedItem, "UTF-8")
             swipeToEditContainer(
                 item = loggedItem,
                 onEdit = {
-                    navController.navigate(Screen.DiaryEditElementScreen.withArgs(encodedJsonLoggedItem))
+                    navController.navigate(Screen.DiaryEditElementScreen.withArgs(loggedItem.id, true))
                 })
             {_->
                 MovieLoggedItem(navController = navController, loggedElement = loggedItem)

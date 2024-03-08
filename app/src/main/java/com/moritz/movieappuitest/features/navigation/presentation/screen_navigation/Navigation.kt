@@ -124,16 +124,24 @@ fun Navigation(){
                         DiaryView(navController = navController, navViewModel = navigationViewModel)
                     }
 
-                    composable(route = Screen.DiaryEditElementScreen.route + "/{loggedElement}",
+                    composable(route = Screen.DiaryEditElementScreen.route + "/{loggedElement}/{comingFromDiaryView}",
                         arguments = listOf(
                             navArgument("loggedElement"){
                                 type = NavType.StringType
                                 defaultValue = ""
                                 nullable = true
+                            },
+                            navArgument("comingFromDiaryView"){
+                                type = NavType.BoolType
                             }
                         )
                     ){parsedLoggedElement->
-                        DiaryEditElementView(navController = navController, navViewModel = navigationViewModel, loggedElement = parsedLoggedElement.arguments?.getString("loggedElement"))
+                        DiaryEditElementView(
+                            navController = navController,
+                            navViewModel = navigationViewModel,
+                            loggedElementId = parsedLoggedElement.arguments?.getString("loggedElement"),
+                            comingFromDiaryView = parsedLoggedElement.arguments?.getBoolean("comingFromDiaryView")
+                        )
                     }
 
                     composable(route = Screen.ReviewsScreen.route){

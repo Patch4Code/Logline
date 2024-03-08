@@ -20,19 +20,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.moritz.movieappuitest.features.core.presentation.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.features.core.presentation.utils.MovieHelper
 import com.moritz.movieappuitest.features.diary.domain.model.LoggedMovie
-import java.net.URLEncoder
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ReviewDetailsInfo(loggedElementData: LoggedMovie, onEditPressed:(encodedJsonLoggedItem: String)->Unit){
+fun ReviewDetailsInfo(reviewedLog: LoggedMovie, onEditPressed:(encodedJsonLoggedItem: String)->Unit){
 
-    val movieTitle = loggedElementData.movie.title
-    val movieYear = MovieHelper.extractYear(loggedElementData.movie.releaseDate)
-    val rating = loggedElementData.rating.toString()
-    val formatedDate = MovieHelper.formatDate(loggedElementData.date)
+    val movieTitle = reviewedLog.movie.title
+    val movieYear = MovieHelper.extractYear(reviewedLog.movie.releaseDate)
+    val rating = reviewedLog.rating.toString()
+    val formatedDate = MovieHelper.formatDate(reviewedLog.date)
 
     Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)){
         Text(text = movieTitle, style = MaterialTheme.typography.titleMedium, maxLines = 2)
@@ -57,9 +55,7 @@ fun ReviewDetailsInfo(loggedElementData: LoggedMovie, onEditPressed:(encodedJson
         Spacer(modifier = Modifier.padding(8.dp))
 
         IconButton(onClick = {
-            val jsonLoggedItem = loggedElementData.toJson()
-            val encodedJsonLoggedItem = URLEncoder.encode(jsonLoggedItem, "UTF-8")
-            onEditPressed(encodedJsonLoggedItem)
+            onEditPressed(reviewedLog.id)
         }) {
             Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Review")
         }

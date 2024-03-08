@@ -11,12 +11,11 @@ class DiaryEditElementViewModel: ViewModel() {
     private val _diaryEntry = MutableLiveData<LoggedMovie>()
     val diaryEntry: LiveData<LoggedMovie> get() = _diaryEntry
 
-
-    fun setDiaryEntryToEdit(diaryEntryToEdit: LoggedMovie){
-        _diaryEntry.value = diaryEntryToEdit
+    fun setDiaryEntryToEdit(diaryEntryId: String?){
+        _diaryEntry.value = LoggedMoviesDummy.find { it.id == diaryEntryId }
     }
 
-    fun updatedDiaryEntry(rating: Int, watchDate: String,){
+    fun updatedDiaryEntry(rating: Int, watchDate: String){
         val movieTitle = _diaryEntry.value?.movie?.title
 
         //Here only updates dummy temporary (later probably use an id for identification)
@@ -25,14 +24,11 @@ class DiaryEditElementViewModel: ViewModel() {
             it.date = watchDate
             it.rating = rating
         }
-
         _diaryEntry.value = updatedElement!!
-
-
-
     }
 
     fun deleteDiaryEntry(){
-
+        //here just with dummy data with movie title as identifier
+        LoggedMoviesDummy.removeIf { it.movie.id == _diaryEntry.value?.movie?.id }
     }
 }

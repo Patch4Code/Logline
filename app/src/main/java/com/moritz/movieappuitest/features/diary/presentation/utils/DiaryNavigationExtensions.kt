@@ -1,37 +1,37 @@
 package com.moritz.movieappuitest.features.diary.presentation.utils
 
+import android.util.Log
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.features.diary.domain.model.LoggedMovie
 import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 
-fun navigateOnDiaryEditSaveChanges(navController: NavController, diaryEntry: LoggedMovie){
+object DiaryNavigationExtensions {
 
-    val previousEntry = navController.previousBackStackEntry
+    fun NavController.navigateOnDiaryEditSaveOrDiscard(isDeleteAction: Boolean = false, comingFromDiaryView: Boolean? = null){
 
-    if(previousEntry?.destination?.route == Screen.DiaryScreen.route){
-        //if previous screen was DiaryView navigate back to DiaryView and clear backstack
-        navController.navigate(Screen.DiaryScreen.route){
-            popUpTo(Screen.DiaryScreen.route) {
-                inclusive = true
+        val previousEntry = previousBackStackEntry
+        //val secondToLastBackStackEntry =
+
+
+        Log.e("DiaryNavigationExtensions","prepreviousEntry: $comingFromDiaryView")
+
+
+        if(previousEntry?.destination?.route == Screen.DiaryScreen.route){
+            //if previous screen was DiaryView navigate back to DiaryView and clear backstack
+            navigate(Screen.DiaryScreen.route){
+                popUpTo(Screen.DiaryScreen.route) {
+                    inclusive = true
+                }
+            }
+        } else{ //previous screen was ReviewDetailsView
+            if (isDeleteAction){
+                navigate(Screen.ReviewsScreen.route){
+                    popUpTo(Screen.ReviewsScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }else{
+                popBackStack()
             }
         }
     }
-
-    else{ //previous screen was ReviewDetailsView
-        //val jsonLoggedItem = diaryEntry?.toJson()
-        //val encodedJsonLoggedItem = URLEncoder.encode(jsonLoggedItem, "UTF-8")
-        val diaryEntryId = diaryEntry.id
-
-        navController.navigate(Screen.ReviewDetailScreen.withArgs(diaryEntryId)){
-            popUpTo(Screen.ReviewsScreen.route) {
-                inclusive = false
-            }
-        }
-
-
-
-        //navController.popBackStack()
-    }
-
-
 }

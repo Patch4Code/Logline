@@ -31,9 +31,10 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun DiaryEditRatingDialog(rating: Int, openRatingDialog: Boolean, onAccept:(rating: Int) ->Unit, onCancel: () ->Unit){
 
-    var movieRating by remember { mutableStateOf(rating) }
-
     if(openRatingDialog){
+
+        var movieRating by remember { mutableStateOf(rating) }
+
         AlertDialog(
             onDismissRequest = { onCancel() }, //openRatingDialog.value = false
             title = {
