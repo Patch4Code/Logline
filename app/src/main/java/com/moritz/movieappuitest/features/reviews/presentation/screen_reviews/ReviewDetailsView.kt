@@ -36,6 +36,8 @@ fun ReviewDetailsView(
     val reviewedLog = reviewDetailsViewModel.currentReviewedLog.observeAsState().value
     val review: String = reviewedLog?.review ?: ""
 
+    val comingFromDiaryView = navController.previousBackStackEntry?.destination?.route == Screen.DiaryScreen.route
+
     LazyColumn (modifier = Modifier.padding(16.dp)){
         item {
             Row{
@@ -51,8 +53,8 @@ fun ReviewDetailsView(
                 if (reviewedLog != null) {
                     ReviewDetailsInfo(
                         reviewedLog = reviewedLog,
-                        onEditPressed = {encodedJsonLoggedItem->
-                            navController.navigate(Screen.DiaryEditElementScreen.withArgs(encodedJsonLoggedItem))
+                        onEditPressed = {reviewedLogId->
+                            navController.navigate("${Screen.DiaryEditElementScreen.route}/${reviewedLogId}/$comingFromDiaryView")
                         }
                     )
                 }

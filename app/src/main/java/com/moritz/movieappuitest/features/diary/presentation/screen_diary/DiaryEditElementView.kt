@@ -40,7 +40,7 @@ fun DiaryEditElementView(
     navController: NavController,
     navViewModel: NavigationViewModel,
     loggedElementId: String?,
-    sourceOfElement: String?,
+    comingFromDiaryView: Boolean?,
     diaryEditElementViewModel: DiaryEditElementViewModel = viewModel()
     ){
 
@@ -94,7 +94,7 @@ fun DiaryEditElementView(
             DiaryEditSaveChangesSection(
                 onSaveChanges = {
                     diaryEditElementViewModel.updatedDiaryEntry(rating, watchDate)
-                    navController.navigateOnDiaryEditSaveOrDiscard()
+                    navController.navigateOnDiaryEditSaveOrDiscard(comingFromDiaryView = comingFromDiaryView)
                 },
                 onDiscardChanges = {openDiscardDialog.value = true}
             )
@@ -104,7 +104,7 @@ fun DiaryEditElementView(
         DiaryEditDiscardDialog(
             openDiscardDialog = openDiscardDialog.value,
             onDiscard = { openDiscardDialog.value = false
-                navController.navigateOnDiaryEditSaveOrDiscard()
+                navController.navigateOnDiaryEditSaveOrDiscard(comingFromDiaryView = comingFromDiaryView)
             },
             onCancel = { openDiscardDialog.value = false }
         )

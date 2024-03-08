@@ -48,7 +48,7 @@ fun DiaryView(navController: NavController, navViewModel: NavigationViewModel, d
             swipeToEditContainer(
                 item = loggedItem,
                 onEdit = {
-                    navController.navigate(Screen.DiaryEditElementScreen.withArgs(loggedItem.id, true))
+                    navController.navigate("${Screen.DiaryEditElementScreen.route}/${loggedItem.id}/${true}")
                 })
             {_->
                 MovieLoggedItem(navController = navController, loggedElement = loggedItem)

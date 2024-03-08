@@ -25,7 +25,7 @@ import com.moritz.movieappuitest.features.diary.domain.model.LoggedMovie
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ReviewDetailsInfo(reviewedLog: LoggedMovie, onEditPressed:(encodedJsonLoggedItem: String)->Unit){
+fun ReviewDetailsInfo(reviewedLog: LoggedMovie, onEditPressed:(reviewedLogId: String)->Unit){
 
     val movieTitle = reviewedLog.movie.title
     val movieYear = MovieHelper.extractYear(reviewedLog.movie.releaseDate)

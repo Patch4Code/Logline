@@ -131,9 +131,7 @@ fun Navigation(){
                                 defaultValue = ""
                                 nullable = true
                             },
-                            navArgument("comingFromDiaryView"){
-                                type = NavType.BoolType
-                            }
+                            navArgument("comingFromDiaryView"){ type = NavType.BoolType }
                         )
                     ){parsedLoggedElement->
                         DiaryEditElementView(
