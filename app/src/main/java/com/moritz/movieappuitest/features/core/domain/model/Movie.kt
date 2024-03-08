@@ -8,6 +8,7 @@ data class Movie(
     @SerializedName("release_date") val releaseDate: String = "N/A-date",
     @SerializedName("poster_path") val posterUrl: String = "",
 ){
+
     //override hashCode-function for movie because release_date and poster_path can be null
     override fun hashCode(): Int { return title.hashCode() + id.hashCode() }
     //override equals-function because it is recommended to implement the equals() and hashCode() methods together

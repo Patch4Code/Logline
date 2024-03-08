@@ -14,7 +14,7 @@ fun DiaryEditDeleteSection(onButtonPressed:() -> Unit ){
     TextButton(onClick = { onButtonPressed() }) {
         Text(
             text = "Delete Diary-Entry",
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.weight(1f)
         )
         Icon(

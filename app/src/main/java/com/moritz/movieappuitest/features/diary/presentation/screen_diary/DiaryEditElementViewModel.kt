@@ -15,7 +15,7 @@ class DiaryEditElementViewModel: ViewModel() {
         _diaryEntry.value = LoggedMoviesDummy.find { it.id == diaryEntryId }
     }
 
-    fun updatedDiaryEntry(rating: Int, watchDate: String){
+    fun updatedDiaryEntry(rating: Int, watchDate: String, review: String){
         val movieTitle = _diaryEntry.value?.movie?.title
 
         //Here only updates dummy temporary (later probably use an id for identification)
@@ -23,6 +23,7 @@ class DiaryEditElementViewModel: ViewModel() {
         updatedElement?.let {
             it.date = watchDate
             it.rating = rating
+            it.review = review
         }
         _diaryEntry.value = updatedElement!!
     }

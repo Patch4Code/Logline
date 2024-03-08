@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 fun DiaryEditRatingSection(rating: Int, onButtonPressed: () -> Unit){
     TextButton(onClick = { onButtonPressed() }) {
         Row (modifier = Modifier.weight(1f)){
-            Text(text = "Rating $rating" , style = MaterialTheme.typography.titleLarge)
+            Text(text = "Rating $rating" , style = MaterialTheme.typography.titleMedium)
             Icon(imageVector = Icons.Default.StarRate, contentDescription = null)
         }
         Icon(imageVector = Icons.Default.Edit, contentDescription = null)

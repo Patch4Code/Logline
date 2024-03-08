@@ -34,10 +34,7 @@ import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 @Composable
 fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
 
-
     val loggedItemId = loggedItem.id
-    //val jsonLoggedItem = loggedItem.toJson()
-    //val encodedJsonLoggedItem = URLEncoder.encode(jsonLoggedItem, "UTF-8")
 
     Column (modifier = Modifier
         .fillMaxSize()

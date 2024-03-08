@@ -15,7 +15,7 @@ fun DiaryEditDateSection(watchDate: String, onButtonPressed: () -> Unit){
     TextButton(onClick = { onButtonPressed() }) {
         Text(
             text = "Watched ${DateHelper.formatDateToDisplay(watchDate)}",
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.weight(1f)
         )
         Icon(
