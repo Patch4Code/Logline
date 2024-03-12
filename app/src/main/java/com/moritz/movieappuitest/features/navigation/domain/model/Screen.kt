@@ -10,6 +10,7 @@ sealed class Screen(val route: String, val title: String) {
     object SearchScreen : Screen("search_screen", "Search")
     object SettingsScreen : Screen("settings_screen", "Settings")
     object MovieScreen : Screen("movie_screen", "")
+    object MovieLogScreen: Screen("movie_log_screen", "Add Diary-Entry")
     object MyMoviesScreen : Screen("my_movies_screen", "Movies")
     object DiaryScreen : Screen("diary_screen", "Diary")
     object DiaryEditElementScreen: Screen("diary_edit_element_screen", "Edit Diary-Entry")

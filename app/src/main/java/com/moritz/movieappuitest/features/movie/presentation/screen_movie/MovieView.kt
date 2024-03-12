@@ -12,9 +12,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.moritz.movieappuitest.features.core.domain.model.Movie
+import com.moritz.movieappuitest.features.core.presentation.utils.JSONHelper.toJson
 import com.moritz.movieappuitest.features.movie.presentation.components.MovieContent
 import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
+import java.net.URLEncoder
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -49,7 +52,17 @@ fun MovieView(
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = {
+                val movieToLog = Movie(
+                    title = movieDetails?.title.toString(),
+                    id=movieId,
+                    releaseDate = movieDetails?.releaseDate.toString(),
+                    posterUrl = movieDetails?.posterPath.toString()
+                )
+                val jsonMovie = movieToLog.toJson()
+                val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
+                navController.navigate(Screen.MovieLogScreen.withArgs(encodedJsonMovie))
+            }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }
         }

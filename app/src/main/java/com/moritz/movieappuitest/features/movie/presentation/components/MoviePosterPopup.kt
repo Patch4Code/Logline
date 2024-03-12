@@ -29,10 +29,11 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import com.moritz.movieappuitest.R
-import com.moritz.movieappuitest.features.movie.domain.model.MovieDetails
 import com.moritz.movieappuitest.features.core.presentation.utils.MovieHelper
+import com.moritz.movieappuitest.features.movie.domain.model.MovieDetails
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
@@ -73,6 +74,7 @@ fun MoviePosterPopup(openPosterPopup: Boolean, movieDetails: MovieDetails?, onPo
                         isButtonVisible = true
                     }
                 }
+                .zIndex(2f)
         ) {
             val movieTitle = movieDetails?.title ?: "N/A"
             val moviePosterUrl: String = MovieHelper.processPosterUrl(movieDetails?.posterPath)

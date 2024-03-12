@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DiaryEditSaveChangesSection(onSaveChanges: () -> Unit, onDiscardChanges: () -> Unit){
+fun DiaryEditSaveChangesSection(isEdit: Boolean = true, onSaveChanges: () -> Unit, onDiscardChanges: () -> Unit){
 
     val context = LocalContext.current
 
@@ -31,7 +31,7 @@ fun DiaryEditSaveChangesSection(onSaveChanges: () -> Unit, onDiscardChanges: () 
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         IconButton(
             onClick = {
-            Toast.makeText(context, "Diary Entry updated", Toast.LENGTH_LONG).show()
+            if (isEdit){ Toast.makeText(context, "Diary Entry updated", Toast.LENGTH_LONG).show() }
             onSaveChanges()
             }
         ){

@@ -27,6 +27,7 @@ import com.moritz.movieappuitest.features.friends.presentation.screen_friends.Fr
 import com.moritz.movieappuitest.features.home.presentation.screen_home.HomeView
 import com.moritz.movieappuitest.features.list.presentation.screen_list.ListView
 import com.moritz.movieappuitest.features.list.presentation.screen_list.ListsTableView
+import com.moritz.movieappuitest.features.movie.presentation.screen_movie.MovieLogView
 import com.moritz.movieappuitest.features.movie.presentation.screen_movie.MovieView
 import com.moritz.movieappuitest.features.my_movies.presentation.screen_my_movies.MyMoviesView
 import com.moritz.movieappuitest.features.navigation.domain.model.Screen
@@ -113,6 +114,21 @@ fun Navigation(){
                             navController = navController,
                             navViewModel = navigationViewModel,
                             id = movieId
+                        )
+                    }
+
+                    composable(
+                        route = Screen.MovieLogScreen.route + "/{movie}",
+                        arguments = listOf(
+                            navArgument("movie"){
+                                type = NavType.StringType
+                            }
+                        )
+                    ){
+                        MovieLogView(
+                            navController = navController,
+                            navViewModel = navigationViewModel,
+                            movieString = it.arguments?.getString("movie"),
                         )
                     }
 
