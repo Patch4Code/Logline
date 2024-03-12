@@ -43,7 +43,6 @@ fun MovieLogView(
     navViewModel: NavigationViewModel,
     movieString: String?,
     movieLogViewModel: MovieLogViewModel = viewModel(),
-    movieViewModel: MovieViewModel = viewModel()
     ){
 
     LaunchedEffect(Unit) {
@@ -88,7 +87,6 @@ fun MovieLogView(
                 isEdit = false,
                 onSaveChanges = {
                     movieLogViewModel.addMovieLog(movie, watchDate, rating, review)
-                    movieViewModel.changeRating(movie.id, rating)
                     Toast.makeText(context, "Diary Entry Added", Toast.LENGTH_LONG).show()
                     navController.popBackStack()
                 },

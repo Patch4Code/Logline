@@ -2,6 +2,8 @@ package com.moritz.movieappuitest.features.movie.presentation.screen_movie
 
 import androidx.lifecycle.ViewModel
 import com.moritz.movieappuitest.features.core.domain.model.Movie
+import com.moritz.movieappuitest.features.core.domain.model.MovieUserData
+import com.moritz.movieappuitest.features.core.domain.model.userDataList
 import com.moritz.movieappuitest.features.diary.domain.model.LoggedMovie
 import com.moritz.movieappuitest.features.diary.domain.model.LoggedMoviesDummy
 
@@ -13,5 +15,24 @@ class MovieLogViewModel: ViewModel() {
 
         //add to LoggedMovies (Dummy)
         LoggedMoviesDummy.add(loggedElement)
+
+        updateRating(movie, rating)
+    }
+
+
+    private fun updateRating(movie: Movie, rating: Int){
+
+        val movieUserData = userDataList.find { it.movie?.id == movie.id }
+
+        if (movieUserData != null){
+            movieUserData.rating = rating
+        }else{
+            val newMovieUserData = MovieUserData(
+                movie  = movie,
+                onWatchlist = false,
+                rating = rating
+            )
+            userDataList.add(newMovieUserData)
+        }
     }
 }
