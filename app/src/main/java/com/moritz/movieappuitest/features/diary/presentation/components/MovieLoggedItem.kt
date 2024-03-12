@@ -81,24 +81,27 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
-                Row (
-                    modifier = Modifier.padding(4.dp, bottom = 8.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.Bottom
-                ){
-                    Icon(
-                        imageVector = Icons.Default.StarRate,
-                        contentDescription = "StarRate",
-                        tint = Color.Yellow,
-                        modifier = Modifier
-                            .size(15.dp)
-                            .align(Alignment.CenterVertically)
-                    )
-                    Text(text = "${loggedElement.rating}",
-                        color = Color.White,
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+
+                if(loggedElement.rating > 0){
+                    Row (
+                        modifier = Modifier.padding(4.dp, bottom = 8.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.Bottom
+                    ){
+                        Icon(
+                            imageVector = Icons.Default.StarRate,
+                            contentDescription = "StarRate",
+                            tint = Color.Yellow,
+                            modifier = Modifier
+                                .size(15.dp)
+                                .align(Alignment.CenterVertically)
+                        )
+                        Text(text = "${loggedElement.rating}",
+                            color = Color.White,
+                            modifier = Modifier.align(Alignment.CenterVertically),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
                 }
             }
         }

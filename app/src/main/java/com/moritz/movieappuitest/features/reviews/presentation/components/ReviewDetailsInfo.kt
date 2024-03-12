@@ -35,22 +35,26 @@ fun ReviewDetailsInfo(reviewedLog: LoggedMovie, onEditPressed:(reviewedLogId: St
     Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)){
         Text(text = movieTitle, style = MaterialTheme.typography.titleMedium, maxLines = 2)
         Text(text = movieYear, style = MaterialTheme.typography.bodyMedium)
-        Row (
-            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Bottom
-        ){
-            Text(text = rating, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.align(
-                Alignment.CenterVertically))
-            Icon(
-                imageVector = Icons.Default.StarRate,
-                contentDescription = "StarRate",
-                tint = Color.Yellow,
-                modifier = Modifier
-                    .size(15.dp)
-                    .align(Alignment.CenterVertically)
-            )
+
+        if(reviewedLog.rating > 0){
+            Row (
+                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom
+            ){
+                Text(text = rating, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.align(
+                    Alignment.CenterVertically))
+                Icon(
+                    imageVector = Icons.Default.StarRate,
+                    contentDescription = "StarRate",
+                    tint = Color.Yellow,
+                    modifier = Modifier
+                        .size(15.dp)
+                        .align(Alignment.CenterVertically)
+                )
+            }
         }
+
         Text(text = "${formatedDate[0]}. ${formatedDate[1]} ${formatedDate[2]}", style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.padding(8.dp))
 

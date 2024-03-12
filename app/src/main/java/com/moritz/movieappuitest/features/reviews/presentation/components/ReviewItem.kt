@@ -47,17 +47,20 @@ fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
                 text = "${loggedItem.movie.title} (${MovieHelper.extractYear(loggedItem.movie.releaseDate)})",
                 style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.padding(start = 8.dp))
-            Row{
-                Icon(
-                    imageVector = Icons.Default.StarRate,
-                    contentDescription = "StarRate",
-                    tint = Color.Yellow,
-                    modifier = Modifier
-                        .size(15.dp)
-                        .align(Alignment.CenterVertically)
-                )
-                Text(text = "${loggedItem.rating}", style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.align(Alignment.CenterVertically))
+
+            if(loggedItem.rating > 0){
+                Row{
+                    Icon(
+                        imageVector = Icons.Default.StarRate,
+                        contentDescription = "StarRate",
+                        tint = Color.Yellow,
+                        modifier = Modifier
+                            .size(15.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                    Text(text = "${loggedItem.rating}", style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.align(Alignment.CenterVertically))
+                }
             }
         }
 
