@@ -81,16 +81,19 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
             )
         }
 
-        if(openRatingDialog.value){
-            DiaryEditRatingDialog(
-                rating = rating ?: 0,
-                openRatingDialog = openRatingDialog.value,
-                onAccept = { newRating->
-                    openRatingDialog.value = false
-                    movieViewModel.changeRating(id, newRating)
-                }
-            ) { openRatingDialog.value = false }
-        }
+        DiaryEditRatingDialog(
+            rating = rating ?: 0,
+            hasDeleteButton = true,
+            openRatingDialog = openRatingDialog.value,
+            onAccept = { newRating->
+                openRatingDialog.value = false
+                movieViewModel.changeRating(id, newRating)
+            },
+            onCancel = {openRatingDialog.value = false},
+            onDelete = {openRatingDialog.value = false
+                movieViewModel.changeRating(id, -1)
+            }
+        )
 
         AddToListDialog(openAddToListDialog, movieDetails)
     }

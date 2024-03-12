@@ -82,25 +82,29 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
                 modifier = Modifier.padding(4.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
-            Row (
-                modifier = Modifier.padding(4.dp, bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.Bottom
-            ){
-                Icon(
-                    imageVector = Icons.Default.StarRate,
-                    contentDescription = "StarRate",
-                    tint = Color.Yellow,
-                    modifier = Modifier
-                        .size(15.dp)
-                        .align(Alignment.CenterVertically)
-                )
-                Text(
-                    text = "$rating",
-                    color = Color.White,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
+
+            if(rating > 0){
+                Row (
+                    modifier = Modifier.padding(4.dp, bottom = 8.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.Bottom
+                ){
+                    Icon(
+                        imageVector = Icons.Default.StarRate,
+                        contentDescription = "StarRate",
+                        tint = Color.Yellow,
+                        modifier = Modifier
+                            .size(15.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                    Text(
+                        text = "$rating",
+                        color = Color.White,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
             }
+
         }
     }
 }

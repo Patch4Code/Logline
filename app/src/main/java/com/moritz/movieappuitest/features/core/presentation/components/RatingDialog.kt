@@ -1,6 +1,7 @@
 package com.moritz.movieappuitest.features.core.presentation.components
 
 import android.view.MotionEvent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,11 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material.icons.filled.StarRate
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +33,13 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun DiaryEditRatingDialog(rating: Int, openRatingDialog: Boolean, onAccept:(rating: Int) ->Unit, onCancel: () ->Unit){
+fun DiaryEditRatingDialog(
+    rating: Int,
+    openRatingDialog: Boolean,
+    hasDeleteButton: Boolean = false,
+    onAccept:(rating: Int) ->Unit,
+    onCancel: () ->Unit,
+    onDelete:()->Unit = {}){
 
     if(openRatingDialog){
 
@@ -85,9 +94,18 @@ fun DiaryEditRatingDialog(rating: Int, openRatingDialog: Boolean, onAccept:(rati
                 }
             },
             dismissButton = {
-                Button(onClick = { onCancel() }) {//openRatingDialog.value = false
-                    Text(text = "Cancel")
+                Row (horizontalArrangement = Arrangement.Start){
+                    if(hasDeleteButton){
+                        IconButton(onClick = { onDelete() }, ) {
+                            Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                        }
+                        Spacer(modifier = Modifier.padding(28.dp))
+                    }
+                    Button(onClick = { onCancel() }) {//openRatingDialog.value = false
+                        Text(text = "Cancel")
+                    }
                 }
+
             },
             modifier = Modifier
                 .padding(0.dp)

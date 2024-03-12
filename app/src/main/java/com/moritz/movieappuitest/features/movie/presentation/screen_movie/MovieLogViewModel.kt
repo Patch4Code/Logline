@@ -13,7 +13,5 @@ class MovieLogViewModel: ViewModel() {
 
         //add to LoggedMovies (Dummy)
         LoggedMoviesDummy.add(loggedElement)
-
-        //update or add rating to
     }
 }

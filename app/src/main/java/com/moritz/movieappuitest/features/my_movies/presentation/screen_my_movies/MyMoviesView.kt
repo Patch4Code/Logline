@@ -8,9 +8,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.core.domain.model.userDataList
 import com.moritz.movieappuitest.features.my_movies.presentation.components.MovieRatedBrowseCard
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 
 @Composable
@@ -24,7 +24,7 @@ fun MyMoviesView(navController: NavController, navViewModel: NavigationViewModel
         modifier = Modifier.padding(8.dp),
         columns = GridCells.Fixed(3),
         content = {
-            val ratedItems = userDataList.filter {it.rating > 0}
+            val ratedItems = userDataList.filter {it.rating >= 0}
             ratedItems.forEach{ ratedItem ->
                 item {
                     MovieRatedBrowseCard(navController, ratedItem)

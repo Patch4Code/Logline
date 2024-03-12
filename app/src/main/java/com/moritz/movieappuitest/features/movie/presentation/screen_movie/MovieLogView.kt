@@ -87,15 +87,10 @@ fun MovieLogView(
             DiaryEditSaveChangesSection(
                 isEdit = false,
                 onSaveChanges = {
-                    if(rating != 0){
-                        movieLogViewModel.addMovieLog(movie, watchDate, rating, review)
-                        movieViewModel.changeRating(movie.id, rating)
-                        Toast.makeText(context, "Rating needed", Toast.LENGTH_LONG).show()
-                        navController.popBackStack()
-                    }
-                    else{
-                        Toast.makeText(context, "Rating needed", Toast.LENGTH_LONG).show()
-                    }
+                    movieLogViewModel.addMovieLog(movie, watchDate, rating, review)
+                    movieViewModel.changeRating(movie.id, rating)
+                    Toast.makeText(context, "Diary Entry Added", Toast.LENGTH_LONG).show()
+                    navController.popBackStack()
                 },
                 onDiscardChanges = {openDiscardDialog.value = true}
             )
@@ -108,8 +103,9 @@ fun MovieLogView(
             onAccept = { newRating->
                 openRatingDialog.value = false
                 rating = newRating
-            }
-        ) { openRatingDialog.value = false }
+            },
+            onCancel = {openRatingDialog.value = false},
+        )
 
         DiaryEditDatePickerDialog(
             watchDate = watchDate,

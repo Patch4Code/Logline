@@ -48,7 +48,6 @@ fun DiaryEditElementView(
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.DiaryEditElementScreen)
         diaryEditElementViewModel.setDiaryEntryToEdit(loggedElementId)
-        //Log.e("DiaryEditElementViewModel", "launched")
     }
 
     val diaryEntry = diaryEditElementViewModel.diaryEntry.observeAsState().value
@@ -107,8 +106,9 @@ fun DiaryEditElementView(
             onAccept = { newRating->
                 openRatingDialog.value = false
                 rating = newRating
-            }
-        ) { openRatingDialog.value = false }
+            },
+            onCancel = {openRatingDialog.value = false}
+        )
 
         DiaryEditDatePickerDialog(
             watchDate = watchDate,
