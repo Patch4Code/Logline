@@ -1,6 +1,7 @@
 package com.moritz.movieappuitest.features.core.presentation.components
 
 import android.view.MotionEvent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -33,16 +34,22 @@ fun DiaryEditRatingDialog(rating: Int, openRatingDialog: Boolean, onAccept:(rati
 
     if(openRatingDialog){
 
-        var movieRating by remember { mutableStateOf(rating) }
+        var movieRating by remember { mutableStateOf(if(rating > 0) rating else 0) }
 
         AlertDialog(
-            onDismissRequest = { onCancel() }, //openRatingDialog.value = false
+            onDismissRequest = { onCancel() },
             title = {
                 Row {
                     Text(text = "Change Rating", modifier = Modifier.weight(1f))
-                    Text(text = movieRating.toString(),  fontSize = 40.sp, style = MaterialTheme.typography.headlineLarge )
+                    if(movieRating > 0){
+                        Text(text = movieRating.toString(),  fontSize = 40.sp, style = MaterialTheme.typography.headlineLarge )
+                    }else{
+                        Column {
+                            Text(text = "No", fontSize = 15.sp, style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp))
+                            Text(text = "Rating", fontSize = 15.sp, style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp))
+                        }
+                    }
                 }
-
                 Spacer(modifier = Modifier.padding(32.dp))
             },
             text = {
@@ -53,7 +60,11 @@ fun DiaryEditRatingDialog(rating: Int, openRatingDialog: Boolean, onAccept:(rati
                                 .pointerInteropFilter {
                                     when (it.action) {
                                         MotionEvent.ACTION_DOWN -> {
-                                            movieRating = index
+                                            movieRating = if ((movieRating == 1) and (index == 1)) {
+                                                0
+                                            } else {
+                                                index
+                                            }
                                         }
                                     }
                                     true

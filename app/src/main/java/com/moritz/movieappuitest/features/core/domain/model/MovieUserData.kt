@@ -3,7 +3,7 @@ package com.moritz.movieappuitest.features.core.domain.model
 data class MovieUserData(
     val movie: Movie? = null,
     var onWatchlist: Boolean = false,
-    var rating: Int = 0
+    var rating: Int = -1
 )
 
 val userDataList = mutableListOf(

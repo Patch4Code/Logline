@@ -8,11 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.moritz.movieappuitest.api.RetrofitHelper
 import com.moritz.movieappuitest.api.TmdbApiService
 import com.moritz.movieappuitest.features.core.domain.model.Movie
-import com.moritz.movieappuitest.features.movie.domain.model.MovieCredits
-import com.moritz.movieappuitest.features.movie.domain.model.MovieDetails
 import com.moritz.movieappuitest.features.core.domain.model.MovieUserData
 import com.moritz.movieappuitest.features.core.domain.model.userDataList
 import com.moritz.movieappuitest.features.core.presentation.utils.TmdbCredentials
+import com.moritz.movieappuitest.features.movie.domain.model.MovieCredits
+import com.moritz.movieappuitest.features.movie.domain.model.MovieDetails
 import kotlinx.coroutines.launch
 
 class MovieViewModel: ViewModel(){
@@ -83,7 +83,7 @@ class MovieViewModel: ViewModel(){
             _myRating.value = movieUserData.rating
             _onWatchlist.value = movieUserData.onWatchlist
         }else{
-            _myRating.value = 0
+            _myRating.value = -1
             _onWatchlist.value = false
         }
     }
@@ -94,7 +94,12 @@ class MovieViewModel: ViewModel(){
             movieUserData.rating = rating
         }else{
             val newMovieUserData = MovieUserData(
-                movie = Movie(title = _detailsData.value?.title ?: "N/A", id = id ?: -1, releaseDate = _detailsData.value?.releaseDate ?: "N/A", posterUrl = _detailsData.value?.posterPath ?: ""),
+                movie = Movie(
+                    title = _detailsData.value?.title ?: "N/A",
+                    id = id ?: -1,
+                    releaseDate = _detailsData.value?.releaseDate ?: "N/A",
+                    posterUrl = _detailsData.value?.posterPath ?: ""
+                ),
                 onWatchlist = false,
                 rating = rating
             )

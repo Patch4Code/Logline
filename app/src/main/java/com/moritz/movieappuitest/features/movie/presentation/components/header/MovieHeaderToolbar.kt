@@ -1,14 +1,16 @@
 package com.moritz.movieappuitest.features.movie.presentation.components.header
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
-import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material.icons.filled.StarRate
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.WatchLater
+import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +29,7 @@ import com.moritz.movieappuitest.features.movie.domain.model.MovieDetails
 import com.moritz.movieappuitest.features.movie.presentation.components.dialogs.AddToListDialog
 import com.moritz.movieappuitest.features.movie.presentation.screen_movie.MovieViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewModel){
 
@@ -41,18 +44,26 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
     //Rating, Watchlist and addToList
     Spacer(modifier = Modifier.padding(8.dp))
     Row{
-        TextButton(onClick = { openRatingDialog.value = true }) {
-            val hasRating = (rating ?: 0) > 0
-            if (hasRating) {
+        //Rating and Watch button
+        TextButton(onClick = { openRatingDialog.value = true }
+        ) {
+            if((rating ?: -1) > 0){
                 Text(text = "$rating", style = MaterialTheme.typography.headlineMedium, color = Color.White)
+                Icon(
+                    imageVector = Icons.Default.StarRate,
+                    contentDescription = null,
+                    tint = Color.Yellow,
+                    modifier = Modifier.size(30.dp)
+                )
             }
-            Icon(
-                imageVector = if (hasRating) Icons.Default.StarRate else Icons.Default.StarOutline,
-                contentDescription = null,
-                tint = Color.Yellow,
-                modifier = Modifier.size(30.dp)
-            )
+            else if(rating == 0){
+                Icon(imageVector = Icons.Filled.Visibility, contentDescription = null, modifier = Modifier.size(30.dp))
+            }else{
+                Icon(imageVector = Icons.Outlined.Visibility, tint = Color.DarkGray, contentDescription = null, modifier = Modifier.size(30.dp))
+            }
         }
+
+        //Watchlist Button
         IconButton(onClick = { movieViewModel.changeOnWatchlist(id, !(onWatchlist ?: false)) }) {
             Icon(imageVector = if (onWatchlist == true) Icons.Default.WatchLater else Icons.Outlined.WatchLater,
                 contentDescription = null,
@@ -60,6 +71,8 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
                 modifier = Modifier.size(30.dp)
             )
         }
+
+        //Add to List Button
         IconButton(onClick = { openAddToListDialog.value = true }) {
             Icon(imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
                 contentDescription = "Add to List",
