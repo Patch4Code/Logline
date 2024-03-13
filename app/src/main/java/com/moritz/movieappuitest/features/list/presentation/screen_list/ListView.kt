@@ -14,23 +14,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.moritz.movieappuitest.features.navigation.domain.model.Screen
 import com.moritz.movieappuitest.features.core.domain.model.Movie
-import com.moritz.movieappuitest.features.list.domain.model.MovieList
 import com.moritz.movieappuitest.features.core.presentation.utils.JSONHelper
-import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.moritz.movieappuitest.features.list.domain.model.MovieList
+import com.moritz.movieappuitest.features.list.presentation.components.list.ListContent
 import com.moritz.movieappuitest.features.list.presentation.components.list.dialogs.AddMovieToListDialog
 import com.moritz.movieappuitest.features.list.presentation.components.list.dialogs.DeleteMovieFromListDialog
 import com.moritz.movieappuitest.features.list.presentation.components.list.dialogs.EditListDialog
 import com.moritz.movieappuitest.features.list.presentation.components.list.dialogs.ListSettingsBottomSheet
-import com.moritz.movieappuitest.features.list.presentation.components.list.ListContent
-import com.moritz.movieappuitest.features.list.presentation.utils.onCancelDeleteMovieFromList
-import com.moritz.movieappuitest.features.list.presentation.utils.onDeleteList
-import com.moritz.movieappuitest.features.list.presentation.utils.onDeleteListBottomSheet
-import com.moritz.movieappuitest.features.list.presentation.utils.onDeleteMovieFromList
-import com.moritz.movieappuitest.features.list.presentation.utils.onEditListBottomSheet
-import com.moritz.movieappuitest.features.list.presentation.utils.onSaveEditList
 import com.moritz.movieappuitest.features.list.presentation.components.lists_table.dialogs.DeleteListDialog
+import com.moritz.movieappuitest.features.list.presentation.utils.ListDialogsExtensions.onCancelDeleteMovieFromList
+import com.moritz.movieappuitest.features.list.presentation.utils.ListDialogsExtensions.onDeleteList
+import com.moritz.movieappuitest.features.list.presentation.utils.ListDialogsExtensions.onDeleteListBottomSheet
+import com.moritz.movieappuitest.features.list.presentation.utils.ListDialogsExtensions.onDeleteMovieFromList
+import com.moritz.movieappuitest.features.list.presentation.utils.ListDialogsExtensions.onEditListBottomSheet
+import com.moritz.movieappuitest.features.list.presentation.utils.ListDialogsExtensions.onSaveEditList
+import com.moritz.movieappuitest.features.navigation.domain.model.Screen
+import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 import java.net.URLDecoder
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

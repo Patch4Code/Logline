@@ -5,27 +5,30 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.moritz.movieappuitest.features.navigation.domain.model.Screen
-import com.moritz.movieappuitest.features.core.domain.model.userDataList
 import com.moritz.movieappuitest.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.moritz.movieappuitest.features.watchlist.presentation.components.MovieWatchlistBrowseCard
 
 @Composable
-fun WatchlistView(navController: NavController, navViewModel: NavigationViewModel){
+fun WatchlistView(navController: NavController, navViewModel: NavigationViewModel, watchlistViewModel: WatchlistViewModel = viewModel()){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.WatchlistScreen)
     }
 
+    val userDataList = watchlistViewModel.myUserDataList.observeAsState().value
+
     LazyVerticalGrid(
         modifier = Modifier.padding(8.dp),
         columns = GridCells.Fixed(3),
         content = {
-            val watchlistItems = userDataList.filter {it.onWatchlist}
-            watchlistItems.forEach{ userData ->
+            val watchlistItems = userDataList?.filter {it.onWatchlist}
+            watchlistItems?.forEach{ userData ->
                 item {
                     if(userData.onWatchlist){
                         userData.movie?.let { MovieWatchlistBrowseCard(navController, it) }
