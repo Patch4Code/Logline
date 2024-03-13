@@ -5,13 +5,14 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+val bundleId = "com.patch4code.loglinemovieapp"
 
 android {
-    namespace = "com.moritz.movieappuitest"
+    namespace = bundleId
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.moritz.movieappuitest"
+        applicationId = bundleId
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -31,8 +32,8 @@ android {
 
     buildTypes {
         release {
-            isShrinkResources = true
-            isMinifyEnabled = true
+            isShrinkResources = false
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

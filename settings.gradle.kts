@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MovieAppUiTest"
+rootProject.name = "Logline"
 include(":app")
