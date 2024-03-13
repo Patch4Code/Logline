@@ -114,13 +114,16 @@ class MovieViewModel: ViewModel(){
             movieUserData.onWatchlist = newOnWatchlistState
         }else{
             val newMovieUserData = MovieUserData(
-                movie = Movie(title = _detailsData.value?.title ?: "N/A", id = id ?: -1, releaseDate = _detailsData.value?.releaseDate ?: "N/A", posterUrl = _detailsData.value?.posterPath ?: ""),
+                movie = Movie(
+                    title = _detailsData.value?.title ?: "N/A",
+                    id = id ?: -1,
+                    releaseDate = _detailsData.value?.releaseDate ?: "N/A",
+                    posterUrl = _detailsData.value?.posterPath ?: ""
+                ),
                 onWatchlist = newOnWatchlistState,
-                rating = 0
             )
             userDataList.add(newMovieUserData)
         }
         _onWatchlist.value = newOnWatchlistState
-        //Log.e("MovieViewModel", "userDataList: $userDataList")
     }
 }

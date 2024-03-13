@@ -17,6 +17,7 @@ class MovieLogViewModel: ViewModel() {
         LoggedMoviesDummy.add(loggedElement)
 
         updateRating(movie, rating)
+        removeFromWatchlist(movie)
     }
 
 
@@ -33,6 +34,14 @@ class MovieLogViewModel: ViewModel() {
                 rating = rating
             )
             userDataList.add(newMovieUserData)
+        }
+    }
+
+
+    private fun removeFromWatchlist(movie: Movie){
+        val movieUserData = userDataList.find { it.movie?.id == movie.id }
+        if (movieUserData != null){
+            movieUserData.onWatchlist = false
         }
     }
 }

@@ -28,6 +28,7 @@ import com.moritz.movieappuitest.features.core.presentation.components.DiaryEdit
 import com.moritz.movieappuitest.features.movie.domain.model.MovieDetails
 import com.moritz.movieappuitest.features.movie.presentation.components.dialogs.AddToListDialog
 import com.moritz.movieappuitest.features.movie.presentation.screen_movie.MovieViewModel
+import com.moritz.movieappuitest.ui.theme.LightBlue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -67,7 +68,7 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
         IconButton(onClick = { movieViewModel.changeOnWatchlist(id, !(onWatchlist ?: false)) }) {
             Icon(imageVector = if (onWatchlist == true) Icons.Default.WatchLater else Icons.Outlined.WatchLater,
                 contentDescription = null,
-                tint = if (onWatchlist == true) Color.White else Color.DarkGray,
+                tint = if (onWatchlist == true) LightBlue else Color.DarkGray,
                 modifier = Modifier.size(30.dp)
             )
         }
