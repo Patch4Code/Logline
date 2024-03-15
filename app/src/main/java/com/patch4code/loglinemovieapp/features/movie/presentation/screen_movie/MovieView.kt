@@ -19,7 +19,6 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import java.net.URLEncoder
 
-//...
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.patch4code.loglinemovieapp.features.about.presentation.screen_settings.AboutView
 import com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary.DiaryEditElementView
 import com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary.DiaryView
 import com.patch4code.loglinemovieapp.features.friends.presentation.screen_friends.FriendsView
@@ -39,7 +40,6 @@ import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profi
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewDetailsView
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewsView
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchView
-import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsView
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.screen_watchlist.WatchlistView
 import kotlinx.coroutines.launch
 
@@ -95,8 +95,8 @@ fun Navigation(){
                         SearchView(navController = navController, navViewModel = navigationViewModel)
                     }
 
-                    composable(route = Screen.SettingsScreen.route){
-                        SettingsView(navController = navController, navViewModel = navigationViewModel)
+                    composable(route = Screen.AboutScreen.route){
+                        AboutView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(

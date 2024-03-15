@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.navigation.domain.model
+package com.patch4code.loglinemovieapp.features.profile.domain.model
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.FeaturedPlayList
@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 data class ProfileNavigationElement(
     val title: String = "",

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.navigation.domain.model.ProfileNavigationElement
+import com.patch4code.loglinemovieapp.features.profile.domain.model.ProfileNavigationElement
 
 @Composable
 fun ProfileNavigation(navController: NavController){

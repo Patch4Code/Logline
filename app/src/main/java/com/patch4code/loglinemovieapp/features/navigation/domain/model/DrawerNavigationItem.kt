@@ -1,17 +1,25 @@
 package com.patch4code.loglinemovieapp.features.navigation.domain.model
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.FeaturedPlayList
+import androidx.compose.material.icons.automirrored.outlined.FeaturedPlayList
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.WatchLater
 import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.Reviews
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -48,16 +56,40 @@ data class DrawerNavigationItem(
                 route = Screen.WatchlistScreen.route,
             ),
             DrawerNavigationItem(
+                title = "Movies",
+                selectedIcon = Icons.Filled.Movie,
+                unselectedIcon = Icons.Outlined.Movie,
+                route = Screen.MyMoviesScreen.route,
+            ),
+            DrawerNavigationItem(
+                title = "Diary",
+                selectedIcon = Icons.Filled.DateRange,
+                unselectedIcon = Icons.Outlined.DateRange,
+                route = Screen.DiaryScreen.route,
+            ),
+            DrawerNavigationItem(
+                title = "Reviews",
+                selectedIcon = Icons.Filled.Reviews,
+                unselectedIcon = Icons.Outlined.Reviews,
+                route = Screen.ReviewsScreen.route,
+            ),
+            DrawerNavigationItem(
+                title = "Lists",
+                selectedIcon = Icons.AutoMirrored.Filled.FeaturedPlayList,
+                unselectedIcon = Icons.AutoMirrored.Outlined.FeaturedPlayList,
+                route = Screen.ListsTableScreen.route,
+            ),
+            DrawerNavigationItem(
                 title = "Friends",
                 selectedIcon = Icons.Filled.Group,
                 unselectedIcon = Icons.Outlined.Group,
                 route = Screen.FriendsScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Settings",
+                title = "About",
                 selectedIcon = Icons.Filled.Settings,
-                unselectedIcon = Icons.Outlined.Settings,
-                route = Screen.SettingsScreen.route
+                unselectedIcon = Icons.Outlined.Info,
+                route = Screen.AboutScreen.route
             ),
         )
     }

@@ -45,6 +45,7 @@ fun MovieContent(
                 movieDetails?.spokenLanguages
             )
             MovieMoreLikeThis(navController, collectionMovies, movieDetails?.title)
+            MovieSourceReference()
         }
     }
     MoviePosterPopup(openPosterPopup.value, movieDetails, onPosterPopupClose = {openPosterPopup.value = false})
