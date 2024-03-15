@@ -7,10 +7,10 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.WatchLater
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.DateRange
@@ -87,7 +87,7 @@ data class DrawerNavigationItem(
             ),
             DrawerNavigationItem(
                 title = "About",
-                selectedIcon = Icons.Filled.Settings,
+                selectedIcon = Icons.Filled.Info,
                 unselectedIcon = Icons.Outlined.Info,
                 route = Screen.AboutScreen.route
             ),

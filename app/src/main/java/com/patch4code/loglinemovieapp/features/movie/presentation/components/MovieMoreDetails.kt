@@ -55,7 +55,7 @@ fun MovieMoreDetails(
             }
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            containerColor = Color.DarkGray,
         ),
     ){
         Row (modifier = Modifier.padding(8.dp).fillMaxWidth()){
