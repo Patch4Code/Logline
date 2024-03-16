@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -18,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -37,7 +35,7 @@ fun MovieSourceReference(){
         TooltipBox(
             positionProvider =  TooltipDefaults.rememberPlainTooltipPositionProvider(),
             tooltip = {
-                Card (modifier = Modifier.padding(8.dp), colors = CardDefaults.cardColors(containerColor = Color.DarkGray)){
+                Card (modifier = Modifier.padding(8.dp)){
                     Text(text = "This product uses the TMDB API but is not endorsed or certified by TMDB.",
                         modifier = Modifier.padding(8.dp)) }
                 },

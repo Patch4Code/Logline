@@ -2,7 +2,6 @@ package com.patch4code.loglinemovieapp.features.reviews.presentation.screen_revi
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,9 +20,12 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ReviewsView(navController: NavController, navViewModel: NavigationViewModel, reviewsViewModel: ReviewsViewModel = viewModel()){
+fun ReviewsView(
+    navController: NavController,
+    navViewModel: NavigationViewModel,
+    reviewsViewModel: ReviewsViewModel = viewModel()
+){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.ReviewsScreen)

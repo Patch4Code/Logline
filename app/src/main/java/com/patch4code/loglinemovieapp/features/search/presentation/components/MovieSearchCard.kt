@@ -12,15 +12,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun MovieSearchCard(navController: NavController, movie: Movie){
@@ -49,14 +48,12 @@ fun MovieSearchCard(navController: NavController, movie: Movie){
                     text = title,
                     modifier = Modifier.padding(4.dp),
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
                     maxLines = 2
                 )
                 Text(
                     text = year,
                     modifier = Modifier.padding(4.dp),
                     style = MaterialTheme.typography.titleSmall,
-                    color = Color.LightGray
                 )
             }
         }

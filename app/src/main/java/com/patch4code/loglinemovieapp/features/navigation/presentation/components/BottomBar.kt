@@ -1,16 +1,15 @@
 package com.patch4code.loglinemovieapp.features.navigation.presentation.components
 
-import androidx.compose.material3.Text
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.BottomNavigationItem
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
 @Composable
@@ -24,7 +23,7 @@ fun BottomBar(navController: NavController, navViewModel: NavigationViewModel){
 
                 selected = item.title == currentScreen.title,
                 label = {
-                    Text(text = item.title, color = Color.White)
+                    Text(text = item.title)
                 },
                 alwaysShowLabel = false,
                 icon = {

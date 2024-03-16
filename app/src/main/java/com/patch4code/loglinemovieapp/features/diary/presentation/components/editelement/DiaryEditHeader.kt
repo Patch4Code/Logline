@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -26,8 +25,8 @@ fun DiaryEditHeader(movieTitle: String, moviePosterUrl: String, movieYear: Strin
             error = painterResource(id = R.drawable.movie_poster_placeholder)
         )
         Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)){
-            Text(text = movieTitle, color = Color.White, style = MaterialTheme.typography.titleLarge)
-            Text(text = movieYear, color = Color.White, style = MaterialTheme.typography.bodyMedium)
+            Text(text = movieTitle, style = MaterialTheme.typography.titleLarge)
+            Text(text = movieYear, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

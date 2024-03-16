@@ -28,10 +28,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.R
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -97,7 +97,6 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
                                 .align(Alignment.CenterVertically)
                         )
                         Text(text = "${loggedElement.rating}",
-                            color = Color.White,
                             modifier = Modifier.align(Alignment.CenterVertically),
                             style = MaterialTheme.typography.bodyMedium
                         )

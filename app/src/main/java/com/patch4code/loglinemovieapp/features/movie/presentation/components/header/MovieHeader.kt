@@ -46,9 +46,9 @@ fun MovieHeader(
                 error = painterResource(id = R.drawable.movie_poster_placeholder))
         }
         Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)){
-            Text(text = movieTitle, color = Color.White, style = MaterialTheme.typography.titleLarge)
+            Text(text = movieTitle, style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.padding(4.dp))
-            Text(text = "$movieYear | $movieRuntime min", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+            Text(text = "$movieYear | $movieRuntime min", style = MaterialTheme.typography.bodyMedium)
             MovieHeaderToolbar(movieDetails, movieViewModel)
         }
     }

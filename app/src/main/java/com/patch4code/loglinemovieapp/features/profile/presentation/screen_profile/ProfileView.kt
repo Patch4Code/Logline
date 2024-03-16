@@ -17,13 +17,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.profile.domain.model.getUserProfileData
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.profile.domain.model.getUserProfileData
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.ExpandableBio
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.MovieFavouriteRow
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.ProfileHead
@@ -54,7 +53,6 @@ fun ProfileView(navController: NavController, navViewModel: NavigationViewModel)
         //Username
         Text(
             text = userData.value.username,
-            color = Color.White,
             modifier = Modifier.align(CenterHorizontally),
             fontWeight = FontWeight.Bold
         )

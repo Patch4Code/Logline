@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
@@ -21,7 +19,6 @@ fun MovieCastAndCrew(movieCredits: MovieCredits?){
             Text(
                 text = "Cast",
                 modifier = Modifier.padding(top = 16.dp),
-                color = Color.White,
                 fontWeight = FontWeight.Bold
             )
             LazyRow {
@@ -36,7 +33,6 @@ fun MovieCastAndCrew(movieCredits: MovieCredits?){
             Text(
                 text = "Crew",
                 modifier = Modifier.padding(top = 16.dp),
-                color = Color.White,
                 fontWeight = FontWeight.Bold
             )
             LazyRow {

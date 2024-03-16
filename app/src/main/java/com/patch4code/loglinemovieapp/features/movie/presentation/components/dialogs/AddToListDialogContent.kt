@@ -35,7 +35,6 @@ fun AddToListDialogContent(myUserMovieLists: List<MovieList>?, currentMovie: Mov
                     onClick = { selectedList.value = list },
                     enabled = !movieAlreadyOnList,
                     shape = RectangleShape,
-                    //modifier = Modifier.background(color = if(selectedList.value == list) Color.Gray else Color.Unspecified),
                     border = if(selectedList.value == list) BorderStroke(2.dp, Color.Gray ) else null
                 ){
                     Row(modifier = Modifier

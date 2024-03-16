@@ -13,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
@@ -22,12 +21,8 @@ fun DiaryEditSaveChangesSection(isEdit: Boolean = true, onSaveChanges: () -> Uni
 
     val context = LocalContext.current
 
-    HorizontalDivider(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp),
-        thickness = 1.dp, color = Color.DarkGray
-    )
+    HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
+
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         IconButton(
             onClick = {

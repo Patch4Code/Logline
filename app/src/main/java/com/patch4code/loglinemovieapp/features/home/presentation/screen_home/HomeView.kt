@@ -10,7 +10,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -38,12 +37,9 @@ fun HomeView(navController: NavController, navViewModel: NavigationViewModel, ho
         LazyColumn {
             homeMoviesMap?.forEach { (groupName, movies) ->
                 item {
-                    Text(
-                        text = groupName,
+                    Text(text = groupName,
                         modifier = Modifier.padding(top = 16.dp, start = 16.dp),
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
-                    )
+                        fontWeight = FontWeight.Bold)
                     LazyRow {
                         items(movies) { movie ->
                             MovieHomeBrowseCard(navController, movie)

@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -43,14 +42,12 @@ fun MovieListAddMovieCard(movie: Movie, selectMovie:(movie: Movie) ->Unit){
                     text = title,
                     modifier = Modifier.padding(4.dp),
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
                     maxLines = 2
                 )
                 Text(
                     text = year,
                     modifier = Modifier.padding(4.dp),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = Color.LightGray
+                    style = MaterialTheme.typography.titleSmall
                 )
             }
         }

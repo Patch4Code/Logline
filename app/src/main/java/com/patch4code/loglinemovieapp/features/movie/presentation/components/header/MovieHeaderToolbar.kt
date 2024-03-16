@@ -49,7 +49,7 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
         TextButton(onClick = { openRatingDialog.value = true }
         ) {
             if((rating ?: -1) > 0){
-                Text(text = "$rating", style = MaterialTheme.typography.headlineMedium, color = Color.White)
+                Text(text = "$rating", style = MaterialTheme.typography.headlineMedium)
                 Icon(
                     imageVector = Icons.Default.StarRate,
                     contentDescription = null,
@@ -77,7 +77,6 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
         IconButton(onClick = { openAddToListDialog.value = true }) {
             Icon(imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
                 contentDescription = "Add to List",
-                tint = Color.White,
                 modifier = Modifier.size(30.dp)
             )
         }

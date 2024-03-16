@@ -70,46 +70,46 @@ fun MovieMoreDetails(
             if(showDetails){
 
                 //Production Companies
-                Text(text = "Production Companies:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = "Production Companies:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Row {
                     studios?.let {
-                        Text(text = it.joinToString { studio -> studio.name }, color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                        Text(text = it.joinToString { studio -> studio.name }, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
                 Spacer(modifier = Modifier.padding(16.dp))
 
 
                 //Countries
-                Text(text = "Production Countries:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = "Production Countries:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Row {
                     countries?.let {
-                        Text(text = it.joinToString { country -> country.name }, color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                        Text(text = it.joinToString { country -> country.name }, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
                 Spacer(modifier = Modifier.padding(16.dp))
 
                 //Spoken Languages
-                Text(text = "Spoken Languages:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = "Spoken Languages:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Row {
                     languages?.let {
-                        Text(text = it.joinToString { language -> language.englishName }, color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                        Text(text = it.joinToString { language -> language.englishName }, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
                 Spacer(modifier = Modifier.padding(16.dp))
 
                 //Status
-                Text(text = "Status:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
-                Text(text = movieStatus, color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                Text(text = "Status:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = movieStatus, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 //Budget
-                Text(text = "Budget:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
-                Text(text = "$budget $", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                Text(text = "Budget:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = "$budget $", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 //Revenue
-                Text(text = "Revenue:", color = Color.White, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
-                Text(text = "$revenue $", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                Text(text = "Revenue:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = "$revenue $", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
             }
         }
