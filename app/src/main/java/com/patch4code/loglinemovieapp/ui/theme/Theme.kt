@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = LightBlue, // e.g. status Bar
+    primary = LightBlue, // e.g. status Bar ...
     primaryContainer = SapphireBlue, // e.g. Floating Action Button
     secondaryContainer = Charcoal, // e.g. BottomBar and Drawer Elevation
     onSecondaryContainer = AzureishWhite, // e.g. Elevated Icon-color on BottomBar and Drawer
@@ -43,7 +43,6 @@ fun MovieAppUiTestTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
         }
     }
-
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
