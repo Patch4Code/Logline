@@ -27,7 +27,7 @@ fun getUserProfileData(): UserProfile {
             Movie("A Clockwork Orange",185, "1971-01-01", "/4sHeTAp65WrSSuc05nRBKddhBxO.jpg"),
             Movie("American Psycho", 1359, "2000-01-01", "/9uGHEgsiUXjCNq8wdq4r49YL8A1.jpg"),
             Movie("Taxi Driver", 103,"1976-01-01","/8FbDLFGRPdWaEz5hWC9wyG0d2il.jpg"),
-            Movie("Who Am I", 284427, "1976-01-01","/oR3tbNzJMJmCKS5O5fanU9yxIOk.jpg",)
+            Movie("Who Am I", 284427, "1976-01-01","/oR3tbNzJMJmCKS5O5fanU9yxIOk.jpg")
         ),
         numberOfFriends = 2
     )

@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
+private val darkColorScheme = darkColorScheme(
     primary = LightBlue, // e.g. status Bar ...
     primaryContainer = SapphireBlue, // e.g. Floating Action Button
     secondaryContainer = Charcoal, // e.g. BottomBar and Drawer Elevation
@@ -33,7 +33,7 @@ fun MovieAppUiTestTheme(
     //dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = DarkColorScheme //DarkColorScheme dynamicDarkColorScheme(context)
+    val colorScheme = darkColorScheme //DarkColorScheme dynamicDarkColorScheme(context)
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {

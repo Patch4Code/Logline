@@ -25,7 +25,7 @@ import com.patch4code.loglinemovieapp.features.movie.domain.model.Cast
 
 @Composable
 fun CastMemberElement(castMember: Cast) {
-    Column (modifier = Modifier.padding(top = 8.dp, bottom = 8.dp), horizontalAlignment = Alignment.CenterHorizontally){
+    Column (modifier = Modifier.padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally){
         if(!castMember.profilePath.isNullOrEmpty()){
             AsyncImage(
                 model = TmdbCredentials.OTHER_IMAGE_URL + castMember.profilePath,

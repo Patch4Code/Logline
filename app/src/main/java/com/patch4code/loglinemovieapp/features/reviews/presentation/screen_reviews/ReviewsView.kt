@@ -1,7 +1,5 @@
 package com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items

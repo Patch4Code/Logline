@@ -17,7 +17,7 @@ import com.patch4code.loglinemovieapp.features.home.presentation.components.Movi
 fun MovieMoreLikeThis(navController: NavController, collectionMovies: List<Movie>?, currentMovieTitle: String?){
 
     if(collectionMovies != null){
-        HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),)
+        HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
         Text(text = "More like this", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
         LazyRow {
             items(collectionMovies) { movie ->

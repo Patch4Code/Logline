@@ -21,5 +21,5 @@ fun MovieGenres(genres: List<Genre>?){
         }
     }
     Spacer(modifier = Modifier.padding(8.dp))
-    HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+    HorizontalDivider()
 }

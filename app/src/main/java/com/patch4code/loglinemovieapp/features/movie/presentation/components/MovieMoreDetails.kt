@@ -44,8 +44,7 @@ fun MovieMoreDetails(
 
     var showDetails by remember { mutableStateOf(false) }
 
-    Spacer(modifier = Modifier.padding(16.dp))
-    HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+    HorizontalDivider(modifier = Modifier.padding(top = 32.dp, bottom = 16.dp))
 
     Card (
         modifier = Modifier

@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.components.header
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -30,7 +29,6 @@ import com.patch4code.loglinemovieapp.features.movie.presentation.components.dia
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
 import com.patch4code.loglinemovieapp.ui.theme.LightBlue
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewModel){
 

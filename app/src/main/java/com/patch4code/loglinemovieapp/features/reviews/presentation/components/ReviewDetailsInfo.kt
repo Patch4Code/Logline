@@ -1,7 +1,5 @@
 package com.patch4code.loglinemovieapp.features.reviews.presentation.components
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ReviewDetailsInfo(reviewedLog: LoggedMovie, onEditPressed:(reviewedLogId: String)->Unit){
 

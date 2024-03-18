@@ -96,7 +96,7 @@ fun DiaryEditRatingDialog(
             dismissButton = {
                 Row (horizontalArrangement = Arrangement.Start){
                     if(hasDeleteButton){
-                        IconButton(onClick = { onDelete() }, ) {
+                        IconButton(onClick = { onDelete() }) {
                             Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                         }
                         Spacer(modifier = Modifier.padding(28.dp))

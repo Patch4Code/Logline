@@ -1,9 +1,12 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.components.cast_and_crew
 
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,31 +19,35 @@ fun MovieCastAndCrew(movieCredits: MovieCredits?){
 
     if (movieCredits != null) {
         if(!movieCredits.cast.isNullOrEmpty()){
-            Text(
-                text = "Cast",
-                modifier = Modifier.padding(top = 16.dp),
-                fontWeight = FontWeight.Bold
+            Text(text = "Cast", modifier = Modifier.padding(top = 16.dp), fontWeight = FontWeight.Bold)
+
+            Row(modifier = Modifier
+                    .horizontalScroll(rememberScrollState())
+                    .height(IntrinsicSize.Max),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                content = {
+                   for(castMember in movieCredits.cast){
+                       CastMemberElement(castMember)
+                   }
+                },
             )
-            LazyRow {
-                items(movieCredits.cast) { castMember ->
-                    CastMemberElement(castMember)
-                    Spacer(modifier = Modifier.padding(4.dp))
-                }
-            }
         }
         if(!movieCredits.crew.isNullOrEmpty()){
-            Spacer(modifier = Modifier.padding(8.dp))
             Text(
                 text = "Crew",
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = 4.dp),
                 fontWeight = FontWeight.Bold
             )
-            LazyRow {
-                items(movieCredits.crew) { crewMember ->
-                    CrewMemberElement(crewMember)
-                    Spacer(modifier = Modifier.padding(4.dp))
-                }
-            }
+            Row(modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                .height(IntrinsicSize.Max),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                content = {
+                    for(crewMember in movieCredits.crew){
+                        CrewMemberElement(crewMember)
+                    }
+                },
+            )
         }
     }
 }

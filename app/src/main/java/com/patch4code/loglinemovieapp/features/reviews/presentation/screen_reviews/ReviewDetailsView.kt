@@ -1,7 +1,5 @@
 package com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -20,7 +18,6 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewDetailsInfo
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewDetailsPoster
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ReviewDetailsView(
     navController: NavController,
