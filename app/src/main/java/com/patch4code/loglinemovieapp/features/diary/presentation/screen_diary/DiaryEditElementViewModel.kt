@@ -30,6 +30,6 @@ class DiaryEditElementViewModel: ViewModel() {
 
     fun deleteDiaryEntry(){
         //here just with dummy data with movie title as identifier
-        LoggedMoviesDummy.removeIf { it.movie.id == _diaryEntry.value?.movie?.id }
+        LoggedMoviesDummy.removeIf { it.id == _diaryEntry.value?.id  }
     }
 }

@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ class DiaryViewModel: ViewModel() {
 
     private fun getDiaryLogs(){
         _diaryLogs.value = LoggedMoviesDummy
+        Log.e("DiaryViewModel","_diaryLogs: ${_diaryLogs.value}")
     }
 
 }
