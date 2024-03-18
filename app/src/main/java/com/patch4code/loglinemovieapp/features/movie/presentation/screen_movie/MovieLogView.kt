@@ -107,7 +107,7 @@ fun MovieLogView(
             openDatePickerDialog = openDatePickerDialog.value,
             onAccept = { date->
                 openDatePickerDialog.value = false
-                watchDateTime = date
+                watchDateTime =  movieLogViewModel.adjustedDateTime(date)
             },
             onCancel = { openDatePickerDialog.value = false }
         )

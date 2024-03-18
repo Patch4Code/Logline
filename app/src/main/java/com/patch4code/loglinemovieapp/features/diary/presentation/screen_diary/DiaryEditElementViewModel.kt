@@ -43,7 +43,7 @@ class DiaryEditElementViewModel: ViewModel() {
             date.with(adjustedTime)
         }else{
             // If there are no existing entries on the same date, set the time to midnight
-            date.with(LocalDateTime.MIN)
+            date.withHour(0).withMinute(0).withSecond(0).withNano(0)
         }
     }
 

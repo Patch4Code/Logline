@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.diary.presentation.components.dialogs
 
-import android.util.Log
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,14 +21,13 @@ fun DiaryEditDatePickerDialog(watchDateTime: LocalDateTime, openDatePickerDialog
         val confirmEnabled = derivedStateOf { datePickerState.selectedDateMillis != null }
 
         DatePickerDialog(
-            onDismissRequest = { onCancel() },//openDatePickerDialog.value = false
+            onDismissRequest = { onCancel() },
             confirmButton = {
                 TextButton(
                     onClick = {
                         if(datePickerState.selectedDateMillis != null){
                             val dateTime = DateHelper.convertLongToLocalDateTime(datePickerState.selectedDateMillis)
                             onAccept(dateTime)
-                            Log.e("DiaryEditDatePickerDialog","dateTime: ${dateTime}")
                         }
                     },
                     enabled = confirmEnabled.value
@@ -38,7 +36,7 @@ fun DiaryEditDatePickerDialog(watchDateTime: LocalDateTime, openDatePickerDialog
                 }
             },
             dismissButton = {
-                TextButton(onClick = { onCancel() }) {//openDatePickerDialog.value = false
+                TextButton(onClick = { onCancel() }) {
                     Text(text = "Cancel")
                 }
             }

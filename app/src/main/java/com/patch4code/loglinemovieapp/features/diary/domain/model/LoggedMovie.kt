@@ -15,7 +15,7 @@ data class LoggedMovie(
 var LoggedMoviesDummy: MutableList<LoggedMovie> = mutableListOf(
     LoggedMovie(
         movie = Movie("Willy’s Wonderland", 643586,"2021-01-28","/keEnkeAvifw8NSEC4f6WsqeLJgF.jpg"),
-        date = LocalDateTime.of(2023, 11, 29, 23, 59, 59), //"2023-11-29"
+        date = LocalDateTime.of(2023, 11, 29, 0, 0 ), //"2023-11-29"
         rating = 6,
         review = "Cage is cool"
     ),

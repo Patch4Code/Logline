@@ -3,6 +3,7 @@ package com.patch4code.loglinemovieapp.features.diary.presentation.utils
 import android.annotation.SuppressLint
 import android.util.Log
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 object DateHelper {
@@ -14,16 +15,12 @@ object DateHelper {
 
     @SuppressLint("SimpleDateFormat")
     fun convertDateTimeToLong(dateTime: LocalDateTime): Long{
-        return dateTime.atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli()
+        Log.e("DateHelper", "convertDateTimeToLong: $dateTime, ${dateTime.toInstant(ZoneOffset.UTC).toEpochMilli()}")
+        return dateTime.toInstant(ZoneOffset.UTC).toEpochMilli()
     }
 
     fun formatDateToDisplay(watchDateTime: LocalDateTime): String {
-        return try {
-            val dateFormat =  DateTimeFormatter.ofPattern("dd.MM.yyyy")
-            watchDateTime.format(dateFormat)
-        } catch (e: Exception) {
-            Log.e("formatDateToDisplay", "Error formatting date", e)
-            "Error formatting date"
-        }
+        val dateFormat =  DateTimeFormatter.ofPattern("dd.MM.yyyy")
+        return watchDateTime.format(dateFormat)
     }
 }

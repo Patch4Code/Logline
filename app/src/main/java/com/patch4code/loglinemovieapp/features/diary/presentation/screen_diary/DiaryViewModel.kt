@@ -19,7 +19,16 @@ class DiaryViewModel: ViewModel() {
 
     private fun getDiaryLogs(){
         _diaryLogs.value = LoggedMoviesDummy
-        Log.e("DiaryViewModel","_diaryLogs: ${_diaryLogs.value}")
+
+        //Log.e("DiaryViewModel","_diaryLogs: ${_diaryLogs.value}")
+        printLoggedMoviesWithoutReview(_diaryLogs.value as MutableList<LoggedMovie>)
+    }
+
+    private fun printLoggedMoviesWithoutReview(loggedMovies: List<LoggedMovie>) {
+        loggedMovies.forEach {
+            Log.e("DiaryViewModel","Movie: ${it.movie.title}, Date: ${it.date}, Rating: ${it.rating}")
+        }
+        Log.e("DiaryViewModel", "---")
     }
 
 }
