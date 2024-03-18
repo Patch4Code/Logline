@@ -15,11 +15,8 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewItem
-import java.time.LocalDate
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ReviewsView(
     navController: NavController,
@@ -36,9 +33,8 @@ fun ReviewsView(
 
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         items(reviewedLogs?.sortedByDescending { loggedItem->
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val localDate = LocalDate.parse(loggedItem.date, formatter)
-            localDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli() } ?: emptyList())
+            loggedItem.date.toEpochSecond(ZoneOffset.UTC)
+        } ?: emptyList())
         { loggedItem ->
             ReviewItem(loggedItem, navController)
         }

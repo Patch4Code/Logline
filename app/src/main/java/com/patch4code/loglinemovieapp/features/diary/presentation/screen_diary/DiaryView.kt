@@ -1,7 +1,5 @@
 package com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,11 +15,8 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.swip
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.MovieLoggedItem
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
-import java.time.LocalDate
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DiaryView(navController: NavController, navViewModel: NavigationViewModel, diaryViewModel: DiaryViewModel = viewModel()){
 
@@ -37,9 +32,8 @@ fun DiaryView(navController: NavController, navViewModel: NavigationViewModel, d
             .padding(16.dp)
     ) {
         items(diaryLogs?.sortedByDescending { loggedItem->
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val localDate = LocalDate.parse(loggedItem.date, formatter)
-            localDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli() } ?: emptyList()
+            loggedItem.date.toEpochSecond(ZoneOffset.UTC)
+        } ?: emptyList()
         )
         { loggedItem ->
             swipeToEditContainer(

@@ -2,38 +2,25 @@ package com.patch4code.loglinemovieapp.features.diary.presentation.utils
 
 import android.annotation.SuppressLint
 import android.util.Log
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import java.util.TimeZone
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 object DateHelper {
 
     @SuppressLint("SimpleDateFormat")
-    fun convertLongToTimeSting(dateMillis: Long?): String{
-        val formatter = SimpleDateFormat("yyyy-MM-dd")
-        return formatter.format(Date(dateMillis!!))
+    fun convertLongToLocalDateTime(longValue: Long?): LocalDateTime {
+        return LocalDateTime.ofInstant(java.time.Instant.ofEpochMilli(longValue!!), java.time.ZoneId.systemDefault())
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun convertTimeStringToLong(timeString: String): Long{
-        return try {
-            val formatter = SimpleDateFormat("yyyy-MM-dd")
-            formatter.timeZone = TimeZone.getTimeZone("UTC")
-            val date = formatter.parse(timeString)
-            date?.time ?: 0L
-        } catch (e: Exception) {
-            Log.e("convertTimeStringToLong", "error during parsing of timeString to Long", e)
-            0L
-        }
+    fun convertDateTimeToLong(dateTime: LocalDateTime): Long{
+        return dateTime.atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli()
     }
 
-    fun formatDateToDisplay(dateString: String): String {
+    fun formatDateToDisplay(watchDateTime: LocalDateTime): String {
         return try {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = dateFormat.parse(dateString)
-            val displayFormat = SimpleDateFormat("d. MMMM yyyy", Locale.getDefault())
-            displayFormat.format(date ?: Date(0))
+            val dateFormat =  DateTimeFormatter.ofPattern("dd.MM.yyyy")
+            watchDateTime.format(dateFormat)
         } catch (e: Exception) {
             Log.e("formatDateToDisplay", "Error formatting date", e)
             "Error formatting date"

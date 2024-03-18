@@ -33,8 +33,7 @@ import com.patch4code.loglinemovieapp.features.diary.presentation.components.edi
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import java.net.URLDecoder
-import java.text.SimpleDateFormat
-import java.util.Date
+import java.time.LocalDateTime
 
 @SuppressLint("SimpleDateFormat")
 @Composable
@@ -52,12 +51,10 @@ fun MovieLogView(
     val decodedMovieString = URLDecoder.decode(movieString, "UTF-8")
     val movie: Movie = JSONHelper.fromJson(decodedMovieString)
 
-
-    val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
     val context = LocalContext.current
 
     var rating by remember { mutableStateOf(0) }
-    var watchDate by remember { mutableStateOf(currentDate) }
+    var watchDateTime by remember { mutableStateOf(LocalDateTime.now()) }
     var review by remember { mutableStateOf("") }
 
     val openDiscardDialog = remember { mutableStateOf(false)  }
@@ -79,14 +76,14 @@ fun MovieLogView(
         Spacer(modifier = Modifier.padding(8.dp))
 
         DiaryEditRatingSection(rating = rating, onButtonPressed = { openRatingDialog.value = true })
-        DiaryEditDateSection(watchDate = watchDate, onButtonPressed = {openDatePickerDialog.value = true})
+        DiaryEditDateSection(watchDateTime = watchDateTime, onButtonPressed = {openDatePickerDialog.value = true})
         DiaryEditReviewSection(reviewText = review, onEditReviewPressed = {openEditReviewDialog.value = true})
 
         Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.weight(1f)){
             DiaryEditSaveChangesSection(
                 isEdit = false,
                 onSaveChanges = {
-                    movieLogViewModel.addMovieLog(movie, watchDate, rating, review)
+                    movieLogViewModel.addMovieLog(movie, watchDateTime, rating, review)
                     Toast.makeText(context, "Diary Entry Added", Toast.LENGTH_LONG).show()
                     navController.popBackStack()
                 },
@@ -106,11 +103,11 @@ fun MovieLogView(
         )
 
         DiaryEditDatePickerDialog(
-            watchDate = watchDate,
+            watchDateTime = watchDateTime,
             openDatePickerDialog = openDatePickerDialog.value,
             onAccept = { date->
                 openDatePickerDialog.value = false
-                watchDate = date
+                watchDateTime = date
             },
             onCancel = { openDatePickerDialog.value = false }
         )

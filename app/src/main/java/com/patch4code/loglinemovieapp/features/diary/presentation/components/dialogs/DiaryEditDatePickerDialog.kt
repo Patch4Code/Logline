@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.diary.presentation.components.dialogs
 
+import android.util.Log
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -9,13 +10,14 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import com.patch4code.loglinemovieapp.features.diary.presentation.utils.DateHelper
+import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DiaryEditDatePickerDialog(watchDate: String, openDatePickerDialog: Boolean, onAccept:(date: String) ->Unit, onCancel: () ->Unit){
+fun DiaryEditDatePickerDialog(watchDateTime: LocalDateTime, openDatePickerDialog: Boolean, onAccept:(dateTime: LocalDateTime) ->Unit, onCancel: () ->Unit){
 
     if (openDatePickerDialog){
-        val watchDateConverted = DateHelper.convertTimeStringToLong(watchDate)
+        val watchDateConverted = DateHelper.convertDateTimeToLong(watchDateTime)
         val datePickerState = rememberDatePickerState(watchDateConverted)
         val confirmEnabled = derivedStateOf { datePickerState.selectedDateMillis != null }
 
@@ -24,11 +26,11 @@ fun DiaryEditDatePickerDialog(watchDate: String, openDatePickerDialog: Boolean, 
             confirmButton = {
                 TextButton(
                     onClick = {
-                        var date = ""
                         if(datePickerState.selectedDateMillis != null){
-                            date = DateHelper.convertLongToTimeSting(datePickerState.selectedDateMillis)
+                            val dateTime = DateHelper.convertLongToLocalDateTime(datePickerState.selectedDateMillis)
+                            onAccept(dateTime)
+                            Log.e("DiaryEditDatePickerDialog","dateTime: ${dateTime}")
                         }
-                        onAccept(date)
                     },
                     enabled = confirmEnabled.value
                 ) {

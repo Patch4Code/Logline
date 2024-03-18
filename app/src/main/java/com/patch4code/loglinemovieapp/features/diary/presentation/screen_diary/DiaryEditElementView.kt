@@ -1,8 +1,6 @@
 package com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary
 
-import android.os.Build
 import androidx.activity.compose.BackHandler
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -34,8 +32,8 @@ import com.patch4code.loglinemovieapp.features.diary.presentation.components.edi
 import com.patch4code.loglinemovieapp.features.diary.presentation.utils.DiaryNavigationExtensions.navigateOnDiaryEditSaveOrDiscard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import java.time.LocalDateTime
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DiaryEditElementView(
     navController: NavController,
@@ -53,13 +51,13 @@ fun DiaryEditElementView(
     val diaryEntry = diaryEditElementViewModel.diaryEntry.observeAsState().value
 
     var rating by remember { mutableStateOf(0)}
-    var watchDate by remember { mutableStateOf("") }
+    var watchDateTime by remember { mutableStateOf(LocalDateTime.now()) }
     var review by remember { mutableStateOf("") }
 
     DisposableEffect(diaryEntry) {
         if (diaryEntry != null) {
             rating = diaryEntry.rating
-            watchDate = diaryEntry.date
+            watchDateTime = diaryEntry.date
             review = diaryEntry.review
         }
         onDispose {}
@@ -85,14 +83,14 @@ fun DiaryEditElementView(
         Spacer(modifier = Modifier.padding(8.dp))
 
         DiaryEditRatingSection(rating = rating, onButtonPressed = { openRatingDialog.value = true })
-        DiaryEditDateSection(watchDate = watchDate, onButtonPressed = {openDatePickerDialog.value = true})
+        DiaryEditDateSection(watchDateTime = watchDateTime, onButtonPressed = {openDatePickerDialog.value = true})
         DiaryEditReviewSection(reviewText = review, onEditReviewPressed = {openEditReviewDialog.value = true})
         DiaryEditDeleteSection(onButtonPressed = {openDeleteDialog.value = true})
 
         Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.weight(1f)){
             DiaryEditSaveChangesSection(
                 onSaveChanges = {
-                    diaryEditElementViewModel.updatedDiaryEntry(rating, watchDate, review)
+                    diaryEditElementViewModel.updatedDiaryEntry(rating, watchDateTime, review)
                     navController.navigateOnDiaryEditSaveOrDiscard(comingFromDiaryView = comingFromDiaryView)
                 },
                 onDiscardChanges = {openDiscardDialog.value = true}
@@ -111,11 +109,11 @@ fun DiaryEditElementView(
         )
 
         DiaryEditDatePickerDialog(
-            watchDate = watchDate,
+            watchDateTime = watchDateTime,
             openDatePickerDialog = openDatePickerDialog.value,
             onAccept = { date->
                 openDatePickerDialog.value = false
-                watchDate = date
+                watchDateTime = diaryEditElementViewModel.adjustedDateTime(date)
             },
             onCancel = { openDatePickerDialog.value = false }
         )

@@ -1,10 +1,6 @@
 package com.patch4code.loglinemovieapp.features.core.presentation.utils
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import java.time.LocalDateTime
 
 object MovieHelper {
 
@@ -16,11 +12,10 @@ object MovieHelper {
         return posterUrl?.takeIf { it.isNotEmpty() }?.let { TmdbCredentials.POSTER_URL + it } ?: ""
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun formatDate(dateString: String): List<String?> {
+    fun formatDate(dateTime: LocalDateTime): List<String?> {
 
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val date = LocalDate.parse(dateString, formatter)
+        //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        //val date = LocalDate.parse(dateString, formatter)
 
         val monthMap = mapOf(
             1 to "JAN",
@@ -36,9 +31,9 @@ object MovieHelper {
             11 to "NOV",
             12 to "DEC"
         )
-        Log.e("Date",date.toString())
+       //Log.e("Date",date.toString())
 
-        return listOf(date.dayOfMonth.toString(), monthMap[date.monthValue], date.year.toString())//date.format(formatter)
+        return listOf(dateTime.dayOfMonth.toString(), monthMap[dateTime.monthValue], dateTime.year.toString())//date.format(formatter)
     }
 }
 

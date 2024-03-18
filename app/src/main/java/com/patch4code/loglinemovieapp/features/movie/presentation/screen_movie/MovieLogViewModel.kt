@@ -6,16 +6,16 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
 import com.patch4code.loglinemovieapp.features.core.domain.model.userDataList
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMoviesDummy
+import java.time.LocalDateTime
 
 class MovieLogViewModel: ViewModel() {
 
-    fun addMovieLog(movie: Movie, date: String, rating: Int, review: String){
+    fun addMovieLog(movie: Movie, date: LocalDateTime, rating: Int, review: String){
 
         val loggedElement = LoggedMovie(movie = movie, date = date, rating = rating, review = review)
 
         //add to LoggedMovies (Dummy)
         LoggedMoviesDummy.add(loggedElement)
-
         updateRating(movie, rating)
         removeFromWatchlist(movie)
     }

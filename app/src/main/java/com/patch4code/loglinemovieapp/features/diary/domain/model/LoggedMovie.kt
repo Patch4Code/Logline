@@ -1,12 +1,13 @@
 package com.patch4code.loglinemovieapp.features.diary.domain.model
 
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import java.time.LocalDateTime
 import java.util.UUID
 
 data class LoggedMovie(
     val id: String = UUID.randomUUID().toString(),
     val movie: Movie,
-    var date: String,
+    var date: LocalDateTime,
     var rating: Int,
     var review: String = ""
 )
@@ -14,35 +15,35 @@ data class LoggedMovie(
 var LoggedMoviesDummy: MutableList<LoggedMovie> = mutableListOf(
     LoggedMovie(
         movie = Movie("Willy’s Wonderland", 643586,"2021-01-28","/keEnkeAvifw8NSEC4f6WsqeLJgF.jpg"),
-        date = "2023-11-29",
+        date = LocalDateTime.of(2023, 11, 29, 23, 59, 59), //"2023-11-29"
         rating = 6,
         review = "Cage is cool"
     ),
     LoggedMovie(
         movie = Movie("Poor Things", 792307,"2023-01-01","/jKyb0MKinNDbHF7WlBP4CE4KPAM.jpg"),
-        date = "2024-01-30",
+        date = LocalDateTime.of(2024, 1, 30, 0, 0), //"2024-01-30",
         rating = 9,
         review = "Cool"
     ),
     LoggedMovie(
         movie = Movie("Old Boy", 670,"2004-09-02","/pWDtjs568ZfOTMbURQBYuT4Qxka.jpg"),
-        date = "2024-01-28",
+        date = LocalDateTime.of(2024, 1, 28, 0, 0), //"2024-01-28"
         rating = 10
     ),
     LoggedMovie(
         movie = Movie("Missing", 768362,"2023-02-23","/wEOUYSU5Uf8J7152PT6jdb5233Y.jpg"),
-        date = "2024-01-26",
+        date = LocalDateTime.of(2024, 1, 26, 0, 0), //"2024-01-26"
         rating = 8
     ),
     LoggedMovie(
         movie = Movie("Mad Max: Fury Road", 76341,"2015-05-14","/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg"),
-        date = "2024-01-25",
+        date = LocalDateTime.of(2024, 1, 25, 0, 0), //"2024-01-25"
         rating = 9,
         review = "Test"
     ),
     LoggedMovie(
         movie = Movie("The Unbearable Weight of Massive Talent", 648579,"2022-01-28","/aqhLeieyTpTUKPOfZ3jzo2La0Mq.jpg"),
-        date = "2023-12-29",
+        date = LocalDateTime.of(2023, 12, 29, 0, 0), //"2023-12-29"
         rating = 7,
         review =  "\"Women - they have minds, and they have souls, as well as just hearts. And they've got ambitions, and they've got talent, as well as just beauty. I'm so sick of people saying that love is just all a woman is fit for. I'm so sick of it.\"\n" +
                 "\n" +

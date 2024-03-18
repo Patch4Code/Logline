@@ -1,8 +1,5 @@
 package com.patch4code.loglinemovieapp.features.diary.presentation.components
 
-
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,7 +30,6 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelp
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
 
@@ -53,7 +49,7 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
                 }
             }
     ){
-        val parsedDate = MovieHelper.formatDate(dateString = loggedElement.date)
+        val parsedDate = MovieHelper.formatDate(dateTime = loggedElement.date)
         Column (modifier = Modifier.padding(end = 16.dp)){
             parsedDate[1]?.let { Text(text = it, style = MaterialTheme.typography.titleMedium) }
             parsedDate[0]?.let { Text(text = it, style = MaterialTheme.typography.headlineLarge) }
@@ -106,6 +102,5 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
         }
 
         Spacer(modifier = Modifier.height(4.dp))
-
     }
 }
