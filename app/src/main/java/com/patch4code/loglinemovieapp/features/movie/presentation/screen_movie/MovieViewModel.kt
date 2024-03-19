@@ -11,8 +11,6 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
 import com.patch4code.loglinemovieapp.features.core.domain.model.userDataList
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
-import com.patch4code.loglinemovieapp.features.movie.domain.model.Cast
-import com.patch4code.loglinemovieapp.features.movie.domain.model.Crew
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import kotlinx.coroutines.launch
@@ -57,17 +55,6 @@ class MovieViewModel: ViewModel(){
             try {
                 val movieCreditsResponse = tmdbApiService.getMovieCredits(movieId = movieId)
                 if(movieCreditsResponse.isSuccessful){
-                    //bring the strings of each cast-character and also crew-job to the same length  for better displaying
-
-                    val equalizedCast = movieCreditsResponse.body()?.let { equalizeCastCharacterStringLength(it.cast) }
-                    val equalizedCrew =  movieCreditsResponse.body()?.let{ equalizeCrewJobStringLength(it.crew)}
-
-                    //Log.e("MovieViewModel","equalizedCrew: $equalizedCrew")
-                    val equalizedCredits = MovieCredits(
-                        id = movieCreditsResponse.body()?.id ?: -1,
-                        cast = equalizedCast ?: emptyList(),
-                        crew = equalizedCrew ?: emptyList()
-                    )
 
                     _creditsData.value = movieCreditsResponse.body()
                 }
@@ -76,30 +63,6 @@ class MovieViewModel: ViewModel(){
             }
         }
     }
-
-    private fun equalizeCastCharacterStringLength(castMembers: List<Cast>): List<Cast> {
-        val maxStringLength = castMembers.maxOfOrNull { it.character.length } ?: 0
-
-        // Gleichmachen der Längen der Characters
-        return castMembers.map { cast ->
-            val padding = " ".repeat(maxStringLength - cast.character.length)
-            val updatedCharacter = cast.character + padding
-            val updatedProfilePath = if(cast.profilePath != null) cast.profilePath else ""
-            cast.copy(character = updatedCharacter, profilePath = updatedProfilePath)
-        }
-    }
-    private fun equalizeCrewJobStringLength(crewMembers: List<Crew>): List<Crew> {
-        val maxStringLength = crewMembers.maxOfOrNull { it.job.length } ?: 0
-
-        return crewMembers.map { crew ->
-            val padding = " ".repeat(maxStringLength - crew.job.length)
-            val updatedCharacter = crew.job + padding
-            val updatedProfilePath = if(crew.profilePath != null) crew.profilePath else ""
-            crew.copy(job = updatedCharacter, profilePath = updatedProfilePath)
-        }
-    }
-
-
 
 
     fun loadMovieCollection(collectionId: Int){
