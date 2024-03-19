@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -21,30 +25,47 @@ fun MovieCastAndCrew(movieCredits: MovieCredits?){
         if(!movieCredits.cast.isNullOrEmpty()){
             Text(text = "Cast", modifier = Modifier.padding(top = 16.dp), fontWeight = FontWeight.Bold)
 
-            Row(modifier = Modifier
-                    .horizontalScroll(rememberScrollState())
+
+            var maxIndex by remember { mutableStateOf(5) }
+            val scrollState = rememberScrollState()
+            Row(
+                modifier = Modifier
+                    .horizontalScroll(scrollState)
                     .height(IntrinsicSize.Max),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 content = {
-                   for(castMember in movieCredits.cast){
-                       CastMemberElement(castMember)
-                   }
+                    for (index in 0 until maxIndex) {
+                        val castMember = movieCredits.cast[index]
+                        CastMemberElement(castMember)
+                        if (scrollState.value == scrollState.maxValue) {
+                            maxIndex = movieCredits.cast.size
+                        }
+                    }
                 },
             )
         }
+
         if(!movieCredits.crew.isNullOrEmpty()){
             Text(
                 text = "Crew",
                 modifier = Modifier.padding(top = 4.dp),
                 fontWeight = FontWeight.Bold
             )
-            Row(modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .height(IntrinsicSize.Max),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+
+            var maxIndex by remember { mutableStateOf(5) }
+            val scrollState = rememberScrollState()
+            Row(
+                modifier = Modifier
+                    .horizontalScroll(scrollState)
+                    .height(IntrinsicSize.Max),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 content = {
-                    for(crewMember in movieCredits.crew){
+                    for (index in 0 until maxIndex) {
+                        val crewMember = movieCredits.crew[index]
                         CrewMemberElement(crewMember)
+                        if (scrollState.value == scrollState.maxValue) {
+                            maxIndex = movieCredits.crew.size
+                        }
                     }
                 },
             )
