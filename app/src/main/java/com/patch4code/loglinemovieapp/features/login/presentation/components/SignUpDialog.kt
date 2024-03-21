@@ -1,0 +1,76 @@
+package com.patch4code.loglinemovieapp.features.login.presentation.components
+
+import android.widget.Toast
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import com.patch4code.loglinemovieapp.features.login.presentation.screen_login.LoginViewModel
+
+@Composable
+fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginViewModel){
+
+    if (showSignupDialog.value) {
+
+        val context = LocalContext.current
+
+        val newUserNameInput = remember { mutableStateOf("") }
+        val email = remember { mutableStateOf("") }
+        val newPasswordInput = remember { mutableStateOf("") }
+        val newPasswordAgainInput = remember { mutableStateOf("") }
+
+        Dialog(onDismissRequest =  {showSignupDialog.value = false}) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    LoginOutlinedTextField(input = newUserNameInput, label = "Username")
+                    LoginOutlinedTextField(input = email, label = "E-mail")
+                    
+                    PasswordOutlinedTextField(passwordInput = newPasswordInput)
+                    PasswordOutlinedTextField(passwordInput = newPasswordAgainInput, label = "Password again")
+
+                    Button(onClick = {
+                        loginViewModel.signUp(
+                            username = newUserNameInput.value,
+                            password = newPasswordInput.value,
+                            passwordAgain = newPasswordAgainInput.value,
+                            onPasswordError = {
+                                Toast.makeText(context, "Password must be the same", Toast.LENGTH_SHORT).show()
+                            },
+                            onSignupTriggered = {parseException->
+                                if(parseException == null){
+                                    Toast.makeText(context, "Signup Successfully", Toast.LENGTH_SHORT).show()
+                                }else{
+                                    Toast.makeText(context, parseException.message, Toast.LENGTH_LONG).show()
+                                }
+                            }
+                        )
+                        showSignupDialog.value = false
+
+                    }) {
+                        Text(text = "SIGN UP")
+                    }
+                }
+            }
+        }
+    }
+}
