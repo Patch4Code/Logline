@@ -69,6 +69,10 @@ dependencies {
     implementation("androidx.compose.material:material:1.6.3")
     implementation("androidx.compose.ui:ui-tooling-preview:1.7.0-alpha04")
 
+    //back4app dependencies
+    implementation("com.github.parse-community.Parse-SDK-Android:parse:1.26.0")
+
+
     //Load Images from URL
     implementation("io.coil-kt:coil-compose:2.4.0")
 

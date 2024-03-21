@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Logline</string>
+
+    //Back4App Strings
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <!-- Paste BOTH strings as required -->
+    <string name="back4app_app_id">zfJXWkBvRGdys63X02H8ZB1L7W8t9aO6HUprVWQC</string>
+    <string name="back4app_client_key">1ya9EHt3FxtuDZpJuQI4c6rsGXQh9jrKnArZyE9H</string>
+
 </resources>
