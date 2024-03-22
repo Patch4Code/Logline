@@ -72,6 +72,8 @@ dependencies {
     //back4app dependencies
     implementation("com.github.parse-community.Parse-SDK-Android:parse:1.26.0")
 
+    // Preferences DataStore (SharedPreferences like APIs)
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //Load Images from URL
     implementation("io.coil-kt:coil-compose:2.4.0")
