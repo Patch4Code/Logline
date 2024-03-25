@@ -73,4 +73,14 @@ class SocialViewModel: ViewModel() {
             }
         }
     }
+
+    fun changeProfileVisibilityState(publicState : Boolean){
+        viewModelScope.launch {
+            dataStore.setProfilePublicState(publicState)
+        }
+        //here the actions with back4app
+    }
+    fun updatePublicProfile(){
+        //here the actions with back4app
+    }
 }
