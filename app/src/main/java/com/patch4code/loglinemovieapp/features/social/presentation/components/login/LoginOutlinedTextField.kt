@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.login.presentation.components
+package com.patch4code.loglinemovieapp.features.social.presentation.components.login
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField

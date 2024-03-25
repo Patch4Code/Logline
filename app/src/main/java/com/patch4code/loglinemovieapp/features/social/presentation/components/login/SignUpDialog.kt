@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.login.presentation.components
+package com.patch4code.loglinemovieapp.features.social.presentation.components.login
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -18,10 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.patch4code.loglinemovieapp.features.login.presentation.screen_login.LoginViewModel
+import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 
 @Composable
-fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginViewModel){
+fun SignUpDialog(showSignupDialog: MutableState<Boolean>, socialViewModel: SocialViewModel){
 
     if (showSignupDialog.value) {
 
@@ -49,8 +49,9 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginV
                     PasswordOutlinedTextField(passwordInput = newPasswordAgainInput, label = "Password again")
 
                     Button(onClick = {
-                        loginViewModel.signUp(
+                        socialViewModel.signUp(
                             username = newUserNameInput.value,
+                            email = email.value,
                             password = newPasswordInput.value,
                             passwordAgain = newPasswordAgainInput.value,
                             onPasswordError = {
@@ -58,13 +59,13 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginV
                             },
                             onSignupTriggered = {parseException->
                                 if(parseException == null){
-                                    Toast.makeText(context, "Signup Successfully", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Signup Successfully! You can now login.", Toast.LENGTH_LONG).show()
+                                    showSignupDialog.value = false
                                 }else{
                                     Toast.makeText(context, parseException.message, Toast.LENGTH_LONG).show()
                                 }
                             }
                         )
-                        showSignupDialog.value = false
 
                     }) {
                         Text(text = "SIGN UP")

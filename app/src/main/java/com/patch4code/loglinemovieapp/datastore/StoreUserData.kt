@@ -46,6 +46,15 @@ class StoreUserData(private val context: Context) {
         }
     }
 
+    suspend fun deleteUserData(){
+        context.dataStore.edit { preferences ->
+            preferences[USER_ID_KEY] = ""
+            preferences[SESSION_TOKEN_KEY] = ""
+            preferences[EMAIL_KEY] = ""
+            preferences[USERNAME_KEY] = ""
+        }
+    }
+
 
 }
 

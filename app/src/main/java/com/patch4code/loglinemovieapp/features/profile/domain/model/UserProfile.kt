@@ -15,8 +15,8 @@ data class UserProfile(
 fun getUserProfileData(): UserProfile {
     return UserProfile(
         username = "@Tylor Durden",
-        profileImageUrl = "https://media.gq-magazin.de/photos/5c9cdb109d77084a7e9ed707/1:1/w_800,h_800,c_limit/teaser-fight-club-quer.jpg",
-        bannerImageUrl = "https://64.media.tumblr.com/60d40dcf8b890fa9278e6d0658b80f72/58e5a6f8f2be5db3-58/s1280x1920/40cbce0f93616aa0ead8ca3c6367d3c26ac3e82e.jpg",
+        profileImageUrl = "https://github.com/Patch4Code/Logline/assets/116561421/5d417226-4eb2-4f10-a520-d0509519d7c7",
+        bannerImageUrl = "https://github.com/Patch4Code/Logline/assets/116561421/8f7f93d5-4e8d-4ca9-8a81-f9db06451d5d",
         bioText = "🔥 Welcome to the anti-social club! 🔥\n" +
                 "Founder of the real Fight Club.\n" +
                 "Connoisseur of fucking chaos.\n" +

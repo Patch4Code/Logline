@@ -19,7 +19,7 @@ sealed class Screen(val route: String, val title: String) {
     object ListsTableScreen : Screen("lists_screen", "Lists")
     object ListScreen : Screen("list_screen", "List")
     object ProfileEditScreen : Screen("profile_edit_screen", "Edit Profile")
-    object FriendsScreen : Screen("friends_screen","Friends")
+    object SocialScreen : Screen("social_screen","Social")
 
     //helper to attach data for navigation
     fun withArgs(vararg args: String): String{

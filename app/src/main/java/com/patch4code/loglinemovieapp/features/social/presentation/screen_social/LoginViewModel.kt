@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.login.presentation.screen_login
+package com.patch4code.loglinemovieapp.features.social.presentation.screen_social
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

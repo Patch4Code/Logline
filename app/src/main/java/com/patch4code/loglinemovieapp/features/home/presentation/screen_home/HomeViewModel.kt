@@ -11,6 +11,7 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import kotlinx.coroutines.launch
 
+
 class HomeViewModel : ViewModel(){
 
     private val tmdbApiService: TmdbApiService by lazy {

@@ -5,19 +5,19 @@ import androidx.compose.material.icons.automirrored.filled.FeaturedPlayList
 import androidx.compose.material.icons.automirrored.outlined.FeaturedPlayList
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.WatchLater
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.DateRange
-import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.Reviews
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.WatchLater
@@ -80,10 +80,10 @@ data class DrawerNavigationItem(
                 route = Screen.ListsTableScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Friends",
-                selectedIcon = Icons.Filled.Group,
-                unselectedIcon = Icons.Outlined.Group,
-                route = Screen.FriendsScreen.route,
+                title = "Social",
+                selectedIcon = Icons.Filled.Public,
+                unselectedIcon = Icons.Outlined.Public,
+                route = Screen.SocialScreen.route,
             ),
             DrawerNavigationItem(
                 title = "About",

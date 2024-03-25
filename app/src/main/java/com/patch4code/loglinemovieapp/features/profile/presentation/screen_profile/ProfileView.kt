@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -58,12 +57,6 @@ fun ProfileView(navController: NavController, navViewModel: NavigationViewModel)
         )
 
         Spacer(modifier = Modifier.padding(4.dp))
-
-        //Friends
-        Text(text = userData.value.numberOfFriends.toString() +  " Friends",
-            modifier = Modifier
-                .clickable { navController.navigate(Screen.FriendsScreen.route) }
-                .align(CenterHorizontally))
 
         ProfileNavigation(navController)
 
