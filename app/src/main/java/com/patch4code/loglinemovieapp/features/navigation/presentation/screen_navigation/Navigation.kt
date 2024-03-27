@@ -32,6 +32,7 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.BottomBar
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.DrawerContent
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.TopBar
+import com.patch4code.loglinemovieapp.features.person_details.presentation.screen_person.PersonDetailsView
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileEditView
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileView
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewDetailsView
@@ -111,6 +112,21 @@ fun Navigation(){
                             navController = navController,
                             navViewModel = navigationViewModel,
                             id = movieId
+                        )
+                    }
+
+                    composable(
+                        route = Screen.PersonDetailsScreen.route + "/{person_id}",
+                        arguments = listOf(
+                            navArgument("person_id"){
+                                type = NavType.IntType
+                            }
+                        )
+                    ){
+                        PersonDetailsView(
+                            navController = navController,
+                            navViewModel = navigationViewModel,
+                            id = it.arguments?.getInt("person_id")
                         )
                     }
 

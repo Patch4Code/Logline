@@ -1,6 +1,7 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.components.cast_and_crew
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,13 +20,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Cast
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 @Composable
-fun CastMemberElement(castMember: Cast) {
-    Column (modifier = Modifier.padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally){
+fun CastMemberElement(castMember: Cast, navController: NavController) {
+
+    Column (
+        modifier = Modifier
+            .padding(top = 8.dp)
+            .clickable { navController.navigate("${Screen.PersonDetailsScreen.route}/${castMember.id}") },
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
         if(!castMember.profilePath.isNullOrEmpty()){
             AsyncImage(
                 model = TmdbCredentials.OTHER_IMAGE_URL + castMember.profilePath,

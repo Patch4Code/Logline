@@ -19,12 +19,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Crew
 
 @Composable
-fun CrewMemberElement(crewMember: Crew){
+fun CrewMemberElement(crewMember: Crew, navController: NavController){
     Column (modifier = Modifier.padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally){
         if(!crewMember.profilePath.isNullOrEmpty()){
             AsyncImage(

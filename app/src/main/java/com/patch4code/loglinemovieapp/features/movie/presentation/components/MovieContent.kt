@@ -35,7 +35,7 @@ fun MovieContent(
             MovieDescription(movieDetails?.tagline, movieDetails?.overview)
             MovieRatings(movieDetails?.voteAverage)
             MovieGenres(movieDetails?.genres)
-            MovieCastAndCrew(movieCredits)
+            MovieCastAndCrew(movieCredits, navController)
             MovieMoreDetails(
                 movieDetails?.productionCompanies,
                 movieDetails?.productionCountries,

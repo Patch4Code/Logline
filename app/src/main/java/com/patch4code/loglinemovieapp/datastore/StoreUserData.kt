@@ -67,8 +67,6 @@ class StoreUserData(private val context: Context) {
             preferences[USERNAME_KEY] = ""
         }
     }
-
-
 }
 
 
