@@ -6,6 +6,7 @@ import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCollectio
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetails
+import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonMovieCredits
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -72,4 +73,12 @@ interface TmdbApiService {
         @Query("language") language: String = "en-US",
         @Query("api_key") apiKey: String = TmdbCredentials.API_KEY
     ): Response<PersonDetails>
+
+    @GET("person/{person_id}/movie_credits")
+    suspend fun getPersonMovieCredits(
+        @Path("person_id") personId: Int?,
+        @Query("language") language: String = "en-US",
+        @Query("api_key") apiKey: String = TmdbCredentials.API_KEY
+    ): Response<PersonMovieCredits>
+
 }

@@ -45,6 +45,7 @@ fun PersonDetailsView(
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PersonDetailsScreen)
         personDetailsViewModel.loadPersonDetails(personId)
+        personDetailsViewModel.loadPersonMovieCredits(personId)
     }
 
     val personDetails = personDetailsViewModel.personDetails.observeAsState().value
