@@ -82,7 +82,7 @@ fun PersonDetailsView(
                 }
             }
             Text(text = "Bio:")
-            ExpandableText(text = personDetails?.biography ?: "N/A")
+            ExpandableText(text = personDetails?.biography ?: "N/A", maxLinesCollapsed = 4)
             Spacer(modifier = Modifier.padding(top = 16.dp))
 
 
