@@ -3,6 +3,7 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    //id("com.google.devtools.ksp")
 }
 
 val bundleId = "com.patch4code.loglinemovieapp"
@@ -68,6 +69,10 @@ dependencies {
     implementation("androidx.compose.ui:ui:1.6.3")
     implementation("androidx.compose.material:material:1.6.3")
     implementation("androidx.compose.ui:ui-tooling-preview:1.7.0-alpha04")
+
+    //Room Database
+    implementation("androidx.room:room-ktx:2.6.1")
+    //ksp("androidx.room:room-compiler:2.6.1")
 
     //back4app dependencies
     implementation("com.github.parse-community.Parse-SDK-Android:parse:1.26.0")

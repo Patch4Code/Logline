@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.parse.ParseException
 import com.parse.ParseUser
-import com.patch4code.loglinemovieapp.datastore.StoreUserData
+import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 import kotlinx.coroutines.launch
 
 class SocialViewModel: ViewModel() {

@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.datastore
+package com.patch4code.loglinemovieapp.preferences_datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore

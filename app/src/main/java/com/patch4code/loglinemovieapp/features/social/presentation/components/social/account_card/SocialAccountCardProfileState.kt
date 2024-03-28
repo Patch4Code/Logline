@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.datastore.StoreUserData
+import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 
 @Composable

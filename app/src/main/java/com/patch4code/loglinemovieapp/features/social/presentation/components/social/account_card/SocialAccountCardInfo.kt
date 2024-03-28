@@ -15,7 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.datastore.StoreUserData
+import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
 @Composable
 fun SocialAccountCardInfo(savedLoginData: StoreUserData){
