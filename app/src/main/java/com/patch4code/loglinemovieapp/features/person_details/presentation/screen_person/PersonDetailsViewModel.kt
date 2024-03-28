@@ -52,94 +52,70 @@ class PersonDetailsViewModel: ViewModel() {
                 }
             } catch (e: Exception) {
                 Log.e("PersonDetailsViewModel", "Error getting person movie credits", e)
-            }
-            finally { //now separate data for displaying -->
-                val tempPersonCreditsMap: MutableMap<String, List<Movie>> = mutableMapOf()
-
-                //Main Department
-                if (mainDepartment == "Acting"){
-                    val mainDepCastMovies: List<Movie> = _personMovieCredits.value?.cast
-                        ?.sortedByDescending { it.popularity}
-                        ?.map {
-                        Movie(
-                            title = it.title ?: "N/A",
-                            id = it.id,
-                            releaseDate = it.releaseDate ?: "N/A",
-                            posterUrl = it.posterUrl ?: "N/A"
-                        )
-                    } ?: emptyList()
-                    tempPersonCreditsMap["Acting (${mainDepCastMovies.size} movies)"] = mainDepCastMovies
-
-                    val uniqueDepartments: List<String> = _personMovieCredits.value?.crew
-                        ?.map { it.department }
-                        ?.distinct()
-                        ?: emptyList()
-                    for(department in uniqueDepartments){
-                        val crewMovies: List<Movie> = _personMovieCredits.value?.crew
-                            ?.filter {it.department == department}
-                            ?.sortedByDescending { it.popularity }
-                            ?.map{
-                                Movie(
-                                    title = it.title ?: "N/A",
-                                    id = it.id,
-                                    releaseDate = it.releaseDate ?: "N/A",
-                                    posterUrl = it.posterUrl ?: "N/A"
-                                )
-                            } ?: emptyList()
-                        tempPersonCreditsMap["$department (${crewMovies.size} movies)"] = crewMovies
-                    }
-
-                }else{
-                    val mainDepCrewMovies: List<Movie> = _personMovieCredits.value?.crew
-                        ?.filter {it.department == mainDepartment}
-                        ?.distinctBy { it.id }
-                        ?.sortedByDescending { it.popularity}
-                        ?.map {
-                            Movie(
-                                title = it.title ?: "N/A",
-                                id = it.id,
-                                releaseDate = it.releaseDate ?: "N/A",
-                                posterUrl = it.posterUrl ?: "N/A"
-                            )
-                        } ?: emptyList()
-                    tempPersonCreditsMap["$mainDepartment (${mainDepCrewMovies.size} movies)"] = mainDepCrewMovies
-
-                    val castMovies: List<Movie> = _personMovieCredits.value?.cast
-                        ?.sortedByDescending { it.popularity}
-                        ?.map {
-                            Movie(
-                                title = it.title ?: "N/A",
-                                id = it.id,
-                                releaseDate = it.releaseDate ?: "N/A",
-                                posterUrl = it.posterUrl ?: "N/A"
-                            )
-                        } ?: emptyList()
-                    tempPersonCreditsMap["Acting (${castMovies.size} movies)"] = castMovies
-
-                    val uniqueDepartments: List<String> = _personMovieCredits.value?.crew
-                        ?.filter {it.department != mainDepartment}
-                        ?.map { it.department }
-                        ?.distinct()
-                        ?: emptyList()
-                    for(department in uniqueDepartments){
-                        val crewMovies: List<Movie> = _personMovieCredits.value?.crew
-                            ?.filter {it.department == department}
-                            ?.sortedByDescending { it.popularity }
-                            ?.map{
-                                Movie(
-                                    title = it.title ?: "N/A",
-                                    id = it.id,
-                                    releaseDate = it.releaseDate ?: "N/A",
-                                    posterUrl = it.posterUrl ?: "N/A"
-                                )
-                            } ?: emptyList()
-                        tempPersonCreditsMap["$department (${crewMovies.size} movies)"] = crewMovies
-                    }
-                }
-
-                _personCreditsMap.value = tempPersonCreditsMap
+            }finally{
+                _personCreditsMap.value = createPersonCreditsMap(mainDepartment)
             }
         }
     }
 
+    //format data for displaying -->
+    private fun createPersonCreditsMap(mainDepartment: String): Map<String, List<Movie>> {
+
+        val tempPersonCreditsMap: MutableMap<String, List<Movie>> = mutableMapOf()
+
+        val mainDepartmentMovies = if (mainDepartment == "Acting") {
+            createCastMoviesList()
+        } else {
+            createCrewMoviesList(mainDepartment)
+        }
+        tempPersonCreditsMap["$mainDepartment (${mainDepartmentMovies.size} movies)"] = mainDepartmentMovies
+
+        if (mainDepartment != "Acting") {
+            val castMovies = createCastMoviesList()
+            tempPersonCreditsMap["Acting (${castMovies.size} movies)"] = castMovies
+        }
+
+        getUniqueDepartments().forEach { department ->
+            if (department != mainDepartment) {
+                val crewMovies = createCrewMoviesList(department)
+                tempPersonCreditsMap["$department (${crewMovies.size} movies)"] = crewMovies
+            }
+        }
+       return tempPersonCreditsMap
+    }
+
+    private fun createCastMoviesList(): List<Movie> {
+        return _personMovieCredits.value?.cast
+            ?.sortedByDescending { it.popularity}
+            ?.map {
+                Movie(
+                    title = it.title ?: "N/A",
+                    id = it.id,
+                    releaseDate = it.releaseDate ?: "N/A",
+                    posterUrl = it.posterUrl ?: "N/A"
+                )
+            } ?: emptyList()
+    }
+
+    private fun getUniqueDepartments(): List<String> {
+        return _personMovieCredits.value?.crew
+            ?.map { it.department }
+            ?.distinct()
+            ?: emptyList()
+    }
+
+    private fun createCrewMoviesList(department: String): List<Movie>{
+        return _personMovieCredits.value?.crew
+            ?.filter {it.department == department}
+            ?.distinctBy { it.id }
+            ?.sortedByDescending { it.popularity }
+            ?.map{
+                Movie(
+                    title = it.title ?: "N/A",
+                    id = it.id,
+                    releaseDate = it.releaseDate ?: "N/A",
+                    posterUrl = it.posterUrl ?: "N/A"
+                )
+            } ?: emptyList()
+    }
 }
