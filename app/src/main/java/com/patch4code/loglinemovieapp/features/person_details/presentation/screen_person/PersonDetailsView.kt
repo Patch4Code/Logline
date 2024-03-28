@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -25,7 +26,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
-import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.components.ExpandableText
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
@@ -45,10 +45,19 @@ fun PersonDetailsView(
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PersonDetailsScreen)
         personDetailsViewModel.loadPersonDetails(personId)
-        personDetailsViewModel.loadPersonMovieCredits(personId)
     }
 
     val personDetails = personDetailsViewModel.personDetails.observeAsState().value
+
+    DisposableEffect(personDetails) {
+        if (personDetails != null) {
+            val mainDepartment = personDetails.knownForDepartment
+            personDetailsViewModel.loadPersonMovieCredits(personId, mainDepartment)
+        }
+        onDispose {}
+    }
+
+    val personCreditsMap = personDetailsViewModel.personCreditsMap.observeAsState().value
 
     LazyColumn(modifier = Modifier.padding(16.dp)){
         item{
@@ -76,20 +85,8 @@ fun PersonDetailsView(
             ExpandableText(text = personDetails?.biography ?: "N/A")
             Spacer(modifier = Modifier.padding(top = 16.dp))
 
-            val homeMoviesMap : Map<String, List<Movie>> = mapOf(
-                "Actor" to listOf(
-                    Movie(),
-                    Movie(),
-                    Movie(),
-                ),
-                "Director" to listOf(
-                    Movie(),
-                    Movie(),
-                    Movie(),
-                )
-            )
 
-            homeMoviesMap?.forEach { (groupName, movies) ->
+            personCreditsMap?.forEach { (groupName, movies) ->
                 Text(text = groupName,
                     modifier = Modifier.padding(top = 16.dp),
                     fontWeight = FontWeight.Bold)
