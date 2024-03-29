@@ -7,10 +7,32 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.room.Room
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.Navigation
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import com.patch4code.loglinemovieapp.ui.theme.MovieAppUiTestTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val db by lazy {
+        Room.databaseBuilder(
+            context = applicationContext,
+            klass = LoglineDatabase::class.java,
+            name = "loglineData.db"
+        ).build()
+    }
+
+    /*
+    private val viewModel by viewModels<MyMoviesViewModel>(
+        factoryProducer = {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return MyMoviesViewModel(db.dao) as T
+                }
+            }
+        }
+    )
+     */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,22 +43,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Navigation()
+                    Navigation(db)
                 }
             }
         }
-
-        // Test Back4App
-        /*
-        val firstObject = ParseObject("FirstClass")
-        firstObject.put("message","Hey ! First message from android. Parse is now connected hi hi")
-        firstObject.saveInBackground {
-            if (it != null){
-                it.localizedMessage?.let { message -> Log.e("MainActivity", message) }
-            }else{
-                Log.d("MainActivity","Object saved.")
-            }
-        }
-         */
     }
 }

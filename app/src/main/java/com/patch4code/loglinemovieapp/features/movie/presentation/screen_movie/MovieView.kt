@@ -17,6 +17,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelpe
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.MovieContent
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLEncoder
 
 
@@ -24,10 +25,16 @@ import java.net.URLEncoder
 @Composable
 fun MovieView(
     navController: NavController,
-    movieViewModel: MovieViewModel = viewModel(),
     navViewModel: NavigationViewModel,
+    db: LoglineDatabase,
     id: String?
 ){
+    //movieViewModel: MovieViewModel = viewModel(),
+    val movieViewModel: MovieViewModel = viewModel(
+        factory = MovieViewModelFactory(db.dao)
+    )
+
+
     val movieId = id?.toIntOrNull() ?: 0
 
     LaunchedEffect(Unit) {

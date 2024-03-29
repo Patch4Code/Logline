@@ -40,12 +40,13 @@ import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_revie
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialView
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.screen_watchlist.WatchlistView
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Navigation(){
+fun Navigation(db: LoglineDatabase){
 
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -111,6 +112,7 @@ fun Navigation(){
                         MovieView(
                             navController = navController,
                             navViewModel = navigationViewModel,
+                            db = db,
                             id = movieId
                         )
                     }
@@ -146,7 +148,7 @@ fun Navigation(){
                     }
 
                     composable(route = Screen.MyMoviesScreen.route){
-                        MyMoviesView(navController = navController, navViewModel = navigationViewModel)
+                        MyMoviesView(navController = navController, navViewModel = navigationViewModel, db = db)
                     }
 
                     composable(route = Screen.DiaryScreen.route){

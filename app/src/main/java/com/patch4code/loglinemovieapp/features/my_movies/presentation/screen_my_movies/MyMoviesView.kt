@@ -13,9 +13,15 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MovieRatedBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
-fun MyMoviesView(navController: NavController, navViewModel: NavigationViewModel, myMoviesViewModel: MyMoviesViewModel = viewModel()){
+fun MyMoviesView(navController: NavController, navViewModel: NavigationViewModel, db: LoglineDatabase){
+
+    //myMoviesViewModel: MyMoviesViewModel = viewModel()
+    val myMoviesViewModel: MyMoviesViewModel = viewModel(
+        factory = MyMoviesViewModelFactory(db.dao)
+    )
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MyMoviesScreen)

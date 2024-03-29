@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.api.RetrofitHelper
 import com.patch4code.loglinemovieapp.api.TmdbApiService
@@ -13,9 +14,10 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.userDataList
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
+import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
-class MovieViewModel: ViewModel(){
+class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
 
     private val tmdbApiService: TmdbApiService by lazy {
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)
@@ -91,6 +93,19 @@ class MovieViewModel: ViewModel(){
     }
 
     fun changeRating(id: Int?, rating: Int){
+        val movie = Movie(
+            title = _detailsData.value?.title ?: "N/A",
+            id = id ?: -1,
+            releaseDate = _detailsData.value?.releaseDate ?: "N/A",
+            posterUrl = _detailsData.value?.posterPath ?: ""
+        )
+
+        viewModelScope.launch {
+            dao.updateOrInsertRating(movie, rating)
+        }
+        _myRating.value = rating
+
+            /*
         val movieUserData = userDataList.find { it.movie?.id == id }
         if (movieUserData != null){
             movieUserData.rating = rating
@@ -108,6 +123,8 @@ class MovieViewModel: ViewModel(){
             userDataList.add(newMovieUserData)
         }
         _myRating.value = rating
+
+         */
     }
 
     fun changeOnWatchlist(id: Int?, newOnWatchlistState: Boolean){
@@ -127,5 +144,15 @@ class MovieViewModel: ViewModel(){
             userDataList.add(newMovieUserData)
         }
         _onWatchlist.value = newOnWatchlistState
+    }
+}
+
+class MovieViewModelFactory(private val dao: MovieUserDataDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MovieViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MovieViewModel(dao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
