@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
-import com.patch4code.loglinemovieapp.features.core.domain.model.userDataList
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMoviesDummy
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
@@ -19,7 +18,6 @@ class MovieLogViewModel(private val userDataDao: MovieUserDataDao): ViewModel() 
         val adjustedDateTime = adjustedDateTime(date)
         val loggedElement = LoggedMovie(movie = movie, date = adjustedDateTime, rating = rating, review = review)
 
-        //add to LoggedMovies (Dummy)
         LoggedMoviesDummy.add(loggedElement)
         updateRating(movie, rating)
         removeFromWatchlist(movie)
@@ -52,9 +50,8 @@ class MovieLogViewModel(private val userDataDao: MovieUserDataDao): ViewModel() 
 
 
     private fun removeFromWatchlist(movie: Movie){
-        val movieUserData = userDataList.find { it.movie?.id == movie.id }
-        if (movieUserData != null){
-            movieUserData.onWatchlist = false
+        viewModelScope.launch {
+            userDataDao.updateOrInsertOnWatchlist(movie, false)
         }
     }
 }
