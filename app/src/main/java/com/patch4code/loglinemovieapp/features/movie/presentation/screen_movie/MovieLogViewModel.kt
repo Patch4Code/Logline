@@ -1,15 +1,18 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
-import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
 import com.patch4code.loglinemovieapp.features.core.domain.model.userDataList
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMoviesDummy
+import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class MovieLogViewModel: ViewModel() {
+class MovieLogViewModel(private val userDataDao: MovieUserDataDao): ViewModel() {
 
     fun addMovieLog(movie: Movie, date: LocalDateTime, rating: Int, review: String){
 
@@ -24,18 +27,8 @@ class MovieLogViewModel: ViewModel() {
 
 
     private fun updateRating(movie: Movie, rating: Int){
-
-        val movieUserData = userDataList.find { it.movie?.id == movie.id }
-
-        if (movieUserData != null){
-            movieUserData.rating = rating
-        }else{
-            val newMovieUserData = MovieUserData(
-                movie  = movie,
-                onWatchlist = false,
-                rating = rating
-            )
-            userDataList.add(newMovieUserData)
+        viewModelScope.launch {
+            userDataDao.updateOrInsertRating(movie, rating)
         }
     }
 
@@ -63,5 +56,16 @@ class MovieLogViewModel: ViewModel() {
         if (movieUserData != null){
             movieUserData.onWatchlist = false
         }
+    }
+}
+
+
+class MovieLogViewModelFactory(private val dao: MovieUserDataDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MovieLogViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MovieLogViewModel(dao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

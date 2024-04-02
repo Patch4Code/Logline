@@ -32,6 +32,7 @@ import com.patch4code.loglinemovieapp.features.diary.presentation.components.edi
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.editelement.DiaryEditSaveChangesSection
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLDecoder
 import java.time.LocalDateTime
 
@@ -40,8 +41,11 @@ import java.time.LocalDateTime
 fun MovieLogView(
     navController: NavController,
     navViewModel: NavigationViewModel,
+    db: LoglineDatabase,
     movieString: String?,
-    movieLogViewModel: MovieLogViewModel = viewModel(),
+    movieLogViewModel: MovieLogViewModel = viewModel(
+        factory = MovieLogViewModelFactory(db.dao)
+    ),
     ){
 
     LaunchedEffect(Unit) {

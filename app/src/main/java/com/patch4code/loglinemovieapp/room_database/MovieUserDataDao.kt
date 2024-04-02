@@ -20,14 +20,30 @@ interface MovieUserDataDao {
     @Transaction
     suspend fun updateOrInsertRating(movie: Movie, rating: Int){
         val existingEntry = getMovieUserDataByMovieId(movie.id)
-        if (existingEntry != null) {
-            // Wenn ein Eintrag bereits vorhanden ist, aktualisieren Sie das Rating
-            existingEntry.rating = rating
-            upsertMovieUserData(existingEntry)
+
+        // If an entry exists and has neither a rating nor is on the watchlist, delete the entry
+        if(existingEntry != null && rating < 0 && !existingEntry.onWatchlist){
+            deleteMovieUserData(existingEntry)
+        }else{
+            // Otherwise, update or insert the entry as usual
+            val updatedEntry = existingEntry ?: MovieUserData(movie = movie)
+            updatedEntry.rating = rating
+            upsertMovieUserData(updatedEntry)
+        }
+    }
+
+    @Transaction
+    suspend fun updateOrInsertOnWatchlist(movie: Movie, onWatchlist: Boolean){
+        val existingEntry = getMovieUserDataByMovieId(movie.id)
+
+        // If an entry exists and is neither on the watchlist nor has a rating, delete the entry
+        if (existingEntry != null && !onWatchlist && existingEntry.rating < 0) {
+            deleteMovieUserData(existingEntry)
         } else {
-            // Wenn kein Eintrag vorhanden ist, fügen Sie einen neuen Eintrag hinzu
-            val newEntry = MovieUserData(movie = movie, rating = rating)
-            upsertMovieUserData(newEntry)
+            // Otherwise, update or insert the entry as usual
+            val updatedEntry = existingEntry ?: MovieUserData(movie = movie)
+            updatedEntry.onWatchlist = onWatchlist
+            upsertMovieUserData(updatedEntry)
         }
     }
 

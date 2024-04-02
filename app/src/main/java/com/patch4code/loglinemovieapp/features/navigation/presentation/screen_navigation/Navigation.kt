@@ -87,7 +87,7 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.WatchlistScreen.route){
-                        WatchlistView(navController = navController, navViewModel = navigationViewModel)
+                        WatchlistView(navController = navController, navViewModel = navigationViewModel, db = db)
                     }
 
                     composable(route = Screen.SearchScreen.route){
@@ -143,6 +143,7 @@ fun Navigation(db: LoglineDatabase){
                         MovieLogView(
                             navController = navController,
                             navViewModel = navigationViewModel,
+                            db = db,
                             movieString = it.arguments?.getString("movie"),
                         )
                     }

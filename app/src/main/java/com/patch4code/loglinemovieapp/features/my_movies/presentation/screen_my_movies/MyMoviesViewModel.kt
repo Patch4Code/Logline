@@ -14,16 +14,10 @@ class MyMoviesViewModel(private val dao: MovieUserDataDao): ViewModel() {
     private val _myUserDataList = MutableLiveData<List<MovieUserData>>()
     val myUserDataList: LiveData<List<MovieUserData>> get() = _myUserDataList
 
-    init {
-        setUserdataList()
-    }
-
-    private fun setUserdataList() {
+    fun setUserdataList() {
         viewModelScope.launch {
             _myUserDataList.value = dao.getMovieUserDataList()
         }
-
-        //_myUserDataList.value = userDataList
     }
 }
 

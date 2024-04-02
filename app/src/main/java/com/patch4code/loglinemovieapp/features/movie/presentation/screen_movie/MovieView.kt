@@ -29,7 +29,6 @@ fun MovieView(
     db: LoglineDatabase,
     id: String?
 ){
-    //movieViewModel: MovieViewModel = viewModel(),
     val movieViewModel: MovieViewModel = viewModel(
         factory = MovieViewModelFactory(db.dao)
     )

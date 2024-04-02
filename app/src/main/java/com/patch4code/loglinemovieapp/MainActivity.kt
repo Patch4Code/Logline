@@ -22,18 +22,6 @@ class MainActivity : ComponentActivity() {
         ).build()
     }
 
-    /*
-    private val viewModel by viewModels<MyMoviesViewModel>(
-        factoryProducer = {
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return MyMoviesViewModel(db.dao) as T
-                }
-            }
-        }
-    )
-     */
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

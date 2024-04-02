@@ -16,15 +16,17 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
-fun MyMoviesView(navController: NavController, navViewModel: NavigationViewModel, db: LoglineDatabase){
-
-    //myMoviesViewModel: MyMoviesViewModel = viewModel()
-    val myMoviesViewModel: MyMoviesViewModel = viewModel(
+fun MyMoviesView(
+    navController: NavController,
+    navViewModel: NavigationViewModel,
+    db: LoglineDatabase,
+    myMoviesViewModel: MyMoviesViewModel = viewModel(
         factory = MyMoviesViewModelFactory(db.dao)
     )
-
+){
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MyMoviesScreen)
+        myMoviesViewModel.setUserdataList()
     }
 
     val userDataList = myMoviesViewModel.myUserDataList.observeAsState().value
