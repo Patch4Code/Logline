@@ -32,6 +32,7 @@ import com.patch4code.loglinemovieapp.features.diary.presentation.components.edi
 import com.patch4code.loglinemovieapp.features.diary.presentation.utils.DiaryNavigationExtensions.navigateOnDiaryEditSaveOrDiscard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.time.LocalDateTime
 
 @Composable
@@ -40,8 +41,11 @@ fun DiaryEditElementView(
     navViewModel: NavigationViewModel,
     loggedElementId: String?,
     comingFromDiaryView: Boolean?,
-    diaryEditElementViewModel: DiaryEditElementViewModel = viewModel()
-    ){
+    db: LoglineDatabase,
+    diaryEditElementViewModel: DiaryEditElementViewModel = viewModel(
+        factory = DiaryEditElementViewModelFactory(db.loggedMovieDao)
+    )
+){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.DiaryEditElementScreen)

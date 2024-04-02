@@ -1,24 +1,32 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
-import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMoviesDummy
+import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneOffset
 
-class MovieLogViewModel(private val userDataDao: MovieUserDataDao): ViewModel() {
+class MovieLogViewModel(
+    private val loggedMovieDao: LoggedMovieDao,
+    private val userDataDao: MovieUserDataDao
+): ViewModel() {
 
     fun addMovieLog(movie: Movie, date: LocalDateTime, rating: Int, review: String){
 
-        val adjustedDateTime = adjustedDateTime(date)
-        val loggedElement = LoggedMovie(movie = movie, date = adjustedDateTime, rating = rating, review = review)
+        viewModelScope.launch {
+            val adjustedDateTime = adjustedDateTime(date)
+            Log.e("MovieLogViewModel", "adjustedDateTime: $adjustedDateTime")
+            val loggedElement = LoggedMovie(movie = movie, date = adjustedDateTime, rating = rating, review = review)
 
-        LoggedMoviesDummy.add(loggedElement)
+            loggedMovieDao.upsertLoggedMovie(loggedElement)
+        }
         updateRating(movie, rating)
         removeFromWatchlist(movie)
     }
@@ -31,9 +39,12 @@ class MovieLogViewModel(private val userDataDao: MovieUserDataDao): ViewModel() 
     }
 
 
-    fun adjustedDateTime(date: LocalDateTime): LocalDateTime{
+    suspend fun adjustedDateTime(date: LocalDateTime): LocalDateTime{
         // Filter out entries with the same date as the given date - here with sample data
-        val sameDateLogs = LoggedMoviesDummy.filter { it.date.toLocalDate() == date.toLocalDate() }
+        val startOfDayMillis = date.toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.UTC)
+        val endOfDayMillis = date.toLocalDate().atStartOfDay().plusDays(1).toEpochSecond(ZoneOffset.UTC)
+
+        val sameDateLogs = loggedMovieDao.getLoggedMoviesWithSameDate(startOfDayMillis, endOfDayMillis)
 
         return if(sameDateLogs.isNotEmpty()){
             // Find the latest time among the existing entries
@@ -57,11 +68,11 @@ class MovieLogViewModel(private val userDataDao: MovieUserDataDao): ViewModel() 
 }
 
 
-class MovieLogViewModelFactory(private val dao: MovieUserDataDao) : ViewModelProvider.Factory {
+class MovieLogViewModelFactory(private val loggedMovieDao: LoggedMovieDao, private val movieUserDataDao: MovieUserDataDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MovieLogViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MovieLogViewModel(dao) as T
+            return MovieLogViewModel(loggedMovieDao, movieUserDataDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

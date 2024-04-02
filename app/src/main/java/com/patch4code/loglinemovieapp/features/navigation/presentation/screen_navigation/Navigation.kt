@@ -153,7 +153,7 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.DiaryScreen.route){
-                        DiaryView(navController = navController, navViewModel = navigationViewModel)
+                        DiaryView(navController = navController, navViewModel = navigationViewModel, db = db)
                     }
 
                     composable(route = Screen.DiaryEditElementScreen.route + "/{loggedElement}/{comingFromDiaryView}",
@@ -169,6 +169,7 @@ fun Navigation(db: LoglineDatabase){
                         DiaryEditElementView(
                             navController = navController,
                             navViewModel = navigationViewModel,
+                            db = db,
                             loggedElementId = parsedLoggedElement.arguments?.getString("loggedElement"),
                             comingFromDiaryView = parsedLoggedElement.arguments?.getBoolean("comingFromDiaryView")
                         )

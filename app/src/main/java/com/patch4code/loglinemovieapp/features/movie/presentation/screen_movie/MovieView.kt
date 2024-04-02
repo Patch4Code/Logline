@@ -27,12 +27,11 @@ fun MovieView(
     navController: NavController,
     navViewModel: NavigationViewModel,
     db: LoglineDatabase,
-    id: String?
-){
-    val movieViewModel: MovieViewModel = viewModel(
-        factory = MovieViewModelFactory(db.dao)
+    id: String?,
+    movieViewModel: MovieViewModel = viewModel(
+        factory = MovieViewModelFactory(db.movieUserDataDao)
     )
-
+){
 
     val movieId = id?.toIntOrNull() ?: 0
 

@@ -4,10 +4,14 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
+import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 
-@Database(entities = [MovieUserData::class], version = 1)
+@Database(entities = [MovieUserData::class, LoggedMovie::class, MovieList::class], version = 1)
 @TypeConverters(RoomConverters::class)
 abstract class LoglineDatabase: RoomDatabase() {
 
-    abstract val dao: MovieUserDataDao
+    abstract val movieUserDataDao: MovieUserDataDao
+    abstract val loggedMovieDao: LoggedMovieDao
+    abstract val movieListDao: MovieListDao
 }

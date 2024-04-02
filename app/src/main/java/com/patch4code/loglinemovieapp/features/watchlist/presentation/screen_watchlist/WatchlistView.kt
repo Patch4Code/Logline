@@ -21,7 +21,7 @@ fun WatchlistView(
     navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     watchlistViewModel: WatchlistViewModel = viewModel(
-        factory = WatchlistViewModelFactory(db.dao)
+        factory = WatchlistViewModelFactory(db.movieUserDataDao)
     )
 ){
 

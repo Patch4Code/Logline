@@ -21,7 +21,7 @@ fun MyMoviesView(
     navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     myMoviesViewModel: MyMoviesViewModel = viewModel(
-        factory = MyMoviesViewModelFactory(db.dao)
+        factory = MyMoviesViewModelFactory(db.movieUserDataDao)
     )
 ){
     LaunchedEffect(Unit) {

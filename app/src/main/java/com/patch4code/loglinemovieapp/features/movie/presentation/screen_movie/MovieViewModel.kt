@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.api.RetrofitHelper
 import com.patch4code.loglinemovieapp.api.TmdbApiService
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
@@ -79,15 +80,15 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     }
 
     fun loadRatingAndWatchlistStatusById(id: Int){
-        //var movieUserData: MovieUserData?
+        var movieUserData: MovieUserData? = null
         viewModelScope.launch {
-            val movieUserData = dao.getMovieUserDataByMovieId(id)
+            movieUserData = dao.getMovieUserDataByMovieId(id)
 
             Log.e("MovieViewModel", "movieUserData: $movieUserData")
 
             if (movieUserData != null){
-                _myRating.value = movieUserData.rating
-                _onWatchlist.value = movieUserData.onWatchlist
+                _myRating.value = movieUserData!!.rating
+                _onWatchlist.value = movieUserData!!.onWatchlist
             }else{
                 _myRating.value = -1
                 _onWatchlist.value = false

@@ -3,12 +3,14 @@ package com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMoviesDummy
+import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class DiaryEditElementViewModel: ViewModel() {
+class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
 
     private val _diaryEntry = MutableLiveData<LoggedMovie>()
     val diaryEntry: LiveData<LoggedMovie> get() = _diaryEntry
@@ -51,5 +53,16 @@ class DiaryEditElementViewModel: ViewModel() {
     fun deleteDiaryEntry(){
         //here just with dummy data with movie title as identifier
         LoggedMoviesDummy.removeIf { it.id == _diaryEntry.value?.id  }
+    }
+}
+
+
+class DiaryEditElementViewModelFactory(private val loggedMovieDao: LoggedMovieDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(DiaryEditElementViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return DiaryEditElementViewModel(loggedMovieDao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

@@ -12,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,6 +34,7 @@ import com.patch4code.loglinemovieapp.features.diary.presentation.components.edi
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
+import kotlinx.coroutines.launch
 import java.net.URLDecoder
 import java.time.LocalDateTime
 
@@ -44,7 +46,7 @@ fun MovieLogView(
     db: LoglineDatabase,
     movieString: String?,
     movieLogViewModel: MovieLogViewModel = viewModel(
-        factory = MovieLogViewModelFactory(db.dao)
+        factory = MovieLogViewModelFactory(db.loggedMovieDao ,db.movieUserDataDao)
     ),
     ){
 
@@ -56,6 +58,7 @@ fun MovieLogView(
     val movie: Movie = JSONHelper.fromJson(decodedMovieString)
 
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     var rating by remember { mutableStateOf(0) }
     var watchDateTime by remember { mutableStateOf(LocalDateTime.now()) }
@@ -111,7 +114,10 @@ fun MovieLogView(
             openDatePickerDialog = openDatePickerDialog.value,
             onAccept = { date->
                 openDatePickerDialog.value = false
-                watchDateTime =  movieLogViewModel.adjustedDateTime(date)
+                scope.launch {
+                    watchDateTime =  movieLogViewModel.adjustedDateTime(date)
+                }
+
             },
             onCancel = { openDatePickerDialog.value = false }
         )

@@ -15,13 +15,21 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.swip
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.MovieLoggedItem
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
-import java.time.ZoneOffset
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
-fun DiaryView(navController: NavController, navViewModel: NavigationViewModel, diaryViewModel: DiaryViewModel = viewModel()){
+fun DiaryView(
+    navController: NavController,
+    navViewModel: NavigationViewModel,
+    db: LoglineDatabase,
+    diaryViewModel: DiaryViewModel = viewModel(
+        factory = DiaryViewModelFactory(db.loggedMovieDao)
+    )
+){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.DiaryScreen)
+        diaryViewModel.getDiaryLogs()
     }
 
     val diaryLogs = diaryViewModel.diaryLogs.observeAsState().value
@@ -31,11 +39,7 @@ fun DiaryView(navController: NavController, navViewModel: NavigationViewModel, d
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        items(diaryLogs?.sortedByDescending { loggedItem->
-            loggedItem.date.toEpochSecond(ZoneOffset.UTC)
-        } ?: emptyList()
-        )
-        { loggedItem ->
+        items(diaryLogs ?: emptyList()) { loggedItem ->
             swipeToEditContainer(
                 item = loggedItem,
                 onEdit = {
