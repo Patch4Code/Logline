@@ -176,7 +176,7 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.ReviewsScreen.route){
-                        ReviewsView(navController = navController, navViewModel = navigationViewModel)
+                        ReviewsView(navController = navController, navViewModel = navigationViewModel, db = db)
                     }
 
                     composable(route = Screen.ReviewDetailScreen.route + "/{loggedElement}",
@@ -188,7 +188,7 @@ fun Navigation(db: LoglineDatabase){
                             }
                         )
                     ){parsedLoggedElement->
-                        ReviewDetailsView(navController = navController, navViewModel = navigationViewModel, loggedElementId = parsedLoggedElement.arguments?.getString("loggedElement"))
+                        ReviewDetailsView(navController = navController, navViewModel = navigationViewModel, db = db, loggedElementId = parsedLoggedElement.arguments?.getString("loggedElement"))
                     }
 
                     composable(route = Screen.ListsTableScreen.route){

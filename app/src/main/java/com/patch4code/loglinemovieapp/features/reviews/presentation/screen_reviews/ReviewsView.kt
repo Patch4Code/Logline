@@ -13,26 +13,27 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewItem
-import java.time.ZoneOffset
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
 fun ReviewsView(
     navController: NavController,
     navViewModel: NavigationViewModel,
-    reviewsViewModel: ReviewsViewModel = viewModel()
+    db: LoglineDatabase,
+    reviewsViewModel: ReviewsViewModel = viewModel(
+        factory = ReviewsViewModelFactory(db.loggedMovieDao)
+    )
 ){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.ReviewsScreen)
+        reviewsViewModel.getReviewedLogs()
     }
 
     val reviewedLogs = reviewsViewModel.reviewedLogs.observeAsState().value
 
-
     LazyColumn(modifier = Modifier.padding(16.dp)) {
-        items(reviewedLogs?.sortedByDescending { loggedItem->
-            loggedItem.date.toEpochSecond(ZoneOffset.UTC)
-        } ?: emptyList())
+        items(reviewedLogs ?: emptyList())
         { loggedItem ->
             ReviewItem(loggedItem, navController)
         }

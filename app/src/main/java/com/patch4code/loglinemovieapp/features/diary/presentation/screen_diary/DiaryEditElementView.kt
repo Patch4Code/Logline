@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,7 @@ import com.patch4code.loglinemovieapp.features.diary.presentation.utils.DiaryNav
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 @Composable
@@ -51,6 +53,8 @@ fun DiaryEditElementView(
         navViewModel.updateScreen(Screen.DiaryEditElementScreen)
         diaryEditElementViewModel.setDiaryEntryToEdit(loggedElementId)
     }
+
+    val scope = rememberCoroutineScope()
 
     val diaryEntry = diaryEditElementViewModel.diaryEntry.observeAsState().value
 
@@ -117,7 +121,9 @@ fun DiaryEditElementView(
             openDatePickerDialog = openDatePickerDialog.value,
             onAccept = { date->
                 openDatePickerDialog.value = false
-                watchDateTime = diaryEditElementViewModel.adjustedDateTime(date)
+                scope.launch {
+                    watchDateTime = diaryEditElementViewModel.adjustedDateTime(date)
+                }
             },
             onCancel = { openDatePickerDialog.value = false }
         )

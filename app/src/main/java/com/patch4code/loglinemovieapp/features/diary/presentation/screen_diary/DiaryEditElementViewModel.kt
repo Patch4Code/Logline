@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
-import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMoviesDummy
 import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneOffset
 
 class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
 
@@ -16,25 +18,24 @@ class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): Vie
     val diaryEntry: LiveData<LoggedMovie> get() = _diaryEntry
 
     fun setDiaryEntryToEdit(diaryEntryId: String?){
-        _diaryEntry.value = LoggedMoviesDummy.find { it.id == diaryEntryId }
+        viewModelScope.launch {
+            _diaryEntry.value = loggedMovieDao.getLoggedMovieById(diaryEntryId)
+        }
     }
 
     fun updatedDiaryEntry(rating: Int, watchDate: LocalDateTime, review: String){
-        val diaryEntryId = _diaryEntry.value?.id
-
-        //Here only updates dummy temporary (later probably use an id for identification)
-        val updatedElement = LoggedMoviesDummy.find { it.id == diaryEntryId }
-        updatedElement?.let {
-            it.date = watchDate
-            it.rating = rating
-            it.review = review
+        viewModelScope.launch {
+            _diaryEntry.value?.id?.let { diaryEntryId ->
+                loggedMovieDao.updateLoggedMovie(diaryEntryId, rating, watchDate, review) }
         }
-        _diaryEntry.value = updatedElement!!
     }
 
-    fun adjustedDateTime(date: LocalDateTime): LocalDateTime{
+    suspend fun adjustedDateTime(date: LocalDateTime): LocalDateTime{
         // Filter out entries with the same date as the given date - here with sample data
-        val sameDateLogs = LoggedMoviesDummy.filter { it.date.toLocalDate() == date.toLocalDate() }
+        val startOfDayMillis = date.toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.UTC)
+        val endOfDayMillis = date.toLocalDate().atStartOfDay().plusDays(1).toEpochSecond(ZoneOffset.UTC)
+
+        val sameDateLogs = loggedMovieDao.getLoggedMoviesWithSameDate(startOfDayMillis, endOfDayMillis)
 
         return if(sameDateLogs.isNotEmpty()){
             // Find the latest time among the existing entries
@@ -49,10 +50,10 @@ class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): Vie
         }
     }
 
-
     fun deleteDiaryEntry(){
-        //here just with dummy data with movie title as identifier
-        LoggedMoviesDummy.removeIf { it.id == _diaryEntry.value?.id  }
+        viewModelScope.launch {
+            _diaryEntry.value?.let { loggedMovieDao.deleteLoggedMovie(it) }
+        }
     }
 }
 

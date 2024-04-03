@@ -17,13 +17,17 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewDetailsInfo
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewDetailsPoster
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
 fun ReviewDetailsView(
     navController: NavController,
     navViewModel: NavigationViewModel,
     loggedElementId: String?,
-    reviewDetailsViewModel: ReviewDetailsViewModel = viewModel()
+    db: LoglineDatabase,
+    reviewDetailsViewModel: ReviewDetailsViewModel = viewModel(
+        factory = ReviewDetailsViewModelFactory(db.loggedMovieDao)
+    )
 ){
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.ReviewDetailScreen)
