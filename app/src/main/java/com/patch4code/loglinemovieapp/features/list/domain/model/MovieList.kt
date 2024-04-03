@@ -6,10 +6,11 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 
 @Entity
 data class MovieList(
-    @PrimaryKey
     var name: String,
     var isPublic: Boolean,
-    var movies: List<Movie>
+    var movies: List<Movie>,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0
 )
 
 val userMovieListsDummy = mutableListOf(

@@ -192,7 +192,7 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.ListsTableScreen.route){
-                        ListsTableView(navController = navController, navViewModel = navigationViewModel)
+                        ListsTableView(navController = navController, navViewModel = navigationViewModel, db = db)
                     }
 
                     composable(route = Screen.ListScreen.route + "/{movieList}",
@@ -204,7 +204,7 @@ fun Navigation(db: LoglineDatabase){
                             }
                         )
                     ){parsedMovieList->
-                        ListView(navController = navController, navViewModel = navigationViewModel, movieListString = parsedMovieList.arguments?.getString("movieList"))
+                        ListView(navController = navController, navViewModel = navigationViewModel, db = db, movieListString = parsedMovieList.arguments?.getString("movieList"))
                     }
 
                     composable(route = Screen.ProfileEditScreen.route){

@@ -1,7 +1,5 @@
 package com.patch4code.loglinemovieapp.features.list.presentation.utils
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
@@ -10,20 +8,10 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 object ListsTableContentExtensions{
 
-    //Check if list-name is unique and only add when that is the case
-    fun ListsTableViewModel.onAddList(
-        listName: String,
-        isPublic: Boolean,
-        openAddListDialog: MutableState<Boolean>,
-        context: Context
+    fun ListsTableViewModel.onAddList(listName: String, isPublic: Boolean, openAddListDialog: MutableState<Boolean>
     ) {
-
-        if (isListNameUnique(listName)) {
-            openAddListDialog.value = false
-            addUserMovieList(MovieList(listName, isPublic, mutableListOf()))
-        } else {
-            Toast.makeText(context, "List name already exists!", Toast.LENGTH_LONG).show()
-        }
+        openAddListDialog.value = false
+        addUserMovieList(MovieList(listName, isPublic, mutableListOf()))
     }
 
     //Delete list and close dialog

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.api.RetrofitHelper
 import com.patch4code.loglinemovieapp.api.TmdbApiService
@@ -11,9 +12,10 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.domain.model.userMovieListsDummy
+import com.patch4code.loglinemovieapp.room_database.MovieListDao
 import kotlinx.coroutines.launch
 
-class ListViewModel: ViewModel() {
+class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
 
     private val _movieList = MutableLiveData<MovieList>()
     val movieList: LiveData<MovieList> get() = _movieList
@@ -27,10 +29,9 @@ class ListViewModel: ViewModel() {
 
 
     fun setList(movieList: MovieList) {
-        //set according to Dummy
-
-        val foundMovieList = userMovieListsDummy.find { it.name == movieList.name }
-        _movieList.value = foundMovieList ?: movieList
+        viewModelScope.launch {
+            _movieList.value = movieListDao.getMovieListById(movieList.id)
+        }
     }
 
 
@@ -39,15 +40,11 @@ class ListViewModel: ViewModel() {
     }
 
     fun addMovieToList(movie: Movie) {
-        val updatedMovies = _movieList.value?.movies.orEmpty().toMutableList()
-        val listName = _movieList.value?.name
-        updatedMovies.add(movie)
-
-        // Change Dummy-Data and accordingly the local ViewModel Data
-        userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
-        userMovieListsDummy.find { it.name == listName }?.let { updateList(it) }
-
-        //Log.e("ListViewModel","_movieList.value: ${_movieList.value}")
+        val listId = _movieList.value?.id
+        viewModelScope.launch {
+            listId?.let { movieListDao.addMovieToList(it, movie) }
+            _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
+        }
     }
 
     fun isMovieAlreadyOnList(movie: Movie): Boolean{
@@ -95,5 +92,16 @@ class ListViewModel: ViewModel() {
 
     fun isListNameUnique(newName: String): Boolean{
         return !userMovieListsDummy.any { it.name == newName }
+    }
+}
+
+
+class ListViewModelFactory(private val movieListDao: MovieListDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ListViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return ListViewModel(movieListDao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

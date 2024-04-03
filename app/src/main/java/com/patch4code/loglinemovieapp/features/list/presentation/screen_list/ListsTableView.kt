@@ -11,20 +11,28 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.ListsTableContent
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListsTableView(navController: NavController, navViewModel: NavigationViewModel, listsTableViewModel: ListsTableViewModel = viewModel()){
+fun ListsTableView(
+    navController: NavController,
+    navViewModel: NavigationViewModel,
+    db: LoglineDatabase,
+    listsTableViewModel: ListsTableViewModel = viewModel(
+        factory = ListsTableViewModelFactory(db.movieListDao)
+    )
+){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.ListsTableScreen)
+        listsTableViewModel.updateUserMovieLists()
     }
 
     val openAddListDialog = remember { mutableStateOf(false)  }
@@ -32,8 +40,6 @@ fun ListsTableView(navController: NavController, navViewModel: NavigationViewMod
     val listToDelete = remember { mutableStateOf<MovieList?>(null) }
 
     val myUserMovieLists = listsTableViewModel.userMovieLists.observeAsState().value
-
-    val context = LocalContext.current
 
     Scaffold (
         floatingActionButton = {
@@ -49,7 +55,6 @@ fun ListsTableView(navController: NavController, navViewModel: NavigationViewMod
                 listToDelete = listToDelete,
                 navController = navController,
                 listsTableViewModel = listsTableViewModel,
-                context = context
             )
         }
     )

@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table
 
-import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,11 +26,12 @@ fun ListsTableContent(
     openDeleteListDialog: MutableState<Boolean>,
     listToDelete: MutableState<MovieList?>,
     navController: NavController,
-    listsTableViewModel: ListsTableViewModel,
-    context: Context
+    listsTableViewModel: ListsTableViewModel
 ){
 
-    LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    LazyColumn(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)) {
         itemsIndexed(
             items = myUserMovieLists ?: emptyList(),
             key = { _, item -> item.hashCode() }
@@ -49,7 +49,9 @@ fun ListsTableContent(
     }
     AddListDialog(
         openAddListDialog = openAddListDialog.value,
-        onSave = { listName, isPublic -> listsTableViewModel.onAddList(listName, isPublic, openAddListDialog, context)},
+        onSave = { listName, isPublic ->
+            listsTableViewModel.onAddList(listName, isPublic, openAddListDialog)
+        },
         onCancel = {openAddListDialog.value = false}
     )
     DeleteListDialog(

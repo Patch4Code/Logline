@@ -31,11 +31,20 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialo
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onSaveEditList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLDecoder
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ListView(navController: NavController, navViewModel: NavigationViewModel, movieListString: String?, listViewModel: ListViewModel = viewModel()){
+fun ListView(
+    navController: NavController,
+    navViewModel: NavigationViewModel,
+    movieListString: String?,
+    db: LoglineDatabase,
+    listViewModel: ListViewModel = viewModel(
+        factory = ListViewModelFactory(db.movieListDao)
+    )
+){
 
     val decodedMovieListString = URLDecoder.decode(movieListString, "UTF-8")
     val movieListData: MovieList = JSONHelper.fromJson(decodedMovieListString)
