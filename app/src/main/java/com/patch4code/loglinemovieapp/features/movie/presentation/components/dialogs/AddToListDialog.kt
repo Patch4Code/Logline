@@ -16,14 +16,23 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.AddToListViewModel
+import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.AddToListViewModelFactory
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
 fun AddToListDialog(
     openAddToListDialog: MutableState<Boolean>,
     movieDetails: MovieDetails?,
-    addToListViewModel: AddToListViewModel = viewModel()
+    db: LoglineDatabase,
+    addToListViewModel: AddToListViewModel = viewModel(
+        factory = AddToListViewModelFactory(db.movieListDao)
+    )
 ){
     if (!openAddToListDialog.value) return
+
+    LaunchedEffect(Unit){
+        addToListViewModel.updateUserMovieLists()
+    }
 
     val context = LocalContext.current
 

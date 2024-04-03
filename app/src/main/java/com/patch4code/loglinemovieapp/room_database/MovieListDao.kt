@@ -17,6 +17,12 @@ interface MovieListDao {
     @Delete
     suspend fun deleteMovieList(movieList: MovieList)
 
+    @Transaction
+    suspend fun deleteMovieListById(id: Int){
+        val listToDelete = getMovieListById(id)
+        deleteMovieList(listToDelete)
+    }
+
     @Query("SELECT * FROM movieList")
     suspend fun getMovieLists() : List<MovieList>
 
@@ -31,6 +37,26 @@ interface MovieListDao {
         updatedMovies.add(movie)
 
         listToUpdate.movies = updatedMovies
+        upsertMovieList(listToUpdate)
+    }
+
+    @Transaction
+    suspend fun removeMovieFromList(listId: Int, movieId: Int){
+        val listToUpdate = getMovieListById(listId)
+
+        val updatedMovies = listToUpdate.movies.toMutableList()
+        updatedMovies.removeIf { it.id == movieId }
+
+        listToUpdate.movies = updatedMovies
+        upsertMovieList(listToUpdate)
+    }
+
+    @Transaction
+    suspend fun editListParameters(listId: Int, newTitle: String, newIsPublicState: Boolean){
+        val listToUpdate = getMovieListById(listId)
+
+        listToUpdate.name = newTitle
+        listToUpdate.isPublic = newIsPublicState
         upsertMovieList(listToUpdate)
     }
 }

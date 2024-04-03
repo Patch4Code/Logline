@@ -27,10 +27,11 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Diar
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.dialogs.AddToListDialog
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import com.patch4code.loglinemovieapp.ui.theme.LightBlue
 
 @Composable
-fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewModel){
+fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewModel, db: LoglineDatabase){
 
     val id = movieDetails?.id
 
@@ -93,6 +94,6 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
             }
         )
 
-        AddToListDialog(openAddToListDialog, movieDetails)
+        AddToListDialog(openAddToListDialog, movieDetails, db)
     }
 }

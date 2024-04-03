@@ -21,11 +21,13 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
 fun MovieHeader(
     movieDetails: MovieDetails?,
     movieViewModel: MovieViewModel,
+    db: LoglineDatabase,
     onPosterClick:() ->Unit
 ){
     val movieTitle = movieDetails?.title ?: "N/A"
@@ -49,7 +51,7 @@ fun MovieHeader(
             Text(text = movieTitle, style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.padding(4.dp))
             Text(text = "$movieYear | $movieRuntime min", style = MaterialTheme.typography.bodyMedium)
-            MovieHeaderToolbar(movieDetails, movieViewModel)
+            MovieHeaderToolbar(movieDetails, movieViewModel, db)
         }
     }
 }

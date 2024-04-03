@@ -11,7 +11,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
@@ -62,8 +61,6 @@ fun ListView(
     val openDeleteListDialog = remember { mutableStateOf(false)  }
     val showBottomSheet = remember { mutableStateOf(false)  }
 
-    val context = LocalContext.current
-
     Scaffold (
         floatingActionButton = {
             FloatingActionButton(onClick = { openAddMovieDialog.value = true }) {
@@ -93,7 +90,7 @@ fun ListView(
             initialMovieTitle = movieList?.name ?: "",
             initialIsPublic = movieList?.isPublic ?: true,
             openEditListDialog = openEditListDialog.value,
-            onSave = {newName, isPublic-> listViewModel.onSaveEditList(newName, isPublic, openEditListDialog, context) },
+            onSave = {newName, isPublic-> listViewModel.onSaveEditList(newName, isPublic, openEditListDialog) },
             onCancel = {openEditListDialog.value = false})
 
         DeleteListDialog(

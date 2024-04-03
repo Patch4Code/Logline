@@ -1,7 +1,5 @@
 package com.patch4code.loglinemovieapp.features.list.presentation.utils
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
@@ -44,13 +42,9 @@ object ListDialogsExtensions{
     }
 
 
-    fun ListViewModel.onSaveEditList(newName: String, isPublic: Boolean, openEditListDialog: MutableState<Boolean>, context: Context) {
-        if(isListNameUnique(newName)){
-            openEditListDialog.value = false
-            editList(newName, isPublic)
-        }else{
-            Toast.makeText(context, "List name already exists!", Toast.LENGTH_LONG).show()
-        }
+    fun ListViewModel.onSaveEditList(newName: String, isPublic: Boolean, openEditListDialog: MutableState<Boolean>) {
+        openEditListDialog.value = false
+        editList(newName, isPublic)
     }
 
 

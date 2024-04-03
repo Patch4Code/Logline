@@ -11,7 +11,6 @@ import com.patch4code.loglinemovieapp.api.TmdbApiService
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
-import com.patch4code.loglinemovieapp.features.list.domain.model.userMovieListsDummy
 import com.patch4code.loglinemovieapp.room_database.MovieListDao
 import kotlinx.coroutines.launch
 
@@ -35,10 +34,6 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
     }
 
 
-    private fun updateList(movieList: MovieList) {
-        _movieList.value = movieList
-    }
-
     fun addMovieToList(movie: Movie) {
         val listId = _movieList.value?.id
         viewModelScope.launch {
@@ -54,13 +49,11 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
 
 
     fun removeMovieFromList(movieId: Int) {
-        val updatedMovies = _movieList.value?.movies.orEmpty().toMutableList()
-        val listName = _movieList.value?.name
-        updatedMovies.removeIf {it.id == movieId}
-
-        // Change Dummy-Data and accordingly the local ViewModel Data
-        userMovieListsDummy.find { it.name == listName }?.movies = updatedMovies
-        userMovieListsDummy.find { it.name == listName }?.let { updateList(it) }
+        val listId = _movieList.value?.id
+        viewModelScope.launch {
+            listId?.let { movieListDao.removeMovieFromList(it, movieId) }
+            _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
+        }
     }
 
 
@@ -78,20 +71,18 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
     }
 
     fun editList(newTitle: String, newIsPublicState: Boolean){
-        val listName = _movieList.value?.name
-
-        userMovieListsDummy.find { it.name == listName }?.isPublic = newIsPublicState
-        userMovieListsDummy.find { it.name == listName }?.name = newTitle
-
-        userMovieListsDummy.find { it.name == newTitle }?.let { updateList(it) }
+        val listId = _movieList.value?.id
+        viewModelScope.launch {
+            listId?.let { movieListDao.editListParameters(it, newTitle, newIsPublicState) }
+            _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
+        }
     }
 
     fun deleteList(){
-        userMovieListsDummy.remove(_movieList.value)
-    }
-
-    fun isListNameUnique(newName: String): Boolean{
-        return !userMovieListsDummy.any { it.name == newName }
+        val listId = _movieList.value?.id
+        viewModelScope.launch {
+            listId?.let { movieListDao.deleteMovieListById(it) }
+        }
     }
 }
 

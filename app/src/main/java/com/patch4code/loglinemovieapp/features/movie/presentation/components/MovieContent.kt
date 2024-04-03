@@ -14,6 +14,7 @@ import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.cast_and_crew.MovieCastAndCrew
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.header.MovieHeader
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
+import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
 fun MovieContent(
@@ -21,7 +22,8 @@ fun MovieContent(
     movieCredits: MovieCredits?,
     collectionMovies: List<Movie>?,
     navController: NavController,
-    movieViewModel: MovieViewModel
+    movieViewModel: MovieViewModel,
+    db: LoglineDatabase
 ) {
     val openPosterPopup = remember { mutableStateOf(false)  }
 
@@ -30,6 +32,7 @@ fun MovieContent(
             MovieHeader(
                 movieDetails = movieDetails,
                 movieViewModel = movieViewModel,
+                db = db,
                 onPosterClick = { openPosterPopup.value = true }
             )
             MovieDescription(movieDetails?.tagline, movieDetails?.overview)

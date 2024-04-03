@@ -73,6 +73,6 @@ fun MovieView(
             }
         }
     ){
-        MovieContent(movieDetails, movieCredits, collectionMovies, navController, movieViewModel)
+        MovieContent(movieDetails, movieCredits, collectionMovies, navController, movieViewModel, db)
     }
 }
