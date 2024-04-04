@@ -74,7 +74,7 @@ fun ListView(
         //Dialogs and BottomSheet
 
         DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
-            onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog) },
+            onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog, movieList, navController) },
             onCancel = { onCancelDeleteMovieFromList(openDeleteMovieDialog, movieList, navController) })
 
         AddMovieToListDialog(openAddMovieDialog = openAddMovieDialog.value,

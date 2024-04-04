@@ -188,7 +188,12 @@ fun Navigation(db: LoglineDatabase){
                             }
                         )
                     ){parsedLoggedElement->
-                        ReviewDetailsView(navController = navController, navViewModel = navigationViewModel, db = db, loggedElementId = parsedLoggedElement.arguments?.getString("loggedElement"))
+                        ReviewDetailsView(
+                            navController = navController,
+                            navViewModel = navigationViewModel,
+                            db = db,
+                            loggedElementId = parsedLoggedElement.arguments?.getString("loggedElement")
+                        )
                     }
 
                     composable(route = Screen.ListsTableScreen.route){
@@ -204,7 +209,12 @@ fun Navigation(db: LoglineDatabase){
                             }
                         )
                     ){parsedMovieList->
-                        ListView(navController = navController, navViewModel = navigationViewModel, db = db, movieListString = parsedMovieList.arguments?.getString("movieList"))
+                        ListView(
+                            navController = navController,
+                            navViewModel = navigationViewModel,
+                            db = db,
+                            movieListString = parsedMovieList.arguments?.getString("movieList")
+                        )
                     }
 
                     composable(route = Screen.ProfileEditScreen.route){

@@ -11,12 +11,26 @@ import java.net.URLEncoder
 
 object ListDialogsExtensions{
 
-    fun ListViewModel.onDeleteMovieFromList(movieToDelete: MutableState<Movie?>, openDeleteMovieDialog: MutableState<Boolean>) {
+    fun ListViewModel.onDeleteMovieFromList(
+        movieToDelete: MutableState<Movie?>,
+        openDeleteMovieDialog: MutableState<Boolean>,
+        movieList:  MovieList?,
+        navController: NavController
+    ) {
         movieToDelete.value?.id?.let { movie->
             removeMovieFromList(movie)
         }
         movieToDelete.value = null
         openDeleteMovieDialog.value = false
+
+        //workaround with scene reload
+        val jsonMovieList = movieList?.toJson()
+        val encodedJsonMovieList = URLEncoder.encode(jsonMovieList, "UTF-8")
+        navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList)){
+            popUpTo(Screen.ListsTableScreen.route){
+                inclusive = false
+            }
+        }
     }
     fun onCancelDeleteMovieFromList(openDeleteMovieDialog: MutableState<Boolean>, movieList:  MovieList?, navController: NavController){
         openDeleteMovieDialog.value = false
