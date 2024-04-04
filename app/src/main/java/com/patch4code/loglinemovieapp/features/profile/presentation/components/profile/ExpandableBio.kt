@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.profile.presentation.components
+package com.patch4code.loglinemovieapp.features.profile.presentation.components.profile
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween

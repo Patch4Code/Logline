@@ -25,6 +25,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,6 +44,8 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.EditBioDialog
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.EditProfileNameDialog
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
@@ -62,20 +66,22 @@ fun ProfileEditView(
     val context = LocalContext.current
     val userProfile = profileViewModel.userProfileData.observeAsState().value
 
+
     val profileImageName = userProfile?.profileImagePath ?: UserProfile.DEFAULT_PROFILE_IMAGE_PATH
     val bannerImageName = userProfile?.bannerImagePath ?: UserProfile.DEFAULT_BANNER_IMAGE_PATH
 
     val profileImageResourceId = context.resources.getIdentifier(profileImageName, "drawable", context.packageName)
     val bannerImageResourceId = context.resources.getIdentifier(bannerImageName, "drawable", context.packageName)
 
-
+    val openEditProfileNameDialog = remember { mutableStateOf(false)  }
+    val openEditBioDialog = remember { mutableStateOf(false)  }
 
 
     LazyColumn(modifier = Modifier.padding(16.dp))
     {
         item {
             Text(text = "Profile Name", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
-            ElevatedButton(onClick = { /*TODO*/ }) {
+            ElevatedButton(onClick = { openEditProfileNameDialog.value = true }) {
                 Text(text = userProfile?.username ?: "Anonymous")
                 Spacer(modifier = Modifier.padding(4.dp))
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
@@ -84,9 +90,9 @@ fun ProfileEditView(
             HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
             Text(text = "Bio", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
-            ElevatedButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
+            ElevatedButton(onClick = { openEditBioDialog.value = true }, modifier = Modifier.fillMaxWidth()) {
                 Text(text = userProfile?.bioText ?: "",
-                    maxLines = 3, minLines = 3, modifier = Modifier.width(250.dp), textAlign = TextAlign.Center
+                    maxLines = 3, minLines = 3, modifier = Modifier.width(250.dp), textAlign = TextAlign.Start
                 )
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit", modifier = Modifier.weight(1f))
             }
@@ -166,4 +172,6 @@ fun ProfileEditView(
             }
         }
     }
+    EditProfileNameDialog(openEditProfileNameDialog, userProfile?.username, profileViewModel)
+    EditBioDialog(openEditBioDialog, userProfile?.bioText, profileViewModel)
 }

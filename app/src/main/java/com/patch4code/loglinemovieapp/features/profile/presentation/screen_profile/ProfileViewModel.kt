@@ -25,6 +25,20 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
             }
         }
     }
+
+    fun updateProfileName(profileName: String){
+        viewModelScope.launch {
+            dao.updateProfileName(profileName)
+            _userProfileData.value = dao.getUserProfile()
+        }
+    }
+
+    fun updateBioText(bioText: String){
+        viewModelScope.launch {
+            dao.updateBio(bioText)
+            _userProfileData.value = dao.getUserProfile()
+        }
+    }
 }
 
 

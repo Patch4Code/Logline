@@ -21,10 +21,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
-import com.patch4code.loglinemovieapp.features.profile.presentation.components.ExpandableBio
-import com.patch4code.loglinemovieapp.features.profile.presentation.components.MovieFavouriteRow
-import com.patch4code.loglinemovieapp.features.profile.presentation.components.ProfileHead
-import com.patch4code.loglinemovieapp.features.profile.presentation.components.ProfileNavigation
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ExpandableBio
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.MovieFavouriteRow
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ProfileHead
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ProfileNavigation
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable

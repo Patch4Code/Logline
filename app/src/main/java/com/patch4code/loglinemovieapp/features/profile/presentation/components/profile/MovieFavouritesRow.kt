@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.profile.presentation.components
+package com.patch4code.loglinemovieapp.features.profile.presentation.components.profile
 
 import android.util.Log
 import androidx.compose.foundation.clickable
