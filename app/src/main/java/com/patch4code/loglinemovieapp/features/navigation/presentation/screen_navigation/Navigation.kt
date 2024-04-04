@@ -83,7 +83,7 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.ProfileScreen.route){
-                        ProfileView(navController = navController, navViewModel = navigationViewModel)
+                        ProfileView(navController = navController, navViewModel = navigationViewModel, db = db)
                     }
 
                     composable(route = Screen.WatchlistScreen.route){
@@ -218,7 +218,7 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.ProfileEditScreen.route){
-                        ProfileEditView(navController = navController, navViewModel = navigationViewModel)
+                        ProfileEditView(navController = navController, navViewModel = navigationViewModel, db = db)
                     }
 
                     composable(route = Screen.SocialScreen.route){
