@@ -43,7 +43,7 @@ fun ProfileEditImageSection(userProfile: UserProfile?, profileViewModel: Profile
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { localUri ->
             //save image locally in app
-            val internalMemoryUri = localUri?.let { ProfileEditExtensions.saveProfileImageToStorage(context, it) }
+            val internalMemoryUri = localUri?.let { ProfileEditExtensions.saveImageToStorage(context, it, "profile_image.jpg") }
             if (internalMemoryUri != null){
                 profileViewModel.setProfileImagePath(internalMemoryUri.toString())
                 //refresh

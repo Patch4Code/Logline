@@ -40,7 +40,7 @@ fun ProfileEditBannerSection(userProfile: UserProfile?, profileViewModel: Profil
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { localUri ->
             //save image locally in app
-            val internalMemoryUri = localUri?.let { ProfileEditExtensions.saveBannerImageToStorage(context, it) }
+            val internalMemoryUri = localUri?.let { ProfileEditExtensions.saveImageToStorage(context, it, "banner_image.jpg") }
             if (internalMemoryUri != null){
                 profileViewModel.setBannerImagePath(internalMemoryUri.toString())
                 //refresh
