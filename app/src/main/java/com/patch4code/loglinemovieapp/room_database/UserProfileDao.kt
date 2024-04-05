@@ -41,4 +41,13 @@ interface UserProfileDao {
             upsertUserProfile(userProfileUpdate)
         }
     }
+
+    @Transaction
+    suspend fun setBannerImagePath(path: String){
+        val userProfileUpdate = getUserProfile()
+        if (userProfileUpdate != null) {
+            userProfileUpdate.bannerImagePath = path
+            upsertUserProfile(userProfileUpdate)
+        }
+    }
 }

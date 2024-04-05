@@ -28,4 +28,21 @@ object ProfileEditExtensions {
         return file?.toUri()
     }
 
+    fun saveBannerImageToStorage(context: Context, uri: Uri): Uri? {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val outputStream: OutputStream
+        var file: File? = null
+        try {
+            // Save the image to the app's internal memory
+            file = File(context.filesDir, "banner_image.jpg")
+            outputStream = FileOutputStream(file)
+            inputStream?.copyTo(outputStream)
+            inputStream?.close()
+            outputStream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return file?.toUri()
+    }
+
 }

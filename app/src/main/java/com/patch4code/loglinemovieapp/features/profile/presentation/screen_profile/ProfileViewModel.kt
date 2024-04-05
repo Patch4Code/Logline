@@ -48,6 +48,13 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
             _userProfileData.value = dao.getUserProfile()
         }
     }
+
+    fun setBannerImagePath(path: String){
+        viewModelScope.launch {
+            dao.setBannerImagePath(path)
+            _userProfileData.value = dao.getUserProfile()
+        }
+    }
 }
 
 

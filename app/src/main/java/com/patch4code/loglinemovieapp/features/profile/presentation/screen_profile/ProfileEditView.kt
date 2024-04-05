@@ -51,7 +51,7 @@ fun ProfileEditView(
 
             Row {
                 ProfileEditImageSection(userProfile, profileViewModel, navController)
-                ProfileEditBannerSection(userProfile)
+                ProfileEditBannerSection(userProfile, profileViewModel, navController)
             }
             ProfileEditFavMoviesSection(userProfile)
         }
