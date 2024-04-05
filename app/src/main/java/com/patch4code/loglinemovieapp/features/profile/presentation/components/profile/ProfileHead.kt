@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.profile.presentation.components.profile
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,32 +13,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 
 @Composable
 fun ProfileHead(userProfile: UserProfile?){
 
-    val context = LocalContext.current
-
-    val profileImageName = userProfile?.profileImagePath ?: UserProfile.DEFAULT_PROFILE_IMAGE_PATH
-    val bannerImageName = userProfile?.bannerImagePath ?: UserProfile.DEFAULT_BANNER_IMAGE_PATH
-
-    val profileImageResourceId = context.resources.getIdentifier(profileImageName, "drawable", context.packageName)
-    val bannerImageResourceId = context.resources.getIdentifier(bannerImageName, "drawable", context.packageName)
+    val profileImagePath = userProfile?.profileImagePath
+    val bannerImagePath = userProfile?.bannerImagePath
 
     Box {
-        Image(
-            painter = painterResource(bannerImageResourceId),
-            modifier = Modifier.fillMaxWidth().height(125.dp),
+        AsyncImage(
+            model = bannerImagePath,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(125.dp),
             contentScale = ContentScale.Crop,
-            contentDescription = "Banner"
+            contentDescription = "Banner",
+            error = painterResource(id = R.drawable.default_banner_image)
         )
 
-        Image(
-            painter = painterResource(id = profileImageResourceId),
+        AsyncImage(
+            model = profileImagePath,
             modifier = Modifier
                 .height(120.dp)
                 .width(120.dp)
@@ -48,7 +46,8 @@ fun ProfileHead(userProfile: UserProfile?){
                 .clip(CircleShape)
                 .border(width = 2.dp, color = Color.DarkGray, shape = CircleShape),
             contentDescription = "Profile Image",
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            error = painterResource(id = R.drawable.default_profile_image)
         )
     }
 }

@@ -14,13 +14,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
-import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.EditBioDialog
-import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.EditProfileNameDialog
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.ProfileEditBannerSection
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.ProfileEditBioSection
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.ProfileEditFavMoviesSection
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.ProfileEditImageSection
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.ProfileEditNameSection
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.dialogs.EditBioDialog
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.dialogs.EditProfileNameDialog
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
@@ -50,7 +50,7 @@ fun ProfileEditView(
             ProfileEditBioSection(openEditBioDialog, userProfile?.bioText)
 
             Row {
-                ProfileEditImageSection(userProfile)
+                ProfileEditImageSection(userProfile, profileViewModel, navController)
                 ProfileEditBannerSection(userProfile)
             }
             ProfileEditFavMoviesSection(userProfile)

@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.profile.presentation.components.profile
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,9 +20,7 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 @Composable
 fun MovieFavouriteRow(navController: NavController, movies: List<Movie>){
 
-
     Text(text = "FAVOURITE MOVIES")
-    Log.e("MovieFavouriteRow", "after text")
 
     Row (modifier = Modifier
         .fillMaxWidth()

@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,6 +24,7 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
             }else{
                 _userProfileData.value = tempUserProfile!!
             }
+            Log.e("ProfileViewModel", "_userProfileData: ${_userProfileData.value}")
         }
     }
 
@@ -36,6 +38,13 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     fun updateBioText(bioText: String){
         viewModelScope.launch {
             dao.updateBio(bioText)
+            _userProfileData.value = dao.getUserProfile()
+        }
+    }
+
+    fun setProfileImagePath(path: String){
+        viewModelScope.launch {
+            dao.setProfileImagePath(path)
             _userProfileData.value = dao.getUserProfile()
         }
     }

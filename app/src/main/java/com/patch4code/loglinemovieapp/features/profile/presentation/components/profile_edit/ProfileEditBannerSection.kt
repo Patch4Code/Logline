@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +18,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 
 @Composable
@@ -26,8 +27,7 @@ fun ProfileEditBannerSection(userProfile: UserProfile?){
 
     val context = LocalContext.current
 
-    val bannerImageName = userProfile?.bannerImagePath ?: UserProfile.DEFAULT_BANNER_IMAGE_PATH
-    val bannerImageResourceId = context.resources.getIdentifier(bannerImageName, "drawable", context.packageName)
+    val bannerImagePath = userProfile?.bannerImagePath
 
     Column {
         Text(text = "Banner Image", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
@@ -37,11 +37,13 @@ fun ProfileEditBannerSection(userProfile: UserProfile?){
                 .fillMaxWidth()
                 .border(width = 2.dp, color = Color.DarkGray)
         ){
-            Image(
-                painter = painterResource(bannerImageResourceId),
+            AsyncImage(
+                model = bannerImagePath,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
-                contentDescription = "Banner")
+                contentDescription = "Banner",
+                error = painterResource(id = R.drawable.default_banner_image)
+            )
         }
         TextButton(onClick = { /*TODO*/ }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text(text = "Reset to Default")

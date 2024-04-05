@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit
+package com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.dialogs
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.height
