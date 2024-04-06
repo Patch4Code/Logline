@@ -53,7 +53,7 @@ fun ProfileEditView(
                 ProfileEditImageSection(userProfile, profileViewModel, navController)
                 ProfileEditBannerSection(userProfile, profileViewModel, navController)
             }
-            ProfileEditFavMoviesSection(userProfile)
+            ProfileEditFavMoviesSection(userProfile, profileViewModel)
         }
     }
     EditProfileNameDialog(openEditProfileNameDialog, userProfile?.username, profileViewModel)

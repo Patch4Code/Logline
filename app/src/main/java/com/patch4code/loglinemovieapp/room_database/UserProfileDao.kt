@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
+import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 
 @Dao
@@ -47,6 +48,17 @@ interface UserProfileDao {
         val userProfileUpdate = getUserProfile()
         if (userProfileUpdate != null) {
             userProfileUpdate.bannerImagePath = path
+            upsertUserProfile(userProfileUpdate)
+        }
+    }
+
+    @Transaction
+    suspend fun setFavMovieAtIndex(index: Int, movie: Movie){
+        val userProfileUpdate = getUserProfile()
+        if (userProfileUpdate != null){
+            val favMovieListUpdate = userProfileUpdate.favouriteMovies.toMutableList()
+            favMovieListUpdate[index] = movie
+            userProfileUpdate.favouriteMovies = favMovieListUpdate
             upsertUserProfile(userProfileUpdate)
         }
     }

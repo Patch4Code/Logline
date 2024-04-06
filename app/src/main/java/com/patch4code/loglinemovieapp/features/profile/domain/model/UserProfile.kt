@@ -10,7 +10,7 @@ data class UserProfile(
     var profileImagePath: String = "",
     var bannerImagePath: String = "",
     var bioText: String = "",
-    val favouriteMovies: List<Movie> = EMPTY_MOVIE_LIST,
+    var favouriteMovies: List<Movie> = EMPTY_MOVIE_LIST,
     @PrimaryKey
     val id:Int = 1
 ){

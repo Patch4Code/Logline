@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 import com.patch4code.loglinemovieapp.room_database.UserProfileDao
 import kotlinx.coroutines.launch
@@ -52,6 +53,13 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     fun setBannerImagePath(path: String){
         viewModelScope.launch {
             dao.setBannerImagePath(path)
+            _userProfileData.value = dao.getUserProfile()
+        }
+    }
+
+    fun setFavMovieAtIndex(index: Int, movie: Movie){
+        viewModelScope.launch {
+            dao.setFavMovieAtIndex(index, movie)
             _userProfileData.value = dao.getUserProfile()
         }
     }
