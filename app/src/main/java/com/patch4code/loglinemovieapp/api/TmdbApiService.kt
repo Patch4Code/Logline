@@ -5,6 +5,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCollection
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
+import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideos
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetails
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonMovieCredits
 import retrofit2.Response
@@ -59,6 +60,14 @@ interface TmdbApiService {
         @Query("language") language: String = "en-US",
         @Query("api_key") apiKey: String = TmdbCredentials.API_KEY
     ): Response<MovieDetails>
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        @Path("movie_id") movieId: Int?,
+        @Query("language") language: String = "en-US",
+        @Query("api_key") apiKey: String = TmdbCredentials.API_KEY
+    ): Response<MovieVideos>
+
 
     @GET("collection/{collection_id}")
     suspend fun getMoviesFromCollection(

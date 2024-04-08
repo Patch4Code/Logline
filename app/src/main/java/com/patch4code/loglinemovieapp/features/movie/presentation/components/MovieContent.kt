@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
+import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.cast_and_crew.MovieCastAndCrew
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.header.MovieHeader
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
@@ -21,6 +22,7 @@ fun MovieContent(
     movieDetails: MovieDetails?,
     movieCredits: MovieCredits?,
     collectionMovies: List<Movie>?,
+    movieVideo: MovieVideo?,
     navController: NavController,
     movieViewModel: MovieViewModel,
     db: LoglineDatabase
@@ -36,17 +38,13 @@ fun MovieContent(
                 onPosterClick = { openPosterPopup.value = true }
             )
             MovieDescription(movieDetails?.tagline, movieDetails?.overview)
+
+            MovieFeaturesBar(movieVideo)
+
             MovieRatings(movieDetails?.voteAverage)
             MovieGenres(movieDetails?.genres)
             MovieCastAndCrew(movieCredits, navController)
-            MovieMoreDetails(
-                movieDetails?.productionCompanies,
-                movieDetails?.productionCountries,
-                movieDetails?.budget,
-                movieDetails?.revenue,
-                movieDetails?.status,
-                movieDetails?.spokenLanguages
-            )
+            MovieMoreDetails(movieDetails)
             MovieMoreLikeThis(navController, collectionMovies, movieDetails?.title)
             MovieSourceReference()
         }

@@ -13,6 +13,7 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
+import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
@@ -24,6 +25,9 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
 
     private val _detailsData = MutableLiveData<MovieDetails>()
     val detailsData: LiveData<MovieDetails> get() = _detailsData
+
+    private val _movieVideo = MutableLiveData<MovieVideo?>()
+    val movieVideo: LiveData<MovieVideo?> get() = _movieVideo
 
     private val _creditsData = MutableLiveData<MovieCredits>()
     val creditsData: LiveData<MovieCredits> get() = _creditsData
@@ -65,7 +69,6 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         }
     }
 
-
     fun loadMovieCollection(collectionId: Int){
         viewModelScope.launch {
             try {
@@ -78,6 +81,22 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
             }
         }
     }
+
+    fun loadMovieVideos(movieId: Int){
+        viewModelScope.launch {
+            try {
+                val movieVideosResponse = tmdbApiService.getMovieVideos(movieId)
+                if (movieVideosResponse.isSuccessful){
+                    val firstYouTubeVideo = movieVideosResponse.body()?.videoList?.find { it.site == "YouTube" && it.type == "Trailer"}
+                    _movieVideo.value = firstYouTubeVideo
+                }
+            } catch (e: Exception) {
+                Log.e("MovieViewModel", "Error getting movie videos", e)
+            }
+        }
+    }
+
+
 
     fun loadRatingAndWatchlistStatusById(id: Int){
         var movieUserData: MovieUserData? = null

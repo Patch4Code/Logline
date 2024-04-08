@@ -26,21 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.features.movie.domain.model.ProductionCompany
-import com.patch4code.loglinemovieapp.features.movie.domain.model.ProductionCountry
-import com.patch4code.loglinemovieapp.features.movie.domain.model.SpokenLanguage
+import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 
 @Composable
-fun MovieMoreDetails(
-    studios: List<ProductionCompany>?,
-    countries: List<ProductionCountry>?,
-    budget: Int?,
-    revenue: Long?,
-    status: String?,
-    languages: List<SpokenLanguage>?
+fun MovieMoreDetails(movieDetails: MovieDetails?
 ){
 
-    val movieStatus: String = status ?: "N/A"
+    val movieStatus: String = movieDetails?.status ?: "N/A"
 
     var showDetails by remember { mutableStateOf(false) }
 
@@ -71,7 +63,7 @@ fun MovieMoreDetails(
                 //Production Companies
                 Text(text = "Production Companies:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Row {
-                    studios?.let {
+                    movieDetails?.productionCompanies?.let {
                         Text(text = it.joinToString { studio -> studio.name }, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
@@ -81,7 +73,7 @@ fun MovieMoreDetails(
                 //Countries
                 Text(text = "Production Countries:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Row {
-                    countries?.let {
+                    movieDetails?.productionCountries?.let {
                         Text(text = it.joinToString { country -> country.name }, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
@@ -90,7 +82,7 @@ fun MovieMoreDetails(
                 //Spoken Languages
                 Text(text = "Spoken Languages:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Row {
-                    languages?.let {
+                    movieDetails?.spokenLanguages?.let {
                         Text(text = it.joinToString { language -> language.englishName }, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
@@ -103,12 +95,12 @@ fun MovieMoreDetails(
 
                 //Budget
                 Text(text = "Budget:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
-                Text(text = "$budget $", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "${movieDetails?.budget} $", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 //Revenue
                 Text(text = "Revenue:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
-                Text(text = "$revenue $", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "${movieDetails?.revenue} $", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
             }
         }
