@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.WatchLater
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.DateRange
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.Reviews
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -86,11 +88,17 @@ data class DrawerNavigationItem(
                 route = Screen.SocialScreen.route,
             ),
             DrawerNavigationItem(
+                title = "Settings",
+                selectedIcon = Icons.Filled.Settings,
+                unselectedIcon = Icons.Outlined.Settings,
+                route = Screen.SettingsScreen.route
+            ),
+            DrawerNavigationItem(
                 title = "About",
                 selectedIcon = Icons.Filled.Info,
                 unselectedIcon = Icons.Outlined.Info,
                 route = Screen.AboutScreen.route
-            ),
+            )
         )
     }
 }

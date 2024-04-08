@@ -38,6 +38,7 @@ import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profi
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewDetailsView
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewsView
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchView
+import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialView
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.screen_watchlist.WatchlistView
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
@@ -223,6 +224,10 @@ fun Navigation(db: LoglineDatabase){
 
                     composable(route = Screen.SocialScreen.route){
                         SocialView(navController = navController, navViewModel = navigationViewModel)
+                    }
+
+                    composable(route = Screen.SettingsScreen.route){
+                        SettingsView(navController = navController, navViewModel = navigationViewModel)
                     }
                 }
             }

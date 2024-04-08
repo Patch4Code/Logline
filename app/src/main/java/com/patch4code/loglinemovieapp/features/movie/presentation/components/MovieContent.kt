@@ -15,6 +15,7 @@ import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.cast_and_crew.MovieCastAndCrew
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.header.MovieHeader
+import com.patch4code.loglinemovieapp.features.movie.presentation.components.watch_providers.MovieWatchProviders
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 

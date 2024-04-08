@@ -43,8 +43,5 @@ fun MovieFeaturesBar(movieVideo: MovieVideo?){
             Text(text = "Share")
         }
     }
-    
-    
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
-
 }

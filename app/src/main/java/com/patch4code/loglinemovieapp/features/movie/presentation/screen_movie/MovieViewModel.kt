@@ -126,8 +126,6 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     }
 
 
-
-
     fun loadRatingAndWatchlistStatusById(id: Int){
         var movieUserData: MovieUserData? = null
         viewModelScope.launch {
