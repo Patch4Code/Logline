@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.movie.domain.model.CountryProviders
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
@@ -23,6 +24,8 @@ fun MovieContent(
     movieCredits: MovieCredits?,
     collectionMovies: List<Movie>?,
     movieVideo: MovieVideo?,
+    movieProviders: CountryProviders?,
+    watchCountry: String?,
     navController: NavController,
     movieViewModel: MovieViewModel,
     db: LoglineDatabase
@@ -38,11 +41,12 @@ fun MovieContent(
                 onPosterClick = { openPosterPopup.value = true }
             )
             MovieDescription(movieDetails?.tagline, movieDetails?.overview)
-
-            MovieFeaturesBar(movieVideo)
-
             MovieRatings(movieDetails?.voteAverage)
             MovieGenres(movieDetails?.genres)
+
+            MovieFeaturesBar(movieVideo)
+            MovieWatchProviders(movieProviders, watchCountry, movieDetails?.id)
+
             MovieCastAndCrew(movieCredits, navController)
             MovieMoreDetails(movieDetails)
             MovieMoreLikeThis(navController, collectionMovies, movieDetails?.title)

@@ -9,7 +9,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
@@ -17,6 +20,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelpe
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.MovieContent
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLEncoder
 
@@ -33,10 +37,12 @@ fun MovieView(
     )
 ){
 
+    val context = LocalContext.current
     val movieId = id?.toIntOrNull() ?: 0
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MovieScreen)
+        movieViewModel.initializeSettingsDataStore(context)
         movieViewModel.loadMovieDetails(movieId)
         movieViewModel.loadMovieCredits(movieId)
         movieViewModel.loadMovieVideos(movieId)
@@ -46,11 +52,18 @@ fun MovieView(
     val movieDetails = movieViewModel.detailsData.observeAsState().value
     val movieCredits = movieViewModel.creditsData.observeAsState().value
     val movieVideo = movieViewModel.movieVideo.observeAsState().value
+    val movieProviders = movieViewModel.countryProviders.observeAsState().value
+
+    val dataSettingsStore = remember { StoreSettings(context) }
+    val watchCountry = dataSettingsStore.getWatchProvidersCountry.collectAsState(initial = "").value
 
     DisposableEffect(movieDetails) {
         if (movieDetails != null) {
             val movieCollectionId = movieDetails.collection?.id ?: 0
             movieViewModel.loadMovieCollection(movieCollectionId)
+        }
+        if(!watchCountry.isNullOrEmpty()){
+            movieViewModel.loadMovieProviders(movieId, watchCountry)
         }
         onDispose {}
     }
@@ -74,6 +87,6 @@ fun MovieView(
             }
         }
     ){
-        MovieContent(movieDetails, movieCredits, collectionMovies, movieVideo, navController, movieViewModel, db)
+        MovieContent(movieDetails, movieCredits, collectionMovies, movieVideo, movieProviders, watchCountry, navController, movieViewModel, db)
     }
 }

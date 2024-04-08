@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,9 +12,11 @@ import com.patch4code.loglinemovieapp.api.TmdbApiService
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
+import com.patch4code.loglinemovieapp.features.movie.domain.model.CountryProviders
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
+import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
@@ -28,6 +31,10 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
 
     private val _movieVideo = MutableLiveData<MovieVideo?>()
     val movieVideo: LiveData<MovieVideo?> get() = _movieVideo
+
+    private lateinit var settingsDataStore: StoreSettings
+    private val _countryProviders = MutableLiveData<CountryProviders?>()
+    val countryProviders: LiveData<CountryProviders?> get() = _countryProviders
 
     private val _creditsData = MutableLiveData<MovieCredits>()
     val creditsData: LiveData<MovieCredits> get() = _creditsData
@@ -96,15 +103,35 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         }
     }
 
+    fun initializeSettingsDataStore(context: Context) {
+        settingsDataStore = StoreSettings(context)
+    }
+    fun loadMovieProviders(movieId: Int, country: String){
+        Log.e("MovieViewModel", "Country: $country")
+        viewModelScope.launch {
+            try {
+                val movieProviderResponse = tmdbApiService.getWatchProviders(movieId)
+                if(movieProviderResponse.isSuccessful){
+                    Log.e("MovieViewModel", "success")
+                    //var country = ""
+                    //settingsDataStore.getWatchProvidersCountry.collect { country = it ?: "" }
+                    val countryProvider = movieProviderResponse.body()?.availableServicesMap?.get(country)
+                    _countryProviders.value = countryProvider
+                    Log.e("MovieViewModel", "Success: $countryProvider")
+                }
+            }catch (e: Exception){
+                Log.e("MovieViewModel", "Error getting movie providers", e)
+            }
+        }
+    }
+
+
 
 
     fun loadRatingAndWatchlistStatusById(id: Int){
         var movieUserData: MovieUserData? = null
         viewModelScope.launch {
             movieUserData = dao.getMovieUserDataByMovieId(id)
-
-            Log.e("MovieViewModel", "movieUserData: $movieUserData")
-
             if (movieUserData != null){
                 _myRating.value = movieUserData!!.rating
                 _onWatchlist.value = movieUserData!!.onWatchlist
