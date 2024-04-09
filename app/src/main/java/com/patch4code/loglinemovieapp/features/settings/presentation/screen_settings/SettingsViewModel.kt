@@ -127,5 +127,4 @@ class SettingsViewModel: ViewModel() {
             settingsDataStore.setWatchProvidersCountry(countryCode)
         }
     }
-
 }

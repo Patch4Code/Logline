@@ -17,8 +17,6 @@ import com.patch4code.loglinemovieapp.ui.theme.Beige
 @Composable
 fun ExportDataSection(){
 
-
-
     val openExportDataDialog = remember { mutableStateOf(false) }
 
     HorizontalDivider()
@@ -35,7 +33,5 @@ fun ExportDataSection(){
             Text(text = "Export Data")
         }
     }
-
     ExportDataDialog(openExportDataDialog)
-
 }
