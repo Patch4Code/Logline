@@ -11,10 +11,6 @@ class SettingsViewModel: ViewModel() {
 
     private lateinit var settingsDataStore: StoreSettings
 
-    fun initializeSettingsDataStore(context: Context) {
-        settingsDataStore = StoreSettings(context)
-    }
-
     private val countries = listOf(
         Country("AE", "United Arab Emirates", "\uD83C\uDDE6\uD83C\uDDEA"),
         Country("AL", "Albania", "\uD83C\uDDE6\uD83C\uDDF1"),
@@ -112,6 +108,10 @@ class SettingsViewModel: ViewModel() {
         Country("YE", "Yemen", "\uD83C\uDDFE\uD83C\uDDEA"),
         Country("ZA", "South Africa", "\uD83C\uDDFF\uD83C\uDDE6")
     )
+
+    fun initializeSettingsDataStore(context: Context) {
+        settingsDataStore = StoreSettings(context)
+    }
 
     fun getCountriesList(): List<Country> {
         return countries

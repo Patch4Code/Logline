@@ -54,7 +54,6 @@ fun CountryPickerDialog(openCountryPickerDialog: MutableState<Boolean>, selected
                                 Text(text = "${country.flagCode} ${country.countryName}")
                             }
                         }
-
                     }
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
