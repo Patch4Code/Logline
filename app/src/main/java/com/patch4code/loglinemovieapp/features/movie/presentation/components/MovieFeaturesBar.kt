@@ -17,22 +17,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
+import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
 const val TMDB_BASE_MOVIE_PAGE_URL = "https://www.themoviedb.org/movie"
 
 @Composable
-fun MovieFeaturesBar(movieVideo: MovieVideo?, movieDetails: MovieDetails?){
+fun MovieFeaturesBar(movieVideo: MovieVideo?, movieDetails: MovieDetails?, navController: NavController){
 
     val context = LocalContext.current
 
     val uriHandler = LocalUriHandler.current
     val isTrailerButtonEnabled: Boolean = movieVideo != null
 
+    val movieId = movieDetails?.id ?: -1
     val title = movieDetails?.title
-    val movieUrl = "$TMDB_BASE_MOVIE_PAGE_URL/${movieDetails?.id}"
+
+    val movieUrl = "$TMDB_BASE_MOVIE_PAGE_URL/$movieId"
     val message = "$title\n$movieUrl"
     val sendIntent = Intent(Intent.ACTION_SEND).apply {
         putExtra(Intent.EXTRA_TEXT, message)
@@ -49,7 +53,7 @@ fun MovieFeaturesBar(movieVideo: MovieVideo?, movieDetails: MovieDetails?){
         }
         Spacer(modifier = Modifier.padding(4.dp))
 
-        FilledTonalButton(onClick = { }) {
+        FilledTonalButton(onClick = { navController.navigate(Screen.MoviePublicReviewsScreen.withArgs("$movieId/$title")) }) {
             Text(text = "Reviews")
         }
         Spacer(modifier = Modifier.padding(4.dp))

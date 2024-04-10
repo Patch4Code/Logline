@@ -3,7 +3,7 @@ package com.patch4code.loglinemovieapp.features.navigation.domain.model
 import android.util.Log
 
 //to define the Screens for the Navigation
-sealed class Screen(val route: String, val title: String) {
+sealed class Screen(val route: String, var title: String) {
     object HomeScreen : Screen("home_view", "Home")
     object ProfileScreen : Screen("profile_view", "Profile")
     object WatchlistScreen : Screen("watchlist_view", "Watchlist")
@@ -13,6 +13,7 @@ sealed class Screen(val route: String, val title: String) {
     object PersonDetailsScreen : Screen("person_details_screen","")
     object MovieLogScreen: Screen("movie_log_screen", "Add Diary-Entry")
     object MyMoviesScreen : Screen("my_movies_screen", "Movies")
+    object MoviePublicReviewsScreen: Screen("movie_public_reviews_screen", "")
     object DiaryScreen : Screen("diary_screen", "Diary")
     object DiaryEditElementScreen: Screen("diary_edit_element_screen", "Edit Diary-Entry")
     object ReviewsScreen : Screen("reviews_screen", "Reviews")

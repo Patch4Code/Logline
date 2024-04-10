@@ -27,6 +27,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.Lis
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListsTableView
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieLogView
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieView
+import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.screen_public_reviews.MoviePublicReviewsView
 import com.patch4code.loglinemovieapp.features.my_movies.presentation.screen_my_movies.MyMoviesView
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.BottomBar
@@ -146,6 +147,20 @@ fun Navigation(db: LoglineDatabase){
                             navViewModel = navigationViewModel,
                             db = db,
                             movieString = it.arguments?.getString("movie"),
+                        )
+                    }
+
+                    composable(
+                        route = Screen.MoviePublicReviewsScreen.route + "/{movie_id}/{movie_title}",
+                        arguments = listOf(navArgument("movie_id"){ type = NavType.StringType })
+                    ){parsedId->
+                        val movieId = parsedId.arguments?.getString("movie_id")
+                        val movieTitle = parsedId.arguments?.getString("movie_title")
+                        MoviePublicReviewsView(
+                            navController = navController,
+                            navViewModel = navigationViewModel,
+                            id = movieId,
+                            title = movieTitle
                         )
                     }
 

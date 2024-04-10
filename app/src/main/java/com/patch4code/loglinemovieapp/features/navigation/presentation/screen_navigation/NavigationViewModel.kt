@@ -14,4 +14,8 @@ class NavigationViewModel: ViewModel() {
     fun updateScreen(newScreen: Screen) {
         _currentScreen.value = newScreen
     }
+
+    fun overrideCurrentScreenTitle(title: String){
+        _currentScreen.value!!.title = title
+    }
 }
