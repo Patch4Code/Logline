@@ -45,6 +45,8 @@ class MoviePublicReviewsViewModel: ViewModel() {
 
 
     fun loadMoreTmdbReviews(){
+
+        Log.e("MoviePublicReviewsViewModel", "highestLoadedPage: $highestLoadedPage, pageAmount: $pageAmount")
         if(highestLoadedPage < pageAmount){
             highestLoadedPage++
             val currentReviews = _tmdbMovieReviews.value?.toMutableList() ?: mutableListOf()
@@ -55,6 +57,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
 
                     if(loadMoreReviewsResponse.isSuccessful){
                         val newLoadedReviews = loadMoreReviewsResponse.body()?.results
+                        Log.e("MoviePublicReviewsViewModel", "newLoadedReviews: $newLoadedReviews")
 
                         if (newLoadedReviews != null) {
                             currentReviews.addAll(newLoadedReviews)

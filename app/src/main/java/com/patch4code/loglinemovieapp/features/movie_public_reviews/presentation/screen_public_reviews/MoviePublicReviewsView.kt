@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -22,6 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components.LoglineMovieReviews
+import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components.TmdbMovieReviews
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
@@ -39,7 +42,10 @@ fun MoviePublicReviewsView(
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MoviePublicReviewsScreen)
         title?.let { navViewModel.overrideCurrentScreenTitle(it) }
+        moviePublicReviewsViewModel.loadTmdbReviews(movieId)
     }
+
+    val tmdbMovieReviews = moviePublicReviewsViewModel.tmdbMovieReviews.observeAsState().value
 
     val tabItems = listOf("Logline Reviews", "TMDB Reviews")
     var selectedTabIndex by remember { mutableStateOf(0) }
@@ -70,12 +76,14 @@ fun MoviePublicReviewsView(
             .fillMaxWidth()
             .weight(1f)
         ) {index->
-            Box(modifier = Modifier.fillMaxSize().padding(8.dp)){
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)){
                 //Text(text = tabItems[index])
                 if(index == 0){
-                    Text(text = "nothing to see here yet")
+                    LoglineMovieReviews(moviePublicReviewsViewModel)
                 }else{
-                    Text(text = "TMDB reviews will be displayed here")
+                    TmdbMovieReviews(tmdbMovieReviews, moviePublicReviewsViewModel)
                 }
             }
         }
