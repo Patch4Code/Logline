@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.components
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -12,18 +13,32 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
+import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
 
 const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
+const val TMDB_BASE_MOVIE_PAGE_URL = "https://www.themoviedb.org/movie"
 
 @Composable
-fun MovieFeaturesBar(movieVideo: MovieVideo?){
+fun MovieFeaturesBar(movieVideo: MovieVideo?, movieDetails: MovieDetails?){
+
+    val context = LocalContext.current
 
     val uriHandler = LocalUriHandler.current
-
     val isTrailerButtonEnabled: Boolean = movieVideo != null
+
+    val title = movieDetails?.title
+    val movieUrl = "$TMDB_BASE_MOVIE_PAGE_URL/${movieDetails?.id}"
+    val message = "$title\n$movieUrl"
+    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+        putExtra(Intent.EXTRA_TEXT, message)
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
 
     Row {
         FilledTonalButton(
@@ -33,11 +48,13 @@ fun MovieFeaturesBar(movieVideo: MovieVideo?){
             Text(text = "Trailer")
         }
         Spacer(modifier = Modifier.padding(4.dp))
+
         FilledTonalButton(onClick = { }) {
             Text(text = "Reviews")
         }
         Spacer(modifier = Modifier.padding(4.dp))
-        FilledTonalButton(onClick = { /*TODO*/ }) {
+
+        FilledTonalButton(onClick = {  startActivity(context, shareIntent, null) }) {
             Icon(imageVector = Icons.Default.Share, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.padding(4.dp))
             Text(text = "Share")
