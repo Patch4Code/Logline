@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Tab
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -68,8 +70,13 @@ fun MoviePublicReviewsView(
             .fillMaxWidth()
             .weight(1f)
         ) {index->
-            Box(modifier = Modifier.fillMaxSize()){
-                Text(text = tabItems[index])
+            Box(modifier = Modifier.fillMaxSize().padding(8.dp)){
+                //Text(text = tabItems[index])
+                if(index == 0){
+                    Text(text = "nothing to see here yet")
+                }else{
+                    Text(text = "TMDB reviews will be displayed here")
+                }
             }
         }
     }
