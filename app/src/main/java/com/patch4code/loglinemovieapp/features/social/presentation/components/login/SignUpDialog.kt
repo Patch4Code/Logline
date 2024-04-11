@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.social.presentation.components.login
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -63,6 +64,7 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, socialViewModel: Socia
                                     showSignupDialog.value = false
                                 }else{
                                     Toast.makeText(context, parseException.message, Toast.LENGTH_LONG).show()
+                                    Log.e("SocialViewModel", "parseException: ${parseException.message}")
                                 }
                             }
                         )
