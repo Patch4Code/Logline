@@ -3,94 +3,23 @@ package com.patch4code.loglinemovieapp.features.social.presentation.screen_socia
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.parse.ParseException
+import com.parse.ParseFile
 import com.parse.ParseObject
 import com.parse.ParseUser
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
+import com.patch4code.loglinemovieapp.room_database.UserProfileDao
 import kotlinx.coroutines.launch
+import java.io.File
 
-class SocialViewModel: ViewModel() {
+class SocialViewModel(private val dao: UserProfileDao): ViewModel() {
 
     private lateinit var dataStore: StoreUserData
 
     fun initializeDataStore(context: Context) {
         dataStore = StoreUserData(context)
-    }
-
-    fun signUp(
-        username: String,
-        email: String,
-        password: String,
-        passwordAgain: String,
-        onPasswordError:()->Unit,
-        onSignupTriggered:(parseException: ParseException?)->Unit
-    ) {
-        if(password == passwordAgain){
-            val user = ParseUser()
-            // Set the user's username and password, which can be obtained by a forms
-            user.setUsername(username)
-            user.setEmail(email)
-            user.setPassword(password)
-
-            val userProfile = ParseObject("UserProfile")
-            userProfile.put("userName", username)
-
-            user.signUpInBackground { parseException ->
-                if (parseException == null) {
-                    // Benutzer erfolgreich erstellt, speichere auch das UserProfile-Objekt
-                    userProfile.put("user", ParseUser.getCurrentUser()) // Weise dem UserProfile den aktuellen Benutzer zu
-                    userProfile.saveInBackground { profileException ->
-                        if (profileException == null) {
-                            // Setze das UserProfile-Objekt im Benutzerobjekt
-                            user.put("userProfile", userProfile)
-                            user.saveInBackground { userException ->
-                                onSignupTriggered(userException)
-                            }
-                        } else {
-                            onSignupTriggered(profileException)
-                        }
-                    }
-                } else {
-                    onSignupTriggered(parseException)
-                }
-            }
-        } else {
-            onPasswordError()
-        }
-    }
-
-
-    fun login(
-        username: String,
-        password: String,
-        onLoginSuccessful:()->Unit,
-        onLoginError:(parseException: ParseException?)->Unit
-    ) {
-        ParseUser.logInInBackground(username,password) { parseUser: ParseUser?, parseException: ParseException? ->
-
-            // check if profile is public and save the state
-            val userDataPointer = parseUser?.getParseObject("userProfile") // Hole den Pointer auf das UserProfile-Objekt
-            userDataPointer?.fetchInBackground { userProfile: ParseObject?, fetchException: ParseException? ->
-                if (userProfile != null) {
-                    val isPublic = userProfile.getBoolean("isPublic")
-                    viewModelScope.launch {
-                        dataStore.setProfilePublicState(isPublic)
-                    }
-                } else if (fetchException != null) {
-                    // Fehler beim Abrufen des UserProfile-Objekts
-                    onLoginError(fetchException)
-                }
-            }
-
-            // save user data
-            if (parseUser != null) {
-                viewModelScope.launch {
-                    dataStore.saveUserData(parseUser.objectId, parseUser.sessionToken, parseUser.email, parseUser.username)
-                }
-                onLoginSuccessful()
-            }else if (parseException != null){ onLoginError(parseException)}
-        }
     }
 
 
@@ -110,40 +39,107 @@ class SocialViewModel: ViewModel() {
         }
     }
 
-    fun changeProfileVisibilityState(publicState : Boolean, onSuccess: () -> Unit, onError: (parseException: ParseException?) -> Unit){
-        val user = ParseUser.getCurrentUser()
-        val userDataPointer = user.getParseObject("userProfile")
+    fun changeProfileVisibilityState(publicState : Boolean, onSuccess: () -> Unit, onError: (exception: Exception?) -> Unit){
+        viewModelScope.launch {
+            try {
+                val user = ParseUser.getCurrentUser()
+                val userDataPointer = user.getParseObject("userProfile")
 
-        Log.e("SocialViewModel", "changeProfileVisibilityState - userDataPointer: $userDataPointer")
-
-        userDataPointer?.fetchInBackground { userProfile: ParseObject?, fetchException: ParseException? ->
-            if (userProfile != null) {
-                // Update des isPublic-Feldes im UserProfile-Objekt
-                userProfile.put("isPublic", publicState)
-                userProfile.saveInBackground { saveException ->
-                    if (saveException == null) {
-                        viewModelScope.launch {
-                            dataStore.setProfilePublicState(publicState)
+                userDataPointer?.fetchInBackground { userProfile: ParseObject?, fetchException: ParseException? ->
+                    if (userProfile != null) {
+                        // Update of the isPublic field in the UserProfile object
+                        userProfile.put("isPublic", publicState)
+                        userProfile.saveInBackground { saveException ->
+                            if (saveException == null) {
+                                viewModelScope.launch {
+                                    dataStore.setProfilePublicState(publicState)
+                                }
+                                //Log.e("SocialViewModel", "onSuccess - changed isPublic to: $publicState ")
+                                onSuccess()
+                            } else {
+                                onError(saveException)
+                                Log.e("SocialViewModel", "error saveException: ${saveException.message}")
+                            }
                         }
-                        Log.e("SocialViewModel", "onSuccess - changed isPublic to: $publicState ")
-                        onSuccess()
-                    } else {
-                        onError(saveException)
-                        Log.e("SocialViewModel", "error saveException: ${saveException.message}")
+                    } else if (fetchException != null) {
+                        Log.e("SocialViewModel", "error fetchException: ${fetchException.message}")
+                        onError(fetchException)
                     }
                 }
-            } else if (fetchException != null) {
-                Log.e("SocialViewModel", "error fetchException: ${fetchException.message}")
-                onError(fetchException)
-            }
-            else{
-                Log.e("SocialViewModel", "error and nothing happened")
+            }catch (e: Exception){
+                onError(e)
+                Log.e("SocialViewModel", "Error changing ProfileVisibilityState: ", e)
             }
         }
     }
 
 
     fun updatePublicProfile(){
-        //here the actions with back4app
+        viewModelScope.launch {
+            val localUserProfile = dao.getUserProfile()
+            try {
+                val user = ParseUser.getCurrentUser()
+                val userDataPointer = user.getParseObject("userProfile")
+
+                userDataPointer?.fetchInBackground { userProfile: ParseObject?, fetchException: ParseException? ->
+                    if (userProfile != null) {
+                        // upload and save profile image
+                        localUserProfile?.profileImagePath?.let { imagePath ->
+                            if(!imagePath.isNullOrEmpty()){
+                                Log.e("SocialViewModel", "profile image Path: $imagePath")
+
+                                //dateipfad falsch!!!
+                                // give: file:///data/user/0/com.patch4code.loglinemovieapp/files/profile_image.jpg
+                                //needed: /data/data/com.patch4code.loglinemovieapp/files/profile_image.jpg
+
+                                val profileImageFile = ParseFile(File("/data/data/com.patch4code.loglinemovieapp/files/profile_image.jpg").readBytes(), "profile_image.jpg")
+                                profileImageFile.saveInBackground({ profileImageSaveException ->
+                                    if (profileImageSaveException == null) {
+                                        userProfile.put("profileImage", profileImageFile)
+                                        // Profilbild wurde hochgeladen und im Benutzerprofil gespeichert
+                                    } else {
+                                        // Fehler beim Hochladen des Profilbilds
+                                        Log.e("SocialViewModel", "Error uploading profile image", profileImageSaveException)
+                                    }
+                                }, { progress ->
+                                    // Hier kannst du den Fortschritt des Hochladens überwachen
+                                })
+                            }
+                        }
+
+
+                        //userProfile.put("pofileImage", )
+                        //userProfile.put("bannerImage", )
+                        //userProfile.put("bioText", localUserProfile?.bioText ?: "")
+                        //userProfile.put("favouriteMovies", )
+
+                        userProfile.saveInBackground { saveException ->
+                            if (saveException == null) {
+                                Log.e("SocialViewModel", "Update profile successful")
+                            } else {
+                                Log.e("SocialViewModel", "Error updating profile")
+                            }
+                        }
+
+
+                    }else{
+                        //Error user profile not found
+                    }
+                }
+            }catch (e: Exception){
+                Log.e("SocialViewModel", "Error updating Profile: ", e)
+            }
+        }
+    }
+}
+
+
+class SocialViewModelFactory(private val dao: UserProfileDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SocialViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return SocialViewModel(dao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

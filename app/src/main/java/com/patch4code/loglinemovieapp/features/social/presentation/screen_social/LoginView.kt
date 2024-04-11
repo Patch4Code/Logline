@@ -8,20 +8,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.patch4code.loglinemovieapp.features.social.presentation.components.login.LoginOutlinedTextField
 import com.patch4code.loglinemovieapp.features.social.presentation.components.login.PasswordOutlinedTextField
 import com.patch4code.loglinemovieapp.features.social.presentation.components.login.SignUpDialog
 
 @Composable
-fun LoginView(socialViewModel: SocialViewModel){
+fun LoginView(loginViewModel: LoginViewModel = viewModel()){
 
     val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        loginViewModel.initializeDataStore(context)
+    }
 
     val userNameInput = remember { mutableStateOf("") }
     val passwordInput = remember { mutableStateOf("") }
@@ -38,7 +44,7 @@ fun LoginView(socialViewModel: SocialViewModel){
         PasswordOutlinedTextField(passwordInput = passwordInput)
         Button(
             onClick = {
-                socialViewModel.login(
+                loginViewModel.login(
                     username = userNameInput.value,
                     password = passwordInput.value,
                     onLoginSuccessful = { Toast.makeText(context, "Successful Login", Toast.LENGTH_LONG).show() },
@@ -56,5 +62,5 @@ fun LoginView(socialViewModel: SocialViewModel){
         }
     }
 
-    SignUpDialog(showSignupDialog = showSignupDialog, socialViewModel = socialViewModel)
+    SignUpDialog(showSignupDialog = showSignupDialog, loginViewModel = loginViewModel)
 }

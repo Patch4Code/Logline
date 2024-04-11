@@ -10,11 +10,13 @@ import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
+import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
+import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
 @Composable
-fun SocialContent(savedLoginData: StoreUserData, socialViewModel: SocialViewModel){
+fun SocialContent(savedLoginData: StoreUserData, socialViewModel: SocialViewModel, navController: NavController){
 
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         item {
@@ -24,9 +26,9 @@ fun SocialContent(savedLoginData: StoreUserData, socialViewModel: SocialViewMode
             Spacer(modifier = Modifier.padding(4.dp))
 
             SocialExploreCard(
-                onClick = {},
+                onClick = { navController.navigate(Screen.PublicProfilesScreen.route) },
                 icon = Icons.Default.Groups2,
-                text = "Explore Public Accounts"
+                text = "Explore Public Profiles"
             )
             SocialExploreCard(
                 onClick = {},

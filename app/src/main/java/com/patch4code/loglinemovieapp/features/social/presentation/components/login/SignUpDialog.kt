@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
+import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.LoginViewModel
 
 @Composable
-fun SignUpDialog(showSignupDialog: MutableState<Boolean>, socialViewModel: SocialViewModel){
+fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginViewModel){
 
     if (showSignupDialog.value) {
 
@@ -50,7 +50,7 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, socialViewModel: Socia
                     PasswordOutlinedTextField(passwordInput = newPasswordAgainInput, label = "Password again")
 
                     Button(onClick = {
-                        socialViewModel.signUp(
+                        loginViewModel.signUp(
                             username = newUserNameInput.value,
                             email = email.value,
                             password = newPasswordInput.value,
