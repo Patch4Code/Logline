@@ -8,7 +8,7 @@ data class PublicUserProfile(
     var profileImagePath: String = "",
     var bannerImagePath: String = "",
     var bioText: String = "",
-    var favouriteMovies: List<Movie> = EMPTY_MOVIE_LIST,
+    var favouriteMovies: List<Movie>? = EMPTY_MOVIE_LIST,
 ){
     companion object {
         const val DEFAULT_USERNAME = "Anonymous"

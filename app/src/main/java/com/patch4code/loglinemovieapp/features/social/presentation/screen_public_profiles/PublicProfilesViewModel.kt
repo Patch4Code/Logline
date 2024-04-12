@@ -9,6 +9,7 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
 import com.patch4code.loglinemovieapp.features.social.domain.model.PublicUserProfile
 import kotlinx.coroutines.launch
 
@@ -43,25 +44,14 @@ class PublicProfilesViewModel: ViewModel() {
                             val bannerImage = profile.getParseFile("bannerImage")
                             val bioText = profile.getString("bioText")
 
-                            val favMovies = mutableListOf<Movie>()
-                            val favouriteMoviesRelation = profile.getRelation<ParseObject>("favouriteMovies")
-                            favouriteMoviesRelation.query.findInBackground { favouriteMovies, e ->
-                                if (e == null) {
-                                    for (movie in favouriteMovies) {
-                                        favMovies.add(
-                                            Movie(
-                                                title = movie.getString("title")  ?: "",
-                                                id = movie.getInt("movieId"),
-                                                releaseDate = movie.getString("releaseDate") ?: "",
-                                                posterUrl = movie.getString("posterUrl") ?: "")
-                                        )
-                                    }
-                                    Log.e("PublicProfilesViewModel","favMovies: $favMovies")
+                            val favMoviesJsonString = profile.getString("favouriteMoviesString")
+                            Log.e("PublicProfilesViewModel", "favMoviesJsonString: $favMoviesJsonString")
+                            var favMovies: List<Movie> = JSONHelper.fromJson(favMoviesJsonString)
 
-                                } else {
-                                    Log.e("PublicProfilesViewModel", "Error when retrieving favorite films: $e")
-                                }
-                            }
+                            //problem json conversion id get to 11.0 etc.
+
+
+
                             val profile = PublicUserProfile(
                                 userId = userId ?: "",
                                 username = userName ?: "Anonymous User",
@@ -72,6 +62,7 @@ class PublicProfilesViewModel: ViewModel() {
                             )
                             publicProfilesList.add(profile)
                         }
+
                         _publicUserProfiles.value = publicProfilesList
                         _isLoading.value = false
                     } else {

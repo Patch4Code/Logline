@@ -10,6 +10,8 @@ import com.parse.ParseException
 import com.parse.ParseFile
 import com.parse.ParseObject
 import com.parse.ParseUser
+import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 import com.patch4code.loglinemovieapp.room_database.UserProfileDao
 import kotlinx.coroutines.launch
@@ -109,16 +111,9 @@ class SocialViewModel(private val dao: UserProfileDao): ViewModel() {
 
                         userProfile.put("bioText", localUserProfile?.bioText ?: "")
 
-                        val favMovies = mutableListOf<ParseObject>()
-                        for (movie in localUserProfile?.favouriteMovies ?: emptyList()) {
-                            val parseMovie = ParseObject("Movie")
-                            parseMovie.put("title", movie.title)
-                            parseMovie.put("movieId", movie.id)
-                            parseMovie.put("releaseDate", movie.releaseDate)
-                            parseMovie.put("posterUrl", movie.posterUrl)
-                            favMovies.add(parseMovie)
-                        }
-                        userProfile.put("favouriteMovies", favMovies)
+                        val favMovies = localUserProfile?.favouriteMovies ?: listOf(Movie(), Movie(), Movie(), Movie())
+                        val jsonFavMovies = favMovies.toJson()
+                        userProfile.put("favouriteMoviesString", jsonFavMovies)
 
 
                         userProfile.saveInBackground { saveException ->

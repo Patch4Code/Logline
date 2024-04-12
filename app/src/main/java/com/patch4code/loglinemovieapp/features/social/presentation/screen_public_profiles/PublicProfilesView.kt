@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profiles
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,9 +28,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.MovieFavouriteRow
 
 @Composable
 fun PublicProfilesView(navController: NavController, navViewModel: NavigationViewModel, publicProfilesViewModel: PublicProfilesViewModel = viewModel()){
@@ -48,9 +51,11 @@ fun PublicProfilesView(navController: NavController, navViewModel: NavigationVie
         LazyColumn(modifier = Modifier.padding(16.dp)){
             publicUserProfiles?.forEach{publicProfile->
                 item {
-                    Row (modifier = Modifier.fillMaxWidth().clickable {
+                    Row (modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
 
-                    },
+                        },
                         verticalAlignment = Alignment.CenterVertically
                     ){
                         AsyncImage(
@@ -68,6 +73,10 @@ fun PublicProfilesView(navController: NavController, navViewModel: NavigationVie
                         Spacer(modifier = Modifier.weight(1f))
                         Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = null)
                     }
+                    //Text(text = "favouriteMovies: ${publicProfile.favouriteMovies}")
+                    Log.e("PublicProfilesView", "favouriteMovies: ${publicProfile.favouriteMovies}")
+                    val favMov = listOf(Movie(), Movie(),Movie(),Movie(),)
+                    MovieFavouriteRow(navController, favMov)
                 }
             }
         }
