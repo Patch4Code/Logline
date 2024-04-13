@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.reflect.TypeToken
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
@@ -12,6 +13,7 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
 import com.patch4code.loglinemovieapp.features.social.domain.model.PublicUserProfile
 import kotlinx.coroutines.launch
+import java.lang.reflect.Type
 
 class PublicProfilesViewModel: ViewModel() {
 
@@ -45,14 +47,11 @@ class PublicProfilesViewModel: ViewModel() {
                             val bioText = profile.getString("bioText")
 
                             val favMoviesJsonString = profile.getString("favouriteMoviesString")
-                            Log.e("PublicProfilesViewModel", "favMoviesJsonString: $favMoviesJsonString")
-                            var favMovies: List<Movie> = JSONHelper.fromJson(favMoviesJsonString)
-
-                            //problem json conversion id get to 11.0 etc.
+                            val type: Type = object : TypeToken<List<Movie>>() {}.type
+                            val favMovies: List<Movie> = JSONHelper.fromJsonWithType(favMoviesJsonString, type)
 
 
-
-                            val profile = PublicUserProfile(
+                            val userProfile = PublicUserProfile(
                                 userId = userId ?: "",
                                 username = userName ?: "Anonymous User",
                                 profileImagePath = profileImage?.url ?: "",
@@ -60,7 +59,7 @@ class PublicProfilesViewModel: ViewModel() {
                                 bioText = bioText ?: "",
                                 favouriteMovies = favMovies,
                             )
-                            publicProfilesList.add(profile)
+                            publicProfilesList.add(userProfile)
                         }
 
                         _publicUserProfiles.value = publicProfilesList
