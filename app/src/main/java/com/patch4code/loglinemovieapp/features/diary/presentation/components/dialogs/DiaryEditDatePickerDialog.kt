@@ -8,7 +8,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
-import com.patch4code.loglinemovieapp.features.diary.presentation.utils.DateHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.DateHelper
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)

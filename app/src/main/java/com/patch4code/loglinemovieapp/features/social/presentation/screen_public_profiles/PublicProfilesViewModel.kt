@@ -37,7 +37,6 @@ class PublicProfilesViewModel: ViewModel() {
 
                 query.findInBackground { publicProfiles, e ->
                     if (publicProfiles.isNotEmpty()) {
-                        //Log.e("PublicProfilesViewModel", "publicProfiles.isNotEmpty(): $publicProfiles")
                         val publicProfilesList = mutableListOf<PublicUserProfile>()
                         for (profile in publicProfiles){
                             val userName = profile.getString("userName")
@@ -50,7 +49,6 @@ class PublicProfilesViewModel: ViewModel() {
                             val type: Type = object : TypeToken<List<Movie>>() {}.type
                             val favMovies: List<Movie> = JSONHelper.fromJsonWithType(favMoviesJsonString, type)
 
-
                             val userProfile = PublicUserProfile(
                                 userId = userId ?: "",
                                 username = userName ?: "Anonymous User",
@@ -61,7 +59,6 @@ class PublicProfilesViewModel: ViewModel() {
                             )
                             publicProfilesList.add(userProfile)
                         }
-
                         _publicUserProfiles.value = publicProfilesList
                         _isLoading.value = false
                     } else {

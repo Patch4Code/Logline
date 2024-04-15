@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -22,7 +21,7 @@ class MovieLogViewModel(
 
         viewModelScope.launch {
             val adjustedDateTime = adjustedDateTime(date)
-            Log.e("MovieLogViewModel", "adjustedDateTime: $adjustedDateTime")
+            //Log.e("MovieLogViewModel", "adjustedDateTime: $adjustedDateTime")
             val loggedElement = LoggedMovie(movie = movie, date = adjustedDateTime, rating = rating, review = review)
 
             loggedMovieDao.upsertLoggedMovie(loggedElement)

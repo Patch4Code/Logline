@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.diary.presentation.utils
+package com.patch4code.loglinemovieapp.features.core.presentation.utils
 
 import android.annotation.SuppressLint
 import android.util.Log

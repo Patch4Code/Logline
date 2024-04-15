@@ -15,7 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
-import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewDetailsInfo
+import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewDetailsInfoAndActions
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewDetailsPoster
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
@@ -37,8 +37,6 @@ fun ReviewDetailsView(
     val reviewedLog = reviewDetailsViewModel.currentReviewedLog.observeAsState().value
     val review: String = reviewedLog?.review ?: ""
 
-    val comingFromDiaryView = navController.previousBackStackEntry?.destination?.route == Screen.DiaryScreen.route
-
     LazyColumn (modifier = Modifier.padding(16.dp)){
         item {
             Row{
@@ -49,15 +47,7 @@ fun ReviewDetailsView(
                             reviewedLog.movie.id.toString()))
                         }
                     )
-                }
-
-                if (reviewedLog != null) {
-                    ReviewDetailsInfo(
-                        reviewedLog = reviewedLog,
-                        onEditPressed = {reviewedLogId->
-                            navController.navigate("${Screen.DiaryEditElementScreen.route}/${reviewedLogId}/$comingFromDiaryView")
-                        }
-                    )
+                    ReviewDetailsInfoAndActions(reviewedLog, navController, reviewDetailsViewModel)
                 }
             }
             //Review Text

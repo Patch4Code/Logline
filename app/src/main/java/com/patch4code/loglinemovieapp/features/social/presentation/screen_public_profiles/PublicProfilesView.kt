@@ -70,8 +70,6 @@ fun PublicProfilesView(navController: NavController, navViewModel: NavigationVie
                         Spacer(modifier = Modifier.weight(1f))
                         Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = null)
                     }
-                    //val favMov = publicProfile.favouriteMovies ?: listOf(Movie(), Movie(),Movie(),Movie())
-                    //MovieFavouriteRow(navController, favMov)
                 }
             }
         }
