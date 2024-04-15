@@ -31,7 +31,7 @@ fun SocialContent(savedLoginData: StoreUserData, socialViewModel: SocialViewMode
                 text = "Explore Public Profiles"
             )
             SocialExploreCard(
-                onClick = {},
+                onClick = { navController.navigate(Screen.PublicReviewsScreen.route)},
                 icon = Icons.Default.Reviews,
                 text = "Explore Public Reviews"
             )

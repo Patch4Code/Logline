@@ -41,6 +41,7 @@ import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_revie
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchView
 import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profiles.PublicProfilesView
+import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews.PublicReviewsView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialView
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.screen_watchlist.WatchlistView
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
@@ -244,6 +245,10 @@ fun Navigation(db: LoglineDatabase){
 
                     composable(route = Screen.PublicProfilesScreen.route){
                         PublicProfilesView(navController = navController, navViewModel = navigationViewModel)
+                    }
+
+                    composable(route = Screen.PublicReviewsScreen.route){
+                        PublicReviewsView(navController = navController, navViewModel = navigationViewModel)
                     }
 
                     composable(route = Screen.SettingsScreen.route){
