@@ -2,17 +2,17 @@ package com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.mode
 
 import com.google.gson.annotations.SerializedName
 
-data class ReviewResponse(
+data class TmdbReviewResponse(
     @SerializedName("id") val id: Int,
     @SerializedName("page") val page: Int,
-    @SerializedName("results") val results: List<Review>,
+    @SerializedName("results") val results: List<TmdbReview>,
     @SerializedName("total_pages") val totalPages: Int,
     @SerializedName("total_results") val totalResults: Int
 )
 
-data class Review(
+data class TmdbReview(
     @SerializedName("author") val author: String,
-    @SerializedName("author_details") val authorDetails: AuthorDetails,
+    @SerializedName("author_details") val tmdbAuthorDetails: TmdbAuthorDetails,
     @SerializedName("content") val content: String,
     @SerializedName("created_at") val createdAt: String,
     @SerializedName("id") val id: String,
@@ -20,7 +20,7 @@ data class Review(
     @SerializedName("url") val url: String
 )
 
-data class AuthorDetails(
+data class TmdbAuthorDetails(
     @SerializedName("name") val name: String?,
     @SerializedName("username") val username: String,
     @SerializedName("avatar_path") val avatarPath: String?,

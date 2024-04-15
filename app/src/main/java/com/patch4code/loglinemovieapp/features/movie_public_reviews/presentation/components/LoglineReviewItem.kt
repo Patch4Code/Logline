@@ -23,16 +23,15 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.ExpandableText
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
-import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.TmdbReview
+import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
 
 @Composable
-fun TmdbReviewItem(tmdbReview: TmdbReview){
+fun TmdbReviewItem(loglineReview: LoglineReview){
 
     Column {
         Row (modifier = Modifier, verticalAlignment = Alignment.CenterVertically){
             AsyncImage(
-                model = TmdbCredentials.OTHER_IMAGE_URL + tmdbReview.tmdbAuthorDetails.avatarPath,
+                model = loglineReview.avatarPath,
                 contentDescription = null,
                 modifier = Modifier
                     .padding(8.dp)
@@ -42,9 +41,9 @@ fun TmdbReviewItem(tmdbReview: TmdbReview){
                 error = painterResource(id = R.drawable.person_placeholder)
 
             )
-            Text(text = tmdbReview.author, style = MaterialTheme.typography.titleMedium)
+            Text(text = loglineReview.authorName, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.padding(4.dp))
-            if ((tmdbReview.tmdbAuthorDetails.rating != null) && (tmdbReview.tmdbAuthorDetails.rating > 0)){
+            if ((loglineReview.rating != null) && (loglineReview.rating > 0)){
                 Icon(
                     imageVector = Icons.Default.StarRate,
                     contentDescription = "StarRate",
@@ -53,11 +52,11 @@ fun TmdbReviewItem(tmdbReview: TmdbReview){
                         .size(15.dp)
                         .align(Alignment.CenterVertically)
                 )
-                Text(text = tmdbReview.tmdbAuthorDetails.rating.toString())
+                Text(text = loglineReview.rating.toString())
             }
         }
         Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp)){
-            ExpandableText(text =  tmdbReview.content, maxLinesCollapsed = 8)
+            ExpandableText(text =  loglineReview.content, maxLinesCollapsed = 8)
         }
     }
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))

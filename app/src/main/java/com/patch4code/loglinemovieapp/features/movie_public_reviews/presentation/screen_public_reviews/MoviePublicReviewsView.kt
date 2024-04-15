@@ -43,9 +43,13 @@ fun MoviePublicReviewsView(
         navViewModel.updateScreen(Screen.MoviePublicReviewsScreen)
         title?.let { navViewModel.overrideCurrentScreenTitle(it) }
         moviePublicReviewsViewModel.loadTmdbReviews(movieId)
+        moviePublicReviewsViewModel.loadLoglineReviews(movieId)
     }
 
     val tmdbMovieReviews = moviePublicReviewsViewModel.tmdbMovieReviews.observeAsState().value
+    val tmdbIsLoading = moviePublicReviewsViewModel.tmdbIsLoading.observeAsState().value
+    val loglineMovieReviews = moviePublicReviewsViewModel.loglineMovieReviews.observeAsState().value
+    val loglineIsLoading = moviePublicReviewsViewModel.loglineIsLoading.observeAsState().value
 
     val tabItems = listOf("Logline Reviews", "TMDB Reviews")
     var selectedTabIndex by remember { mutableStateOf(0) }
@@ -81,9 +85,9 @@ fun MoviePublicReviewsView(
                 .padding(8.dp)){
                 //Text(text = tabItems[index])
                 if(index == 0){
-                    LoglineMovieReviews(moviePublicReviewsViewModel)
+                    LoglineMovieReviews(loglineMovieReviews, loglineIsLoading)
                 }else{
-                    TmdbMovieReviews(tmdbMovieReviews, moviePublicReviewsViewModel)
+                    TmdbMovieReviews(tmdbMovieReviews, tmdbIsLoading, moviePublicReviewsViewModel)
                 }
             }
         }
