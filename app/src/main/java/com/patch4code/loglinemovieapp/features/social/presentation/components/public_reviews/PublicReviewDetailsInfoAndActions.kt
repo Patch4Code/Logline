@@ -15,12 +15,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -43,7 +44,7 @@ fun PublicReviewDetailsInfoAndActions(
     val rating = review.rating
     val formatedDate = MovieHelper.formatDate(review.createdAt)
 
-    val context = LocalContext.current
+    val showDeletePublicReviewDialog = remember { mutableStateOf(false) }
 
     Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)){
 
@@ -88,11 +89,11 @@ fun PublicReviewDetailsInfoAndActions(
         Spacer(modifier = Modifier.padding(4.dp))
 
         if(isYourReview == true){
-            IconButton(onClick = {  }) {
+            IconButton(onClick = { showDeletePublicReviewDialog.value = true }) {
                 Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Public Review")
             }
         }
     }
 
-    //MakeReviewPublicDialog(openMakeReviewPublicDialog, reviewDetailsViewModel)
+    DeletePublicReviewDialog(showDeletePublicReviewDialog, review.objectId,navController, publicReviewDetailsViewModel)
 }

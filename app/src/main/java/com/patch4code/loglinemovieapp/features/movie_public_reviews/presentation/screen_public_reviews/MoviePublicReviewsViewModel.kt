@@ -108,9 +108,12 @@ class MoviePublicReviewsViewModel: ViewModel() {
                         }
                     }
                 }
-                val loglineMovieReviews = buildLoglineMovieReviews(movieReviews)
-
-                _loglineMovieReviews.value = loglineMovieReviews
+                if (movieReviews.isEmpty()){
+                    _loglineMovieReviews.value = emptyList()
+                }else{
+                    val loglineMovieReviews = buildLoglineMovieReviews(movieReviews)
+                    _loglineMovieReviews.value = loglineMovieReviews.sortedByDescending { it.createdAt }
+                }
             }catch (e: Exception){
                 Log.e("MoviePublicReviewsViewModel", "Catch Error: ", e)
             }finally {
