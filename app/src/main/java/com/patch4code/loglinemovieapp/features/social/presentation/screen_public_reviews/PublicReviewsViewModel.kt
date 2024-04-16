@@ -35,8 +35,12 @@ class PublicReviewsViewModel: ViewModel() {
                     if (publicReviews != null){
                         val publicLoglineReviews = mutableListOf<LoglineReview>()
                         for (log in publicReviews){
+                            val objectId = log.objectId
                             val content = log.getString("review") ?: ""
-                            val date = DateHelper.convertLongToLocalDateTime(log.getNumber("date")?.toLong())
+
+                            val longDate = log.getNumber("date")?.toLong()
+                            val date = DateHelper.convertLongToLocalDateTime(longDate)
+
                             val rating = log.getNumber("rating")?.toInt() ?: 0
                             val user = log.getParseUser("user")
                             val userId = user?.objectId ?: ""
@@ -58,6 +62,7 @@ class PublicReviewsViewModel: ViewModel() {
                             }
 
                             val review = LoglineReview(
+                                objectId = objectId,
                                 authorName = authorName,
                                 userId = userId,
                                 content = content,

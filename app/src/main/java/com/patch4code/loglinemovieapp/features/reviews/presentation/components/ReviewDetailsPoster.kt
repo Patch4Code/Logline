@@ -11,20 +11,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 
 @Composable
-fun ReviewDetailsPoster(loggedElementData: LoggedMovie, onPosterPressed:()->Unit){
+fun ReviewDetailsPoster(movieTitle: String, posterPath: String, onPosterPressed:()->Unit){
 
-    val movieTitle = loggedElementData.movie.title
-    val moviePosterUrl: String = MovieHelper.processPosterUrl(loggedElementData.movie.posterUrl)
+    val moviePosterUrl: String = MovieHelper.processPosterUrl(posterPath)
 
     Card (modifier = Modifier
         .height(200.dp)
         .width(133.dp)
-        .clickable { onPosterPressed() },//navController.navigate(Screen.MovieScreen.withArgs(loggedElementData.movie.id.toString()))
+        .clickable { onPosterPressed() },
         colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
     ) {
         AsyncImage(

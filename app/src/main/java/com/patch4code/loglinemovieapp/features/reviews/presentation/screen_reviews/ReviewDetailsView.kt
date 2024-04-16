@@ -42,7 +42,8 @@ fun ReviewDetailsView(
             Row{
                 if (reviewedLog != null) {
                     ReviewDetailsPoster(
-                        loggedElementData = reviewedLog,
+                        movieTitle = reviewedLog.movie.title,
+                        posterPath = reviewedLog.movie.posterUrl,
                         onPosterPressed = {navController.navigate(Screen.MovieScreen.withArgs(
                             reviewedLog.movie.id.toString()))
                         }

@@ -4,10 +4,12 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.ToNumberPolicy
 import java.lang.reflect.Type
+import java.time.LocalDateTime
 
 object JSONHelper {
     val gson: Gson = GsonBuilder()
         .setObjectToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE)
+        .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
         .create()
     inline fun <reified T> fromJson(json: String?): T = gson.fromJson(json, T::class.java)
 

@@ -97,6 +97,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
                 if(foundReviewLogs != null){
                     val publicMovieLoglineReviews = mutableListOf<LoglineReview>()
                     for (log in foundReviewLogs){
+                        val objectId = log.objectId
                         val content = log.getString("review") ?: ""
                         val date = DateHelper.convertLongToLocalDateTime(log.getNumber("date")?.toLong())
                         val rating = log.getNumber("rating")?.toInt() ?: 0
@@ -120,6 +121,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
                         //Log.e("MoviePublicReviewsViewModel", "avatarPath: $avatarPath")
 
                         val review = LoglineReview(
+                            objectId = objectId,
                             authorName = authorName,
                             userId = userId,
                             content = content,

@@ -24,6 +24,7 @@ sealed class Screen(val route: String, var title: String) {
     object SocialScreen : Screen("social_screen","Social")
     object PublicProfilesScreen: Screen("public_profiles_screen", "Public Profiles")
     object PublicReviewsScreen: Screen("public_reviews_screen", "Public Reviews")
+    object PublicReviewDetailsScreen: Screen("public_review_details_screen", "Public Review")
     object SettingsScreen : Screen("settings_screen", "Settings")
 
     //helper to attach data for navigation
