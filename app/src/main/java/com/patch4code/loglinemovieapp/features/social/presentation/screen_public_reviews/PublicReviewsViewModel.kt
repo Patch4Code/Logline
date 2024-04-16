@@ -46,7 +46,7 @@ class PublicReviewsViewModel: ViewModel() {
                     }
                 }
                 // use the received publicReviews to create List<LoglineReview>
-                val publicLoglineReviews = fetchPublicLoglineReviews(publicReviews)
+                val publicLoglineReviews = buildPublicLoglineReviews(publicReviews)
 
                 // Set the value of publicReviews LiveData to the fetched List<LoglineReview> sorted by date
                 _publicReviews.value = publicLoglineReviews.sortedByDescending { it.createdAt }
@@ -59,7 +59,7 @@ class PublicReviewsViewModel: ViewModel() {
     }
 
     // Creates List<LoglineReview> from given List<ParseObject>
-    private suspend fun fetchPublicLoglineReviews(publicReviews: List<ParseObject>): List<LoglineReview> {
+    private suspend fun buildPublicLoglineReviews(publicReviews: List<ParseObject>): List<LoglineReview> {
         return suspendCoroutine { continuation ->
             val publicLoglineReviews = mutableListOf<LoglineReview>()
             val countDownLatch = CountDownLatch(publicReviews.size)
