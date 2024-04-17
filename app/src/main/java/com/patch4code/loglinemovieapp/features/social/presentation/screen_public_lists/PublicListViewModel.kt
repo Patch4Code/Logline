@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews
+package com.patch4code.loglinemovieapp.features.social.presentation.screen_public_lists
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.parse.ParseQuery
 import com.parse.ParseUser
 import kotlinx.coroutines.launch
 
-class PublicReviewDetailsViewModel: ViewModel() {
+class PublicListViewModel: ViewModel() {
 
     private val _isYourReview = MutableLiveData<Boolean>()
     val isYourReview: LiveData<Boolean> get() = _isYourReview
@@ -17,15 +17,14 @@ class PublicReviewDetailsViewModel: ViewModel() {
     fun isYourReview(userId: String){
         val currentUser = ParseUser.getCurrentUser()
         _isYourReview.value = currentUser.objectId == userId
-        //Log.e("PublicReviewDetailsViewModel", "userId: $userId - currentUser.Id: ${currentUser.objectId}")
     }
 
-    fun deletePublicReview(objectId: String, onSuccess:()->Unit, onError:(error: Exception)->Unit){
+    fun deletePublicList(objectId: String, onSuccess:()->Unit, onError:(error: Exception)->Unit){
         viewModelScope.launch {
-            val query = ParseQuery<ParseObject>("LoggedMovie")
-            query.getInBackground(objectId){ loggedMovie, getError->
+            val query = ParseQuery<ParseObject>("MovieList")
+            query.getInBackground(objectId){ publicList, getError->
                 if (getError == null) {
-                    loggedMovie.deleteInBackground{deleteError->
+                    publicList.deleteInBackground{deleteError->
                         if (deleteError == null){
                             onSuccess()
                         }else{

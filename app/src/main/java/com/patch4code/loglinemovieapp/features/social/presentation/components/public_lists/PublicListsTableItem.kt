@@ -18,16 +18,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.item.ListsItemPreviewImages
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.social.domain.model.PublicList
+import java.net.URLEncoder
 
 @Composable
 fun PublicListsTableItem(navController: NavController, publicList: PublicList){
 
-    Column (modifier = Modifier.clickable {  }){//navigate
+    Column (modifier = Modifier
+        .clickable {
+            val publicListJson = publicList.toJson()
+            //Log.e("PublicReview", "loglineReviewJson: $loglineReviewJson")
+            val encodedPublicListJson = URLEncoder.encode(publicListJson, "UTF-8")
+            //Log.e("PublicReview", "encodedLoglineReviewJson: $encodedLoglineReviewJson")
+            navController.navigate(Screen.PublicListScreen.withArgs(encodedPublicListJson))
+        }
+    ){//navigate
 
         Row (modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically){
             AsyncImage(
@@ -36,7 +48,9 @@ fun PublicListsTableItem(navController: NavController, publicList: PublicList){
                 modifier = Modifier
                     .padding(8.dp)
                     .size(35.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .zIndex(2f)
+                    .clickable {  },
                 contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.person_placeholder)
             )

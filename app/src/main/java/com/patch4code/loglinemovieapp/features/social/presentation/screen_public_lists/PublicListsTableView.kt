@@ -21,7 +21,7 @@ import com.patch4code.loglinemovieapp.features.social.presentation.components.pu
 fun PublicListsTableView(navController: NavController, navViewModel: NavigationViewModel, publicListsViewViewModel: PublicListsTableViewModel = viewModel()){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.PublicListsScreen)
+        navViewModel.updateScreen(Screen.PublicListsTableScreen)
         publicListsViewViewModel.getPublicLists()
     }
 

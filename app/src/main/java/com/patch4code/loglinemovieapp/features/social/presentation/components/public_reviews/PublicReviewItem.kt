@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
@@ -42,8 +43,6 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
     Column (modifier = Modifier
         .fillMaxSize()
         .clickable {
-            Log.e("PublicReview", "publicReview raw: $publicReview")
-
             val loglineReviewJson = publicReview.toJson()
             Log.e("PublicReview", "loglineReviewJson: $loglineReviewJson")
             val encodedLoglineReviewJson = URLEncoder.encode(loglineReviewJson, "UTF-8")
@@ -58,7 +57,9 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
                 modifier = Modifier
                     .padding(8.dp)
                     .size(35.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .zIndex(2f)
+                    .clickable {  },
                 contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.person_placeholder)
             )
