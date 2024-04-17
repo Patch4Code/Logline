@@ -15,7 +15,7 @@ import com.patch4code.loglinemovieapp.features.social.domain.model.PublicUserPro
 import kotlinx.coroutines.launch
 import java.lang.reflect.Type
 
-class PublicProfilesViewModel: ViewModel() {
+class PublicProfilesTableViewModel: ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
@@ -62,7 +62,7 @@ class PublicProfilesViewModel: ViewModel() {
                         _publicUserProfiles.value = publicProfilesList
                         _isLoading.value = false
                     } else {
-                        Log.e("PublicProfilesViewModel", "Error")
+                        Log.e("PublicProfilesViewModel", "Error", e)
                     }
                 }
             }catch (e: Exception){

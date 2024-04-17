@@ -34,12 +34,10 @@ fun PublicListsTableItem(navController: NavController, publicList: PublicList){
     Column (modifier = Modifier
         .clickable {
             val publicListJson = publicList.toJson()
-            //Log.e("PublicReview", "loglineReviewJson: $loglineReviewJson")
             val encodedPublicListJson = URLEncoder.encode(publicListJson, "UTF-8")
-            //Log.e("PublicReview", "encodedLoglineReviewJson: $encodedLoglineReviewJson")
             navController.navigate(Screen.PublicListScreen.withArgs(encodedPublicListJson))
         }
-    ){//navigate
+    ){
 
         Row (modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically){
             AsyncImage(
@@ -73,5 +71,4 @@ fun PublicListsTableItem(navController: NavController, publicList: PublicList){
         }
         HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
     }
-
 }

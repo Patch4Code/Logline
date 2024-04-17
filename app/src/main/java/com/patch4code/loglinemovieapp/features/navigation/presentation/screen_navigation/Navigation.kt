@@ -42,7 +42,8 @@ import com.patch4code.loglinemovieapp.features.search.presentation.screen_search
 import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_lists.PublicListView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_lists.PublicListsTableView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profiles.PublicProfilesView
+import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profile_page.PublicProfileView
+import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profiles.PublicProfilesTableView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews.PublicReviewDetailsView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews.PublicReviewsView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialView
@@ -247,7 +248,21 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.PublicProfilesScreen.route){
-                        PublicProfilesView(navController = navController, navViewModel = navigationViewModel)
+                        PublicProfilesTableView(navController = navController, navViewModel = navigationViewModel)
+                    }
+
+                    composable(route = Screen.PublicProfileScreen.route + "/{user_id}",
+                        arguments = listOf(
+                            navArgument("user_id"){
+                                type = NavType.StringType
+                            }
+                        )
+                    ){
+                        PublicProfileView(
+                            navController = navController,
+                            navViewModel = navigationViewModel,
+                            userId = it.arguments?.getString("user_id")
+                        )
                     }
 
                     composable(route = Screen.PublicReviewsScreen.route){

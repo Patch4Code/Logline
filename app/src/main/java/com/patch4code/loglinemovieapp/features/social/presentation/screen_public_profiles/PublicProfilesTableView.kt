@@ -32,14 +32,14 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
 @Composable
-fun PublicProfilesView(navController: NavController, navViewModel: NavigationViewModel, publicProfilesViewModel: PublicProfilesViewModel = viewModel()){
+fun PublicProfilesTableView(navController: NavController, navViewModel: NavigationViewModel, publicProfilesTableViewModel: PublicProfilesTableViewModel = viewModel()){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicProfilesScreen)
-        publicProfilesViewModel.getPublicUserProfiles()
+        publicProfilesTableViewModel.getPublicUserProfiles()
     }
-    val isLoading by publicProfilesViewModel.isLoading.observeAsState(initial = false)
-    val publicUserProfiles = publicProfilesViewModel.publicUserProfiles.observeAsState().value
+    val isLoading by publicProfilesTableViewModel.isLoading.observeAsState(initial = false)
+    val publicUserProfiles = publicProfilesTableViewModel.publicUserProfiles.observeAsState().value
 
     if(isLoading){
         LoadingIndicator()
@@ -51,7 +51,7 @@ fun PublicProfilesView(navController: NavController, navViewModel: NavigationVie
                     Row (modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-
+                            navController.navigate(Screen.PublicProfileScreen.withArgs(publicProfile.userId))
                         },
                         verticalAlignment = Alignment.CenterVertically
                     ){
