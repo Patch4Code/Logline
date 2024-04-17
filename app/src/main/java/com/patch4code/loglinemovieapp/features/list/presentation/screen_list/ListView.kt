@@ -86,7 +86,7 @@ fun ListView(
 
         EditListDialog(
             initialMovieTitle = movieList?.name ?: "",
-            initialIsPublic = movieList?.isPublic ?: true,
+            initialIsRankedState = movieList?.isRanked ?: false,
             openEditListDialog = openEditListDialog.value,
             onSave = {newName, isPublic-> listViewModel.onSaveEditList(newName, isPublic, openEditListDialog) },
             onCancel = {openEditListDialog.value = false})

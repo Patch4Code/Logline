@@ -18,7 +18,7 @@ interface MovieListDao {
     suspend fun deleteMovieList(movieList: MovieList)
 
     @Transaction
-    suspend fun deleteMovieListById(id: Int){
+    suspend fun deleteMovieListById(id: String){
         val listToDelete = getMovieListById(id)
         deleteMovieList(listToDelete)
     }
@@ -26,11 +26,11 @@ interface MovieListDao {
     @Query("SELECT * FROM movieList")
     suspend fun getMovieLists() : List<MovieList>
 
-    @Query("SELECT * FROM movieList WHERE id = :listId")
-    suspend fun getMovieListById(listId: Int): MovieList
+    @Query("SELECT * FROM movieList WHERE id = :listId LIMIT 1")
+    suspend fun getMovieListById(listId: String): MovieList
 
     @Transaction
-    suspend fun addMovieToList(listId: Int, movie: Movie){
+    suspend fun addMovieToList(listId: String, movie: Movie){
         val listToUpdate = getMovieListById(listId)
 
         val updatedMovies = listToUpdate.movies.toMutableList()
@@ -41,7 +41,7 @@ interface MovieListDao {
     }
 
     @Transaction
-    suspend fun removeMovieFromList(listId: Int, movieId: Int){
+    suspend fun removeMovieFromList(listId: String, movieId: Int){
         val listToUpdate = getMovieListById(listId)
 
         val updatedMovies = listToUpdate.movies.toMutableList()
@@ -52,11 +52,11 @@ interface MovieListDao {
     }
 
     @Transaction
-    suspend fun editListParameters(listId: Int, newTitle: String, newIsPublicState: Boolean){
+    suspend fun editListParameters(listId: String, newTitle: String, newIsPublicState: Boolean){
         val listToUpdate = getMovieListById(listId)
 
         listToUpdate.name = newTitle
-        listToUpdate.isPublic = newIsPublicState
+        listToUpdate.isRanked = newIsPublicState
         upsertMovieList(listToUpdate)
     }
 }

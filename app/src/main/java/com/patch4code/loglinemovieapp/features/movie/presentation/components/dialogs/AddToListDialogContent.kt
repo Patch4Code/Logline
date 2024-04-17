@@ -6,11 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -44,12 +40,8 @@ fun AddToListDialogContent(myUserMovieLists: List<MovieList>?, currentMovie: Mov
 
                         Column (modifier = Modifier.weight(1f)
                         ){
-                            Text(text = list.name, style = MaterialTheme.typography.titleMedium)
+                            Text(text = "${list.name} (${list.movies.size})", style = MaterialTheme.typography.titleMedium)
                         }
-                        Icon(modifier = Modifier.padding(8.dp),
-                            imageVector = if(list.isPublic) Icons.Default.Public else Icons.Default.Lock,
-                            contentDescription = if(list.isPublic) "List is public" else "List is private",
-                        )
                     }
                 }
                 HorizontalDivider()

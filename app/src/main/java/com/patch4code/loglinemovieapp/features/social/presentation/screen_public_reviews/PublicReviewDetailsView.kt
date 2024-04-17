@@ -40,7 +40,6 @@ fun PublicReviewDetailsView(
 
     val isYourReview = publicReviewDetailsViewModel.isYourReview.observeAsState().value
 
-
     LazyColumn (modifier = Modifier.padding(16.dp)){
         item {
             Row{
@@ -58,8 +57,4 @@ fun PublicReviewDetailsView(
             Text(text = review.content, style = MaterialTheme.typography.bodyMedium)
         }
     }
-
-
-    //Text(text = "${review.movie}, ${review.objectId}, ${review.authorName}, isYourReview = $isYourReview")
-
 }

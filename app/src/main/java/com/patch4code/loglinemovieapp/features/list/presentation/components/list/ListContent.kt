@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.Icon
@@ -21,9 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToDeleteContainer
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.items.ListItem
-import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToDeleteContainer
 
 @Composable
 fun ListContent(
@@ -39,8 +38,9 @@ fun ListContent(
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(text = movieList?.name ?: "N/A", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
-            Icon(imageVector = if(movieList?.isPublic == true) Icons.Default.Public else Icons.Default.Lock,
-                contentDescription = if(movieList?.isPublic == true) "Public List" else "Private List")
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.Default.Public, contentDescription = "Make Public")
+            }
             IconButton(onClick = { showBottomSheet.value = true }) {
                 Icon(imageVector = Icons.Default.MoreVert, contentDescription = "Open List Settings")
             }

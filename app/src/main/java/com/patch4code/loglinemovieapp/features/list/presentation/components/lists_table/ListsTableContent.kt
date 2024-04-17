@@ -49,8 +49,8 @@ fun ListsTableContent(
     }
     AddListDialog(
         openAddListDialog = openAddListDialog.value,
-        onSave = { listName, isPublic ->
-            listsTableViewModel.onAddList(listName, isPublic, openAddListDialog)
+        onSave = { listName, isRanked ->
+            listsTableViewModel.onAddList(listName, isRanked, openAddListDialog)
         },
         onCancel = {openAddListDialog.value = false}
     )

@@ -36,7 +36,7 @@ fun SocialContent(savedLoginData: StoreUserData, socialViewModel: SocialViewMode
                 text = "Explore Public Reviews"
             )
             SocialExploreCard(
-                onClick = {},
+                onClick = { navController.navigate(Screen.PublicListsScreen.route)},
                 icon = Icons.AutoMirrored.Filled.FeaturedPlayList,
                 text = "Explore Public Lists"
             )
