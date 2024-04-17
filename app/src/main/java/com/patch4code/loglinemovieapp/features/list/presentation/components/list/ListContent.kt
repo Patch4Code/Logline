@@ -15,14 +15,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToDeleteContainer
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.MakeListPublicDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.items.ListItem
+import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
+import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
 @Composable
 fun ListContent(
@@ -30,15 +37,23 @@ fun ListContent(
     showBottomSheet: MutableState<Boolean>,
     openDeleteMovieDialog : MutableState<Boolean>,
     movieToDelete:  MutableState<Movie?>,
-    navController: NavController
+    navController: NavController,
+    listViewModel: ListViewModel
 ){
+
+    val context = LocalContext.current
+    val dataLoginStore = remember { StoreUserData(context) }
+    val savedLoginData = dataLoginStore.getUserId.collectAsState(initial = "")
+    val openMakeListPublicDialog = remember { mutableStateOf(false)  }
+
     Column {
         Row (
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(text = movieList?.name ?: "N/A", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(enabled = savedLoginData.value?.isNotEmpty() == true,
+                onClick = { openMakeListPublicDialog.value = true}) {
                 Icon(imageVector = Icons.Default.Public, contentDescription = "Make Public")
             }
             IconButton(onClick = { showBottomSheet.value = true }) {
@@ -66,4 +81,5 @@ fun ListContent(
             }
         }
     }
+    MakeListPublicDialog(openMakeListPublicDialog, listViewModel)
 }

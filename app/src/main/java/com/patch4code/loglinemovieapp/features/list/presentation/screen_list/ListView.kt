@@ -68,7 +68,7 @@ fun ListView(
             }
         }
     ){
-        ListContent(movieList, showBottomSheet, openDeleteMovieDialog, movieToDelete, navController)
+        ListContent(movieList, showBottomSheet, openDeleteMovieDialog, movieToDelete, navController, listViewModel)
 
 
         //Dialogs and BottomSheet

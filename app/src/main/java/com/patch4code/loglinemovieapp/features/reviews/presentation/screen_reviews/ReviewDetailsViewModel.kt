@@ -27,7 +27,7 @@ class ReviewDetailsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewMo
         }
     }
 
-    fun makeReviewPublic(onSuccess:(alreadyExistingText: String)->Unit, onError:(exception: Exception)->Unit){
+    fun makeReviewPublic(onSuccess:(publishStatus: String)->Unit, onError:(exception: Exception)->Unit){
         viewModelScope.launch {
             val publishStatus: String
             try {
@@ -52,7 +52,7 @@ class ReviewDetailsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewMo
                 loggedMovie.put("user", user)
                 _currentReviewedLog.value?.id?.let { loggedMovie.put("logId", it) }
                 _currentReviewedLog.value?.movie?.let { loggedMovie.put("movieId", it.id) }
-                val movieJson = _currentReviewedLog.value?.movie?.toJson() ?: Movie()
+                val movieJson = _currentReviewedLog.value?.movie?.toJson() ?: Movie().toJson()
                 loggedMovie.put("movie", movieJson)
                 val longTime = _currentReviewedLog.value?.date?.let { DateHelper.convertDateTimeToLong(it) }
                 longTime?.let { loggedMovie.put("date", it) }
