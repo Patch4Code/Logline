@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.social.presentation.screen_public_lists
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -47,6 +49,10 @@ fun PublicListView(
     val decodedPublicListJson = URLDecoder.decode(publicListJson, "UTF-8")
     val publicList: PublicList = JSONHelper.fromJson(decodedPublicListJson)
 
+    val avatarPath = publicList.avatarPath
+    val userId = publicList.userId
+    val userName = publicList.authorName
+
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicListScreen)
         navViewModel.overrideCurrentScreenTitle("List by ${publicList.authorName}")
@@ -67,7 +73,10 @@ fun PublicListView(
                     modifier = Modifier
                         .padding(8.dp)
                         .size(30.dp)
-                        .clip(CircleShape),
+                        .clip(CircleShape)
+                        .zIndex(2f)
+                        .clickable(avatarPath.isNotEmpty()) {
+                            navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
                     contentScale = ContentScale.Crop,
                     error = painterResource(id = R.drawable.person_placeholder)
                 )

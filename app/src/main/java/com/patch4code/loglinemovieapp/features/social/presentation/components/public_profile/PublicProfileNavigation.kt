@@ -36,7 +36,7 @@ fun PublicProfileNavigation(userId: String, userName: String, navController: Nav
         }
         Box(modifier = Modifier
             .padding(12.dp)
-            .clickable { }) {
+            .clickable { navController.navigate(Screen.PublicProfileListsScreen.route + "/$userId/$userName") }) {
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Icon(imageVector = Icons.AutoMirrored.Filled.FeaturedPlayList, contentDescription = "Lists")
                 Text(text = "Lists")

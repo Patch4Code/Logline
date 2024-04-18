@@ -47,9 +47,13 @@ class PublicProfileReviewsViewModel: ViewModel() {
                         }
                     }
                 }
-                val profileLoglineReviews = buildProfileLoglineReviews(publicReviewsParseObject)
 
-                _publicProfileReviews.value = profileLoglineReviews
+                if (publicReviewsParseObject.isEmpty()){
+                    _publicProfileReviews.value = emptyList()
+                }else{
+                    val profileLoglineReviews = buildProfileLoglineReviews(publicReviewsParseObject)
+                    _publicProfileReviews.value = profileLoglineReviews
+                }
             } catch (e: Exception) {
                 Log.e("PublicProfileReviewsViewModel", "Catch Error: ", e)
             } finally {

@@ -30,7 +30,6 @@ class PublicProfileViewModel: ViewModel() {
                 _isLoading.value = true
 
                 val query = ParseQuery.getQuery<ParseObject>("UserProfile")
-                query.whereEqualTo("isPublic", true)
                 query.whereEqualTo("user", ParseObject.createWithoutData("_User", userId))
 
                 query.getFirstInBackground { publicProfile, e ->

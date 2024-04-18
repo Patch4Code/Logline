@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.social.presentation.components.public_reviews
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,11 +26,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews.PublicReviewDetailsViewModel
 
 @Composable
@@ -39,6 +42,9 @@ fun PublicReviewDetailsInfoAndActions(
     isYourReview: Boolean?,
     publicReviewDetailsViewModel: PublicReviewDetailsViewModel
 ){
+    val avatarPath = review.avatarPath
+    val userId = review.userId
+    val userName = review.authorName
 
     val movieYear = MovieHelper.extractYear(review.movie.releaseDate)
     val rating = review.rating
@@ -55,7 +61,10 @@ fun PublicReviewDetailsInfoAndActions(
                 modifier = Modifier
                     .padding(8.dp)
                     .size(30.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .zIndex(2f)
+                    .clickable(avatarPath.isNotEmpty()) {
+                        navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
                 contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.person_placeholder)
             )

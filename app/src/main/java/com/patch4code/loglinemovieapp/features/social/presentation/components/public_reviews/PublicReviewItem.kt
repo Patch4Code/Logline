@@ -39,6 +39,10 @@ import java.net.URLEncoder
 @Composable
 fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
 
+    val avatarPath = publicReview.avatarPath
+    val userId = publicReview.userId
+    val userName = publicReview.authorName
+
     Column (modifier = Modifier
         .fillMaxSize()
         .clickable {
@@ -56,7 +60,8 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
                     .size(35.dp)
                     .clip(CircleShape)
                     .zIndex(2f)
-                    .clickable {  },
+                    .clickable(avatarPath.isNotEmpty()) {
+                        navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
                 contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.person_placeholder)
             )

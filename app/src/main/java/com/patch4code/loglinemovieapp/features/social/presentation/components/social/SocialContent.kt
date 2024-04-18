@@ -21,7 +21,7 @@ fun SocialContent(savedLoginData: StoreUserData, socialViewModel: SocialViewMode
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         item {
 
-            SocialAccountCard(savedLoginData, socialViewModel)
+            SocialAccountCard(savedLoginData, socialViewModel, navController)
 
             Spacer(modifier = Modifier.padding(4.dp))
 

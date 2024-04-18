@@ -31,6 +31,10 @@ import java.net.URLEncoder
 @Composable
 fun PublicListsTableItem(navController: NavController, publicList: PublicList){
 
+    val avatarPath = publicList.avatarPath
+    val userId = publicList.userId
+    val userName = publicList.authorName
+
     Column (modifier = Modifier
         .clickable {
             val publicListJson = publicList.toJson()
@@ -48,7 +52,8 @@ fun PublicListsTableItem(navController: NavController, publicList: PublicList){
                     .size(35.dp)
                     .clip(CircleShape)
                     .zIndex(2f)
-                    .clickable {  },
+                    .clickable (avatarPath.isNotEmpty()){
+                        navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
                 contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.person_placeholder)
             )
