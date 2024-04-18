@@ -73,7 +73,6 @@ fun PublicProfileView(
                     //modifier = Modifier.align(Alignment.CenterHorizontally),
                     fontWeight = FontWeight.Bold
                 )
-
                 if ((isYourProfilePublic.value == false) &&  (yourUserId.value == userId)){
                     Icon(imageVector = Icons.Default.Lock, contentDescription = "Profile is Private")
                 }

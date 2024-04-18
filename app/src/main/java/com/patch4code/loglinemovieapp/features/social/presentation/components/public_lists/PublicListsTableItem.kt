@@ -29,7 +29,7 @@ import com.patch4code.loglinemovieapp.features.social.domain.model.PublicList
 import java.net.URLEncoder
 
 @Composable
-fun PublicListsTableItem(navController: NavController, publicList: PublicList){
+fun PublicListsTableItem(navController: NavController, publicList: PublicList, isProfileListItem: Boolean = false){
 
     val avatarPath = publicList.avatarPath
     val userId = publicList.userId
@@ -43,21 +43,23 @@ fun PublicListsTableItem(navController: NavController, publicList: PublicList){
         }
     ){
 
-        Row (modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically){
-            AsyncImage(
-                model = publicList.avatarPath,
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .size(35.dp)
-                    .clip(CircleShape)
-                    .zIndex(2f)
-                    .clickable (avatarPath.isNotEmpty()){
-                        navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
-                contentScale = ContentScale.Crop,
-                error = painterResource(id = R.drawable.person_placeholder)
-            )
-            Text(text = publicList.authorName, style = MaterialTheme.typography.titleMedium)
+        if(!isProfileListItem){
+            Row (modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically){
+                AsyncImage(
+                    model = publicList.avatarPath,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(35.dp)
+                        .clip(CircleShape)
+                        .zIndex(2f)
+                        .clickable (avatarPath.isNotEmpty()){
+                            navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
+                    contentScale = ContentScale.Crop,
+                    error = painterResource(id = R.drawable.person_placeholder)
+                )
+                Text(text = publicList.authorName, style = MaterialTheme.typography.titleMedium)
+            }
         }
 
         Row(

@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,13 +21,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.ExpandableText
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 @Composable
-fun TmdbReviewItem(loglineReview: LoglineReview){
+fun TmdbReviewItem(loglineReview: LoglineReview, navController: NavController){
+
+    val avatarPath = loglineReview.avatarPath
+    val userId = loglineReview.userId
+    val userName = loglineReview.authorName
 
     Column {
         Row (modifier = Modifier, verticalAlignment = Alignment.CenterVertically){
@@ -36,7 +44,10 @@ fun TmdbReviewItem(loglineReview: LoglineReview){
                 modifier = Modifier
                     .padding(8.dp)
                     .size(40.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .zIndex(2f)
+                    .clickable (avatarPath.isNotEmpty()){
+                        navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
                 contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.person_placeholder)
 

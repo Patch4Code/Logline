@@ -79,7 +79,6 @@ class PublicProfileListsViewModel: ViewModel() {
                 var avatarPath = ""
 
                 val profileQuery = ParseQuery.getQuery<ParseObject>("UserProfile")
-                profileQuery.whereEqualTo("isPublic", true)
                 profileQuery.whereEqualTo("user", user)
                 profileQuery.findInBackground { profiles, e ->
                     if (e != null) {

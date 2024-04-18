@@ -52,10 +52,8 @@ fun PublicProfileListsView(
         LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
             items(publicProfileLists)
             { publicProfileList ->
-                PublicListsTableItem(navController, publicProfileList)
+                PublicListsTableItem(navController, publicProfileList, true)
             }
         }
     }
-
-
 }

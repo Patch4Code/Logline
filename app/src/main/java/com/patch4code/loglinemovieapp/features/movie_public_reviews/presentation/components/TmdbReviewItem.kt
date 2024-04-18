@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -29,6 +31,8 @@ import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model
 @Composable
 fun TmdbReviewItem(tmdbReview: TmdbReview){
 
+    val uriHandler = LocalUriHandler.current
+
     Column {
         Row (modifier = Modifier, verticalAlignment = Alignment.CenterVertically){
             AsyncImage(
@@ -37,7 +41,8 @@ fun TmdbReviewItem(tmdbReview: TmdbReview){
                 modifier = Modifier
                     .padding(8.dp)
                     .size(40.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .clickable { uriHandler.openUri(tmdbReview.url) },
                 contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.person_placeholder)
 

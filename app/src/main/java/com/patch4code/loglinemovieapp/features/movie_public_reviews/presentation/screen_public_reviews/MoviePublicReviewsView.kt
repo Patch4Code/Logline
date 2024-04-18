@@ -80,12 +80,10 @@ fun MoviePublicReviewsView(
             .fillMaxWidth()
             .weight(1f)
         ) {index->
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp)){
-                //Text(text = tabItems[index])
+            Box(modifier = Modifier.fillMaxSize().padding(8.dp)
+            ){
                 if(index == 0){
-                    LoglineMovieReviews(loglineMovieReviews, loglineIsLoading)
+                    LoglineMovieReviews(loglineMovieReviews, loglineIsLoading, navController)
                 }else{
                     TmdbMovieReviews(tmdbMovieReviews, tmdbIsLoading, moviePublicReviewsViewModel)
                 }

@@ -10,11 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
 
 @Composable
-fun LoglineMovieReviews(loglineMovieTmdbReviews: List<LoglineReview>?, loglineIsLoading: Boolean?){
+fun LoglineMovieReviews(loglineMovieTmdbReviews: List<LoglineReview>?, loglineIsLoading: Boolean?, navController: NavController){
 
     if (loglineIsLoading == true){
         LoadingIndicator()
@@ -30,7 +31,7 @@ fun LoglineMovieReviews(loglineMovieTmdbReviews: List<LoglineReview>?, loglineIs
 
             loglineMovieTmdbReviews.forEach{ review->
                 item{
-                    TmdbReviewItem(review)
+                    TmdbReviewItem(review, navController)
                 }
             }
         }
