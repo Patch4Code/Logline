@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.social.presentation.components.public_reviews
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,9 +43,7 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
         .fillMaxSize()
         .clickable {
             val loglineReviewJson = publicReview.toJson()
-            Log.e("PublicReview", "loglineReviewJson: $loglineReviewJson")
             val encodedLoglineReviewJson = URLEncoder.encode(loglineReviewJson, "UTF-8")
-            Log.e("PublicReview", "encodedLoglineReviewJson: $encodedLoglineReviewJson")
             navController.navigate(Screen.PublicReviewDetailsScreen.withArgs(encodedLoglineReviewJson))
         }
     ){

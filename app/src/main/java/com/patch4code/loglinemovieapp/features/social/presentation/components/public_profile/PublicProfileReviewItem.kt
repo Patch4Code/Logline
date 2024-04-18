@@ -26,8 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
+import java.net.URLEncoder
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -35,7 +38,11 @@ fun PublicProfileReviewItem(loglineReview: LoglineReview, navController: NavCont
 
     Column (modifier = Modifier
         .fillMaxSize()
-        .clickable {  }
+        .clickable {
+            val loglineReviewJson = loglineReview.toJson()
+            val encodedLoglineReviewJson = URLEncoder.encode(loglineReviewJson, "UTF-8")
+            navController.navigate(Screen.PublicReviewDetailsScreen.withArgs(encodedLoglineReviewJson))
+        }
     ){
 
         FlowRow (modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
