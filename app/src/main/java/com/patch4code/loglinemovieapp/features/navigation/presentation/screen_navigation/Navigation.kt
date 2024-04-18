@@ -42,6 +42,8 @@ import com.patch4code.loglinemovieapp.features.search.presentation.screen_search
 import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_lists.PublicListView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_lists.PublicListsTableView
+import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profile_page.PublicProfileListsView
+import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profile_page.PublicProfileReviewsView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profile_page.PublicProfileView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profiles.PublicProfilesTableView
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews.PublicReviewDetailsView
@@ -247,13 +249,16 @@ fun Navigation(db: LoglineDatabase){
                         SocialView(navController = navController, navViewModel = navigationViewModel, db = db)
                     }
 
-                    composable(route = Screen.PublicProfilesScreen.route){
+                    composable(route = Screen.PublicProfilesTableScreen.route){
                         PublicProfilesTableView(navController = navController, navViewModel = navigationViewModel)
                     }
 
-                    composable(route = Screen.PublicProfileScreen.route + "/{user_id}",
+                    composable(route = Screen.PublicProfileScreen.route + "/{user_id}/{user_name}",
                         arguments = listOf(
                             navArgument("user_id"){
+                                type = NavType.StringType
+                            },
+                            navArgument("user_name"){
                                 type = NavType.StringType
                             }
                         )
@@ -261,7 +266,44 @@ fun Navigation(db: LoglineDatabase){
                         PublicProfileView(
                             navController = navController,
                             navViewModel = navigationViewModel,
-                            userId = it.arguments?.getString("user_id")
+                            userId = it.arguments?.getString("user_id"),
+                            userName = it.arguments?.getString("user_name")
+                        )
+                    }
+
+                    composable(route = Screen.PublicProfileReviewsScreen.route + "/{user_id}/{user_name}",
+                        arguments = listOf(
+                            navArgument("user_id"){
+                                type = NavType.StringType
+                            },
+                            navArgument("user_name"){
+                                type = NavType.StringType
+                            }
+                        )
+                    ){
+                        PublicProfileReviewsView(
+                            navController = navController,
+                            navViewModel = navigationViewModel,
+                            userId = it.arguments?.getString("user_id"),
+                            userName = it.arguments?.getString("user_name")
+                        )
+                    }
+
+                    composable(route = Screen.PublicProfileListsScreen.route + "/{user_id}/{user_name}",
+                        arguments = listOf(
+                            navArgument("user_id"){
+                                type = NavType.StringType
+                            },
+                            navArgument("user_name"){
+                                type = NavType.StringType
+                            }
+                        )
+                    ){
+                        PublicProfileListsView(
+                            navController = navController,
+                            navViewModel = navigationViewModel,
+                            userId = it.arguments?.getString("user_id"),
+                            userName = it.arguments?.getString("user_name"),
                         )
                     }
 

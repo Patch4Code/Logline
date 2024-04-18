@@ -35,7 +35,7 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 fun PublicProfilesTableView(navController: NavController, navViewModel: NavigationViewModel, publicProfilesTableViewModel: PublicProfilesTableViewModel = viewModel()){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.PublicProfilesScreen)
+        navViewModel.updateScreen(Screen.PublicProfilesTableScreen)
         publicProfilesTableViewModel.getPublicUserProfiles()
     }
     val isLoading by publicProfilesTableViewModel.isLoading.observeAsState(initial = false)
@@ -51,7 +51,7 @@ fun PublicProfilesTableView(navController: NavController, navViewModel: Navigati
                     Row (modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            navController.navigate(Screen.PublicProfileScreen.withArgs(publicProfile.userId))
+                            navController.navigate(Screen.PublicProfileScreen.route + "/${publicProfile.userId}/${publicProfile.username}")
                         },
                         verticalAlignment = Alignment.CenterVertically
                     ){

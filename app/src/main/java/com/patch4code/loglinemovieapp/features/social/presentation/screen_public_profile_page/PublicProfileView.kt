@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profile_page
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -21,17 +20,22 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ExpandableBio
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.MovieFavouriteRow
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ProfileHead
+import com.patch4code.loglinemovieapp.features.social.presentation.components.public_profile.PublicProfileNavigation
 
 @Composable
 fun PublicProfileView(
     navController: NavController,
     navViewModel: NavigationViewModel,
     userId: String?,
+    userName: String?,
     publicProfileViewModel: PublicProfileViewModel = viewModel()
 ){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicProfileScreen)
+        if (userName != null){
+            navViewModel.overrideCurrentScreenTitle(userName)
+        }
         publicProfileViewModel.getPublicUserProfile(userId)
     }
 
@@ -41,8 +45,6 @@ fun PublicProfileView(
     if (isLoading == true){
         LoadingIndicator()
     }else{
-        Log.e("PublicProfileView", "userProfile: $userProfile")
-
         //Profile Layout
         Column(horizontalAlignment = Alignment.CenterHorizontally)
         {
@@ -58,8 +60,7 @@ fun PublicProfileView(
 
             Spacer(modifier = Modifier.padding(4.dp))
 
-
-            //ProfileNavigation(navController) --> add extra navigation only with reviews and list icon
+            PublicProfileNavigation(userId ?: "", userName ?: "", navController)
 
             LazyColumn(modifier = Modifier.padding(start = 16.dp, end = 16.dp)){
                 item{
