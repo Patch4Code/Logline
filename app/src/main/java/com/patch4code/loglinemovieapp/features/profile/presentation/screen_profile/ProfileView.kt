@@ -1,20 +1,28 @@
 package com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,6 +33,7 @@ import com.patch4code.loglinemovieapp.features.profile.presentation.components.p
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.MovieFavouriteRow
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ProfileHead
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ProfileNavigation
+import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 @Composable
@@ -44,6 +53,10 @@ fun ProfileView(
 
     val userProfile = profileViewModel.userProfileData.observeAsState().value
 
+    val context = LocalContext.current
+    val dataLoginStore = remember { StoreUserData(context) }
+    val loginUserName = dataLoginStore.getUsername.collectAsState(initial = "").value
+
     //Profile Layout
     Column(horizontalAlignment = CenterHorizontally)
     {
@@ -58,11 +71,13 @@ fun ProfileView(
         Spacer(modifier = Modifier.padding(10.dp))
 
         //Username
-        Text(
-            text = userProfile?.username ?: "Anonymous",
-            modifier = Modifier.align(CenterHorizontally),
-            fontWeight = FontWeight.Bold
-        )
+        if(!loginUserName.isNullOrEmpty()){
+            Row (horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically){
+                Text(text = loginUserName, fontWeight = FontWeight.Bold)
+                Icon(imageVector = Icons.Default.Verified, modifier = Modifier.size(16.dp),contentDescription = null)}
+        }else{
+            Text(text = userProfile?.username ?: "Anonymous", modifier = Modifier.align(CenterHorizontally), fontWeight = FontWeight.Bold)
+        }
 
         Spacer(modifier = Modifier.padding(4.dp))
 
