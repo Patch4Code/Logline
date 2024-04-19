@@ -76,6 +76,7 @@ class PublicReviewsViewModel: ViewModel() {
                 val type: Type = object : TypeToken<Movie>() {}.type
                 val movie: Movie = JSONHelper.fromJsonWithType(movieJson, type)
 
+                var isProfilePublic = false
                 var avatarPath = ""
                 var authorName = "Anonymous"
 
@@ -88,6 +89,7 @@ class PublicReviewsViewModel: ViewModel() {
                     } else {
                         val profile = profiles.firstOrNull()
                         if (profile != null) {
+                            isProfilePublic = profile.getBoolean("isPublic")
                             avatarPath = profile.getParseFile("profileImage")?.url ?: ""
                             authorName = profile.getString("userName") ?: "Anonymous"
                         }
@@ -101,7 +103,8 @@ class PublicReviewsViewModel: ViewModel() {
                         movie = movie,
                         createdAt = date,
                         avatarPath = avatarPath,
-                        rating = rating
+                        rating = rating,
+                        isProfilePublic = isProfilePublic
                     )
                     publicLoglineReviews.add(review)
 

@@ -135,6 +135,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
                 val user = log.getParseUser("user")
                 val userId = user?.objectId ?: ""
 
+                var isProfilePublic = false
                 var avatarPath = ""
                 var authorName = "Anonymous"
 
@@ -147,6 +148,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
                     } else {
                         val profile = profiles.firstOrNull()
                         if (profile != null) {
+                            isProfilePublic = profile.getBoolean("isPublic")
                             avatarPath = profile.getParseFile("profileImage")?.url ?: ""
                             authorName = profile.getString("userName") ?: "Anonymous"
                         }
@@ -158,7 +160,8 @@ class MoviePublicReviewsViewModel: ViewModel() {
                         content = content,
                         createdAt = date,
                         avatarPath = avatarPath,
-                        rating = rating
+                        rating = rating,
+                        isProfilePublic = isProfilePublic
                     )
                     publicMovieLoglineReviews.add(review)
 

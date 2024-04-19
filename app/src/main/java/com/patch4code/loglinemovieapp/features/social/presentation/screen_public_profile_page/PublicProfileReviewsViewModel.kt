@@ -104,7 +104,8 @@ class PublicProfileReviewsViewModel: ViewModel() {
                         movie = movie,
                         createdAt = date,
                         avatarPath = avatarPath,
-                        rating = rating
+                        rating = rating,
+                        isProfilePublic = true
                     )
                     publicCurrentUserReviews.add(review)
 

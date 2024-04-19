@@ -100,7 +100,8 @@ class PublicProfileListsViewModel: ViewModel() {
                             name = listName,
                             movies = movies,
                             isRanked = isRanked
-                        )
+                        ),
+                        isProfilePublic = true
                     )
 
                     publicProfileMovieLists.add(publicList)

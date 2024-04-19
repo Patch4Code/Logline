@@ -63,7 +63,7 @@ fun PublicProfilesTableView(navController: NavController, navViewModel: Navigati
                                 .size(50.dp)
                                 .clip(CircleShape),
                             contentScale = ContentScale.Crop,
-                            error = painterResource(id = R.drawable.person_placeholder)
+                            error = painterResource(id = R.drawable.default_profile_image)
                         )
                         Spacer(modifier = Modifier.padding(4.dp))
                         Text(text = publicProfile.username, style = MaterialTheme.typography.titleMedium)

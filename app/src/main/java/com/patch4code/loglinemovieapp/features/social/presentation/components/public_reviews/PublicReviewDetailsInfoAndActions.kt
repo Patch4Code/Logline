@@ -42,7 +42,7 @@ fun PublicReviewDetailsInfoAndActions(
     isYourReview: Boolean?,
     publicReviewDetailsViewModel: PublicReviewDetailsViewModel
 ){
-    val avatarPath = review.avatarPath
+    val isProfilePublic = review.isProfilePublic
     val userId = review.userId
     val userName = review.authorName
 
@@ -63,10 +63,10 @@ fun PublicReviewDetailsInfoAndActions(
                     .size(30.dp)
                     .clip(CircleShape)
                     .zIndex(2f)
-                    .clickable(avatarPath.isNotEmpty()) {
+                    .clickable(isProfilePublic) {
                         navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
                 contentScale = ContentScale.Crop,
-                error = painterResource(id = R.drawable.person_placeholder)
+                error = painterResource(id = if(isProfilePublic) R.drawable.default_profile_image else R.drawable.person_placeholder)
             )
             Text(text = review.authorName, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }

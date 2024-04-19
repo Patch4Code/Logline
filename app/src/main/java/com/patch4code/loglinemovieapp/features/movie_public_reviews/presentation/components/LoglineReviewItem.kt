@@ -30,9 +30,9 @@ import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 @Composable
-fun TmdbReviewItem(loglineReview: LoglineReview, navController: NavController){
+fun LoglineReviewItem(loglineReview: LoglineReview, navController: NavController){
 
-    val avatarPath = loglineReview.avatarPath
+    val isProfilePublic = loglineReview.isProfilePublic
     val userId = loglineReview.userId
     val userName = loglineReview.authorName
 
@@ -46,10 +46,10 @@ fun TmdbReviewItem(loglineReview: LoglineReview, navController: NavController){
                     .size(40.dp)
                     .clip(CircleShape)
                     .zIndex(2f)
-                    .clickable (avatarPath.isNotEmpty()){
+                    .clickable (isProfilePublic){
                         navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
                 contentScale = ContentScale.Crop,
-                error = painterResource(id = R.drawable.person_placeholder)
+                error = painterResource(id = if(isProfilePublic) R.drawable.default_profile_image else R.drawable.person_placeholder)
 
             )
             Text(text = loglineReview.authorName, style = MaterialTheme.typography.titleMedium)

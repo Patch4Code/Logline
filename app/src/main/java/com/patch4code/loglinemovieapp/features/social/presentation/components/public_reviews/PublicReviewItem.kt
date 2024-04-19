@@ -39,7 +39,7 @@ import java.net.URLEncoder
 @Composable
 fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
 
-    val avatarPath = publicReview.avatarPath
+    val isProfilePublic = publicReview.isProfilePublic
     val userId = publicReview.userId
     val userName = publicReview.authorName
 
@@ -60,10 +60,10 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
                     .size(35.dp)
                     .clip(CircleShape)
                     .zIndex(2f)
-                    .clickable(avatarPath.isNotEmpty()) {
+                    .clickable(isProfilePublic) {
                         navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
                 contentScale = ContentScale.Crop,
-                error = painterResource(id = R.drawable.person_placeholder)
+                error = painterResource(id = if(isProfilePublic) R.drawable.default_profile_image else R.drawable.person_placeholder)
             )
             Text(text = publicReview.authorName, style = MaterialTheme.typography.titleMedium)
             //${publicReview.movie.title}(${MovieHelper.extractYear(publicReview.movie.releaseDate)})

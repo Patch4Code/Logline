@@ -11,5 +11,6 @@ data class LoglineReview(
     val content: String,
     val createdAt: LocalDateTime,
     val avatarPath: String,
-    val rating: Int
+    val rating: Int,
+    val isProfilePublic: Boolean
 )

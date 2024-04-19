@@ -10,4 +10,5 @@ data class PublicList(
     val authorName: String,
     val avatarPath: String,
     val movieList: MovieList,
+    val isProfilePublic: Boolean
 )

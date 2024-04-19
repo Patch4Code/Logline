@@ -49,7 +49,7 @@ fun PublicListView(
     val decodedPublicListJson = URLDecoder.decode(publicListJson, "UTF-8")
     val publicList: PublicList = JSONHelper.fromJson(decodedPublicListJson)
 
-    val avatarPath = publicList.avatarPath
+    val isProfilePublic = publicList.isProfilePublic
     val userId = publicList.userId
     val userName = publicList.authorName
 
@@ -75,10 +75,10 @@ fun PublicListView(
                         .size(30.dp)
                         .clip(CircleShape)
                         .zIndex(2f)
-                        .clickable(avatarPath.isNotEmpty()) {
+                        .clickable(isProfilePublic) {
                             navController.navigate(Screen.PublicProfileScreen.route + "/$userId/$userName") },
                     contentScale = ContentScale.Crop,
-                    error = painterResource(id = R.drawable.person_placeholder)
+                    error = painterResource(id = if(isProfilePublic) R.drawable.default_profile_image else R.drawable.person_placeholder)
                 )
                 Text(text = publicList.authorName, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }

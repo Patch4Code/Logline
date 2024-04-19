@@ -15,12 +15,12 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Load
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
 
 @Composable
-fun LoglineMovieReviews(loglineMovieTmdbReviews: List<LoglineReview>?, loglineIsLoading: Boolean?, navController: NavController){
+fun LoglineMovieReviews(loglineMovieReviews: List<LoglineReview>?, loglineIsLoading: Boolean?, navController: NavController){
 
     if (loglineIsLoading == true){
         LoadingIndicator()
     }else{
-        if (loglineMovieTmdbReviews.isNullOrEmpty()){
+        if (loglineMovieReviews.isNullOrEmpty()){
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Text(text = "no Logline reviews yet")
             }
@@ -29,9 +29,9 @@ fun LoglineMovieReviews(loglineMovieTmdbReviews: List<LoglineReview>?, loglineIs
 
         LazyColumn(modifier = Modifier.padding(8.dp)){
 
-            loglineMovieTmdbReviews.forEach{ review->
+            loglineMovieReviews.forEach{ review->
                 item{
-                    TmdbReviewItem(review, navController)
+                    LoglineReviewItem(review, navController)
                 }
             }
         }

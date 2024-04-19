@@ -71,6 +71,7 @@ class PublicListsTableViewModel: ViewModel() {
                 val isRanked = list.getBoolean("isRanked")
                 val publishedAt = list.createdAt
 
+                var isProfilePublic = false
                 var authorName = "Anonymous"
                 var avatarPath = ""
 
@@ -83,6 +84,7 @@ class PublicListsTableViewModel: ViewModel() {
                     } else {
                         val profile = profiles.firstOrNull()
                         if (profile != null) {
+                            isProfilePublic = profile.getBoolean("isPublic")
                             avatarPath = profile.getParseFile("profileImage")?.url ?: ""
                             authorName = profile.getString("userName") ?: "Anonymous"
                         }
@@ -97,7 +99,8 @@ class PublicListsTableViewModel: ViewModel() {
                             name = listName,
                             movies = movies,
                             isRanked = isRanked
-                        )
+                        ),
+                        isProfilePublic = isProfilePublic
                     )
 
                     publicMovieLists.add(publicList)
