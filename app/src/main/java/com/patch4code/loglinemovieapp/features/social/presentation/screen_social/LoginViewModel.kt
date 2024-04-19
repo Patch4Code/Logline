@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.parse.ParseException
 import com.parse.ParseObject
 import com.parse.ParseUser
+import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 import kotlinx.coroutines.launch
 
@@ -35,6 +37,8 @@ class LoginViewModel: ViewModel() {
             // Define userProfile
             val userProfile = ParseObject("UserProfile")
             userProfile.put("userName", username)
+            val favouriteMoviesString = listOf(Movie(), Movie(), Movie(), Movie()).toJson()
+            userProfile.put("favouriteMoviesString", favouriteMoviesString)
 
             user.signUpInBackground { parseException ->
                 if (parseException == null) {
