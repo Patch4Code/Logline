@@ -24,7 +24,9 @@ fun SocialMakePublicDialog(openMakePublicDialog: MutableState<Boolean>, socialVi
                         publicState = true,
                         onSuccess = { Toast.makeText(context, "Your Profile is now public", Toast.LENGTH_SHORT).show() },
                         onError = { Toast.makeText(context, "Error making Profile public", Toast.LENGTH_SHORT).show() }
-                    ) }
+                    )
+                    socialViewModel.updatePublicProfile(context = context, onSuccess = { }, onError = { })
+                }
                 ){
                     Text(text = "Confirm")
                 }
