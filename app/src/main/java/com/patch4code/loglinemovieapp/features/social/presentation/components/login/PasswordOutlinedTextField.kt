@@ -1,6 +1,7 @@
 package com.patch4code.loglinemovieapp.features.social.presentation.components.login
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
@@ -13,6 +14,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -29,6 +31,10 @@ fun PasswordOutlinedTextField(passwordInput: MutableState<String>, label: String
         modifier = Modifier.padding(16.dp),
         singleLine = true,
         visualTransformation = if (showPassword.value) VisualTransformation.None else PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            autoCorrect = false
+        ),
         trailingIcon = {
             IconButton(onClick = { showPassword.value = !showPassword.value }) {
                 Icon(
