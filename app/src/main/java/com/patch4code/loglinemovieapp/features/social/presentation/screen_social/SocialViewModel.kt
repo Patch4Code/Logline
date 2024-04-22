@@ -6,6 +6,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.parse.ParseACL
 import com.parse.ParseException
 import com.parse.ParseFile
 import com.parse.ParseObject
@@ -47,10 +48,17 @@ class SocialViewModel(private val dao: UserProfileDao): ViewModel() {
                 val user = ParseUser.getCurrentUser()
                 val userDataPointer = user.getParseObject("userProfile")
 
+                val acl = ParseACL()
+                acl.setWriteAccess(ParseUser.getCurrentUser(), true)
+                acl.setReadAccess(ParseUser.getCurrentUser(), true)
+                acl.publicReadAccess = publicState
+
                 userDataPointer?.fetchInBackground { userProfile: ParseObject?, fetchException: ParseException? ->
                     if (userProfile != null) {
                         // Update of the isPublic field in the UserProfile object
                         userProfile.put("isPublic", publicState)
+                        userProfile.acl = acl
+
                         userProfile.saveInBackground { saveException ->
                             if (saveException == null) {
                                 viewModelScope.launch {

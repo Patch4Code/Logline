@@ -3,6 +3,7 @@ package com.patch4code.loglinemovieapp.features.social.presentation.screen_socia
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.parse.ParseACL
 import com.parse.ParseException
 import com.parse.ParseObject
 import com.parse.ParseUser
@@ -44,6 +45,11 @@ class LoginViewModel: ViewModel() {
                 if (parseException == null) {
                     // When user was created successfully, also set userProfiles user to current user
                     userProfile.put("user", ParseUser.getCurrentUser())
+                    val acl = ParseACL()
+                    acl.setWriteAccess(ParseUser.getCurrentUser(), true)
+                    acl.setReadAccess(ParseUser.getCurrentUser(), true)
+                    userProfile.acl = acl
+
                     userProfile.saveInBackground { profileException ->
                         if (profileException == null) {
                             // Set UserProfile-Object for the user
