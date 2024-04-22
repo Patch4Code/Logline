@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +28,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.ExpandableText
+import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -59,40 +61,46 @@ fun PersonDetailsView(
 
     val personCreditsMap = personDetailsViewModel.personCreditsMap.observeAsState().value
 
-    LazyColumn(modifier = Modifier.padding(16.dp)){
-        item{
-            Row(modifier = Modifier.padding(bottom = 16.dp)){
-                Card (modifier = Modifier
-                    .height(200.dp)
-                    .width(133.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
-                ) {
-                    AsyncImage(
-                        model = MovieHelper.processPosterUrl(personDetails?.profilePath),
-                        contentDescription = "Image of ${personDetails?.name}",
-                        error = painterResource(id = R.drawable.movie_poster_placeholder)
-                    )
+    val isLoading by personDetailsViewModel.isLoading.observeAsState(initial = false)
+
+    if(isLoading){
+        LoadingIndicator()
+    }else{
+        LazyColumn(modifier = Modifier.padding(16.dp)){
+            item{
+                Row(modifier = Modifier.padding(bottom = 16.dp)){
+                    Card (modifier = Modifier
+                        .height(200.dp)
+                        .width(133.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
+                    ) {
+                        AsyncImage(
+                            model = MovieHelper.processPosterUrl(personDetails?.profilePath),
+                            contentDescription = "Image of ${personDetails?.name}",
+                            error = painterResource(id = R.drawable.movie_poster_placeholder)
+                        )
+                    }
+
+                    Column (modifier = Modifier
+                        .height(200.dp)
+                        .padding(8.dp)){
+                        Text(text = personDetails?.name ?: "N/A", style = MaterialTheme.typography.headlineMedium)
+                        Text(text = "Known for: ${personDetails?.knownForDepartment}")
+                    }
                 }
-
-                Column (modifier = Modifier
-                    .height(200.dp)
-                    .padding(8.dp)){
-                    Text(text = personDetails?.name ?: "N/A", style = MaterialTheme.typography.headlineMedium)
-                    Text(text = "Known for: ${personDetails?.knownForDepartment}")
-                }
-            }
-            Text(text = "Bio:")
-            ExpandableText(text = personDetails?.biography ?: "N/A", maxLinesCollapsed = 4)
-            Spacer(modifier = Modifier.padding(top = 16.dp))
+                Text(text = "Bio:")
+                ExpandableText(text = personDetails?.biography ?: "N/A", maxLinesCollapsed = 4)
+                Spacer(modifier = Modifier.padding(top = 16.dp))
 
 
-            personCreditsMap?.forEach { (groupName, movies) ->
-                Text(text = groupName,
-                    modifier = Modifier.padding(top = 16.dp),
-                    fontWeight = FontWeight.Bold)
-                LazyRow {
-                    items(movies) { movie ->
-                        MovieHomeBrowseCard(navController, movie)
+                personCreditsMap?.forEach { (groupName, movies) ->
+                    Text(text = groupName,
+                        modifier = Modifier.padding(top = 16.dp),
+                        fontWeight = FontWeight.Bold)
+                    LazyRow {
+                        items(movies) { movie ->
+                            MovieHomeBrowseCard(navController, movie)
+                        }
                     }
                 }
             }

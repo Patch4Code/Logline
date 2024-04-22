@@ -29,10 +29,14 @@ class PersonDetailsViewModel: ViewModel() {
     val personCreditsMap: LiveData<Map<String, List<Movie>>>
         get() = _personCreditsMap
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     fun loadPersonDetails(personId: Int){
         viewModelScope.launch {
             try {
+                _isLoading.value = true
+
                 val personDetailsResponse = tmdbApiService.getPersonDetails(personId = personId)
                 if(personDetailsResponse.isSuccessful){
                     _personDetails.value = personDetailsResponse.body()
@@ -46,6 +50,8 @@ class PersonDetailsViewModel: ViewModel() {
     fun loadPersonMovieCredits(personId: Int, mainDepartment: String){
         viewModelScope.launch {
             try {
+                _isLoading.value = true
+
                 val personMovieCreditsResponse = tmdbApiService.getPersonMovieCredits(personId)
                 if(personMovieCreditsResponse.isSuccessful){
                     _personMovieCredits.value = personMovieCreditsResponse.body()
@@ -54,6 +60,7 @@ class PersonDetailsViewModel: ViewModel() {
                 Log.e("PersonDetailsViewModel", "Error getting person movie credits", e)
             }finally{
                 _personCreditsMap.value = createPersonCreditsMap(mainDepartment)
+                _isLoading.value = false
             }
         }
     }
