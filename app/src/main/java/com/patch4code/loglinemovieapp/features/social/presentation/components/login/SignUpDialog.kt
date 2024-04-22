@@ -3,11 +3,12 @@ package com.patch4code.loglinemovieapp.features.social.presentation.components.l
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +36,7 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginV
 
         Dialog(onDismissRequest =  {showSignupDialog.value = false}) {
             Surface(
-                modifier = Modifier.fillMaxSize(),
+                //modifier = Modifier.fillMaxSize(),
                 shape = RoundedCornerShape(16.dp),
             ) {
                 Column(modifier = Modifier
@@ -43,13 +44,25 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginV
                     .padding(top = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
+                    Text(text = "Signup",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp,bottom = 8.dp)
+                    )
+
                     LoginOutlinedTextField(input = newUserNameInput, label = "Username")
+                    Spacer(modifier = Modifier.padding(4.dp))
                     LoginOutlinedTextField(input = email, label = "E-mail")
-                    
+
+                    Spacer(modifier = Modifier.padding(8.dp))
+
                     PasswordOutlinedTextField(passwordInput = newPasswordInput)
+                    Spacer(modifier = Modifier.padding(4.dp))
                     PasswordOutlinedTextField(passwordInput = newPasswordAgainInput, label = "Password again")
 
-                    Button(onClick = {
+
+                    Spacer(modifier = Modifier.padding(16.dp))
+
+                    OutlinedButton(onClick = {
                         loginViewModel.signUp(
                             username = newUserNameInput.value,
                             email = email.value,
@@ -68,10 +81,11 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginV
                                 }
                             }
                         )
-
                     }) {
                         Text(text = "SIGN UP")
                     }
+
+                    Spacer(modifier = Modifier.padding(16.dp))
                 }
             }
         }

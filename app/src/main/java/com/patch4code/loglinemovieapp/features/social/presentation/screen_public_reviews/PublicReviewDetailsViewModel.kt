@@ -16,8 +16,11 @@ class PublicReviewDetailsViewModel: ViewModel() {
 
     fun isYourReview(userId: String){
         val currentUser = ParseUser.getCurrentUser()
-        _isYourReview.value = currentUser.objectId == userId
-        //Log.e("PublicReviewDetailsViewModel", "userId: $userId - currentUser.Id: ${currentUser.objectId}")
+        if (currentUser != null) {
+            _isYourReview.value = currentUser.objectId == userId
+        } else {
+            _isYourReview.value = false
+        }
     }
 
     fun deletePublicReview(objectId: String, onSuccess:()->Unit, onError:(error: Exception)->Unit){

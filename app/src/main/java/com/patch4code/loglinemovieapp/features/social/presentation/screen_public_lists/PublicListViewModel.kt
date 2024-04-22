@@ -11,12 +11,16 @@ import kotlinx.coroutines.launch
 
 class PublicListViewModel: ViewModel() {
 
-    private val _isYourReview = MutableLiveData<Boolean>()
-    val isYourReview: LiveData<Boolean> get() = _isYourReview
+    private val _isYourList = MutableLiveData<Boolean>()
+    val isYourList: LiveData<Boolean> get() = _isYourList
 
     fun isYourReview(userId: String){
         val currentUser = ParseUser.getCurrentUser()
-        _isYourReview.value = currentUser.objectId == userId
+        if (currentUser != null) {
+            _isYourList.value = currentUser.objectId == userId
+        } else {
+            _isYourList.value = false
+        }
     }
 
     fun deletePublicList(objectId: String, onSuccess:()->Unit, onError:(error: Exception)->Unit){

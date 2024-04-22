@@ -16,7 +16,7 @@ fun LoginOutlinedTextField(input: MutableState<String>, label: String){
         value = input.value,
         onValueChange = {input.value = it},
         label = { Text(text = label) },
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,

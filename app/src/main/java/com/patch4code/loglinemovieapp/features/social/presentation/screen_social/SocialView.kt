@@ -2,7 +2,6 @@ package com.patch4code.loglinemovieapp.features.social.presentation.screen_socia
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -32,11 +31,6 @@ fun SocialView(
     }
 
     val dataLoginStore = remember { StoreUserData(context) }
-    val savedLoginData = dataLoginStore.getUserId.collectAsState(initial = "")
 
-    if (savedLoginData.value?.isNotEmpty() == true){
-        SocialContent(dataLoginStore, socialViewModel, navController)
-    } else{
-        LoginView()
-    }
+    SocialContent(dataLoginStore, socialViewModel, navController)
 }

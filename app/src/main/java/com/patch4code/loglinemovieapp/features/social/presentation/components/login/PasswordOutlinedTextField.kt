@@ -28,7 +28,7 @@ fun PasswordOutlinedTextField(passwordInput: MutableState<String>, label: String
         value = passwordInput.value,
         onValueChange = {passwordInput.value = it},
         label = { Text(text = label) },
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
         singleLine = true,
         visualTransformation = if (showPassword.value) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(

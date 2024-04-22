@@ -59,7 +59,7 @@ fun PublicListView(
         publicListViewModel.isYourReview(publicList.userId)
     }
 
-    val isYourReview = publicListViewModel.isYourReview.observeAsState().value
+    val isYourReview = publicListViewModel.isYourList.observeAsState().value
 
     val showDeletePublicListDialog = remember { mutableStateOf(false) }
 

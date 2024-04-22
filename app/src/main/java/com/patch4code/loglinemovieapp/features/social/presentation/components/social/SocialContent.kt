@@ -8,6 +8,7 @@ import androidx.compose.material.icons.automirrored.filled.FeaturedPlayList
 import androidx.compose.material.icons.filled.Groups2
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -18,10 +19,17 @@ import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 @Composable
 fun SocialContent(savedLoginData: StoreUserData, socialViewModel: SocialViewModel, navController: NavController){
 
+    val savedLoginId = savedLoginData.getUserId.collectAsState(initial = "")
+
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         item {
 
-            SocialAccountCard(savedLoginData, socialViewModel, navController)
+
+            if (savedLoginId.value?.isNotEmpty() == true){
+                SocialAccountCard(savedLoginData, socialViewModel, navController)
+            } else{
+                SocialLoginCard()
+            }
 
             Spacer(modifier = Modifier.padding(4.dp))
 
