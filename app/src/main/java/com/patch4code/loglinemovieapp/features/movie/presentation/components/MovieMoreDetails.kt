@@ -27,6 +27,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun MovieMoreDetails(movieDetails: MovieDetails?
@@ -35,6 +38,18 @@ fun MovieMoreDetails(movieDetails: MovieDetails?
     val movieStatus: String = movieDetails?.status ?: "N/A"
 
     var showDetails by remember { mutableStateOf(false) }
+
+    val currencyFormat = NumberFormat.getCurrencyInstance(Locale.US) as DecimalFormat
+    currencyFormat.applyPattern("#,###")
+
+    val formatedBudget =
+        if((movieDetails?.budget ?: 0) > 0)
+            currencyFormat.format(movieDetails?.budget?.toDouble() ?: 0.0) + " $"
+        else "N/A"
+    val formatedRevenue =
+        if ((movieDetails?.revenue ?: 0) > 0)
+            currencyFormat.format(movieDetails?.revenue?.toDouble() ?: 0.0) + " $"
+        else "N/A"
 
     HorizontalDivider(modifier = Modifier.padding(top = 32.dp, bottom = 16.dp))
 
@@ -95,12 +110,12 @@ fun MovieMoreDetails(movieDetails: MovieDetails?
 
                 //Budget
                 Text(text = "Budget:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
-                Text(text = "${movieDetails?.budget} $", style = MaterialTheme.typography.bodyMedium)
+                Text(text = formatedBudget, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 //Revenue
                 Text(text = "Revenue:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
-                Text(text = "${movieDetails?.revenue} $", style = MaterialTheme.typography.bodyMedium)
+                Text(text = formatedRevenue, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
             }
         }

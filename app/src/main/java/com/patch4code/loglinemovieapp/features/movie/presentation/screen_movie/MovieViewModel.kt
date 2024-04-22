@@ -48,57 +48,37 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     private val _onWatchlist = MutableLiveData<Boolean>()
     val onWatchlist: LiveData<Boolean> get() = _onWatchlist
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
-    fun loadMovieDetails(movieId: Int){
+
+    fun loadAllMovieData(movieId: Int) {
+        _isLoading.value = true
+
         viewModelScope.launch {
             try {
                 val movieDetailsResponse = tmdbApiService.getMovieDetails(movieId = movieId)
-                if(movieDetailsResponse.isSuccessful){
+                val movieCreditsResponse = tmdbApiService.getMovieCredits(movieId = movieId)
+                val movieCollectionResponse = tmdbApiService.getMoviesFromCollection(collectionId = movieDetailsResponse.body()?.collection?.id ?: 0)
+                val movieVideosResponse = tmdbApiService.getMovieVideos(movieId)
+
+                if (movieDetailsResponse.isSuccessful) {
                     _detailsData.value = movieDetailsResponse.body()
                 }
-            } catch (e: Exception) {
-                Log.e("MovieViewModel", "Error getting movie details", e)
-            }
-        }
-    }
-
-    fun loadMovieCredits(movieId: Int){
-        viewModelScope.launch {
-            try {
-                val movieCreditsResponse = tmdbApiService.getMovieCredits(movieId = movieId)
-                if(movieCreditsResponse.isSuccessful){
-
+                if (movieCreditsResponse.isSuccessful) {
                     _creditsData.value = movieCreditsResponse.body()
                 }
-            } catch (e: Exception) {
-                Log.e("MovieViewModel", "Error getting movie credits", e)
-            }
-        }
-    }
-
-    fun loadMovieCollection(collectionId: Int){
-        viewModelScope.launch {
-            try {
-                val movieCollectionResponse = tmdbApiService.getMoviesFromCollection(collectionId = collectionId)
-                if(movieCollectionResponse.isSuccessful){
+                if (movieCollectionResponse.isSuccessful) {
                     _collectionMovies.value = movieCollectionResponse.body()?.movies
                 }
-            } catch (e: Exception) {
-                Log.e("MovieViewModel", "Error getting movie collection", e)
-            }
-        }
-    }
-
-    fun loadMovieVideos(movieId: Int){
-        viewModelScope.launch {
-            try {
-                val movieVideosResponse = tmdbApiService.getMovieVideos(movieId)
-                if (movieVideosResponse.isSuccessful){
-                    val firstYouTubeVideo = movieVideosResponse.body()?.videoList?.find { it.site == "YouTube" && it.type == "Trailer"}
+                if (movieVideosResponse.isSuccessful) {
+                    val firstYouTubeVideo = movieVideosResponse.body()?.videoList?.find { it.site == "YouTube" && it.type == "Trailer" }
                     _movieVideo.value = firstYouTubeVideo
                 }
             } catch (e: Exception) {
-                Log.e("MovieViewModel", "Error getting movie videos", e)
+                Log.e("MovieViewModel", "Error loading movie data", e)
+            } finally {
+                _isLoading.value = false
             }
         }
     }
@@ -112,12 +92,9 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
             try {
                 val movieProviderResponse = tmdbApiService.getWatchProviders(movieId)
                 if(movieProviderResponse.isSuccessful){
-                    Log.e("MovieViewModel", "success")
-                    //var country = ""
-                    //settingsDataStore.getWatchProvidersCountry.collect { country = it ?: "" }
                     val countryProvider = movieProviderResponse.body()?.availableServicesMap?.get(country)
                     _countryProviders.value = countryProvider
-                    Log.e("MovieViewModel", "Success: $countryProvider")
+                    //Log.e("MovieViewModel", "Success: $countryProvider")
                 }
             }catch (e: Exception){
                 Log.e("MovieViewModel", "Error getting movie providers", e)
@@ -127,7 +104,7 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
 
 
     fun loadRatingAndWatchlistStatusById(id: Int){
-        var movieUserData: MovieUserData? = null
+        var movieUserData: MovieUserData?
         viewModelScope.launch {
             movieUserData = dao.getMovieUserDataByMovieId(id)
             if (movieUserData != null){

@@ -10,12 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.MovieContent
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -43,50 +45,49 @@ fun MovieView(
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MovieScreen)
         movieViewModel.initializeSettingsDataStore(context)
-        movieViewModel.loadMovieDetails(movieId)
-        movieViewModel.loadMovieCredits(movieId)
-        movieViewModel.loadMovieVideos(movieId)
         movieViewModel.loadRatingAndWatchlistStatusById(movieId)
+        movieViewModel.loadAllMovieData(movieId)
     }
 
     val movieDetails = movieViewModel.detailsData.observeAsState().value
     val movieCredits = movieViewModel.creditsData.observeAsState().value
     val movieVideo = movieViewModel.movieVideo.observeAsState().value
     val movieProviders = movieViewModel.countryProviders.observeAsState().value
+    val collectionMovies = movieViewModel.collectionMovies.observeAsState().value
 
     val dataSettingsStore = remember { StoreSettings(context) }
     val watchCountry = dataSettingsStore.getWatchProvidersCountry.collectAsState(initial = "").value
 
     DisposableEffect(movieDetails) {
-        if (movieDetails != null) {
-            val movieCollectionId = movieDetails.collection?.id ?: 0
-            movieViewModel.loadMovieCollection(movieCollectionId)
-        }
         if(!watchCountry.isNullOrEmpty()){
             movieViewModel.loadMovieProviders(movieId, watchCountry)
         }
         onDispose {}
     }
 
-    val collectionMovies = movieViewModel.collectionMovies.observeAsState().value
+    val isLoading by movieViewModel.isLoading.observeAsState(initial = false)
 
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                val movieToLog = Movie(
-                    title = movieDetails?.title.toString(),
-                    id=movieId,
-                    releaseDate = movieDetails?.releaseDate.toString(),
-                    posterUrl = movieDetails?.posterPath.toString()
-                )
-                val jsonMovie = movieToLog.toJson()
-                val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
-                navController.navigate(Screen.MovieLogScreen.withArgs(encodedJsonMovie))
-            }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+    if(isLoading){
+        LoadingIndicator()
+    }else{
+        Scaffold(
+            floatingActionButton = {
+                FloatingActionButton(onClick = {
+                    val movieToLog = Movie(
+                        title = movieDetails?.title.toString(),
+                        id=movieId,
+                        releaseDate = movieDetails?.releaseDate.toString(),
+                        posterUrl = movieDetails?.posterPath.toString()
+                    )
+                    val jsonMovie = movieToLog.toJson()
+                    val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
+                    navController.navigate(Screen.MovieLogScreen.withArgs(encodedJsonMovie))
+                }) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                }
             }
+        ){
+            MovieContent(movieDetails, movieCredits, collectionMovies, movieVideo, movieProviders, watchCountry, navController, movieViewModel, db)
         }
-    ){
-        MovieContent(movieDetails, movieCredits, collectionMovies, movieVideo, movieProviders, watchCountry, navController, movieViewModel, db)
     }
 }
