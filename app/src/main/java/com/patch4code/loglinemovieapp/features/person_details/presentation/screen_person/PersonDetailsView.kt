@@ -21,6 +21,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -76,7 +77,7 @@ fun PersonDetailsView(
                     ) {
                         AsyncImage(
                             model = MovieHelper.processPosterUrl(personDetails?.profilePath),
-                            contentDescription = "Image of ${personDetails?.name}",
+                            contentDescription = "${stringResource(id = R.string.person_image_description)} ${personDetails?.name}",
                             error = painterResource(id = R.drawable.movie_poster_placeholder)
                         )
                     }
@@ -85,10 +86,10 @@ fun PersonDetailsView(
                         .height(200.dp)
                         .padding(8.dp)){
                         Text(text = personDetails?.name ?: "N/A", style = MaterialTheme.typography.headlineMedium)
-                        Text(text = "Known for: ${personDetails?.knownForDepartment}")
+                        Text(text = "${stringResource(id = R.string.known_for_title)} ${personDetails?.knownForDepartment}")
                     }
                 }
-                Text(text = "Bio:")
+                Text(text = stringResource(id = R.string.bio_title))
                 ExpandableText(text = personDetails?.biography ?: "N/A", maxLinesCollapsed = 4)
                 Spacer(modifier = Modifier.padding(top = 16.dp))
 

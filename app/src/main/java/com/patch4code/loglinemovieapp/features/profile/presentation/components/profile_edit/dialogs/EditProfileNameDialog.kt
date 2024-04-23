@@ -10,6 +10,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileViewModel
 
 @Composable
@@ -20,9 +22,11 @@ fun EditProfileNameDialog(openEditProfileNameDialog: MutableState<Boolean>, prof
         val context = LocalContext.current
         val textInput = remember { mutableStateOf(profileName ?: "") }
 
+        val toastText = stringResource(id = R.string.name_updated_toast)
+
         AlertDialog(
             onDismissRequest = { openEditProfileNameDialog.value = false  },
-            title = { Text(text = "Edit Profile Name") },
+            title = { Text(text = stringResource(id = R.string.edit_name_title)) },
             text = {
                 OutlinedTextField(
                     value = textInput.value,
@@ -33,17 +37,17 @@ fun EditProfileNameDialog(openEditProfileNameDialog: MutableState<Boolean>, prof
                 Button(onClick = {
                     openEditProfileNameDialog.value = false
                     profileViewModel.updateProfileName(textInput.value)
-                    Toast.makeText(context, "Profile Name was updated", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
 
                 }) {
-                    Text(text = "Save")
+                    Text(text = stringResource(id = R.string.save_button_text))
                 }
             },
             dismissButton = {
                 Button(onClick = {
                     openEditProfileNameDialog.value = false
                 }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             }
         )

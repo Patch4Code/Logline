@@ -5,7 +5,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.GeneralMovieSearchViewModel
 import com.patch4code.loglinemovieapp.features.core.presentation.components.movie_search_dialog.MovieSearchDialog
@@ -25,8 +27,8 @@ fun SelectFavMovieDialog(
     val selectedMovie = remember { mutableStateOf<Movie?>(null) }
 
     MovieSearchDialog(
-        title = "Search Favourite Movie",
-        confirmText = "Save",
+        title = stringResource(id = R.string.search_fav_movie_dialog_title),
+        confirmText = stringResource(id = R.string.save_button_text),
         textInput = textInput,
         selectedMovie = selectedMovie,
         searchResult = searchResult,

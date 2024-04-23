@@ -118,6 +118,29 @@
     <string name="no_tmdb_reviews_text">no TMDB reviews yet</string>
 
 
+    <!-- PersonDetails Strings -->
+    <string name="person_image_description">Image of</string>
+    <string name="known_for_title">Known for:</string>
+    <string name="bio_title">Bio:</string>
+
+
+    <!-- Profile Strings -->
+    <string name="favourite_movies_title">FAVOURITE MOVIES</string>
+    <string name="favourite_movies_title2">Favourite Movies</string>
+    <string name="banner_image_title">Banner Image</string>
+    <string name="banner_image_description">Banner</string>
+    <string name="reset_to_default_text">Reset to Default</string>
+    <string name="profile_bio_title">Bio</string>
+    <string name="edit_icon_description">Edit</string>
+    <string name="delete_fav_movie_icon_description">Delete Favourite Movie</string>
+    <string name="profile_image_title">Profile Image</string>
+    <string name="edit_bio_text">Edit Bio</string>
+    <string name="bio_updated_toast">Bio was updated</string>
+    <string name="edit_name_title">Edit Profile Name</string>
+    <string name="name_updated_toast">Profile Name was updated</string>
+    <string name="search_fav_movie_dialog_title">Search Favourite Movie</string>
+
+
 
 
 

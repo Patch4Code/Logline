@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -59,7 +60,7 @@ fun ProfileEditImageSection(userProfile: UserProfile?, profileViewModel: Profile
     )
 
     Column(horizontalAlignment = Alignment.CenterHorizontally){
-        Text(text = "Profile Image", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
+        Text(text = stringResource(id = R.string.profile_image_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
         Card(
             onClick = {
                 singlePhotoPickerLauncher.launch(
@@ -74,13 +75,13 @@ fun ProfileEditImageSection(userProfile: UserProfile?, profileViewModel: Profile
         ){
             AsyncImage(
                 model = profileImagePath,
-                contentDescription = "Profile Image",
+                contentDescription = stringResource(id = R.string.profile_image_title),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.default_profile_image))
         }
         TextButton(onClick = { profileViewModel.setProfileImagePath("") }) {
-            Text(text = "Reset to Default")
+            Text(text = stringResource(id = R.string.reset_to_default_text))
         }
     }
     Spacer(modifier = Modifier.padding(8.dp))

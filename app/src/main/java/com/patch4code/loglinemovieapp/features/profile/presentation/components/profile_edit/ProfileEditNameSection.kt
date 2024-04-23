@@ -15,7 +15,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
 @Composable
@@ -33,7 +35,7 @@ fun ProfileEditNameSection(openEditProfileNameDialog: MutableState<Boolean>, use
     ) {
         Text(text = (if(isLoggedIn) loginUserName!! else userName ?: "Anonymous"))
         Spacer(modifier = Modifier.padding(4.dp))
-        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
+        Icon(imageVector = Icons.Default.Edit, contentDescription = stringResource(id = R.string.edit_icon_description))
     }
 
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))

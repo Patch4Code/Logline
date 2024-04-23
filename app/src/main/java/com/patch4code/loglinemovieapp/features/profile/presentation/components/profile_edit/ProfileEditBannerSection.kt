@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -57,7 +58,7 @@ fun ProfileEditBannerSection(userProfile: UserProfile?, profileViewModel: Profil
     )
 
     Column {
-        Text(text = "Banner Image", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
+        Text(text = stringResource(id = R.string.banner_image_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
         Card (
             onClick = {
                 singlePhotoPickerLauncher.launch(
@@ -73,12 +74,12 @@ fun ProfileEditBannerSection(userProfile: UserProfile?, profileViewModel: Profil
                 model = bannerImagePath,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
-                contentDescription = "Banner",
+                contentDescription = stringResource(id = R.string.banner_image_description),
                 error = painterResource(id = R.drawable.default_banner_image)
             )
         }
         TextButton(onClick = { profileViewModel.setBannerImagePath("") }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            Text(text = "Reset to Default")
+            Text(text = stringResource(id = R.string.reset_to_default_text))
         }
     }
 }

@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
@@ -37,7 +38,7 @@ fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: Prof
 
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
-    Text(text = "Favourite Movies", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
+    Text(text = stringResource(id = R.string.favourite_movies_title2), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
     Row (modifier = Modifier
         .fillMaxWidth()
         .padding(top = 8.dp, bottom = 8.dp),
@@ -62,7 +63,7 @@ fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: Prof
                         onClick = { profileViewModel.setFavMovieAtIndex(index, Movie()) },
                         modifier = Modifier.align(Alignment.TopEnd).padding(2.dp).size(20.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.Close, contentDescription = "Delete Favourite Movie")
+                        Icon(imageVector = Icons.Default.Close, contentDescription = stringResource(id = R.string.delete_fav_movie_icon_description))
                     }
                 }
             }

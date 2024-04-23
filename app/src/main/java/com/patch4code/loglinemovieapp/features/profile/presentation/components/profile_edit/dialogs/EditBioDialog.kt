@@ -12,7 +12,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileViewModel
 
 @Composable
@@ -23,9 +25,11 @@ fun EditBioDialog(openEditBioDialog: MutableState<Boolean>, bioText: String?, pr
         val context = LocalContext.current
         val textInput = remember { mutableStateOf(bioText ?: "") }
 
+        val toastTest = stringResource(id = R.string.bio_updated_toast)
+
         AlertDialog(
             onDismissRequest = { openEditBioDialog.value = false  },
-            title = { Text(text = "Edit Bio") },
+            title = { Text(text = stringResource(id = R.string.edit_bio_text)) },
             modifier = Modifier.height(400.dp),
             text = {
                 OutlinedTextField(
@@ -39,20 +43,19 @@ fun EditBioDialog(openEditBioDialog: MutableState<Boolean>, bioText: String?, pr
                 Button(onClick = {
                     openEditBioDialog.value = false
                     profileViewModel.updateBioText(textInput.value)
-                    Toast.makeText(context, "Bio was updated", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, toastTest, Toast.LENGTH_SHORT).show()
 
                 }) {
-                    Text(text = "Save")
+                    Text(text = stringResource(id = R.string.save_button_text))
                 }
             },
             dismissButton = {
                 Button(onClick = {
                     openEditBioDialog.value = false
                 }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             }
         )
-
     }
 }

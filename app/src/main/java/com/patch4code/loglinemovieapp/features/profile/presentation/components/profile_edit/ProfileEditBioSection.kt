@@ -13,18 +13,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun ProfileEditBioSection(openEditBioDialog: MutableState<Boolean>, bioText: String?){
 
-    Text(text = "Bio", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
+    Text(text = stringResource(id = R.string.profile_bio_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
     ElevatedButton(onClick = { openEditBioDialog.value = true }, modifier = Modifier.fillMaxWidth()) {
         Text(text = bioText ?: "",
             maxLines = 3, minLines = 3, modifier = Modifier.width(250.dp), textAlign = TextAlign.Start
         )
-        Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit", modifier = Modifier.weight(1f))
+        Icon(imageVector = Icons.Default.Edit, contentDescription = stringResource(id = R.string.edit_icon_description), modifier = Modifier.weight(1f))
     }
 
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
