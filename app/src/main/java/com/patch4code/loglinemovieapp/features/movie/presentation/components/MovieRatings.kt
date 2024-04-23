@@ -8,7 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun MovieRatings(voteAverage: Double?){
@@ -16,7 +18,7 @@ fun MovieRatings(voteAverage: Double?){
     val voteAverageTmdb: String = String.format("%.1f", voteAverage)
 
     Column {
-        Text(text = "Average Rating:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+        Text(text = stringResource(id = R.string.average_rating_title), modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
         Row {
             Column {
                 Text(text = voteAverageTmdb, style = MaterialTheme.typography.titleLarge)

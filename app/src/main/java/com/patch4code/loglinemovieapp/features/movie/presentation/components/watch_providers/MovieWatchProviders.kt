@@ -9,8 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.CountryProviders
 
 
@@ -27,13 +29,13 @@ fun MovieWatchProviders(
     Row (modifier = Modifier
         .clickable { uriHandler.openUri("https://www.themoviedb.org/movie/$movieId/watch?locale=$watchCountry") }
     ){
-        ProviderSection(movieProviders.flatrate, "Stream")
+        ProviderSection(movieProviders.flatrate, stringResource(id = R.string.stream_title))
         Spacer(modifier = Modifier.padding(4.dp))
-        ProviderSection(movieProviders.rent, "Rent/Buy")
+        ProviderSection(movieProviders.rent, stringResource(id = R.string.rent_buy_title))
     }
 
     Row(modifier = Modifier.padding(start = 10.dp, top = 10.dp)){
-        Text(text = "Source: ")
+        Text(text = stringResource(id = R.string.source_title))
         Text(text = "JustWatch", fontStyle = FontStyle.Italic)
     }
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp))

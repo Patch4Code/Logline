@@ -8,13 +8,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Genre
 
 @Composable
 fun MovieGenres(genres: List<Genre>?){
 
-    Text(text = "Genre:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+    Text(text = stringResource(id = R.string.genres_title), modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
     Row {
         genres?.let {
             Text(text = it.joinToString { genre -> genre.name })

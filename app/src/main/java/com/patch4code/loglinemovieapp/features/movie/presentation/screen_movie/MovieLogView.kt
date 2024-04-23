@@ -16,9 +16,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.components.DiaryEditRatingDialog
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
@@ -60,6 +62,8 @@ fun MovieLogView(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
+    val toastText = stringResource(id = R.string.movie_log_toast)
+
     var rating by remember { mutableStateOf(0) }
     var watchDateTime by remember { mutableStateOf(LocalDateTime.now()) }
     var review by remember { mutableStateOf("") }
@@ -91,7 +95,7 @@ fun MovieLogView(
                 isEdit = false,
                 onSaveChanges = {
                     movieLogViewModel.addMovieLog(movie, watchDateTime, rating, review)
-                    Toast.makeText(context, "Diary Entry Added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
                     navController.popBackStack()
                 },
                 onDiscardChanges = {openDiscardDialog.value = true}

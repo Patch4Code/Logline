@@ -87,7 +87,7 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         settingsDataStore = StoreSettings(context)
     }
     fun loadMovieProviders(movieId: Int, country: String){
-        Log.e("MovieViewModel", "Country: $country")
+        //Log.e("MovieViewModel", "Country: $country")
         viewModelScope.launch {
             try {
                 val movieProviderResponse = tmdbApiService.getWatchProviders(movieId)

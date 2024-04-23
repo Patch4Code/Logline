@@ -18,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Crew
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -41,7 +43,7 @@ fun CrewMemberElement(crewMember: Crew, navController: NavController){
                     .padding(4.dp)
                     .clip(CircleShape)
                     .border(width = 2.dp, color = Color.DarkGray, shape = CircleShape),
-                contentDescription = "Crew Member Image of ${crewMember.name}",
+                contentDescription = "${stringResource(id = R.string.crew_member_description)} ${crewMember.name}",
                 contentScale = ContentScale.Crop
             )
         }
@@ -54,7 +56,7 @@ fun CrewMemberElement(crewMember: Crew, navController: NavController){
                     .padding(4.dp)
                     .clip(CircleShape)
                     .border(width = 2.dp, color = Color.DarkGray, shape = CircleShape),
-                contentDescription = "Cast Member Image of ${crewMember.name}"
+                contentDescription = "${stringResource(id = R.string.crew_member_description)} ${crewMember.name}"
             )
         }
         Text(text = crewMember.name, style = MaterialTheme.typography.bodyMedium)

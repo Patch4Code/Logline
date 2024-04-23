@@ -77,11 +77,42 @@
         <string name="list_delete_movie_dialog_confirm">Delete Movie</string>
         <string name="edit_list_text">Edit List</string>
         <string name="list_bottom_sheet_title">List Settings</string>
-
         <string name="list_publish_dialog_success_toast">List published</string>
         <string name="list_publish_dialog_error_toast">Error publishing this List:</string>
         <string name="list_publish_dialog_title">Publish this List</string>
         <string name="list_publish_dialog_text">Are you sure you want to publish this List? Please note that if this list has been previously published, the existing version will be overwritten.</string>
+
+
+    <!-- Movie Strings -->
+    <string name="movie_log_toast">Diary Entry Added</string>
+    <string name="trailer_button_text">Trailer</string>
+    <string name="reviews_button_text">Reviews</string>
+    <string name="share_button_text">Share</string>
+    <string name="genres_title">Genre:</string>
+    <string name="more_details_title">More Details</string>
+    <string name="production_companies_title">Production Companies:</string>
+    <string name="production_countries_title">Production Countries:</string>
+    <string name="spoken_languages_title">Spoken Languages:</string>
+    <string name="status_title">Status:</string>
+    <string name="budget_title">Budget:</string>
+    <string name="revenue_title">Revenue:</string>
+    <string name="more_like_this_title">More like this</string>
+    <string name="average_rating_title">Average Rating:</string>
+    <string name="source_title">Source: </string>
+    <string name="source_tooltip_description">more info</string>
+    <string name="cast_member_description">Cast Member Image of</string>
+    <string name="crew_member_description">Crew Member Image of</string>
+    <string name="cast_title">Cast</string>
+    <string name="crew_title">Crew</string>
+    <string name="add_to_list_dialog_title">Add movie to list</string>
+    <string name="add_to_list_text">Add to List</string>
+    <string name="add_to_list_dialog_toast">Movie added to List</string>
+
+    <string name="stream_title">Stream</string>
+    <string name="rent_buy_title">Rent/Buy</string>
+
+
+
 
 
 

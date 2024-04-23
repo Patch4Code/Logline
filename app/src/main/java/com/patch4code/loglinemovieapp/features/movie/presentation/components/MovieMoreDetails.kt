@@ -24,8 +24,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -65,10 +67,10 @@ fun MovieMoreDetails(movieDetails: MovieDetails?
         ),
     ){
         Row (modifier = Modifier.padding(8.dp).fillMaxWidth()){
-            Text(text = "More Details", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
+            Text(text = stringResource(id = R.string.more_details_title), modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
             Icon(
                 imageVector = if(showDetails) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                contentDescription = "ArrowDown"
+                contentDescription = null
             )
         }
 
@@ -76,7 +78,10 @@ fun MovieMoreDetails(movieDetails: MovieDetails?
             if(showDetails){
 
                 //Production Companies
-                Text(text = "Production Companies:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = stringResource(id = R.string.production_companies_title),
+                    modifier = Modifier.padding(bottom = 4.dp),
+                    style = MaterialTheme.typography.titleSmall
+                )
                 Row {
                     movieDetails?.productionCompanies?.let {
                         Text(text = it.joinToString { studio -> studio.name }, style = MaterialTheme.typography.bodyMedium)
@@ -86,7 +91,10 @@ fun MovieMoreDetails(movieDetails: MovieDetails?
 
 
                 //Countries
-                Text(text = "Production Countries:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = stringResource(id = R.string.production_countries_title),
+                    modifier = Modifier.padding(bottom = 4.dp),
+                    style = MaterialTheme.typography.titleSmall
+                )
                 Row {
                     movieDetails?.productionCountries?.let {
                         Text(text = it.joinToString { country -> country.name }, style = MaterialTheme.typography.bodyMedium)
@@ -95,7 +103,7 @@ fun MovieMoreDetails(movieDetails: MovieDetails?
                 Spacer(modifier = Modifier.padding(16.dp))
 
                 //Spoken Languages
-                Text(text = "Spoken Languages:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = stringResource(id = R.string.spoken_languages_title), modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Row {
                     movieDetails?.spokenLanguages?.let {
                         Text(text = it.joinToString { language -> language.englishName }, style = MaterialTheme.typography.bodyMedium)
@@ -104,22 +112,21 @@ fun MovieMoreDetails(movieDetails: MovieDetails?
                 Spacer(modifier = Modifier.padding(16.dp))
 
                 //Status
-                Text(text = "Status:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = stringResource(id = R.string.status_title), modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Text(text = movieStatus, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 //Budget
-                Text(text = "Budget:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = stringResource(id = R.string.budget_title), modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Text(text = formatedBudget, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 //Revenue
-                Text(text = "Revenue:", modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
+                Text(text = stringResource(id = R.string.revenue_title), modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
                 Text(text = formatedRevenue, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.padding(8.dp))
             }
         }
-
     }
     Spacer(modifier = Modifier.padding(8.dp))
 }

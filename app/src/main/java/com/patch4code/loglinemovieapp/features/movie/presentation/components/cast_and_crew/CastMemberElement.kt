@@ -18,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Cast
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -44,7 +46,7 @@ fun CastMemberElement(castMember: Cast, navController: NavController) {
                     .padding(4.dp)
                     .clip(CircleShape)
                     .border(width = 2.dp, color = Color.DarkGray, shape = CircleShape),
-                contentDescription = "Cast Member Image of ${castMember.name}",
+                contentDescription = "${stringResource(id = R.string.cast_member_description)} ${castMember.name}",
                 contentScale = ContentScale.Crop,
             )
         }
@@ -57,7 +59,7 @@ fun CastMemberElement(castMember: Cast, navController: NavController) {
                     .padding(4.dp)
                     .clip(CircleShape)
                     .border(width = 2.dp, color = Color.DarkGray, shape = CircleShape),
-                contentDescription = "Cast Member Image of ${castMember.name}"
+                contentDescription = "${stringResource(id = R.string.cast_member_description)} ${castMember.name}"
             )
         }
         Text(text = castMember.name, style = MaterialTheme.typography.bodyMedium)

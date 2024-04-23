@@ -15,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -49,19 +51,19 @@ fun MovieFeaturesBar(movieVideo: MovieVideo?, movieDetails: MovieDetails?, navCo
             onClick = { uriHandler.openUri(YOUTUBE_BASE_URL + (movieVideo?.key ?: "")) },
             enabled = isTrailerButtonEnabled
         ) {
-            Text(text = "Trailer")
+            Text(text = stringResource(id = R.string.trailer_button_text))
         }
         Spacer(modifier = Modifier.padding(4.dp))
 
         FilledTonalButton(onClick = { navController.navigate(Screen.MoviePublicReviewsScreen.withArgs("$movieId/$title")) }) {
-            Text(text = "Reviews")
+            Text(text = stringResource(id = R.string.reviews_button_text))
         }
         Spacer(modifier = Modifier.padding(4.dp))
 
         FilledTonalButton(onClick = {  startActivity(context, shareIntent, null) }) {
             Icon(imageVector = Icons.Default.Share, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.padding(4.dp))
-            Text(text = "Share")
+            Text(text = stringResource(id = R.string.share_button_text))
         }
     }
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))

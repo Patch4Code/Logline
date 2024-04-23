@@ -11,7 +11,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
@@ -35,6 +37,7 @@ fun AddToListDialog(
     }
 
     val context = LocalContext.current
+    val toastText = stringResource(id = R.string.add_to_list_dialog_toast)
 
     val currentMovie = Movie(
         title = movieDetails?.title ?: "N/A",
@@ -51,7 +54,7 @@ fun AddToListDialog(
 
     AlertDialog(
         onDismissRequest = { openAddToListDialog.value = false  },
-        title = { Text(text = "Add movie to list") },
+        title = { Text(text = stringResource(id = R.string.add_to_list_dialog_title)) },
         text = {
             AddToListDialogContent(myUserMovieLists, currentMovie, selectedList)
         },
@@ -59,19 +62,19 @@ fun AddToListDialog(
             Button(onClick = {
                 openAddToListDialog.value = false
                 addToListViewModel.addMovieToList(selectedList.value)
-                Toast.makeText(context, "Movie added to List ${selectedList.value?.name}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "$toastText ${selectedList.value?.name}", Toast.LENGTH_SHORT).show()
 
             },
                 enabled = selectedList.value != null
             ) {
-                Text(text = "Add to List")
+                Text(text = stringResource(id = R.string.add_to_list_text))
             }
         },
         dismissButton = {
             Button(onClick = {
                 openAddToListDialog.value = false
             }) {
-                Text(text = "Cancel")
+                Text(text = stringResource(id = R.string.cancel_button_text))
             }
         }
     )

@@ -17,8 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,24 +32,20 @@ fun MovieSourceReference(){
 
     HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 8.dp))
     Row(verticalAlignment = Alignment.CenterVertically){
-        Text(text = "Source: ")
+        Text(text = stringResource(id = R.string.source_title))
         Text(text = "TMDB", fontStyle = FontStyle.Italic)
         TooltipBox(
             positionProvider =  TooltipDefaults.rememberPlainTooltipPositionProvider(),
             tooltip = {
                 Card (modifier = Modifier.padding(8.dp)){
-                    Text(text = "This product uses the TMDB API but is not endorsed or certified by TMDB.",
+                    Text(text = stringResource(id = R.string.tmdb_credits_text),
                         modifier = Modifier.padding(8.dp)) }
                 },
             state = tooltipState
         ) {
             IconButton(onClick = { scope.launch { tooltipState.show() } }) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = "more info")
+                Icon(imageVector = Icons.Outlined.Info, contentDescription = stringResource(id = R.string.source_tooltip_description))
             }
         }
-
     }
-
-
-
 }

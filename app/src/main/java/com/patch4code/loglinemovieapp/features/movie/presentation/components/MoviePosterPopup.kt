@@ -27,13 +27,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
-import com.patch4code.loglinemovieapp.R
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
@@ -82,7 +83,7 @@ fun MoviePosterPopup(openPosterPopup: Boolean, movieDetails: MovieDetails?, onPo
             Box {
                 AsyncImage(
                     model = moviePosterUrl,
-                    contentDescription = "$movieTitle-Poster",
+                    contentDescription = "$movieTitle${stringResource(id = R.string.poster_description_appendage)}",
                     modifier = Modifier.fillMaxWidth(),
                     error = painterResource(id = R.drawable.movie_poster_placeholder)
                 )

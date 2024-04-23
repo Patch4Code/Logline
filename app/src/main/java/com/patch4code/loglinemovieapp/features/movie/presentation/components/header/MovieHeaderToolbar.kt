@@ -22,7 +22,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.DiaryEditRatingDialog
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.dialogs.AddToListDialog
@@ -75,7 +77,7 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
         //Add to List Button
         IconButton(onClick = { openAddToListDialog.value = true }) {
             Icon(imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
-                contentDescription = "Add to List",
+                contentDescription = stringResource(id = R.string.add_to_list_text),
                 modifier = Modifier.size(30.dp)
             )
         }
