@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -58,7 +59,7 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
 
         AsyncImage(
             model = moviePosterUrl,
-            contentDescription = "${movieTitle}-Poster",
+            contentDescription = "${movieTitle}${stringResource(id = R.string.poster_description_appendage)}",
             error = painterResource(id = R.drawable.movie_poster_placeholder)
         )
         Row {
@@ -86,7 +87,7 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
                     ){
                         Icon(
                             imageVector = Icons.Default.StarRate,
-                            contentDescription = "StarRate",
+                            contentDescription = stringResource(id = R.string.star_icon_description),
                             tint = Color.Yellow,
                             modifier = Modifier
                                 .size(15.dp)
@@ -100,7 +101,6 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
                 }
             }
         }
-
         Spacer(modifier = Modifier.height(4.dp))
     }
 }

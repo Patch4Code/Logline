@@ -18,14 +18,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
 @Composable
-fun AboutView(navController: NavController, navViewModel: NavigationViewModel){
+fun AboutView(navViewModel: NavigationViewModel){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.AboutScreen)
@@ -45,15 +45,14 @@ fun AboutView(navController: NavController, navViewModel: NavigationViewModel){
             Icon(painter = painterResource(id = R.drawable.loglinelogo_v5), contentDescription = null)
         }
 
-        Text(text = "Logline - Movie App", style = MaterialTheme.typography.headlineMedium)
+        Text(text = stringResource(id = R.string.extended_app_name), style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.padding(4.dp))
-        Text(text = "Logline is a native Android Open Source Movie App", style = MaterialTheme.typography.bodyLarge)
+        Text(text = stringResource(id = R.string.logline_info), style = MaterialTheme.typography.bodyLarge)
         Spacer(modifier = Modifier.padding(8.dp))
 
         ElevatedButton(onClick = { uriHandler.openUri("https://github.com/Patch4Code/Logline") }) {
-           Text(text = "Github-Page")
+           Text(text = stringResource(id = R.string.logline_github_button_text))
         }
-
 
         Spacer(modifier = Modifier.padding(16.dp))
 
@@ -63,13 +62,13 @@ fun AboutView(navController: NavController, navViewModel: NavigationViewModel){
             modifier = Modifier.width(240.dp)
         )
         Spacer(modifier = Modifier.padding(4.dp))
-        Text(text = "This product uses the TMDB API but is not endorsed or certified by TMDB.")
+        Text(text = stringResource(id = R.string.tmdb_credits_text))
         Spacer(modifier = Modifier.padding(8.dp))
         ElevatedButton(onClick = { uriHandler.openUri("https://www.themoviedb.org/terms-of-use") }) {
-            Text(text = "TMDB Terms of Use")
+            Text(text = stringResource(id = R.string.tmdb_terms_of_use_button_text))
         }
         ElevatedButton(onClick = { uriHandler.openUri("https://www.themoviedb.org/api-terms-of-use") }) {
-            Text(text = "TMDB API Terms of Use")
+            Text(text = stringResource(id = R.string.tmdb_api_terms_of_use_button_text))
         }
     }
 }

@@ -9,8 +9,10 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun DiaryEditReviewSection(reviewText: String, onEditReviewPressed:()->Unit){
@@ -18,7 +20,7 @@ fun DiaryEditReviewSection(reviewText: String, onEditReviewPressed:()->Unit){
     OutlinedCard(onClick = { onEditReviewPressed() }, modifier = Modifier.padding(8.dp).fillMaxWidth().height(150.dp)) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = reviewText.ifEmpty { "Add review ..." },
+                text = reviewText.ifEmpty { stringResource(id = R.string.diary_edit_review_section_text) },
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 5,
                 overflow = TextOverflow.Ellipsis

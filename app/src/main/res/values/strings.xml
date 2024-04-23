@@ -1,10 +1,55 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Logline</string>
 
     //Back4App Strings
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
-    <!-- Paste BOTH strings as required -->
-    <string name="back4app_app_id">zfJXWkBvRGdys63X02H8ZB1L7W8t9aO6HUprVWQC</string>
+    <string name="back4app_app_id" tools:ignore="Typos">zfJXWkBvRGdys63X02H8ZB1L7W8t9aO6HUprVWQC</string>
     <string name="back4app_client_key">1ya9EHt3FxtuDZpJuQI4c6rsGXQh9jrKnArZyE9H</string>
+
+    //stringResource(id = R.string.)
+
+    <!-- Default General Strings -->
+    <string name="poster_description_appendage">-Poster</string>
+    <string name="star_icon_description">StarRate</string>
+
+    <!-- Default Button Strings -->
+    <string name="ok_button_text">OK</string>
+    <string name="save_button_text">Save</string>
+    <string name="discard_button_text">Discard</string>
+    <string name="delete_button_text">Delete</string>
+    <string name="cancel_button_text">Cancel</string>
+
+    <!-- AboutView Strings -->
+    <string name="extended_app_name">Logline - Movie App</string>
+    <string name="logline_info">Logline is a native Android Open Source Movie App</string>
+    <string name="logline_github_button_text">Github-Page</string>
+    <string name="tmdb_credits_text">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
+    <string name="tmdb_terms_of_use_button_text">TMDB Terms of Use</string>
+    <string name="tmdb_api_terms_of_use_button_text">TMDB API Terms of Use</string>
+
+    <!-- Diary Strings -->
+        <!-- Diary Dialog Strings -->
+        <string name="diary_discard_changes_dialog_title">Discard Changes?</string>
+        <string name="diary_discard_changes_dialog_text">When you continue, changes will be lost.</string>
+        <string name="diary_delete_dialog_title">Delete Diary-Entry</string>
+        <string name="diary_delete_dialog_text">Are you sure you want to delete the diary entry?</string>
+        <string name="diary_edit_review_dialog_title">Edit Review</string>
+        <string name="diary_edit_review_dialog_label_empty">Add Review …</string>
+        <string name="diary_edit_review_dialog_label">Edit Review</string>
+
+        <!-- Diary Edit Strings -->
+        <string name="diary_edit_date_section_text">Watched</string>
+        <string name="diary_edit_delete_section_text">Delete Diary-Entry</string>
+        <string name="diary_edit_rating_section_rating_text">Rating</string>
+        <string name="diary_edit_rating_section_no_rating_text">No Rating</string>
+        <string name="diary_edit_review_section_text">Add review …</string>
+        <string name="diary_edit_save_toast_text">Diary Entry updated</string>
+        <string name="diary_edit_save_description_text">Diary Entry updated</string>
+        <string name="diary_edit_exit_description_text">Exit Changes</string>
+
+
+
+
+    //stringResource(id = R.string.)
 
 </resources>

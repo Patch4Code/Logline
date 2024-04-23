@@ -105,7 +105,7 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.AboutScreen.route){
-                        AboutView(navController = navController, navViewModel = navigationViewModel)
+                        AboutView(navViewModel = navigationViewModel)
                     }
 
                     composable(

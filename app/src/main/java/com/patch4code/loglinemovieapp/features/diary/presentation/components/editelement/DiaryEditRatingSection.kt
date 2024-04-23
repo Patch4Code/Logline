@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun DiaryEditRatingSection(rating: Int, onButtonPressed: () -> Unit){
@@ -17,10 +19,10 @@ fun DiaryEditRatingSection(rating: Int, onButtonPressed: () -> Unit){
         Row (modifier = Modifier.weight(1f)){
 
             if(rating > 0){
-                Text(text = "Rating $rating" , style = MaterialTheme.typography.titleMedium)
+                Text(text = "${stringResource(id = R.string.diary_edit_rating_section_rating_text)} $rating" , style = MaterialTheme.typography.titleMedium)
                 Icon(imageVector = Icons.Default.StarRate, contentDescription = null)
             }else{
-                Text(text = "No Rating" , style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(id = R.string.diary_edit_rating_section_no_rating_text) , style = MaterialTheme.typography.titleMedium)
             }
         }
         Icon(imageVector = Icons.Default.Edit, contentDescription = null)

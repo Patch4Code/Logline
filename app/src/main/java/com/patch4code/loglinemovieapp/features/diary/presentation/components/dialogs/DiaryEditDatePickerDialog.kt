@@ -8,6 +8,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.DateHelper
 import java.time.LocalDateTime
 
@@ -32,12 +34,12 @@ fun DiaryEditDatePickerDialog(watchDateTime: LocalDateTime, openDatePickerDialog
                     },
                     enabled = confirmEnabled.value
                 ) {
-                    Text(text = "OK")
+                    Text(text = stringResource(id = R.string.ok_button_text))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { onCancel() }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             }
         ) {

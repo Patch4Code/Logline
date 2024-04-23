@@ -1,7 +1,6 @@
 package com.patch4code.loglinemovieapp.features.core.presentation.utils
 
 import android.annotation.SuppressLint
-import android.util.Log
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -15,7 +14,7 @@ object DateHelper {
 
     @SuppressLint("SimpleDateFormat")
     fun convertDateTimeToLong(dateTime: LocalDateTime): Long{
-        Log.e("DateHelper", "convertDateTimeToLong: $dateTime, ${dateTime.toInstant(ZoneOffset.UTC).toEpochMilli()}")
+        //Log.e("DateHelper", "convertDateTimeToLong: $dateTime, ${dateTime.toInstant(ZoneOffset.UTC).toEpochMilli()}")
         return dateTime.toInstant(ZoneOffset.UTC).toEpochMilli()
     }
 

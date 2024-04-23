@@ -8,6 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.DateHelper
 import java.time.LocalDateTime
 
@@ -15,7 +17,7 @@ import java.time.LocalDateTime
 fun DiaryEditDateSection(watchDateTime: LocalDateTime, onButtonPressed: () -> Unit){
     TextButton(onClick = { onButtonPressed() }) {
         Text(
-            text = "Watched ${DateHelper.formatDateToDisplay(watchDateTime)}",
+            text = "${stringResource(id = R.string.diary_edit_date_section_text)} ${DateHelper.formatDateToDisplay(watchDateTime)}",
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.weight(1f)
         )

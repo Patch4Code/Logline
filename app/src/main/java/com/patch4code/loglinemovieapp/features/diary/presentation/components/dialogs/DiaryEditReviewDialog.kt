@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun DiaryEditReviewDialog(review: String, openEditReviewDialog: Boolean, onSave:(editedReview: String) ->Unit, onCancel: () ->Unit){
@@ -20,7 +22,7 @@ fun DiaryEditReviewDialog(review: String, openEditReviewDialog: Boolean, onSave:
 
         AlertDialog(
             onDismissRequest = { onCancel() },
-            title = { Text(text = "Edit Review") },
+            title = { Text(text = stringResource(id = R.string.diary_edit_review_dialog_title)) },
             modifier = Modifier.height(400.dp),
             text = {
                 OutlinedTextField(
@@ -29,22 +31,22 @@ fun DiaryEditReviewDialog(review: String, openEditReviewDialog: Boolean, onSave:
                     minLines = 10,
                     maxLines = 10,
                     label = {
-                        Text(text = if(review.isEmpty())"Add Review ..." else "Edit Review")
+                        Text(text = if(review.isEmpty()) stringResource(id = R.string.diary_edit_review_dialog_label_empty)
+                            else stringResource(id = R.string.diary_edit_review_dialog_label)
+                        )
                     }
                 )
             },
             confirmButton = {
                 Button(onClick = { onSave(textInput.value) }) {
-                    Text(text = "Save")
+                    Text(text = stringResource(id = R.string.save_button_text))
                 }
             },
             dismissButton = {
                 Button(onClick = { onCancel() }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             }
         )
     }
-
-
 }

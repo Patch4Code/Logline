@@ -4,23 +4,25 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun DiaryEditDiscardDialog(openDiscardDialog: Boolean, onDiscard:() ->Unit, onCancel: () ->Unit){
 
     if (openDiscardDialog) {
         AlertDialog(
-            onDismissRequest = { onCancel() },//openDiscardDialog.value = false
-            title = { Text(text = "Discard Changes?") },
-            text = { Text(text = "When you continue, changes will be lost.") },
+            onDismissRequest = { onCancel() },
+            title = { Text(text = stringResource(id = R.string.diary_discard_changes_dialog_title)) },
+            text = { Text(text = stringResource(id = R.string.diary_discard_changes_dialog_text)) },
             confirmButton = {
                 Button(onClick = { onDiscard() }) {
-                    Text(text = "Discard")
+                    Text(text = stringResource(id = R.string.discard_button_text))
                 }
             },
             dismissButton = {
-                Button(onClick = { onCancel() }) {//openDiscardDialog.value = false
-                    Text(text = "Cancel")
+                Button(onClick = { onCancel() }) {
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             }
         )
