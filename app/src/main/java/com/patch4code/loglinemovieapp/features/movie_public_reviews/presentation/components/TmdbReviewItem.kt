@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
@@ -52,7 +53,7 @@ fun TmdbReviewItem(tmdbReview: TmdbReview){
             if ((tmdbReview.tmdbAuthorDetails.rating != null) && (tmdbReview.tmdbAuthorDetails.rating > 0)){
                 Icon(
                     imageVector = Icons.Default.StarRate,
-                    contentDescription = "StarRate",
+                    contentDescription = stringResource(id = R.string.star_icon_description),
                     tint = Color.Yellow,
                     modifier = Modifier
                         .size(15.dp)

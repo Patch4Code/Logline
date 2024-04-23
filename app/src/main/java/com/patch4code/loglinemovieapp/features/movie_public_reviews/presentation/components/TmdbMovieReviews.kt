@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.TmdbReview
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.screen_public_reviews.MoviePublicReviewsViewModel
@@ -22,7 +24,7 @@ fun TmdbMovieReviews(tmdbMovieReviews: List<TmdbReview>?, tmdbIsLoading: Boolean
     }else{
         if (tmdbMovieReviews.isNullOrEmpty()){
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                Text(text = "no TMDB reviews yet")
+                Text(text = stringResource(id = R.string.no_tmdb_reviews_text))
             }
             return
         }

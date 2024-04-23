@@ -107,9 +107,15 @@
     <string name="add_to_list_dialog_title">Add movie to list</string>
     <string name="add_to_list_text">Add to List</string>
     <string name="add_to_list_dialog_toast">Movie added to List</string>
-
     <string name="stream_title">Stream</string>
     <string name="rent_buy_title">Rent/Buy</string>
+
+
+    <!-- MoviePublicReviews Strings -->
+    <string name="logline_reviews_title">Logline Reviews</string>
+    <string name="tmdb_reviews_title">TMDB Reviews</string>
+    <string name="no_logline_reviews_text">no Logline reviews yet</string>
+    <string name="no_tmdb_reviews_text">no TMDB reviews yet</string>
 
 
 

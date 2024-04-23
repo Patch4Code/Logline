@@ -20,9 +20,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components.LoglineMovieReviews
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components.TmdbMovieReviews
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -51,7 +53,7 @@ fun MoviePublicReviewsView(
     val loglineMovieReviews = moviePublicReviewsViewModel.loglineMovieReviews.observeAsState().value
     val loglineIsLoading = moviePublicReviewsViewModel.loglineIsLoading.observeAsState().value
 
-    val tabItems = listOf("Logline Reviews", "TMDB Reviews")
+    val tabItems = listOf(stringResource(id = R.string.logline_reviews_title), stringResource(id = R.string.tmdb_reviews_title))
     var selectedTabIndex by remember { mutableStateOf(0) }
     val pagerState = rememberPagerState { tabItems.size }
 

@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
@@ -57,7 +58,7 @@ fun LoglineReviewItem(loglineReview: LoglineReview, navController: NavController
             if ((loglineReview.rating != null) && (loglineReview.rating > 0)){
                 Icon(
                     imageVector = Icons.Default.StarRate,
-                    contentDescription = "StarRate",
+                    contentDescription = stringResource(id = R.string.star_icon_description),
                     tint = Color.Yellow,
                     modifier = Modifier
                         .size(15.dp)
