@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.parse.ParseACL
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
@@ -58,6 +59,11 @@ class ReviewDetailsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewMo
                 longTime?.let { loggedMovie.put("date", it) }
                 _currentReviewedLog.value?.rating?.let { loggedMovie.put("rating", it) }
                 _currentReviewedLog.value?.review?.let { loggedMovie.put("review", it) }
+
+                val acl = ParseACL()
+                acl.setWriteAccess(ParseUser.getCurrentUser(), true)
+                acl.publicReadAccess = true
+                loggedMovie.acl = acl
 
                 loggedMovie.saveInBackground {exception->
                     if (exception == null){

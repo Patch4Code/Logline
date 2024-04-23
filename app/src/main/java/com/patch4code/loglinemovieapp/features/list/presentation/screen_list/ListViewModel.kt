@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.parse.ParseACL
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
@@ -92,12 +93,15 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
                 val moviesJson = _movieList.value?.movies?.toJson() ?: "[]"
                 movieList.put("moviesString", moviesJson)
 
-                Log.e("ListViewModel", "movieList after put: ${movieList.getString("listId")}")
+                val acl = ParseACL()
+                acl.setWriteAccess(ParseUser.getCurrentUser(), true)
+                acl.publicReadAccess = true
+                movieList.acl = acl
 
                 movieList.saveInBackground{exception->
                     if(exception == null){
                         onSuccess(publishStatus)
-                        Log.e("ListViewModel", "Success ($.)")
+                        //Log.e("ListViewModel", "Success")
                     }else{
                         onError(exception)
                         Log.e("ListViewModel", "Error: ", exception)
