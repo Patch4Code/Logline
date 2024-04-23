@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -39,7 +40,7 @@ fun MovieSearchCard(navController: NavController, movie: Movie){
             ){
             AsyncImage(
                 model = posterUrl,
-                contentDescription = "$title-Poster",
+                contentDescription = "$title${stringResource(id = R.string.poster_description)}",
                 modifier = Modifier.padding(4.dp),
                 error = painterResource(id = R.drawable.movie_poster_placeholder)
             )

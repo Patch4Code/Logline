@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.ui.theme.Beige
 
 @Composable
@@ -21,16 +23,15 @@ fun ExportDataSection(){
 
     HorizontalDivider()
     Column (modifier = Modifier.padding(20.dp)){
-        Text(text = "Export Data", style = MaterialTheme.typography.titleMedium, color = Beige)
-        Text(text = "Export your Logline App data locally as a ZIP file containing up to three separate .db files. " +
-                "Retrieve the file from your downloads folder and utilize it for backup purposes or to transfer your data to another device.",
+        Text(text = stringResource(id = R.string.export_title), style = MaterialTheme.typography.titleMedium, color = Beige)
+        Text(text = stringResource(id = R.string.export_text),
             style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.padding(8.dp))
-        Text(text = "File Name: logline_backup_yyyy-MM-dd_HH-mm-ss.zip", style = MaterialTheme.typography.labelMedium)
+        Text(text = stringResource(id = R.string.export_file_title), style = MaterialTheme.typography.labelMedium)
         Spacer(modifier = Modifier.padding(8.dp))
         Button(onClick = { openExportDataDialog.value = true }
         ) {
-            Text(text = "Export Data")
+            Text(text = stringResource(id = R.string.export_title))
         }
     }
     ExportDataDialog(openExportDataDialog)

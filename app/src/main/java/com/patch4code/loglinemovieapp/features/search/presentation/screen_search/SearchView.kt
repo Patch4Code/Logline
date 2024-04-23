@@ -10,10 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,10 +24,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.search.presentation.components.MovieSearchCard
@@ -63,7 +65,7 @@ fun SearchView(
             OutlinedTextField(
                 value = textInput.value,
                 onValueChange = {textInput.value = it},
-                label = { Text(text = "Search Movie")},
+                label = { Text(text = stringResource(id = R.string.search_text_field_label))},
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
                     onSearch = {
@@ -82,7 +84,7 @@ fun SearchView(
                     }
                 },
                 modifier = Modifier.align(Alignment.CenterVertically)) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+                Icon(imageVector = Icons.Default.Search, contentDescription = stringResource(id = R.string.search_icon_description))
             }
         }
         Spacer(modifier = Modifier.padding(4.dp))
@@ -97,6 +99,5 @@ fun SearchView(
                 }
             }
         }
-
     }
 }

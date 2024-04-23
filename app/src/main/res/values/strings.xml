@@ -151,7 +151,30 @@
     <string name="publish_review_icon_description">Make Review public</string>
 
 
+    <!-- Search Strings -->
+    <string name="search_text_field_label">Search Movie</string>
+    <string name="search_icon_description">Search</string>
 
+
+    <!-- Settings Strings -->
+    <string name="select_country_title">Select Country</string>
+    <string name="country_changed_toast">Select Country</string>
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="edit_profile_text">Customize your local Profile page. Set profile and banner images, update displayed name and bio, and select your top 4 favorite movies.</string>
+    <string name="export_data_dialog_title">Export App Data</string>
+    <string name="export_data_dialog_text">Export your App data as backup or to transfer it to another device. You can find the exported zip file in the download folder of your device.</string>
+    <string name="export_data_toast">Data was exported</string>
+    <string name="export_button_text">Export</string>
+    <string name="export_title">Export Data</string>
+    <string name="export_text">Export your Logline App data locally as a ZIP file containing up to three separate .db files. Retrieve the file from your downloads folder and utilize it for backup purposes or to transfer your data to another device.</string>
+    <string name="export_file_title">File Name: logline_backup_yyyy-MM-dd_HH-mm-ss.zip</string>
+    <string name="import_title">Import Database</string>
+    <string name="import_text">"Import a previously exported ZIP file, to restore backed-up data. The import file should be a ZIP archive containing up to 3 .db files. This Process will restart your app."</string>
+    <string name="warning_icon_description">Warning</string>
+    <string name="import_warning_text">Please note that the current app data will be permanently replaced after the import process is completed!</string>
+    <string name="import_button_text">Import Data</string>
+    <string name="Country_title">Country for Watch Providers</string>
+    <string name="Country_text">Select your country to access streaming, rental, and purchase options customized specifically for this location on the movie page.</string>
 
     //stringResource(id = R.string.)
 

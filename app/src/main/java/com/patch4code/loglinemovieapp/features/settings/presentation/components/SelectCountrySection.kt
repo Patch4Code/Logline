@@ -13,7 +13,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsViewModel
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 
@@ -30,8 +32,8 @@ fun SelectCountrySection(settingsViewModel: SettingsViewModel){
 
     //Country selection
     Column (modifier = Modifier.padding(20.dp)){
-        Text(text = "Country for Watch Providers", style = MaterialTheme.typography.titleMedium)
-        Text(text = "Select your country to access streaming, rental, and purchase options customized specifically for this location on the movie page.",
+        Text(text = stringResource(id = R.string.Country_title), style = MaterialTheme.typography.titleMedium)
+        Text(text = stringResource(id = R.string.Country_text),
             style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.padding(8.dp))
         val selectedCountry = selectedCountryCode?.let { settingsViewModel.getCountryNameByCode(it) }

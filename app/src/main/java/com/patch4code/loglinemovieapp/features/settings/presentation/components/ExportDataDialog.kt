@@ -7,6 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.settings.presentation.utils.SettingsExtensions
 
 @Composable
@@ -15,23 +17,25 @@ fun ExportDataDialog(openExportDataDialog: MutableState<Boolean>){
     if(!openExportDataDialog.value) return
 
     val context = LocalContext.current
+
+    val toastText = stringResource(id = R.string.export_data_toast)
+
     AlertDialog(
         onDismissRequest = { openExportDataDialog.value = false },
-        title = { Text(text = "Export App Data")},
-        text = { Text(text = "Export your App data as backup or to transfer it to another device. " +
-                "You can find the exported zip file in the download folder of your device.")},
+        title = { Text(text = stringResource(id = R.string.export_data_dialog_title))},
+        text = { Text(text = stringResource(id = R.string.export_data_dialog_text))},
         confirmButton = {
             Button(onClick = {
                 openExportDataDialog.value = false
                 SettingsExtensions.exportDatabaseFile(context)
-                Toast.makeText(context, "Data was exported", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
             }) {
-                Text(text = "Export")
+                Text(text = stringResource(id = R.string.export_button_text))
             }
         },
         dismissButton = {
             Button(onClick = { openExportDataDialog.value = false }) {
-                Text(text = "Cancel")
+                Text(text = stringResource(id = R.string.cancel_button_text))
             }
         }
     )

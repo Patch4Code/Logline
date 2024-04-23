@@ -21,7 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.settings.presentation.utils.SettingsExtensions
 import com.patch4code.loglinemovieapp.ui.theme.Beige
 
@@ -52,21 +54,19 @@ fun ImportDataSection(){
 
     HorizontalDivider()
     Column (modifier = Modifier.padding(20.dp)){
-        Text(text = "Import Database", style = MaterialTheme.typography.titleMedium, color = Beige)
-        Text(text = "Import a previously exported ZIP file, to restore backed-up data. " +
-                "The import file should be a ZIP archive containing up to 3 .db files." +
-                "This Process will restart your app.",
+        Text(text = stringResource(id = R.string.import_title), style = MaterialTheme.typography.titleMedium, color = Beige)
+        Text(text = stringResource(id = R.string.import_text),
             style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.padding(8.dp))
         Row (verticalAlignment = Alignment.CenterVertically){
-            Icon(imageVector = Icons.Default.WarningAmber, contentDescription = "Warning")
+            Icon(imageVector = Icons.Default.WarningAmber, contentDescription = stringResource(id = R.string.warning_icon_description))
             Spacer(modifier = Modifier.padding(8.dp))
-            Text(text = "Please note that the current app data will be permanently replaced after the import process is completed!",
+            Text(text = stringResource(id = R.string.import_warning_text),
                 style = MaterialTheme.typography.labelMedium)
         }
         Spacer(modifier = Modifier.padding(8.dp))
         Button(onClick = { singleFilePickerLauncher.launch("application/zip") }) {
-            Text(text = "Import Data")
+            Text(text = stringResource(id = R.string.import_button_text))
         }
     }
 }

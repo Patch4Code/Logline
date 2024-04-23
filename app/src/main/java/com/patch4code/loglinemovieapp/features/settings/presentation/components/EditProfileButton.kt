@@ -15,8 +15,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.ui.theme.Beige
 
@@ -30,14 +32,13 @@ fun EditProfileButton(navController: NavController){
     ) {
         Column (modifier = Modifier.padding(8.dp)){
             Row {
-                Text(text = "Edit Profile", style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(id = R.string.edit_profile_title), style = MaterialTheme.typography.titleMedium)
                 Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = null, modifier = Modifier.size(20.dp))
             }
-            Text(text = "Customize your local Profile page. Set profile and banner images, update displayed name and bio, and select your top 4 favorite movies.",
+            Text(text = stringResource(id = R.string.edit_profile_text),
                 style = MaterialTheme.typography.bodyMedium,
                 color = Beige
             )
         }
     }
-
 }
