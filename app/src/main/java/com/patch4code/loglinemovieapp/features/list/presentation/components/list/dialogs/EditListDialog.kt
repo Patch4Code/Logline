@@ -8,6 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun EditListDialog(
@@ -25,13 +27,13 @@ fun EditListDialog(
 
         AlertDialog(
             onDismissRequest = { onCancel() },
-            title = { Text(text = "Edit List") },
+            title = { Text(text = stringResource(id = R.string.edit_list_text)) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = textInput.value,
                         onValueChange = { textInput.value = it },
-                        label = { Text(text = "List name") })
+                        label = { Text(text = stringResource(id = R.string.list_dialog_text_field_label)) })
 
                     // ranked list not implemented yet
                     /*
@@ -50,12 +52,12 @@ fun EditListDialog(
             },
             confirmButton = {
                 Button(onClick = { onSave(textInput.value, isRanked.value) }) {
-                    Text(text = "Save")
+                    Text(text = stringResource(id = R.string.save_button_text))
                 }
             },
             dismissButton = {
                 Button(onClick = { onCancel() }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             }
         )

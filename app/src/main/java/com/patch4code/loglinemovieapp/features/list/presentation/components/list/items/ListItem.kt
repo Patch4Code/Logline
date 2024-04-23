@@ -14,14 +14,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun ListItem(navController: NavController, movie: Movie){
@@ -43,7 +44,7 @@ fun ListItem(navController: NavController, movie: Movie){
         ){
             AsyncImage(
                 model = moviePosterUrl,
-                contentDescription = "${movieTitle}-Poster",
+                contentDescription = "${movieTitle}${stringResource(id = R.string.poster_description_appendage)}",
                 error = painterResource(id = R.drawable.movie_poster_placeholder)
             )
             Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp).width(140.dp))

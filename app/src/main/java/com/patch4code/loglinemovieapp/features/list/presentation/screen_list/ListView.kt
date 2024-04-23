@@ -11,8 +11,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
@@ -64,7 +66,7 @@ fun ListView(
     Scaffold (
         floatingActionButton = {
             FloatingActionButton(onClick = { openAddMovieDialog.value = true }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add new movie to list")
+                Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(id = R.string.list_add_movie_description_text))
             }
         }
     ){

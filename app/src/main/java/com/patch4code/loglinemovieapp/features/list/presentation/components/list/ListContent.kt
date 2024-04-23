@@ -21,8 +21,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToDeleteContainer
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
@@ -54,10 +56,10 @@ fun ListContent(
             Text(text = movieList?.name ?: "N/A", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
             IconButton(enabled = savedLoginData.value?.isNotEmpty() == true,
                 onClick = { openMakeListPublicDialog.value = true}) {
-                Icon(imageVector = Icons.Default.Public, contentDescription = "Make Public")
+                Icon(imageVector = Icons.Default.Public, contentDescription = stringResource(id = R.string.list_make_public_text))
             }
             IconButton(onClick = { showBottomSheet.value = true }) {
-                Icon(imageVector = Icons.Default.MoreVert, contentDescription = "Open List Settings")
+                Icon(imageVector = Icons.Default.MoreVert, contentDescription = stringResource(id = R.string.list_settings_icon_description))
             }
         }
 

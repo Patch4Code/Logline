@@ -4,6 +4,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun DeleteMovieFromListDialog(openDeleteMovieDialog: Boolean, onDelete:()->Unit, onCancel:()->Unit){
@@ -11,16 +13,16 @@ fun DeleteMovieFromListDialog(openDeleteMovieDialog: Boolean, onDelete:()->Unit,
     if(openDeleteMovieDialog){
         AlertDialog(
             onDismissRequest = { onCancel() },//openDiscardDialog.value = false
-            title = { Text(text = "Delete movie from List") },
-            text = { Text(text = "Are you sure you want to delete the movie from the list?") },
+            title = { Text(text = stringResource(id = R.string.list_delete_movie_dialog_title)) },
+            text = { Text(text = stringResource(id = R.string.list_delete_movie_dialog_text)) },
             confirmButton = {
                 Button(onClick = { onDelete() }) {
-                    Text(text = "Delete Movie")
+                    Text(text = stringResource(id = R.string.list_delete_movie_dialog_confirm))
                 }
             },
             dismissButton = {
                 Button(onClick = { onCancel() }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             }
         )

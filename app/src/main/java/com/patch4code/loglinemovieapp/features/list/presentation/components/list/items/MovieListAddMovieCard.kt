@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
@@ -33,7 +34,7 @@ fun MovieListAddMovieCard(movie: Movie, selectMovie:(movie: Movie) ->Unit){
         ){
             AsyncImage(
                 model = posterUrl,
-                contentDescription = "$title-Poster",
+                contentDescription = "$title${stringResource(id = R.string.poster_description_appendage)}",
                 modifier = Modifier.padding(4.dp),
                 error = painterResource(id = R.drawable.movie_poster_placeholder)
             )

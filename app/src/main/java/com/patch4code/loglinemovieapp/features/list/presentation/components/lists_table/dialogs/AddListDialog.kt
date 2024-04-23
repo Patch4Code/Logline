@@ -8,6 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String, isPublic: Boolean)->Unit, onCancel:()->Unit){
@@ -19,13 +21,13 @@ fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String, isPublic
 
         AlertDialog(
             onDismissRequest = { onCancel() },
-            title = { Text(text = "New List") },
+            title = { Text(text = stringResource(id = R.string.add_list_dialog_title)) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = textInput.value,
                         onValueChange = { textInput.value = it },
-                        label = { Text(text = "List name") })
+                        label = { Text(text = stringResource(id = R.string.list_dialog_text_field_label)) })
 
                     /*
                     Row (modifier = Modifier.padding(top = 8.dp)){
@@ -44,12 +46,12 @@ fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String, isPublic
             },
             confirmButton = {
                 Button(onClick = { onSave(textInput.value, isRanked.value) }) {
-                    Text(text = "Save")
+                    Text(text = stringResource(id = R.string.save_button_text))
                 }
             },
             dismissButton = {
                 Button(onClick = { onCancel() }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             }
         )

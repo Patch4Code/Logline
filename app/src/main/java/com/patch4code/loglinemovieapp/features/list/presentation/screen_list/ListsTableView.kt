@@ -11,8 +11,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.ListsTableContent
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -44,7 +46,7 @@ fun ListsTableView(
     Scaffold (
         floatingActionButton = {
             FloatingActionButton(onClick = { openAddListDialog.value = true }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add new list")
+                Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(id = R.string.list_table_add_list_description_text))
             }
         },
         content = {

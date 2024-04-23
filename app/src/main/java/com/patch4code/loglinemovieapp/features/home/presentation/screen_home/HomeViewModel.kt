@@ -31,26 +31,7 @@ class HomeViewModel : ViewModel(){
         get() = _homeMoviesMap
 
 
-    init {
-        loadHomeViewData()
-    }
-
-    private fun updateHomeMovieMap() {
-        val popularMovies = _popularMovies.value ?: emptyList()
-        val topRatedMovies = _topRatedMovies.value ?: emptyList()
-        val upcomingMovies = _upcomingMovies.value ?: emptyList()
-
-        // Combine individual lists into a map
-        val newMovieMap = mapOf(
-            "Popular Movies" to popularMovies,
-            "Top Rated Movies" to topRatedMovies,
-            "Upcoming Movies" to upcomingMovies
-        )
-
-        _homeMoviesMap.value = newMovieMap
-    }
-
-    private fun loadHomeViewData(){
+    fun loadHomeViewData(homeViewTitles: Array<String>){
         viewModelScope.launch {
             try {
                 _isLoading.value = true
@@ -73,8 +54,23 @@ class HomeViewModel : ViewModel(){
             } catch (e: Exception) {
                 Log.e("HomeViewModel", "Error loading data", e)
             } finally {
-                updateHomeMovieMap()
+                updateHomeMovieMap(homeViewTitles)
             }
         }
+    }
+
+
+    private fun updateHomeMovieMap(homeViewTitles: Array<String>) {
+        val popularMovies = _popularMovies.value ?: emptyList()
+        val topRatedMovies = _topRatedMovies.value ?: emptyList()
+        val upcomingMovies = _upcomingMovies.value ?: emptyList()
+
+        // Combine individual lists into a map
+        val newMovieMap = mapOf(
+            homeViewTitles[0] to popularMovies,
+            homeViewTitles[1] to topRatedMovies,
+            homeViewTitles[2] to upcomingMovies
+        )
+        _homeMoviesMap.value = newMovieMap
     }
 }

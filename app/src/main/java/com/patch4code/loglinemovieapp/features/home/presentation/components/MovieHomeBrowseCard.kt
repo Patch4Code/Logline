@@ -17,14 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun MovieHomeBrowseCard(navController: NavController, movie: Movie) {
@@ -56,7 +57,7 @@ fun MovieHomeBrowseCard(navController: NavController, movie: Movie) {
             {
                 AsyncImage(
                     model = posterUrl,
-                    contentDescription = "$title-Poster",
+                    contentDescription = "$title${stringResource(id = R.string.poster_description_appendage)}",
                     error = painterResource(id = R.drawable.movie_poster_placeholder)
                 )
             }

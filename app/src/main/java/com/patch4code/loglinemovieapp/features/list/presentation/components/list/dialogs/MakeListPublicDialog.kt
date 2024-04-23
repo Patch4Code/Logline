@@ -7,6 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
 
 @Composable
@@ -15,28 +17,29 @@ fun MakeListPublicDialog(openMakeListPublicDialog: MutableState<Boolean>, listVi
     if(!openMakeListPublicDialog.value) return
 
     val context = LocalContext.current
+    val successToastText = stringResource(id = R.string.list_publish_dialog_success_toast)
+    val errorToastText = stringResource(id = R.string.list_publish_dialog_error_toast)
 
     AlertDialog(
         onDismissRequest = { openMakeListPublicDialog.value = false },
         confirmButton = {
             Button(onClick = {
                 listViewModel.makeListPublic(
-                    onSuccess = {publishStatus-> Toast.makeText(context, "List published ($publishStatus)", Toast.LENGTH_SHORT).show()},
-                    onError = {e-> Toast.makeText(context, "Error publishing this List: ${e.message}", Toast.LENGTH_LONG).show()}
+                    onSuccess = {publishStatus-> Toast.makeText(context, "$successToastText ($publishStatus)", Toast.LENGTH_SHORT).show()},
+                    onError = {e-> Toast.makeText(context, "$errorToastText ${e.message}", Toast.LENGTH_LONG).show()}
                 )
                 openMakeListPublicDialog.value = false
             }
             ){
-                Text(text = "Make Public")
+                Text(text = stringResource(id = R.string.list_make_public_text))
             }
         },
         dismissButton = {
             Button(onClick = { openMakeListPublicDialog.value = false }) {
-                Text(text = "Cancel")
+                Text(text = stringResource(id = R.string.cancel_button_text))
             }
         },
-        title = { Text(text = "Publish this List") },
-        text = { Text(text = "Are you sure you want to publish this List? " +
-                "Please note that if this list has been previously published, the existing version will be overwritten.") }
+        title = { Text(text = stringResource(id = R.string.list_publish_dialog_title)) },
+        text = { Text(text = stringResource(id = R.string.list_publish_dialog_text)) }
     )
 }

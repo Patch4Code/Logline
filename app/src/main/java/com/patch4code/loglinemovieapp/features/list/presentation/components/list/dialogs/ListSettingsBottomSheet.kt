@@ -20,7 +20,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +34,7 @@ fun ListSettingsBottomSheet(showBottomSheet: Boolean, onClose:()->Unit, onEdit:(
             modifier = Modifier.height(300.dp)
         ){
             Column (modifier = Modifier.padding(16.dp)){
-                Text(text = "List Settings", style = MaterialTheme.typography.titleLarge)
+                Text(text = stringResource(id = R.string.list_bottom_sheet_title), style = MaterialTheme.typography.titleLarge)
                 HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
                 TextButton(onClick = { onEdit() })
                 {
@@ -40,7 +42,7 @@ fun ListSettingsBottomSheet(showBottomSheet: Boolean, onClose:()->Unit, onEdit:(
                     {
                         Icon(imageVector = Icons.Default.Edit, contentDescription = null)
                         Spacer(modifier = Modifier.padding(8.dp))
-                        Text(text = "Edit List")
+                        Text(text = stringResource(id = R.string.edit_list_text))
                     }
                 }
                 TextButton(onClick = { onDelete() })
@@ -49,7 +51,7 @@ fun ListSettingsBottomSheet(showBottomSheet: Boolean, onClose:()->Unit, onEdit:(
                     {
                         Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                         Spacer(modifier = Modifier.padding(8.dp))
-                        Text(text = "Delete List")
+                        Text(text = stringResource(id = R.string.delete_list_text))
                     }
                 }
             }

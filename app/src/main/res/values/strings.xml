@@ -19,6 +19,7 @@
     <string name="delete_button_text">Delete</string>
     <string name="cancel_button_text">Cancel</string>
 
+
     <!-- AboutView Strings -->
     <string name="extended_app_name">Logline - Movie App</string>
     <string name="logline_info">Logline is a native Android Open Source Movie App</string>
@@ -26,6 +27,7 @@
     <string name="tmdb_credits_text">This product uses the TMDB API but is not endorsed or certified by TMDB.</string>
     <string name="tmdb_terms_of_use_button_text">TMDB Terms of Use</string>
     <string name="tmdb_api_terms_of_use_button_text">TMDB API Terms of Use</string>
+
 
     <!-- Diary Strings -->
         <!-- Diary Dialog Strings -->
@@ -36,7 +38,6 @@
         <string name="diary_edit_review_dialog_title">Edit Review</string>
         <string name="diary_edit_review_dialog_label_empty">Add Review …</string>
         <string name="diary_edit_review_dialog_label">Edit Review</string>
-
         <!-- Diary Edit Strings -->
         <string name="diary_edit_date_section_text">Watched</string>
         <string name="diary_edit_delete_section_text">Delete Diary-Entry</string>
@@ -46,6 +47,42 @@
         <string name="diary_edit_save_toast_text">Diary Entry updated</string>
         <string name="diary_edit_save_description_text">Diary Entry updated</string>
         <string name="diary_edit_exit_description_text">Exit Changes</string>
+
+
+    <!-- HomeView Strings -->
+    <string-array name="home_view_titles">
+        <item>Popular Movies</item>
+        <item>Top Rated Movies</item>
+        <item>Upcoming Movies</item>
+    </string-array>
+
+
+    <!-- List Strings -->
+        <!-- ListsTableView Strings -->
+        <string name="list_table_add_list_description_text">Add new list</string>
+        <string name="list_add_movie_description_text">Add new movie to list</string>
+        <string name="add_list_dialog_title">New List</string>
+        <string name="list_dialog_text_field_label">List name</string>
+        <string name="delete_list_dialog_title">Delete List</string>
+        <string name="delete_list_dialog_text">Are you sure you want to delete the list?</string>
+        <string name="delete_list_text">Delete List</string>
+        <!-- ListView Strings -->
+        <string name="list_make_public_text">Make Public</string>
+        <string name="list_settings_icon_description">Open List Settings</string>
+        <string name="list_add_movie_dialog_title">Search Movie to add to list</string>
+        <string name="list_add_movie_dialog_confirm">Add Movie</string>
+        <string name="toast_movie_already_on_list">Movie already on the list!</string>
+        <string name="list_delete_movie_dialog_title">Delete movie from List</string>
+        <string name="list_delete_movie_dialog_text">Are you sure you want to delete the movie from the list?</string>
+        <string name="list_delete_movie_dialog_confirm">Delete Movie</string>
+        <string name="edit_list_text">Edit List</string>
+        <string name="list_bottom_sheet_title">List Settings</string>
+
+        <string name="list_publish_dialog_success_toast">List published</string>
+        <string name="list_publish_dialog_error_toast">Error publishing this List:</string>
+        <string name="list_publish_dialog_title">Publish this List</string>
+        <string name="list_publish_dialog_text">Are you sure you want to publish this List? Please note that if this list has been previously published, the existing version will be overwritten.</string>
+
 
 
 
