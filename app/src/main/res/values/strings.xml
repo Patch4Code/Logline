@@ -10,7 +10,9 @@
 
     <!-- Default General Strings -->
     <string name="poster_description_appendage">-Poster</string>
+    <string name="poster_description">-Poster</string>
     <string name="star_icon_description">StarRate</string>
+    <string name="make_public_text">Make Public</string>
 
     <!-- Default Button Strings -->
     <string name="ok_button_text">OK</string>
@@ -67,7 +69,6 @@
         <string name="delete_list_dialog_text">Are you sure you want to delete the list?</string>
         <string name="delete_list_text">Delete List</string>
         <!-- ListView Strings -->
-        <string name="list_make_public_text">Make Public</string>
         <string name="list_settings_icon_description">Open List Settings</string>
         <string name="list_add_movie_dialog_title">Search Movie to add to list</string>
         <string name="list_add_movie_dialog_confirm">Add Movie</string>
@@ -141,8 +142,13 @@
     <string name="search_fav_movie_dialog_title">Search Favourite Movie</string>
 
 
-
-
+    <!-- Reviews Strings -->
+    <string name="review_publish_success_toast">Review published</string>
+    <string name="review_publish_error_toast">Error publishing this Review:</string>
+    <string name="review_publish_dialog_title">Publish this Review</string>
+    <string name="review_publish_dialog_text">Are you sure you want to publish this Review? Please note that if this review has been previously published, the existing version will be overwritten.</string>
+    <string name="edit_review_icon_description">Edit Review</string>
+    <string name="publish_review_icon_description">Make Review public</string>
 
 
 

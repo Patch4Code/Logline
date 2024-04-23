@@ -23,8 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -64,7 +66,7 @@ fun ReviewDetailsInfoAndActions(
                     Alignment.CenterVertically))
                 Icon(
                     imageVector = Icons.Default.StarRate,
-                    contentDescription = "StarRate",
+                    contentDescription = stringResource(id = R.string.star_icon_description),
                     tint = Color.Yellow,
                     modifier = Modifier
                         .size(15.dp)
@@ -79,14 +81,13 @@ fun ReviewDetailsInfoAndActions(
         
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()){
             IconButton(onClick = { navController.navigate("${Screen.DiaryEditElementScreen.route}/${reviewedLog.id}/$comingFromDiaryView") }) {
-                Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Review")
+                Icon(imageVector = Icons.Default.Edit, contentDescription = stringResource(id = R.string.edit_review_icon_description))
             }
             IconButton(enabled = savedLoginData.value?.isNotEmpty() == true,
                 onClick = {openMakeReviewPublicDialog.value = true}) {
-                Icon(imageVector = Icons.Default.Public, contentDescription = "Make Review public")
+                Icon(imageVector = Icons.Default.Public, contentDescription = stringResource(id = R.string.publish_review_icon_description))
             }
         }
-        
     }
 
     MakeReviewPublicDialog(openMakeReviewPublicDialog, reviewDetailsViewModel)

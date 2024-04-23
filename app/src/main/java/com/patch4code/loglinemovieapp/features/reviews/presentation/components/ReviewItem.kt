@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -52,7 +53,7 @@ fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
                 Row{
                     Icon(
                         imageVector = Icons.Default.StarRate,
-                        contentDescription = "StarRate",
+                        contentDescription = stringResource(id = R.string.star_icon_description),
                         tint = Color.Yellow,
                         modifier = Modifier
                             .size(15.dp)
@@ -67,7 +68,7 @@ fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
         Row (modifier = Modifier.height(150.dp)){
             AsyncImage(
                 model = MovieHelper.processPosterUrl(loggedItem.movie.posterUrl),
-                contentDescription = "Poster",
+                contentDescription = stringResource(id = R.string.poster_description),
                 error = painterResource(id = R.drawable.movie_poster_placeholder)
             )
 

@@ -31,7 +31,7 @@ fun MakeListPublicDialog(openMakeListPublicDialog: MutableState<Boolean>, listVi
                 openMakeListPublicDialog.value = false
             }
             ){
-                Text(text = stringResource(id = R.string.list_make_public_text))
+                Text(text = stringResource(id = R.string.make_public_text))
             }
         },
         dismissButton = {

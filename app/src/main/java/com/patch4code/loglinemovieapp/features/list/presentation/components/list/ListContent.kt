@@ -56,7 +56,7 @@ fun ListContent(
             Text(text = movieList?.name ?: "N/A", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
             IconButton(enabled = savedLoginData.value?.isNotEmpty() == true,
                 onClick = { openMakeListPublicDialog.value = true}) {
-                Icon(imageVector = Icons.Default.Public, contentDescription = stringResource(id = R.string.list_make_public_text))
+                Icon(imageVector = Icons.Default.Public, contentDescription = stringResource(id = R.string.make_public_text))
             }
             IconButton(onClick = { showBottomSheet.value = true }) {
                 Icon(imageVector = Icons.Default.MoreVert, contentDescription = stringResource(id = R.string.list_settings_icon_description))
