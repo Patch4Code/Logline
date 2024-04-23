@@ -21,8 +21,8 @@ fun MakeReviewPublicDialog(openMakeReviewPublicDialog: MutableState<Boolean>, re
         confirmButton = {
             Button(onClick = {
                 reviewDetailsViewModel.makeReviewPublic(
-                    onSuccess = {publishStatus-> Toast.makeText(context, "Review made public ($publishStatus)", Toast.LENGTH_SHORT).show() },
-                    onError = {e-> Toast.makeText(context, "Error making Review public: ${e.message}", Toast.LENGTH_LONG).show()}
+                    onSuccess = {publishStatus-> Toast.makeText(context, "Review published ($publishStatus)", Toast.LENGTH_SHORT).show() },
+                    onError = {e-> Toast.makeText(context, "Error publishing this Review: ${e.message}", Toast.LENGTH_LONG).show()}
                 )
                 openMakeReviewPublicDialog.value = false
             }
@@ -35,8 +35,8 @@ fun MakeReviewPublicDialog(openMakeReviewPublicDialog: MutableState<Boolean>, re
                 Text(text = "Cancel")
             }
         },
-        title = { Text(text = "Make this Review Public") },
-        text = { Text(text = "Are you sure you want to make this Review public? " +
+        title = { Text(text = "Publish this Review") },
+        text = { Text(text = "Are you sure you want to publish this Review? " +
                 "Please note that if this review has been previously published, the existing version will be overwritten.") }
     )
 }

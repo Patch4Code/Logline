@@ -21,8 +21,8 @@ fun MakeListPublicDialog(openMakeListPublicDialog: MutableState<Boolean>, listVi
         confirmButton = {
             Button(onClick = {
                 listViewModel.makeListPublic(
-                    onSuccess = {publishStatus-> Toast.makeText(context, "List made public ($publishStatus)", Toast.LENGTH_SHORT).show()},
-                    onError = {e-> Toast.makeText(context, "Error making List public: ${e.message}", Toast.LENGTH_LONG).show()}
+                    onSuccess = {publishStatus-> Toast.makeText(context, "List published ($publishStatus)", Toast.LENGTH_SHORT).show()},
+                    onError = {e-> Toast.makeText(context, "Error publishing this List: ${e.message}", Toast.LENGTH_LONG).show()}
                 )
                 openMakeListPublicDialog.value = false
             }
@@ -35,8 +35,8 @@ fun MakeListPublicDialog(openMakeListPublicDialog: MutableState<Boolean>, listVi
                 Text(text = "Cancel")
             }
         },
-        title = { Text(text = "Make this List Public") },
-        text = { Text(text = "Are you sure you want to make this List public? " +
+        title = { Text(text = "Publish this List") },
+        text = { Text(text = "Are you sure you want to publish this List? " +
                 "Please note that if this list has been previously published, the existing version will be overwritten.") }
     )
 }
