@@ -15,8 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 @Composable
@@ -30,16 +32,16 @@ fun PublicProfileNavigation(userId: String, userName: String, navController: Nav
             .padding(12.dp)
             .clickable { navController.navigate(Screen.PublicProfileReviewsScreen.route + "/$userId/$userName") }) {
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                Icon(imageVector = Icons.Default.Reviews, contentDescription = "Reviews")
-                Text(text = "Reviews")
+                Icon(imageVector = Icons.Default.Reviews, contentDescription = stringResource(id = R.string.reviews_text))
+                Text(text = stringResource(id = R.string.reviews_text))
             }
         }
         Box(modifier = Modifier
             .padding(12.dp)
             .clickable { navController.navigate(Screen.PublicProfileListsScreen.route + "/$userId/$userName") }) {
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.FeaturedPlayList, contentDescription = "Lists")
-                Text(text = "Lists")
+                Icon(imageVector = Icons.AutoMirrored.Filled.FeaturedPlayList, contentDescription = stringResource(id = R.string.lists_text))
+                Text(text = stringResource(id = R.string.lists_text))
             }
         }
     }

@@ -32,8 +32,8 @@ fun SelectCountrySection(settingsViewModel: SettingsViewModel){
 
     //Country selection
     Column (modifier = Modifier.padding(20.dp)){
-        Text(text = stringResource(id = R.string.Country_title), style = MaterialTheme.typography.titleMedium)
-        Text(text = stringResource(id = R.string.Country_text),
+        Text(text = stringResource(id = R.string.country_title), style = MaterialTheme.typography.titleMedium)
+        Text(text = stringResource(id = R.string.country_text),
             style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.padding(8.dp))
         val selectedCountry = selectedCountryCode?.let { settingsViewModel.getCountryNameByCode(it) }

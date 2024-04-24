@@ -10,10 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
@@ -29,12 +32,14 @@ fun PublicReviewDetailsView(
     publicReviewDetailsViewModel: PublicReviewDetailsViewModel = viewModel()
 ){
 
+    val context = LocalContext.current
+
     val decodedLoglineReviewJson = URLDecoder.decode(loglineReviewJson, "UTF-8")
     val review: LoglineReview = JSONHelper.fromJson(decodedLoglineReviewJson)
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicReviewDetailsScreen)
-        navViewModel.overrideCurrentScreenTitle("Review by ${review.authorName}")
+        navViewModel.overrideCurrentScreenTitle("${UiText.StringResource(R.string.review_by_text).asString(context)} ${review.authorName}")
         publicReviewDetailsViewModel.isYourReview(review.userId)
     }
 

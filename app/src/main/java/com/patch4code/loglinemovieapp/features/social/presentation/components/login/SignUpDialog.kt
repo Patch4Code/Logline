@@ -18,8 +18,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.LoginViewModel
 
 @Composable
@@ -29,35 +31,33 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginV
 
         val context = LocalContext.current
 
+        val passwordErrorToastText = stringResource(id = R.string.password_must_be_same_toast)
+        val signupSuccessToastText = stringResource(id = R.string.signup_success_toast)
+
         val newUserNameInput = remember { mutableStateOf("") }
         val email = remember { mutableStateOf("") }
         val newPasswordInput = remember { mutableStateOf("") }
         val newPasswordAgainInput = remember { mutableStateOf("") }
 
         Dialog(onDismissRequest =  {showSignupDialog.value = false}) {
-            Surface(
-                //modifier = Modifier.fillMaxSize(),
-                shape = RoundedCornerShape(16.dp),
-            ) {
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+            Surface(shape = RoundedCornerShape(16.dp),) {
+                Column(modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-                    Text(text = "Signup",
+                    Text(text = stringResource(id = R.string.signup_dialog_title),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp,bottom = 8.dp)
                     )
 
-                    LoginOutlinedTextField(input = newUserNameInput, label = "Username")
+                    LoginOutlinedTextField(input = newUserNameInput, label = stringResource(id = R.string.username_label))
                     Spacer(modifier = Modifier.padding(4.dp))
-                    LoginOutlinedTextField(input = email, label = "E-mail")
+                    LoginOutlinedTextField(input = email, label = stringResource(id = R.string.email_label))
 
                     Spacer(modifier = Modifier.padding(8.dp))
 
                     PasswordOutlinedTextField(passwordInput = newPasswordInput)
                     Spacer(modifier = Modifier.padding(4.dp))
-                    PasswordOutlinedTextField(passwordInput = newPasswordAgainInput, label = "Password again")
+                    PasswordOutlinedTextField(passwordInput = newPasswordAgainInput, label = stringResource(id = R.string.password_again_label))
 
 
                     Spacer(modifier = Modifier.padding(16.dp))
@@ -69,11 +69,11 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginV
                             password = newPasswordInput.value,
                             passwordAgain = newPasswordAgainInput.value,
                             onPasswordError = {
-                                Toast.makeText(context, "Password must be the same", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, passwordErrorToastText, Toast.LENGTH_SHORT).show()
                             },
                             onSignupTriggered = {parseException->
                                 if(parseException == null){
-                                    Toast.makeText(context, "Signup Successfully! You can now login.", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, signupSuccessToastText, Toast.LENGTH_LONG).show()
                                     showSignupDialog.value = false
                                 }else{
                                     Toast.makeText(context, parseException.message, Toast.LENGTH_LONG).show()
@@ -82,7 +82,7 @@ fun SignUpDialog(showSignupDialog: MutableState<Boolean>, loginViewModel: LoginV
                             }
                         )
                     }) {
-                        Text(text = "SIGN UP")
+                        Text(text = stringResource(id = R.string.signup_button_text))
                     }
 
                     Spacer(modifier = Modifier.padding(16.dp))

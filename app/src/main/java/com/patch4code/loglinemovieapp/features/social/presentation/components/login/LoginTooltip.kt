@@ -15,7 +15,9 @@ import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.ui.theme.SonicSilver
 import kotlinx.coroutines.launch
 
@@ -30,15 +32,13 @@ fun LoginTooltip(){
         positionProvider =  TooltipDefaults.rememberPlainTooltipPositionProvider(),
         tooltip = {
             Card (modifier = Modifier.padding(8.dp), colors = CardDefaults.cardColors(containerColor = SonicSilver)){
-                Text(text = "Log in to access the social features of the Logline app, " +
-                        "allowing you to publish lists and reviews, and enabling others " +
-                        "to view your profile.",
+                Text(text = stringResource(id = R.string.login_tooltip_text),
                     modifier = Modifier.padding(8.dp)) }
         },
         state = tooltipState
     ) {
         IconButton(onClick = { scope.launch { tooltipState.show() } }) {
-            Icon(imageVector = Icons.Outlined.Info, contentDescription = "more info")
+            Icon(imageVector = Icons.Outlined.Info, contentDescription = stringResource(id = R.string.info_icon_description))
         }
     }
 }

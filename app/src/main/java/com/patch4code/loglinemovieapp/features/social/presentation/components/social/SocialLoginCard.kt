@@ -19,8 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.components.login.LoginOutlinedTextField
 import com.patch4code.loglinemovieapp.features.social.presentation.components.login.LoginTooltip
 import com.patch4code.loglinemovieapp.features.social.presentation.components.login.PasswordOutlinedTextField
@@ -41,6 +43,9 @@ fun SocialLoginCard(loginViewModel: LoginViewModel = viewModel()){
 
     val showSignupDialog = remember { mutableStateOf(false) }
 
+    val successToastText = stringResource(id = R.string.login_success_toast)
+    val errorToastText = stringResource(id = R.string.login_error_toast)
+
     Card{
         Column (modifier = Modifier
             .fillMaxWidth()
@@ -50,12 +55,12 @@ fun SocialLoginCard(loginViewModel: LoginViewModel = viewModel()){
             Row (modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp,bottom = 8.dp),
                 horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
             ){
-                Text(text = "Login to your Logline Account", style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(id = R.string.login_card_title), style = MaterialTheme.typography.titleMedium)
                 LoginTooltip()
             }
 
 
-            LoginOutlinedTextField(input = userNameInput, label = "Username")
+            LoginOutlinedTextField(input = userNameInput, label = stringResource(id = R.string.username_label))
             Spacer(modifier = Modifier.padding(4.dp))
             PasswordOutlinedTextField(passwordInput = passwordInput)
             Spacer(modifier = Modifier.padding(8.dp))
@@ -66,14 +71,14 @@ fun SocialLoginCard(loginViewModel: LoginViewModel = viewModel()){
                         loginViewModel.login(
                             username = userNameInput.value,
                             password = passwordInput.value,
-                            onLoginSuccessful = { Toast.makeText(context, "Successful Login", Toast.LENGTH_LONG).show() },
-                            onLoginError = { Toast.makeText(context, "Login Error: ${it!!.message}", Toast.LENGTH_LONG).show()}
+                            onLoginSuccessful = { Toast.makeText(context, successToastText, Toast.LENGTH_LONG).show() },
+                            onLoginError = { Toast.makeText(context, "$errorToastText ${it!!.message}", Toast.LENGTH_LONG).show()}
                         ) },
-                    content = { Text(text = "LOGIN")  }
+                    content = { Text(text = stringResource(id = R.string.login_button_text))  }
                 )
                 Spacer(modifier = Modifier.padding(8.dp))
                 OutlinedButton(onClick = { showSignupDialog.value = true }) {
-                    Text(text = "SIGN UP")
+                    Text(text = stringResource(id = R.string.signup_button_text))
                 }
             }
         }

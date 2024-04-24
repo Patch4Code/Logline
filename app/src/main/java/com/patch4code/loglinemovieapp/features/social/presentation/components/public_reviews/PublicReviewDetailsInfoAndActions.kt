@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -85,7 +86,7 @@ fun PublicReviewDetailsInfoAndActions(
                     Alignment.CenterVertically))
                 Icon(
                     imageVector = Icons.Default.StarRate,
-                    contentDescription = "StarRate",
+                    contentDescription = stringResource(id = R.string.star_icon_description),
                     tint = Color.Yellow,
                     modifier = Modifier
                         .size(15.dp)
@@ -99,7 +100,7 @@ fun PublicReviewDetailsInfoAndActions(
 
         if(isYourReview == true){
             IconButton(onClick = { showDeletePublicReviewDialog.value = true }) {
-                Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Public Review")
+                Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(id = R.string.delete_review_description))
             }
         }
     }

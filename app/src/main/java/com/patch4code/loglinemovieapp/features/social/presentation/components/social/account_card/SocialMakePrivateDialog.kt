@@ -7,6 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 
 @Composable
@@ -15,6 +17,9 @@ fun SocialMakePrivateDialog(openMakePrivateDialog: MutableState<Boolean>, social
     if(openMakePrivateDialog.value){
         val context = LocalContext.current
 
+        val successToastText = stringResource(id = R.string.success_private_toast)
+        val errorToastText = stringResource(id = R.string.error_private_toast)
+
         AlertDialog(
             onDismissRequest = { openMakePrivateDialog.value = false },
             confirmButton = {
@@ -22,21 +27,21 @@ fun SocialMakePrivateDialog(openMakePrivateDialog: MutableState<Boolean>, social
                     openMakePrivateDialog.value = false
                     socialViewModel.changeProfileVisibilityState(
                         publicState = false,
-                        onSuccess = { Toast.makeText(context, "Your Profile is now private", Toast.LENGTH_SHORT).show() },
-                        onError = { Toast.makeText(context, "Error making Profile private", Toast.LENGTH_SHORT).show() }
+                        onSuccess = { Toast.makeText(context, successToastText, Toast.LENGTH_SHORT).show() },
+                        onError = { Toast.makeText(context, errorToastText, Toast.LENGTH_SHORT).show() }
                     )
                 }
                 ){
-                    Text(text = "Confirm")
+                    Text(text = stringResource(id = R.string.confirm_button_text))
                 }
             },
             dismissButton = {
                 Button(onClick = { openMakePrivateDialog.value = false }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             },
-            title = { Text(text = "Make Profile Private") },
-            text = { Text(text = "Are you sure you want to make your Profile private?") }
+            title = { Text(text = stringResource(id = R.string.make_private_dialog_title)) },
+            text = { Text(text = stringResource(id = R.string.make_private_dialog_text)) }
         )
     }
 }

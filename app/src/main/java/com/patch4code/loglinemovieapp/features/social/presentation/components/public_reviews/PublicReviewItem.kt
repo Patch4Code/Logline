@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -66,14 +67,13 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
                 error = painterResource(id = if(isProfilePublic) R.drawable.default_profile_image else R.drawable.person_placeholder)
             )
             Text(text = publicReview.authorName, style = MaterialTheme.typography.titleMedium)
-            //${publicReview.movie.title}(${MovieHelper.extractYear(publicReview.movie.releaseDate)})
 
             if(publicReview.rating > 0){
                 Spacer(modifier = Modifier.padding(8.dp))
                 Row{
                     Icon(
                         imageVector = Icons.Default.StarRate,
-                        contentDescription = "StarRate",
+                        contentDescription = stringResource(id = R.string.star_icon_description),
                         tint = Color.Yellow,
                         modifier = Modifier
                             .size(15.dp)
@@ -100,7 +100,7 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
 
             AsyncImage(
                 model = MovieHelper.processPosterUrl(publicReview.movie.posterUrl),
-                contentDescription = "Poster",
+                contentDescription = stringResource(id = R.string.poster_description),
                 error = painterResource(id = R.drawable.movie_poster_placeholder)
             )
         }

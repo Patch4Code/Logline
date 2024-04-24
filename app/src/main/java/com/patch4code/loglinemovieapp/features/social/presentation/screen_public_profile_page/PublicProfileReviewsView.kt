@@ -13,10 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.social.presentation.components.public_profile.PublicProfileReviewItem
@@ -29,9 +33,11 @@ fun PublicProfileReviewsView(
     userName: String?,
     publicProfileReviewsViewModel: PublicProfileReviewsViewModel = viewModel()
 ){
+    val context = LocalContext.current
+
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicProfileReviewsScreen)
-        navViewModel.overrideCurrentScreenTitle("$userName's Reviews")
+        navViewModel.overrideCurrentScreenTitle("$userName${UiText.StringResource(R.string.user_reviews_appendage).asString(context)}")
         publicProfileReviewsViewModel.getPublicProfileReviews(userId)
     }
 
@@ -43,7 +49,7 @@ fun PublicProfileReviewsView(
     }else{
         if (publicProfileReviews.isNullOrEmpty()){
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                Text(text = "no reviews")
+                Text(text = stringResource(id = R.string.no_reviews_text))
             }
             return
         }

@@ -18,10 +18,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
@@ -70,14 +72,12 @@ fun PublicProfileView(
             //Username
             Row (horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically){
                 Text(text = userProfile?.username ?: "Anonymous",
-                    //modifier = Modifier.align(Alignment.CenterHorizontally),
                     fontWeight = FontWeight.Bold
                 )
                 if ((isYourProfilePublic.value == false) &&  (yourUserId.value == userId)){
-                    Icon(imageVector = Icons.Default.Lock, contentDescription = "Profile is Private")
+                    Icon(imageVector = Icons.Default.Lock, contentDescription = stringResource(id = R.string.profile_private_icon_description))
                 }
             }
-
 
             Spacer(modifier = Modifier.padding(4.dp))
 

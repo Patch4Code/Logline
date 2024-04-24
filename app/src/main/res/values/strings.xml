@@ -10,9 +10,11 @@
 
     <!-- Default General Strings -->
     <string name="poster_description_appendage">-Poster</string>
-    <string name="poster_description">-Poster</string>
+    <string name="poster_description">Poster</string>
     <string name="star_icon_description">StarRate</string>
     <string name="make_public_text">Make Public</string>
+    <string name="reviews_text">Reviews</string>
+    <string name="lists_text">Lists</string>
 
     <!-- Default Button Strings -->
     <string name="ok_button_text">OK</string>
@@ -20,6 +22,9 @@
     <string name="discard_button_text">Discard</string>
     <string name="delete_button_text">Delete</string>
     <string name="cancel_button_text">Cancel</string>
+    <string name="confirm_button_text">Confirm</string>
+    <string name="login_button_text">LOGIN</string>
+    <string name="signup_button_text">SIGN UP</string>
 
 
     <!-- AboutView Strings -->
@@ -173,8 +178,59 @@
     <string name="warning_icon_description">Warning</string>
     <string name="import_warning_text">Please note that the current app data will be permanently replaced after the import process is completed!</string>
     <string name="import_button_text">Import Data</string>
-    <string name="Country_title">Country for Watch Providers</string>
-    <string name="Country_text">Select your country to access streaming, rental, and purchase options customized specifically for this location on the movie page.</string>
+    <string name="country_title">Country for Watch Providers</string>
+    <string name="country_text">Select your country to access streaming, rental, and purchase options customized specifically for this location on the movie page.</string>
+
+
+    <!-- Social Strings -->
+    <string name="review_by_text">Review by</string>
+    <string name="user_lists_appendage">\'s Lists</string>
+    <string name="user_reviews_appendage">\'s Reviews</string>
+    <string name="no_lists_text">no lists</string>
+    <string name="no_reviews_text">no reviews</string>
+    <string name="profile_private_icon_description">Profile is Private</string>
+    <string name="list_by_text">List by</string>
+    <string name="list_delete_icon_description">Delete Public List</string>
+    <string name="login_tooltip_text">Log in to access the social features of the Logline app, allowing you to publish lists and reviews, and enabling others to view your profile."</string>
+    <string name="info_icon_description">more info</string>
+    <string name="signup_dialog_title">Signup</string>
+    <string name="username_label">Username</string>
+    <string name="email_label">E-mail</string>
+    <string name="password_again_label">Password again</string>
+    <string name="password_must_be_same_toast">Password must be the same</string>
+    <string name="signup_success_toast">Signup Successfully! You can now login.</string>
+    <string name="deleted_success_toast">Successfully Deleted</string>
+    <string name="deleted_error_toast">Delete Error:</string>
+    <string name="deleted_public_list_dialog_title">Delete this public list</string>
+    <string name="deleted_public_list_dialog_text">Are you sure you want to delete this public list? Deleting this public list will have no effect on locally saved lists.</string>
+    <string name="deleted_public_review_dialog_title">Delete this public review</string>
+    <string name="deleted_public_review_dialog_text">Are you sure you want to delete this public review? Deleting this public review will have no effect on locally saved reviews.</string>
+    <string name="delete_review_description">Delete Public Review</string>
+    <string name="logout_success_toast">Successful Logged Out</string>
+    <string name="logout_error_toast">Logout Error:</string>
+    <string name="logout_text">Logout</string>
+    <string name="account_text">Account</string>
+    <string name="view_your_profile_text">View your Profile</string>
+    <string name="profile_public_text">Profile is Public</string>
+    <string name="profile_private_text">Profile is Private</string>
+    <string name="success_private_toast">Your Profile is now private</string>
+    <string name="error_private_toast">Error making Profile private</string>
+    <string name="make_private_dialog_title">Make Profile Private</string>
+    <string name="make_private_dialog_text">Are you sure you want to make your Profile private?</string>
+    <string name="success_public_toast">Your Profile is now public</string>
+    <string name="error_public_toast">Error making Profile public</string>
+    <string name="make_public_dialog_title">Make Profile Public</string>
+    <string name="make_public_dialog_text">Are you sure you want to make your Profile public?</string>
+    <string name="update_profile_success_toast">Profile updated successfully</string>
+    <string name="update_profile_dialog_title">Update Public Profile</string>
+    <string name="update_profile_dialog_text">Do you want to update your Profile? Please only do this when you made changes to your Profile-Page.</string>
+    <string name="explore_public_profiles_title">Explore Public Profiles</string>
+    <string name="explore_public_reviews_title">Explore Public Reviews</string>
+    <string name="explore_public_lists_title">Explore Public Lists</string>
+    <string name="login_card_title">Login to your Logline Account</string>
+    <string name="login_success_toast">Successful Login</string>
+    <string name="login_error_toast">Login Error:</string>
+
 
     //stringResource(id = R.string.)
 

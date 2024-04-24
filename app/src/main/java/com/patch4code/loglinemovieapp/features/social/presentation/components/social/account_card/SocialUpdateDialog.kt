@@ -7,6 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 
 @Composable
@@ -15,6 +17,8 @@ fun SocialUpdateDialog(openUpdateDialog: MutableState<Boolean>, socialViewModel:
     if(openUpdateDialog.value){
         val context = LocalContext.current
 
+        val successToastText = stringResource(id = R.string.update_profile_success_toast)
+
         AlertDialog(
             onDismissRequest = { openUpdateDialog.value = false },
             confirmButton = {
@@ -22,21 +26,21 @@ fun SocialUpdateDialog(openUpdateDialog: MutableState<Boolean>, socialViewModel:
                     openUpdateDialog.value = false
                     socialViewModel.updatePublicProfile(
                         context = context,
-                        onSuccess = { Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()},
+                        onSuccess = { Toast.makeText(context, successToastText, Toast.LENGTH_SHORT).show()},
                         onError = { error-> Toast.makeText(context, error, Toast.LENGTH_SHORT).show() }
                     )
                 }
                 ){
-                    Text(text = "Confirm")
+                    Text(text = stringResource(id = R.string.confirm_button_text))
                 }
             },
             dismissButton = {
                 Button(onClick = { openUpdateDialog.value = false }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel_button_text))
                 }
             },
-            title = { Text(text = "Update Public Profile") },
-            text = { Text(text = "Do you want to update your Profile? Please only do this when you made changes to your Profile-Page.") }
+            title = { Text(text = stringResource(id = R.string.update_profile_dialog_title)) },
+            text = { Text(text = stringResource(id = R.string.update_profile_dialog_text)) }
         )
     }
 }

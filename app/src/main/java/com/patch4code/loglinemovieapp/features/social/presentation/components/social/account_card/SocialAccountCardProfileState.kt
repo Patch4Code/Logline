@@ -18,9 +18,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.parse.ParseUser
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
@@ -39,12 +41,12 @@ fun SocialAccountCardProfileState(savedLoginData: StoreUserData, socialViewModel
     Column {
 
         TextButton(onClick = { navController.navigate(Screen.PublicProfileScreen.route + "/$profileId/$userName") }) {
-            Text(text = "View your Profile")
+            Text(text = stringResource(id = R.string.view_your_profile_text))
         }
 
         Row (verticalAlignment = Alignment.CenterVertically){
             if(savedLoginData.getIsProfilePublic.collectAsState(initial = false).value == true){
-                Text(text = "Profile is Public", Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(id = R.string.profile_public_text), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
 
                 TextButton(onClick = { openUpdateDialog.value = true }) {
                     Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
@@ -54,7 +56,7 @@ fun SocialAccountCardProfileState(savedLoginData: StoreUserData, socialViewModel
                     Icon(imageVector = Icons.Default.Public, contentDescription = null)
                 }
             }else{
-                Text(text = "Profile is Private", Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(id = R.string.profile_private_text), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
                 TextButton(onClick = { openMakePublicDialog.value = true }) {
                     Icon(imageVector = Icons.Default.PublicOff, contentDescription = null)
                 }

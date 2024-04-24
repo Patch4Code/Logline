@@ -10,8 +10,10 @@ import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
@@ -36,17 +38,17 @@ fun SocialContent(savedLoginData: StoreUserData, socialViewModel: SocialViewMode
             SocialExploreCard(
                 onClick = { navController.navigate(Screen.PublicProfilesTableScreen.route) },
                 icon = Icons.Default.Groups2,
-                text = "Explore Public Profiles"
+                text = stringResource(id = R.string.explore_public_profiles_title)
             )
             SocialExploreCard(
                 onClick = { navController.navigate(Screen.PublicReviewsScreen.route)},
                 icon = Icons.Default.Reviews,
-                text = "Explore Public Reviews"
+                text = stringResource(id = R.string.explore_public_reviews_title)
             )
             SocialExploreCard(
                 onClick = { navController.navigate(Screen.PublicListsTableScreen.route)},
                 icon = Icons.AutoMirrored.Filled.FeaturedPlayList,
-                text = "Explore Public Lists"
+                text = stringResource(id = R.string.explore_public_lists_title)
             )
         }
     }

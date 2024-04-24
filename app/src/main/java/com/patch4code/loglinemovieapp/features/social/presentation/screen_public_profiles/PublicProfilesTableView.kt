@@ -32,7 +32,11 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
 @Composable
-fun PublicProfilesTableView(navController: NavController, navViewModel: NavigationViewModel, publicProfilesTableViewModel: PublicProfilesTableViewModel = viewModel()){
+fun PublicProfilesTableView(
+    navController: NavController,
+    navViewModel: NavigationViewModel,
+    publicProfilesTableViewModel: PublicProfilesTableViewModel = viewModel()
+){
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicProfilesTableScreen)

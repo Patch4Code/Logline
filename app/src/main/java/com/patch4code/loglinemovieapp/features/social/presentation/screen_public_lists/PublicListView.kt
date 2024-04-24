@@ -23,7 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -32,6 +34,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.items.ListItem
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
@@ -46,6 +49,8 @@ fun PublicListView(
     publicListJson: String?,
     publicListViewModel: PublicListViewModel = viewModel()
 ){
+    val context = LocalContext.current
+
     val decodedPublicListJson = URLDecoder.decode(publicListJson, "UTF-8")
     val publicList: PublicList = JSONHelper.fromJson(decodedPublicListJson)
 
@@ -55,7 +60,7 @@ fun PublicListView(
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicListScreen)
-        navViewModel.overrideCurrentScreenTitle("List by ${publicList.authorName}")
+        navViewModel.overrideCurrentScreenTitle("${UiText.StringResource(R.string.list_by_text).asString(context)} ${publicList.authorName}")
         publicListViewModel.isYourReview(publicList.userId)
     }
 
@@ -91,7 +96,7 @@ fun PublicListView(
                 )
                 if(isYourReview == true){
                     IconButton(onClick = { showDeletePublicListDialog.value = true }) {
-                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Public List")
+                        Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(id = R.string.list_delete_icon_description))
                     }
                 }
             }
