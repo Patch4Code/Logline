@@ -10,12 +10,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -25,11 +23,9 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 @Composable
 fun HomeView(navController: NavController, navViewModel: NavigationViewModel, homeViewModel: HomeViewModel = viewModel()){
 
-    val homeViewTitles = stringArrayResource(id = R.array.home_view_titles)
-
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.HomeScreen)
-        homeViewModel.loadHomeViewData(homeViewTitles)
+        homeViewModel.loadHomeViewData()
     }
 
     val isLoading by homeViewModel.isLoading.observeAsState(initial = false)
@@ -42,7 +38,7 @@ fun HomeView(navController: NavController, navViewModel: NavigationViewModel, ho
         LazyColumn {
             homeMoviesMap?.forEach { (groupName, movies) ->
                 item {
-                    Text(text = groupName,
+                    Text(text = groupName.asString(),
                         modifier = Modifier.padding(top = 16.dp, start = 16.dp),
                         fontWeight = FontWeight.Bold)
                     LazyRow {

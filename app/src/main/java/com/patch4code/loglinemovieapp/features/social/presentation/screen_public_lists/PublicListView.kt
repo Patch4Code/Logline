@@ -60,7 +60,7 @@ fun PublicListView(
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicListScreen)
-        navViewModel.overrideCurrentScreenTitle("${UiText.StringResource(R.string.list_by_text).asString(context)} ${publicList.authorName}")
+        navViewModel.overrideCurrentScreenTitle(UiText.DynamicString("${UiText.StringResource(R.string.list_by_text).asString(context)} ${publicList.authorName}"))
         publicListViewModel.isYourReview(publicList.userId)
     }
 

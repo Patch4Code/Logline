@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
@@ -32,7 +33,7 @@ fun ProfileHead(userProfile: UserProfile?){
                 .fillMaxWidth()
                 .height(125.dp),
             contentScale = ContentScale.Crop,
-            contentDescription = "Banner",
+            contentDescription = stringResource(id = R.string.banner_image_description),
             error = painterResource(id = R.drawable.default_banner_image)
         )
 
@@ -45,7 +46,7 @@ fun ProfileHead(userProfile: UserProfile?){
                 .offset(y = 60.dp)
                 .clip(CircleShape)
                 .border(width = 2.dp, color = Color.DarkGray, shape = CircleShape),
-            contentDescription = "Profile Image",
+            contentDescription = stringResource(id = R.string.profile_image_title),
             contentScale = ContentScale.Crop,
             error = painterResource(id = R.drawable.default_profile_image)
         )

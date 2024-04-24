@@ -39,7 +39,7 @@ fun PublicReviewDetailsView(
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicReviewDetailsScreen)
-        navViewModel.overrideCurrentScreenTitle("${UiText.StringResource(R.string.review_by_text).asString(context)} ${review.authorName}")
+        navViewModel.overrideCurrentScreenTitle(UiText.DynamicString("${UiText.StringResource(R.string.review_by_text).asString(context)} ${review.authorName}"))
         publicReviewDetailsViewModel.isYourReview(review.userId)
     }
 

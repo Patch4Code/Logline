@@ -7,6 +7,7 @@ import androidx.compose.ui.res.stringResource
 
 //This class makes it possible to use string resources outside of composable functions
 sealed class UiText{
+    data class DynamicString(val value: String): UiText()
     class StringResource(
         @StringRes val resId: Int,
         vararg val args: Any
@@ -15,12 +16,14 @@ sealed class UiText{
     @Composable
     fun asString(): String {
         return when(this) {
+            is DynamicString -> value
             is StringResource -> stringResource(resId, *args)
         }
     }
 
     fun asString(context: Context): String {
         return when(this) {
+            is DynamicString -> value
             is StringResource -> context.getString(resId, *args)
         }
     }

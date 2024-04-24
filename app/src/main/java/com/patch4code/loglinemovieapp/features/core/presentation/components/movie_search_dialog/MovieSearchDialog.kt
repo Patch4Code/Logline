@@ -7,6 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.GeneralMovieSearchViewModel
 
@@ -38,8 +40,6 @@ fun MovieSearchDialog(
                 Text(text = confirmText)
             }
         },
-        dismissButton = { Button(onClick = { onDismiss() }) { Text(text = "Cancel") } }
+        dismissButton = { Button(onClick = { onDismiss() }) { Text(text = stringResource(id = R.string.cancel_button_text)) } }
     )
 }
-
-

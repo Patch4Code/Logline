@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.navigation.domain.model
 
+import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
@@ -10,6 +11,8 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 
 data class BottomNavigationItem(
     val title: String = "",
@@ -17,28 +20,28 @@ data class BottomNavigationItem(
     val unselectedIcon: ImageVector = Icons.Outlined.Home,
     val route: String = ""
 ) {
-    fun getBottomNavigationItems(): List<BottomNavigationItem> {
+    fun getBottomNavigationItems(context: Context): List<BottomNavigationItem> {
         return listOf(
             BottomNavigationItem(
-                title = "Home",
+                title = UiText.StringResource(R.string.home_text).asString(context),
                 selectedIcon = Icons.Filled.Home,
                 unselectedIcon = Icons.Outlined.Home,
                 route = Screen.HomeScreen.route
             ),
             BottomNavigationItem(
-                title = "Search",
+                title = UiText.StringResource(R.string.search_text).asString(context),
                 selectedIcon = Icons.Filled.Search,
                 unselectedIcon = Icons.Outlined.Search,
                 route = Screen.SearchScreen.route
             ),
             BottomNavigationItem(
-                title = "Profile",
+                title = UiText.StringResource(R.string.profile_text).asString(context),
                 selectedIcon = Icons.Filled.AccountCircle,
                 unselectedIcon = Icons.Outlined.AccountCircle,
                 route = Screen.ProfileScreen.route
             ),
             BottomNavigationItem(
-                title = "Watchlist",
+                title = UiText.StringResource(R.string.watchlist_text).asString(context),
                 selectedIcon = Icons.Filled.WatchLater,
                 unselectedIcon = Icons.Outlined.WatchLater,
                 route = Screen.WatchlistScreen.route

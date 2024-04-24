@@ -37,7 +37,7 @@ fun PublicProfileReviewsView(
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicProfileReviewsScreen)
-        navViewModel.overrideCurrentScreenTitle("$userName${UiText.StringResource(R.string.user_reviews_appendage).asString(context)}")
+        navViewModel.overrideCurrentScreenTitle(UiText.DynamicString("$userName${UiText.StringResource(R.string.user_reviews_appendage).asString(context)}"))
         publicProfileReviewsViewModel.getPublicProfileReviews(userId)
     }
 

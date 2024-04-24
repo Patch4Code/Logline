@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components.LoglineMovieReviews
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components.TmdbMovieReviews
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -43,7 +44,7 @@ fun MoviePublicReviewsView(
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MoviePublicReviewsScreen)
-        title?.let { navViewModel.overrideCurrentScreenTitle(it) }
+        title?.let { navViewModel.overrideCurrentScreenTitle(UiText.DynamicString(it)) }
         moviePublicReviewsViewModel.loadTmdbReviews(movieId)
         moviePublicReviewsViewModel.loadLoglineReviews(movieId)
     }

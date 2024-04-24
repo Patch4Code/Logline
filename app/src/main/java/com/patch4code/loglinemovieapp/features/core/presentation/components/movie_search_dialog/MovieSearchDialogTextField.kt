@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.SoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.GeneralMovieSearchViewModel
 
@@ -26,7 +28,7 @@ fun MovieSearchDialogTextField(
     OutlinedTextField(
         value = textInput.value,
         onValueChange = {textInput.value = it},
-        label = { Text(text = "Search Movie") },
+        label = { Text(text = stringResource(id = R.string.search_text_field_label)) },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions(
             onSearch = {
@@ -47,7 +49,7 @@ fun MovieSearchDialogTextField(
                     generalMovieSearchViewModel.searchMovie(textInput.value)
                 }
             }) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+                Icon(imageVector = Icons.Default.Search, contentDescription = stringResource(id = R.string.search_icon_description))
             }
         }
     )

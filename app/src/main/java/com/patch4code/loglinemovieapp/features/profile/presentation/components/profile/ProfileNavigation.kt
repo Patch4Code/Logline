@@ -12,12 +12,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.profile.domain.model.ProfileNavigationElement
 
 @Composable
 fun ProfileNavigation(navController: NavController){
+
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -25,7 +29,7 @@ fun ProfileNavigation(navController: NavController){
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ProfileNavigationElement().getProfileNavigationElements().forEach { item ->
+        ProfileNavigationElement().getProfileNavigationElements(context).forEach { item ->
             Box(modifier = Modifier
                 .padding(12.dp)
                 .clickable { navController.navigate(item.route) }) {

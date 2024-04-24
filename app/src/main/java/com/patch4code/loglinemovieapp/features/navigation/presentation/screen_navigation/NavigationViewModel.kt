@@ -3,6 +3,7 @@ package com.patch4code.loglinemovieapp.features.navigation.presentation.screen_n
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 class NavigationViewModel: ViewModel() {
@@ -15,7 +16,7 @@ class NavigationViewModel: ViewModel() {
         _currentScreen.value = newScreen
     }
 
-    fun overrideCurrentScreenTitle(title: String){
+    fun overrideCurrentScreenTitle(title: UiText){
         _currentScreen.value!!.title = title
     }
 }

@@ -28,8 +28,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.patch4code.loglinemovieapp.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -49,13 +51,21 @@ fun DiaryEditRatingDialog(
             onDismissRequest = { onCancel() },
             title = {
                 Row {
-                    Text(text = "Change Rating", modifier = Modifier.weight(1f))
+                    Text(text = stringResource(id = R.string.change_rating_text), modifier = Modifier.weight(1f))
                     if(movieRating > 0){
                         Text(text = movieRating.toString(),  fontSize = 40.sp, style = MaterialTheme.typography.headlineLarge )
                     }else{
                         Column {
-                            Text(text = "No", fontSize = 15.sp, style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp))
-                            Text(text = "Rating", fontSize = 15.sp, style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp))
+                            Text(
+                                text = stringResource(id = R.string.no_text),
+                                fontSize = 15.sp,
+                                style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp)
+                            )
+                            Text(
+                                text = stringResource(id = R.string.rating_text),
+                                fontSize = 15.sp,
+                                style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp)
+                            )
                         }
                     }
                 }
@@ -88,9 +98,9 @@ fun DiaryEditRatingDialog(
                 Spacer(modifier = Modifier.padding(32.dp))
             },
             confirmButton = {
-                Button(onClick = { onAccept(movieRating) } //openRatingDialog.value = false
+                Button(onClick = { onAccept(movieRating) }
                 ) {
-                    Text(text = "OK")
+                    Text(text = stringResource(id = R.string.ok_button_text))
                 }
             },
             dismissButton = {
@@ -101,11 +111,10 @@ fun DiaryEditRatingDialog(
                         }
                         Spacer(modifier = Modifier.padding(28.dp))
                     }
-                    Button(onClick = { onCancel() }) {//openRatingDialog.value = false
-                        Text(text = "Cancel")
+                    Button(onClick = { onCancel() }) {
+                        Text(text = stringResource(id = R.string.cancel_button_text))
                     }
                 }
-
             },
             modifier = Modifier
                 .padding(0.dp)

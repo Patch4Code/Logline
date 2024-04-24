@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ExpandableBio
@@ -45,7 +46,7 @@ fun PublicProfileView(
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicProfileScreen)
         if (userName != null){
-            navViewModel.overrideCurrentScreenTitle(userName)
+            navViewModel.overrideCurrentScreenTitle(UiText.DynamicString(userName))
         }
         publicProfileViewModel.getPublicUserProfile(userId)
     }

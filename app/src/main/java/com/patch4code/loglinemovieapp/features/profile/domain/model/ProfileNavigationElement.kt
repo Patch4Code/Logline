@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.profile.domain.model
 
+import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.FeaturedPlayList
 import androidx.compose.material.icons.filled.AccountBox
@@ -7,6 +8,8 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 data class ProfileNavigationElement(
@@ -15,25 +18,25 @@ data class ProfileNavigationElement(
     val route: String = ""
 )
 {
-    fun getProfileNavigationElements(): List<ProfileNavigationElement>{
+    fun getProfileNavigationElements(context: Context): List<ProfileNavigationElement>{
         return listOf(
             ProfileNavigationElement(
-                title = "Movies",
+                title = UiText.StringResource(R.string.movies_text).asString(context),
                 navIcon = Icons.Default.Movie,
                 route = Screen.MyMoviesScreen.route
             ),
             ProfileNavigationElement(
-                title = "Diary",
+                title = UiText.StringResource(R.string.diary_text).asString(context),
                 navIcon = Icons.Default.DateRange,
                 route = Screen.DiaryScreen.route
             ),
             ProfileNavigationElement(
-                title = "Reviews",
+                title = UiText.StringResource(R.string.reviews_text).asString(context),
                 navIcon = Icons.Default.Reviews,
                 route = Screen.ReviewsScreen.route
             ),
             ProfileNavigationElement(
-                title = "Lists",
+                title = UiText.StringResource(R.string.lists_text).asString(context),
                 navIcon = Icons.AutoMirrored.Filled.FeaturedPlayList,
                 route = Screen.ListsTableScreen.route
             )

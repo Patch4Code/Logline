@@ -21,7 +21,7 @@ fun MakeReviewPublicDialog(openMakeReviewPublicDialog: MutableState<Boolean>, re
     val toastSuccessText = stringResource(id = R.string.review_publish_success_toast)
     val toastErrorText = stringResource(id = R.string.review_publish_error_toast)
 
-            AlertDialog(
+    AlertDialog(
         onDismissRequest = { openMakeReviewPublicDialog.value = false },
         confirmButton = {
             Button(onClick = {

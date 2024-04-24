@@ -5,10 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.api.RetrofitHelper
 import com.patch4code.loglinemovieapp.api.TmdbApiService
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import kotlinx.coroutines.launch
 
 
@@ -25,13 +27,13 @@ class HomeViewModel : ViewModel(){
     private val _popularMovies = MutableLiveData<List<Movie>>()
     private val _topRatedMovies = MutableLiveData<List<Movie>>()
     private val _upcomingMovies = MutableLiveData<List<Movie>>()
-    private val _homeMoviesMap = MutableLiveData<Map<String, List<Movie>>>()
+    private val _homeMoviesMap = MutableLiveData<Map<UiText.StringResource, List<Movie>>>()
 
-    val homeMoviesMap: LiveData<Map<String, List<Movie>>>
+    val homeMoviesMap: LiveData<Map<UiText.StringResource, List<Movie>>>
         get() = _homeMoviesMap
 
 
-    fun loadHomeViewData(homeViewTitles: Array<String>){
+    fun loadHomeViewData(){
         viewModelScope.launch {
             try {
                 _isLoading.value = true
@@ -54,22 +56,22 @@ class HomeViewModel : ViewModel(){
             } catch (e: Exception) {
                 Log.e("HomeViewModel", "Error loading data", e)
             } finally {
-                updateHomeMovieMap(homeViewTitles)
+                updateHomeMovieMap()
             }
         }
     }
 
 
-    private fun updateHomeMovieMap(homeViewTitles: Array<String>) {
+    private fun updateHomeMovieMap() {
         val popularMovies = _popularMovies.value ?: emptyList()
         val topRatedMovies = _topRatedMovies.value ?: emptyList()
         val upcomingMovies = _upcomingMovies.value ?: emptyList()
 
         // Combine individual lists into a map
         val newMovieMap = mapOf(
-            homeViewTitles[0] to popularMovies,
-            homeViewTitles[1] to topRatedMovies,
-            homeViewTitles[2] to upcomingMovies
+            UiText.StringResource(R.string.popular_movies_title) to popularMovies,
+            UiText.StringResource(R.string.top_rated_movies_title) to topRatedMovies,
+            UiText.StringResource(R.string.upcoming_movies_title) to upcomingMovies
         )
         _homeMoviesMap.value = newMovieMap
     }

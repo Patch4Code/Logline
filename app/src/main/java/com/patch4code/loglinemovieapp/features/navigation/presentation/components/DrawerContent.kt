@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.DrawerNavigationItem
@@ -30,16 +31,17 @@ fun DrawerContent(
     scope: CoroutineScope,
     navigationViewModel: NavigationViewModel
 ){
+    val context = LocalContext.current
     val currentScreen by navViewModel.currentScreen.observeAsState(Screen.HomeScreen)
 
     ModalDrawerSheet (
         modifier = Modifier.width(300.dp)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-        DrawerNavigationItem().getDrawerNavigationItems().forEach { drawerNavigationItem ->
+        DrawerNavigationItem().getDrawerNavigationItems(context).forEach { drawerNavigationItem ->
             NavigationDrawerItem(
                 label = { Text(text = drawerNavigationItem.title) },
-                selected = drawerNavigationItem.title == currentScreen.title,
+                selected = drawerNavigationItem.title == currentScreen.title.asString(),
                 onClick = {
                     scope.launch{
                         drawerState.close()
@@ -49,7 +51,7 @@ fun DrawerContent(
                 },
                 icon = {
                     Icon(
-                        imageVector = if(drawerNavigationItem.title == currentScreen.title) {
+                        imageVector = if(drawerNavigationItem.title == currentScreen.title.asString()) {
                             drawerNavigationItem.selectedIcon
                         } else {drawerNavigationItem.unselectedIcon},
                         contentDescription = drawerNavigationItem.title

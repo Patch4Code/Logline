@@ -37,7 +37,7 @@ fun PublicProfileListsView(
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicProfileListsScreen)
-        navViewModel.overrideCurrentScreenTitle("$userName${UiText.StringResource(R.string.user_lists_appendage).asString(context)}")
+        navViewModel.overrideCurrentScreenTitle(UiText.DynamicString("$userName${UiText.StringResource(R.string.user_lists_appendage).asString(context)}"))
         publicProfileListsViewModel.getPublicProfileLists(userId)
     }
 

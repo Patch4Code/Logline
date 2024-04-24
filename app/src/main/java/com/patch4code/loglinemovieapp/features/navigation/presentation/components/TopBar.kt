@@ -12,9 +12,11 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
@@ -31,7 +33,7 @@ fun TopBar(
 
     TopAppBar (
         title = {
-            Text(text = currentScreen.title,
+            Text(text = currentScreen.title.asString(),
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
@@ -40,7 +42,7 @@ fun TopBar(
         },
         navigationIcon = {
             IconButton(onClick = {onDrawerStateChanged()}) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "Open Navigation Drawer")
+                Icon(imageVector = Icons.Default.Menu, contentDescription = stringResource(id = R.string.menu_icon_description))
             }
         },
         scrollBehavior = scrollBehavior

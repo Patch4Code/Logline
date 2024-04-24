@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.navigation.domain.model
 
+import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.FeaturedPlayList
 import androidx.compose.material.icons.automirrored.outlined.FeaturedPlayList
@@ -24,6 +25,8 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 
 data class DrawerNavigationItem(
     val title: String = "",
@@ -31,70 +34,70 @@ data class DrawerNavigationItem(
     val unselectedIcon: ImageVector = Icons.Filled.Home,
     val route: String = "",
 ){
-    fun getDrawerNavigationItems(): List<DrawerNavigationItem> {
+    fun getDrawerNavigationItems(context: Context): List<DrawerNavigationItem> {
         return listOf(
             DrawerNavigationItem(
-                title = "Home",
+                title = UiText.StringResource(R.string.home_text).asString(context),
                 selectedIcon = Icons.Filled.Home,
                 unselectedIcon = Icons.Outlined.Home,
                 route = Screen.HomeScreen.route
             ),
             DrawerNavigationItem(
-                title = "Search",
+                title = UiText.StringResource(R.string.search_text).asString(context),
                 selectedIcon = Icons.Filled.Search,
                 unselectedIcon = Icons.Outlined.Search,
                 route = Screen.SearchScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Profile",
+                title = UiText.StringResource(R.string.profile_text).asString(context),
                 selectedIcon = Icons.Filled.AccountCircle,
                 unselectedIcon = Icons.Outlined.AccountCircle,
                 route = Screen.ProfileScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Watchlist",
+                title = UiText.StringResource(R.string.watchlist_text).asString(context),
                 selectedIcon = Icons.Filled.WatchLater,
                 unselectedIcon = Icons.Outlined.WatchLater,
                 route = Screen.WatchlistScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Movies",
+                title = UiText.StringResource(R.string.movies_text).asString(context),
                 selectedIcon = Icons.Filled.Movie,
                 unselectedIcon = Icons.Outlined.Movie,
                 route = Screen.MyMoviesScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Diary",
+                title = UiText.StringResource(R.string.diary_text).asString(context),
                 selectedIcon = Icons.Filled.DateRange,
                 unselectedIcon = Icons.Outlined.DateRange,
                 route = Screen.DiaryScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Reviews",
+                title = UiText.StringResource(R.string.reviews_text).asString(context),
                 selectedIcon = Icons.Filled.Reviews,
                 unselectedIcon = Icons.Outlined.Reviews,
                 route = Screen.ReviewsScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Lists",
+                title = UiText.StringResource(R.string.lists_text).asString(context),
                 selectedIcon = Icons.AutoMirrored.Filled.FeaturedPlayList,
                 unselectedIcon = Icons.AutoMirrored.Outlined.FeaturedPlayList,
                 route = Screen.ListsTableScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Social",
+                title = UiText.StringResource(R.string.social_text).asString(context),
                 selectedIcon = Icons.Filled.Public,
                 unselectedIcon = Icons.Outlined.Public,
                 route = Screen.SocialScreen.route,
             ),
             DrawerNavigationItem(
-                title = "Settings",
+                title = UiText.StringResource(R.string.settings_text).asString(context),
                 selectedIcon = Icons.Filled.Settings,
                 unselectedIcon = Icons.Outlined.Settings,
                 route = Screen.SettingsScreen.route
             ),
             DrawerNavigationItem(
-                title = "About",
+                title = UiText.StringResource(R.string.about_text).asString(context),
                 selectedIcon = Icons.Filled.Info,
                 unselectedIcon = Icons.Outlined.Info,
                 route = Screen.AboutScreen.route

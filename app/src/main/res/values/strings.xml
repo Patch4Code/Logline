@@ -13,8 +13,38 @@
     <string name="poster_description">Poster</string>
     <string name="star_icon_description">StarRate</string>
     <string name="make_public_text">Make Public</string>
+    <string name="menu_icon_description">Open Navigation Drawer</string>
+
+
+    <!-- Screen Titles Strings -->
+    <string name="home_text">Home</string>
+    <string name="profile_text">Profile</string>
+    <string name="watchlist_text">Watchlist</string>
+    <string name="search_text">Search</string>
+    <string name="about_text">About</string>
+    <string name="movies_text">Movies</string>
+    <string name="movie_log_text">Add Diary-Entry</string>
+    <string name="my_movies_text">Movies</string>
+    <string name="movie_public_reviews_text">Public Reviews</string>
+    <string name="diary_text">Diary</string>
+    <string name="diary_edit_element_text">Edit Diary-Entry</string>
     <string name="reviews_text">Reviews</string>
+    <string name="review_detail_text">Review</string>
     <string name="lists_text">Lists</string>
+    <string name="list_text">List</string>
+    <string name="profile_edit_text">Edit Profile</string>
+    <string name="social_text">Social</string>
+    <string name="public_profiles_text">Public Profiles</string>
+    <string name="public_profile_text">Public Profile</string>
+    <string name="public_profile_reviews_text">Profile Reviews</string>
+    <string name="public_profile_lists_text">Profile Lists</string>
+    <string name="public_reviews_text">Public Reviews</string>
+    <string name="public_review_details_text">Public Review</string>
+    <string name="public_lists_text">Public Lists</string>
+    <string name="public_list_text">Public List</string>
+    <string name="settings_text">Settings</string>
+    <string name="empty_text"> </string>
+
 
     <!-- Default Button Strings -->
     <string name="ok_button_text">OK</string>
@@ -57,11 +87,9 @@
 
 
     <!-- HomeView Strings -->
-    <string-array name="home_view_titles">
-        <item>Popular Movies</item>
-        <item>Top Rated Movies</item>
-        <item>Upcoming Movies</item>
-    </string-array>
+    <string name="popular_movies_title">Popular Movies</string>
+    <string name="top_rated_movies_title">Top Rated Movies</string>
+    <string name="upcoming_movies_title">Upcoming Movies</string>
 
 
     <!-- List Strings -->
@@ -146,6 +174,10 @@
     <string name="name_updated_toast">Profile Name was updated</string>
     <string name="search_fav_movie_dialog_title">Search Favourite Movie</string>
 
+    <!-- Ratings Strings -->
+    <string name="change_rating_text">Change Rating</string>
+    <string name="no_text">No</string>
+    <string name="rating_text">Rating</string>
 
     <!-- Reviews Strings -->
     <string name="review_publish_success_toast">Review published</string>
