@@ -24,6 +24,16 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * AboutView - Composable function representing the About screen of the application.
+ * This Screen displays information about the application and provides links to external resources
+ * (Github-Repository and TMDB terms of use)
+ *
+ * @author Patch4Code
+ */
+
 @Composable
 fun AboutView(navViewModel: NavigationViewModel){
 
@@ -35,27 +45,28 @@ fun AboutView(navViewModel: NavigationViewModel){
 
     Column(modifier = Modifier.padding(16.dp))
     {
-        Column (modifier = Modifier
-            .fillMaxWidth()
-            .size(150.dp)
-            .padding(vertical = 8.dp),
+        // Logline Icon center aligned
+        Column (modifier = Modifier.fillMaxWidth().size(150.dp).padding(vertical = 8.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Icon(painter = painterResource(id = R.drawable.loglinelogo_v5), contentDescription = null)
         }
 
+        // Logline Movie App info text
         Text(text = stringResource(id = R.string.extended_app_name), style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.padding(4.dp))
         Text(text = stringResource(id = R.string.logline_info), style = MaterialTheme.typography.bodyLarge)
         Spacer(modifier = Modifier.padding(8.dp))
 
+        // button to open Logline-GitHub link
         ElevatedButton(onClick = { uriHandler.openUri("https://github.com/Patch4Code/Logline") }) {
            Text(text = stringResource(id = R.string.logline_github_button_text))
         }
 
         Spacer(modifier = Modifier.padding(16.dp))
 
+        // TMDB Icon and info text
         Image(
             painter = painterResource(id = R.drawable.tmdb_logo),
             contentDescription = null,
@@ -64,6 +75,8 @@ fun AboutView(navViewModel: NavigationViewModel){
         Spacer(modifier = Modifier.padding(4.dp))
         Text(text = stringResource(id = R.string.tmdb_credits_text))
         Spacer(modifier = Modifier.padding(8.dp))
+
+        // buttons to open TMDB Terms of Use links
         ElevatedButton(onClick = { uriHandler.openUri("https://www.themoviedb.org/terms-of-use") }) {
             Text(text = stringResource(id = R.string.tmdb_terms_of_use_button_text))
         }
