@@ -12,12 +12,20 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.items.MovieListAddMovieCard
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieSearchDialogLazyColumn - Composable function for displaying movie search results in a lazy column
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieSearchDialogLazyColumn(
     searchResult: List<Movie>?,
     selectedMovie: MutableState<Movie?>
 ){
 
+    // Lazy Column of movies that are clickable to select one
     LazyColumn (modifier = Modifier.padding(top = 8.dp)) {
         searchResult?.forEach{ movie->
             item{

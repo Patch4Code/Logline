@@ -5,7 +5,15 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 
-//This class makes it possible to use string resources outside of composable functions
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * UiText - Represents UI text that can be either a dynamic string or a string resource
+ * This class makes it possible to use string resources outside of composable functions
+ *
+ * @author Patch4Code
+ */
+
 sealed class UiText{
     data class DynamicString(val value: String): UiText()
     class StringResource(
@@ -13,6 +21,7 @@ sealed class UiText{
         vararg val args: Any
     ): UiText()
 
+    // Converts the UiText object to a string (only inside composable functions)
     @Composable
     fun asString(): String {
         return when(this) {
@@ -21,6 +30,7 @@ sealed class UiText{
         }
     }
 
+    // Converts UiText object to a string using the provided context
     fun asString(context: Context): String {
         return when(this) {
             is DynamicString -> value

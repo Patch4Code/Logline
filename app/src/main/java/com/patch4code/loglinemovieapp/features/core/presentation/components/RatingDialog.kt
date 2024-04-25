@@ -33,6 +33,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * RatingDialog - Composable function for displaying a rating dialog
+ * allows users to select a rating for a movie (no rating or number from 1 to 10)
+ *
+ * @author Patch4Code
+ */
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DiaryEditRatingDialog(
@@ -43,82 +52,84 @@ fun DiaryEditRatingDialog(
     onCancel: () ->Unit,
     onDelete:()->Unit = {}){
 
-    if(openRatingDialog){
+    if(!openRatingDialog) return
 
-        var movieRating by remember { mutableStateOf(if(rating > 0) rating else 0) }
+    // State to track the selected rating
+    var movieRating by remember { mutableStateOf(if(rating > 0) rating else 0) }
 
-        AlertDialog(
-            onDismissRequest = { onCancel() },
-            title = {
-                Row {
-                    Text(text = stringResource(id = R.string.change_rating_text), modifier = Modifier.weight(1f))
-                    if(movieRating > 0){
-                        Text(text = movieRating.toString(),  fontSize = 40.sp, style = MaterialTheme.typography.headlineLarge )
-                    }else{
-                        Column {
-                            Text(
-                                text = stringResource(id = R.string.no_text),
-                                fontSize = 15.sp,
-                                style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp)
-                            )
-                            Text(
-                                text = stringResource(id = R.string.rating_text),
-                                fontSize = 15.sp,
-                                style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp)
-                            )
-                        }
+    AlertDialog(
+        onDismissRequest = { onCancel() },
+        title = {
+            // Dialog title with selected rating text
+            Row {
+                Text(text = stringResource(id = R.string.change_rating_text), modifier = Modifier.weight(1f))
+                if(movieRating > 0){
+                    Text(text = movieRating.toString(),  fontSize = 40.sp, style = MaterialTheme.typography.headlineLarge )
+                }else{
+                    Column {
+                        Text(
+                            text = stringResource(id = R.string.no_text),
+                            fontSize = 15.sp,
+                            style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp)
+                        )
+                        Text(
+                            text = stringResource(id = R.string.rating_text),
+                            fontSize = 15.sp,
+                            style = MaterialTheme.typography.headlineLarge.copy(lineHeight = 20.sp)
+                        )
                     }
                 }
-                Spacer(modifier = Modifier.padding(32.dp))
-            },
-            text = {
-                Row (verticalAlignment = Alignment.CenterVertically){
-                    for(index in 1 .. 10){
-                        Icon(
-                            modifier = Modifier
-                                .pointerInteropFilter {
-                                    when (it.action) {
-                                        MotionEvent.ACTION_DOWN -> {
-                                            movieRating = if ((movieRating == 1) and (index == 1)) {
-                                                0
-                                            } else {
-                                                index
-                                            }
+            }
+            Spacer(modifier = Modifier.padding(32.dp))
+        },
+        text = {
+            // star icons with selected elements based on movieRating state and click functionality
+            Row (verticalAlignment = Alignment.CenterVertically){
+                for(index in 1 .. 10){
+                    Icon(
+                        modifier = Modifier
+                            .pointerInteropFilter {
+                                when (it.action) {
+                                    MotionEvent.ACTION_DOWN -> {
+                                        movieRating = if ((movieRating == 1) and (index == 1)) {
+                                            0
+                                        } else {
+                                            index
                                         }
                                     }
-                                    true
                                 }
-                                .size(27.dp),
-                            imageVector = if(index <= movieRating){
-                                Icons.Default.StarRate}else Icons.Default.StarOutline,
-                            contentDescription = null,
-                            tint = Color.Yellow)
-                    }
+                                true
+                            }
+                            .size(27.dp),
+                        imageVector = if(index <= movieRating){
+                            Icons.Default.StarRate}else Icons.Default.StarOutline,
+                        contentDescription = null,
+                        tint = Color.Yellow)
                 }
-                Spacer(modifier = Modifier.padding(32.dp))
-            },
-            confirmButton = {
-                Button(onClick = { onAccept(movieRating) }
-                ) {
-                    Text(text = stringResource(id = R.string.ok_button_text))
-                }
-            },
-            dismissButton = {
-                Row (horizontalArrangement = Arrangement.Start){
-                    if(hasDeleteButton){
-                        IconButton(onClick = { onDelete() }) {
-                            Icon(imageVector = Icons.Default.Delete, contentDescription = null)
-                        }
-                        Spacer(modifier = Modifier.padding(28.dp))
+            }
+            Spacer(modifier = Modifier.padding(32.dp))
+        },
+        confirmButton = {
+            Button(onClick = { onAccept(movieRating) }
+            ) {
+                Text(text = stringResource(id = R.string.ok_button_text))
+            }
+        },
+        dismissButton = {
+            Row (horizontalArrangement = Arrangement.Start){
+                if(hasDeleteButton){
+                    IconButton(onClick = { onDelete() }) {
+                        Icon(imageVector = Icons.Default.Delete, contentDescription = null)
                     }
-                    Button(onClick = { onCancel() }) {
-                        Text(text = stringResource(id = R.string.cancel_button_text))
-                    }
+                    Spacer(modifier = Modifier.padding(28.dp))
                 }
-            },
-            modifier = Modifier
-                .padding(0.dp)
-                .width(500.dp),
-        )
-    }
+                Button(onClick = { onCancel() }) {
+                    Text(text = stringResource(id = R.string.cancel_button_text))
+                }
+            }
+        },
+        modifier = Modifier
+            .padding(0.dp)
+            .width(500.dp),
+    )
 }

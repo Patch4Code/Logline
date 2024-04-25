@@ -5,6 +5,14 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DateHelper - Helper object providing methods for data and time conversions
+ *
+ * @author Patch4Code
+ */
+
 object DateHelper {
 
     @SuppressLint("SimpleDateFormat")
@@ -14,7 +22,6 @@ object DateHelper {
 
     @SuppressLint("SimpleDateFormat")
     fun convertDateTimeToLong(dateTime: LocalDateTime): Long{
-        //Log.e("DateHelper", "convertDateTimeToLong: $dateTime, ${dateTime.toInstant(ZoneOffset.UTC).toEpochMilli()}")
         return dateTime.toInstant(ZoneOffset.UTC).toEpochMilli()
     }
 

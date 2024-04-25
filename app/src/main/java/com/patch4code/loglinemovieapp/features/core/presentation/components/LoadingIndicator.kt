@@ -10,6 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * LoadingIndicator - Composable function for displaying a circular loading indicator in the center of the screen
+ *
+ * @author Patch4Code
+ */
+
 @Composable
 fun LoadingIndicator(){
     Column(

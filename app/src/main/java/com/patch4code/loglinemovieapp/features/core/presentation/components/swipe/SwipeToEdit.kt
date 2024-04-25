@@ -30,6 +30,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * swipeToEditContainer - Composable function for swipe-to-edit functionality
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T> swipeToEditContainer(
@@ -69,6 +76,7 @@ fun <T> swipeToEditContainer(
     )
 }
 
+// Composable function for the background of swipe-to-edit
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SwipeEditBackground(swipeDismissState: DismissState){

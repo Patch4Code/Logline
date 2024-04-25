@@ -17,6 +17,13 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.GeneralMovieSearchViewModel
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieSearchDialogTextField - Composable function for the text field in the movie search dialog
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieSearchDialogTextField(
     textInput: MutableState<String>,

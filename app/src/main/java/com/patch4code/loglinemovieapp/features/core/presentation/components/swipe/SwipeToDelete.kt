@@ -30,6 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * swipeToDeleteContainer - Composable function for swipe-to-delete functionality
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T> swipeToDeleteContainer(
@@ -65,6 +72,7 @@ fun <T> swipeToDeleteContainer(
     )
 }
 
+// Composable function for the background of swipe-to-delete
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SwipeDeleteBackground(swipeDismissState: DismissState){

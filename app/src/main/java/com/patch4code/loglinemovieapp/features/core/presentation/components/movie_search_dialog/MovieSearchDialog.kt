@@ -12,6 +12,13 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.GeneralMovieSearchViewModel
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieSearchDialog - Composable function for a movie search dialog
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieSearchDialog(
     title: String,
@@ -23,11 +30,11 @@ fun MovieSearchDialog(
     onDismiss:()->Unit,
     onConfirm:()->Unit
 ){
-
     AlertDialog(
         onDismissRequest = { onDismiss() },
         title = { Text(text = title) },
         text = {
+            // Text-field for search-input and LazyColumn to display search result
             val keyboardController = LocalSoftwareKeyboardController.current
             Column {
                 MovieSearchDialogTextField(textInput, keyboardController, selectedMovie, generalMovieSearchViewModel)

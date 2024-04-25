@@ -17,9 +17,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ExpandableText - Composable function for displaying expandable text
+ *
+ * @author Patch4Code
+ */
+
 @Composable
 fun ExpandableText(text: String, maxLinesCollapsed: Int = 2) {
 
+    // State to track whether to show more text or not
     var showMore by remember { mutableStateOf(false) }
 
     Column (modifier = Modifier.padding(top = 8.dp)){
@@ -30,6 +39,7 @@ fun ExpandableText(text: String, maxLinesCollapsed: Int = 2) {
                 indication = null
             ) { showMore = !showMore }) {
 
+            // Render text with the option to expand or collapse based on the showMore state
             if (showMore) {
                 Text(text = text, style = MaterialTheme.typography.bodyMedium)
             } else {

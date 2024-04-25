@@ -2,21 +2,28 @@ package com.patch4code.loglinemovieapp.features.core.presentation.utils
 
 import java.time.LocalDateTime
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieHelper - Helper Object providing methods for processing movie-related data
+ *
+ * @author Patch4Code
+ */
+
 object MovieHelper {
 
+    // Extracts year from a release date string
     fun extractYear(releaseDate: String?): String {
         return releaseDate?.takeIf { it.isNotEmpty() }?.split("-")?.get(0) ?: "N/A"
     }
 
+    // Generates the complete poster URL for a movie by combining the TMDB base URL with the URL ending provided by the API
     fun processPosterUrl(posterUrl: String?): String {
         return posterUrl?.takeIf { it.isNotEmpty() }?.let { TmdbCredentials.POSTER_URL + it } ?: ""
     }
 
+    // Formats LocalDateTime object into a list of date components (e.g. [1,JAN,2020])
     fun formatDate(dateTime: LocalDateTime): List<String?> {
-
-        //val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        //val date = LocalDate.parse(dateString, formatter)
-
         val monthMap = mapOf(
             1 to "JAN",
             2 to "FEB",
@@ -31,9 +38,7 @@ object MovieHelper {
             11 to "NOV",
             12 to "DEC"
         )
-       //Log.e("Date",date.toString())
-
-        return listOf(dateTime.dayOfMonth.toString(), monthMap[dateTime.monthValue], dateTime.year.toString())//date.format(formatter)
+        return listOf(dateTime.dayOfMonth.toString(), monthMap[dateTime.monthValue], dateTime.year.toString())
     }
 }
 
