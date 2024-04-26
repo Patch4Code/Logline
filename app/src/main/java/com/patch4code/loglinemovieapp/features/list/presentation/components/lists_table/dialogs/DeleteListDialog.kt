@@ -7,6 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DeleteListDialog - Composable function displaying a dialog for deleting a list.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DeleteListDialog(openDeleteListDialog: Boolean, onDelete:()->Unit, onCancel:()->Unit){
 

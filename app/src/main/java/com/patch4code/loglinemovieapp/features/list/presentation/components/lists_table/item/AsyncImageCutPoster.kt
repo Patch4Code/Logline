@@ -8,6 +8,14 @@ import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * AsyncImageCutPoster - Composable function displaying an image asynchronously with a clipped width,
+ * used for ListsItemPreviewImages
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun AsyncImageCutPoster(url:String?){
     AsyncImage(
@@ -18,9 +26,8 @@ fun AsyncImageCutPoster(url:String?){
             .layout { measurable, constraints ->
                 val width = (30 * density).toInt()
 
-                val placeable = measurable.measure(
-                    constraints
-                )
+                val placeable = measurable.measure(constraints)
+
                 layout(width, placeable.height) {
                     placeable.place(-100, 0)
                 }

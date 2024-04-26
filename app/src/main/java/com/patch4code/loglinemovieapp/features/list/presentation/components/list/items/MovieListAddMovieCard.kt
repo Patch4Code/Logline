@@ -19,6 +19,14 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieListAddMovieCard - Composable function represents a card item for adding a movie to a movie list.
+ * Item for a search result of the MovieSearchDialogLazyColumn composable.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieListAddMovieCard(movie: Movie, selectMovie:(movie: Movie) ->Unit){
 

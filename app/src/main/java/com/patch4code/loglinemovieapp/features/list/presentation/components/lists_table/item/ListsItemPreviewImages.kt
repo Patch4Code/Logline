@@ -7,6 +7,14 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ListsItemPreviewImages - Composable function displaying the preview images for a movie list.
+ * Shows up to 3 posters of the list, with the first having full with and the other two half width.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ListsItemPreviewImages(list: MovieList){
 

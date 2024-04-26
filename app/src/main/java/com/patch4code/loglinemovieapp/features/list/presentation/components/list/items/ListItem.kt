@@ -24,6 +24,14 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ListItem - Composable function represents a single item in a list of movies.
+ * Navigates to MovieView on click
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ListItem(navController: NavController, movie: Movie){
 

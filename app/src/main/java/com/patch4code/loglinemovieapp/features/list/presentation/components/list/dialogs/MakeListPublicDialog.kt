@@ -11,6 +11,14 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MakeListPublicDialog - Composable function representing a dialog for making a list public.
+ * Calls the listViewModel and gets success or error response (launches corresponding toast)
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MakeListPublicDialog(openMakeListPublicDialog: MutableState<Boolean>, listViewModel: ListViewModel){
 

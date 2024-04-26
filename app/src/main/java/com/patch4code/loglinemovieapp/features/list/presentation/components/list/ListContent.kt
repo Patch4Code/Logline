@@ -33,6 +33,15 @@ import com.patch4code.loglinemovieapp.features.list.presentation.components.list
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ListContent - Composable function representing the content of a movie list.
+ * Includes a header section with list title, makePublic-button and listSettings-button.
+ * Below that is a LazyColumn with the list items which provide swipe to delete functionality.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ListContent(
     movieList: MovieList?,

@@ -35,6 +35,14 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLDecoder
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ListsTableView - Composable function that displays a certain list of movies.
+ * Provides options for adding and deleting movies and editing the list name.
+ *
+ * @author Patch4Code
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListView(

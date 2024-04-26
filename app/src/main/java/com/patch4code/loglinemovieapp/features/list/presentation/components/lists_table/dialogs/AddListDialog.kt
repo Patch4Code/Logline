@@ -11,6 +11,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * AddListDialog - Composable function displaying a dialog for adding a new list.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String, isPublic: Boolean)->Unit, onCancel:()->Unit){
 

@@ -16,17 +16,26 @@ import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.room_database.MovieListDao
 import kotlinx.coroutines.launch
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ListsTableView - ViewModel responsible for managing data related to the list screen.
+ * Provides methods for adding and removing movies and editing and publishing the movie list.
+ *
+ * @author Patch4Code
+ */
 class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
 
     private val _movieList = MutableLiveData<MovieList>()
     val movieList: LiveData<MovieList> get() = _movieList
 
+    // Sets the movie list data based on id by calling the db
     fun setList(movieList: MovieList) {
         viewModelScope.launch {
             _movieList.value = movieListDao.getMovieListById(movieList.id)
         }
     }
-
+    // Adds a movie to the movie list calling the db
     fun addMovieToList(movie: Movie) {
         val listId = _movieList.value?.id
         viewModelScope.launch {
@@ -34,12 +43,12 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
             _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
         }
     }
-
+    // Checks if a movie is already on the current list
     fun isMovieAlreadyOnList(movie: Movie): Boolean{
         val movieList = _movieList.value?.movies
         return movieList?.contains(movie) ?: false
     }
-
+    // Removes a movie from the movie list calling the db
     fun removeMovieFromList(movieId: Int) {
         val listId = _movieList.value?.id
         viewModelScope.launch {
@@ -47,7 +56,7 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
             _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
         }
     }
-
+    // Edits the movie list parameters calling the db
     fun editList(newTitle: String, newIsPublicState: Boolean){
         val listId = _movieList.value?.id
         viewModelScope.launch {
@@ -55,7 +64,7 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
             _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
         }
     }
-
+    // Deletes the movie list calling the db
     fun deleteList(){
         val listId = _movieList.value?.id
         viewModelScope.launch {
@@ -63,6 +72,7 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
         }
     }
 
+    // Makes the movie list public communicating with Back4App database
     fun makeListPublic(onSuccess:(publishStatus: String)->Unit, onError:(exception: Exception)->Unit){
         viewModelScope.launch {
             val publishStatus: String
@@ -73,17 +83,17 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
                 query.whereEqualTo("user", ParseUser.getCurrentUser())
                 _movieList.value?.id?.let { query.whereEqualTo("listId", it) }
                 val existingMovieList = query.find().firstOrNull()
-                Log.e("ListViewModel", "existingMovieList: $existingMovieList")
+                //Log.e("ListViewModel", "existingMovieList: $existingMovieList")
 
                 val movieList: ParseObject
                 if(existingMovieList != null){
                     publishStatus = "Updated"
                     movieList = existingMovieList
-                    Log.e("ListViewModel", "Update")
+                    //Log.e("ListViewModel", "Update")
                 }else{
                     publishStatus = "Newly Published"
                     movieList = ParseObject("MovieList")
-                    Log.e("ListViewModel", "create")
+                    //Log.e("ListViewModel", "create")
                 }
 
                 movieList.put("user", user)
@@ -101,14 +111,11 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
                 movieList.saveInBackground{exception->
                     if(exception == null){
                         onSuccess(publishStatus)
-                        //Log.e("ListViewModel", "Success")
                     }else{
                         onError(exception)
                         Log.e("ListViewModel", "Error: ", exception)
                     }
                 }
-
-
             }catch (e: Exception){
                 Log.e("ListViewModel", "Catch Error: ", e)
                 onError(e)
@@ -117,7 +124,7 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
     }
 }
 
-
+// Factory-class for creating ListViewModel instances to manage access to the database
 class ListViewModelFactory(private val movieListDao: MovieListDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListViewModel::class.java)) {

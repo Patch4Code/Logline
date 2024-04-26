@@ -17,6 +17,14 @@ import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import java.net.URLEncoder
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ListsTableItem - Composable function representing an item in the lists table.
+ * Navigates to the ListView on click.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ListsTableItem(navController: NavController, list: MovieList){
 

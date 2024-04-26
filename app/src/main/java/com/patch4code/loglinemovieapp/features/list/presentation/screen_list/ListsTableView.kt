@@ -21,6 +21,14 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ListsTableView - Composable function that displays the ListsTable screen.
+ * Displays the user's movie lists and provides options to add, delete and navigate to a list.
+ *
+ * @author Patch4Code
+ */
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListsTableView(
@@ -45,6 +53,7 @@ fun ListsTableView(
 
     Scaffold (
         floatingActionButton = {
+            // ActionButton to add a new list
             FloatingActionButton(onClick = { openAddListDialog.value = true }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(id = R.string.list_table_add_list_description_text))
             }

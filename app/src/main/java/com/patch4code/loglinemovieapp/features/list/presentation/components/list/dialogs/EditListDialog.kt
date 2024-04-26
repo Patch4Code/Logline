@@ -11,6 +11,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * EditListDialog - Composable function representing a dialog for editing a list.
+ * Allows the user to change the list name.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun EditListDialog(
     initialMovieTitle: String,

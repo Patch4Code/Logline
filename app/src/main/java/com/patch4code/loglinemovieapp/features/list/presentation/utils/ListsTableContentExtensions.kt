@@ -6,8 +6,16 @@ import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListsTableViewModel
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ListsTableContentExtensions - Provides extension functions for managing list table content.
+ *
+ * @author Patch4Code
+ */
 object ListsTableContentExtensions{
 
+    // add a new list to the table
     fun ListsTableViewModel.onAddList(listName: String, isPublic: Boolean, openAddListDialog: MutableState<Boolean>
     ) {
         openAddListDialog.value = false

@@ -24,6 +24,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ListSettingsBottomSheet - Composable function representing a bottom sheet for list settings.
+ * Contains button to delete and to edit the list.
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListSettingsBottomSheet(showBottomSheet: Boolean, onClose:()->Unit, onEdit:()->Unit, onDelete:()->Unit){
