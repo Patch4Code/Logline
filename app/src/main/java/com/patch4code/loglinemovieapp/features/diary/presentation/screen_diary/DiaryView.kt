@@ -17,6 +17,14 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryView - Composable function to display diary logs from the db
+ * displays list of MovieLoggedItems and provides swipe to edit functionality
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiaryView(
     navController: NavController,
@@ -34,15 +42,12 @@ fun DiaryView(
 
     val diaryLogs = diaryViewModel.diaryLogs.observeAsState().value
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
+    LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         items(diaryLogs ?: emptyList()) { loggedItem ->
             swipeToEditContainer(
                 item = loggedItem,
                 onEdit = {
+                    // navigate to DiaryEditElementScreen on swipe (parameters: loggedElementId and comingFromDiaryView (boolean))
                     navController.navigate("${Screen.DiaryEditElementScreen.route}/${loggedItem.id}/${true}")
                 })
             {_->

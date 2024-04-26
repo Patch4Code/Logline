@@ -7,6 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryEditDeleteDialog - Composable function representing a delete confirmation dialog for the diary edit section.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiaryEditDeleteDialog(openDeleteDialog: Boolean, onDelete:() ->Unit, onCancel: () ->Unit){
 

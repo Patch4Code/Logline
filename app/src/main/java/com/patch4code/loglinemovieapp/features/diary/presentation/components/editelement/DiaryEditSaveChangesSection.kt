@@ -18,6 +18,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryEditSaveChangesSection - Composable function representing the section of
+ * the DiaryEditElementView for saving changes or discarding them.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiaryEditSaveChangesSection(isEdit: Boolean = true, onSaveChanges: () -> Unit, onDiscardChanges: () -> Unit){
 
@@ -28,6 +36,7 @@ fun DiaryEditSaveChangesSection(isEdit: Boolean = true, onSaveChanges: () -> Uni
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
 
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        // save DiaryEdit button with toast message
         IconButton(
             onClick = {
             if (isEdit){ Toast.makeText(context, toastText, Toast.LENGTH_LONG).show() }
@@ -36,6 +45,7 @@ fun DiaryEditSaveChangesSection(isEdit: Boolean = true, onSaveChanges: () -> Uni
         ){
             Icon(imageVector = Icons.Default.Check, contentDescription = stringResource(id = R.string.diary_edit_save_description_text))
         }
+        // discard DiaryEdit changes button
         IconButton(onClick = { onDiscardChanges() }) {
             Icon(imageVector = Icons.Default.Close, contentDescription = stringResource(id = R.string.diary_edit_exit_description_text))
         }

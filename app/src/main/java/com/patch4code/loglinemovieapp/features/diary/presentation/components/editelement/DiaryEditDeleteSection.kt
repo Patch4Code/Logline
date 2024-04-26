@@ -11,6 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryEditDeleteSection - Composable function representing a section (button) of
+ * the DiaryEditElementView for opening a dialog to delete the diary entry
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiaryEditDeleteSection(onButtonPressed:() -> Unit ){
     TextButton(onClick = { onButtonPressed() }) {

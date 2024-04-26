@@ -13,6 +13,14 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.DateHelper
 import java.time.LocalDateTime
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryEditDateSection - Composable function representing a section (button) of
+ * the DiaryEditElementView for opening a dialog for editing the watch date
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiaryEditDateSection(watchDateTime: LocalDateTime, onButtonPressed: () -> Unit){
     TextButton(onClick = { onButtonPressed() }) {

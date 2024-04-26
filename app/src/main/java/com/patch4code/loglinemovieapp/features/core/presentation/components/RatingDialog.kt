@@ -36,12 +36,11 @@ import com.patch4code.loglinemovieapp.R
 /**
  * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
  *
- * RatingDialog - Composable function for displaying a rating dialog
- * allows users to select a rating for a movie (no rating or number from 1 to 10)
+ * RatingDialog - Composable function for displaying a rating dialog.
+ * Allows users to select a rating for a movie (no rating or number from 1 to 10)
  *
  * @author Patch4Code
  */
-
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DiaryEditRatingDialog(

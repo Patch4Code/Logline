@@ -14,6 +14,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryEditReviewSection - Composable function representing a section (clickable OutlinedCard)
+ * of the DiaryEditElementView for opening a dialog for editing the review
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiaryEditReviewSection(reviewText: String, onEditReviewPressed:()->Unit){
 

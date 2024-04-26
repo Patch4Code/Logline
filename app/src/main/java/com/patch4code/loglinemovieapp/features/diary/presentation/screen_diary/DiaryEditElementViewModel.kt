@@ -12,17 +12,27 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneOffset
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryEditElementViewModel - ViewModel responsible for managing the editing of diary entries
+ * provides methods for updating or deleting a set diary entry (based on its id)
+ *
+ * @author Patch4Code
+ */
 class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
 
     private val _diaryEntry = MutableLiveData<LoggedMovie>()
     val diaryEntry: LiveData<LoggedMovie> get() = _diaryEntry
 
+    // initial function to set diary entry based on diaryEntryId from db
     fun setDiaryEntryToEdit(diaryEntryId: String?){
         viewModelScope.launch {
             _diaryEntry.value = loggedMovieDao.getLoggedMovieById(diaryEntryId)
         }
     }
 
+    // function to update the current diary entry (rating, watch-date, review) in db
     fun updatedDiaryEntry(rating: Int, watchDate: LocalDateTime, review: String){
         viewModelScope.launch {
             _diaryEntry.value?.id?.let { diaryEntryId ->
@@ -30,6 +40,7 @@ class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): Vie
         }
     }
 
+    // Adjusts LocalDateTime to prevent conflicts with existing diary entries
     suspend fun adjustedDateTime(date: LocalDateTime): LocalDateTime{
         // Filter out entries with the same date as the given date - here with sample data
         val startOfDayMillis = date.toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.UTC)
@@ -50,6 +61,7 @@ class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): Vie
         }
     }
 
+    // function to delete the current diary entry from db
     fun deleteDiaryEntry(){
         viewModelScope.launch {
             _diaryEntry.value?.let { loggedMovieDao.deleteLoggedMovie(it) }
@@ -57,7 +69,7 @@ class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): Vie
     }
 }
 
-
+// Factory-class for creating DiaryEditElementViewModel instances to manage access to the database
 class DiaryEditElementViewModelFactory(private val loggedMovieDao: LoggedMovieDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DiaryEditElementViewModel::class.java)) {

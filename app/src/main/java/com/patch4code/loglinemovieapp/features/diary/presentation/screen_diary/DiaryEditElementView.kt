@@ -37,6 +37,14 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryEditElementView - Composable function for editing diary elements
+ * This composable function provides  UI for editing diary elements, including ratings, dates, reviews, and deletion
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiaryEditElementView(
     navController: NavController,
@@ -62,6 +70,7 @@ fun DiaryEditElementView(
     var watchDateTime by remember { mutableStateOf(LocalDateTime.now()) }
     var review by remember { mutableStateOf("") }
 
+    // Set initial values when diaryEntry is available
     DisposableEffect(diaryEntry) {
         if (diaryEntry != null) {
             rating = diaryEntry.rating
@@ -71,6 +80,7 @@ fun DiaryEditElementView(
         onDispose {}
     }
 
+    // Mutable state variables for controlling dialog visibility
     val openDiscardDialog = remember { mutableStateOf(false)  }
     val openDatePickerDialog = remember { mutableStateOf(false)}
     val openRatingDialog = remember { mutableStateOf(false)}
@@ -78,6 +88,7 @@ fun DiaryEditElementView(
     val openEditReviewDialog = remember { mutableStateOf(false)}
 
     BackHandler {
+        // Handle back press to open discard dialog
         openDiscardDialog.value = true
     }
 
@@ -115,7 +126,6 @@ fun DiaryEditElementView(
             },
             onCancel = {openRatingDialog.value = false}
         )
-
         DiaryEditDatePickerDialog(
             watchDateTime = watchDateTime,
             openDatePickerDialog = openDatePickerDialog.value,
@@ -127,7 +137,6 @@ fun DiaryEditElementView(
             },
             onCancel = { openDatePickerDialog.value = false }
         )
-
         DiaryEditReviewDialog(
             openEditReviewDialog = openEditReviewDialog.value,
             review = review,
@@ -137,7 +146,6 @@ fun DiaryEditElementView(
             },
             onCancel = { openEditReviewDialog.value = false }
         )
-
         DiaryEditDiscardDialog(
             openDiscardDialog = openDiscardDialog.value,
             onDiscard = { openDiscardDialog.value = false
@@ -145,7 +153,6 @@ fun DiaryEditElementView(
             },
             onCancel = { openDiscardDialog.value = false }
         )
-
         DiaryEditDeleteDialog(
             openDeleteDialog = openDeleteDialog.value,
             onDelete = { openDeleteDialog.value = false

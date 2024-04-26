@@ -3,10 +3,18 @@ package com.patch4code.loglinemovieapp.features.diary.presentation.utils
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryNavigationExtensions - Helper object for navigation related to the diary
+ *
+ * @author Patch4Code
+ */
+
 object DiaryNavigationExtensions {
 
+    // Handles navigation weather the user is coming from DiaryView or not (in that case from ReviewDetailsView)
     fun NavController.navigateOnDiaryEditSaveOrDiscard(isDeleteAction: Boolean = false, comingFromDiaryView: Boolean?){
-
         if(comingFromDiaryView == true){
             handleDiaryScreenNavigation(isDeleteAction)
         }else{
@@ -43,5 +51,4 @@ object DiaryNavigationExtensions {
             popBackStack()
         }
     }
-
 }

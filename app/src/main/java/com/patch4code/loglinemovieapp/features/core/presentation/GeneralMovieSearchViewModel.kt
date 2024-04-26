@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
  *
  * @author Patch4Code
  */
-
 class GeneralMovieSearchViewModel: ViewModel() {
 
     private val tmdbApiService: TmdbApiService by lazy {

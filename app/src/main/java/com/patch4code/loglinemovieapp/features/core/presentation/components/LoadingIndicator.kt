@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
  *
  * @author Patch4Code
  */
-
 @Composable
 fun LoadingIndicator(){
     Column(

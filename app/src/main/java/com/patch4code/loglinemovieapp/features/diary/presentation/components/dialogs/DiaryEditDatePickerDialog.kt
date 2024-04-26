@@ -13,6 +13,14 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.DateHelper
 import java.time.LocalDateTime
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryEditDatePickerDialog - Composable function representing a date picker dialog for the diary edit section.
+ * Uses Material3 DatePickerDialog
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryEditDatePickerDialog(watchDateTime: LocalDateTime, openDatePickerDialog: Boolean, onAccept:(dateTime: LocalDateTime) ->Unit, onCancel: () ->Unit){

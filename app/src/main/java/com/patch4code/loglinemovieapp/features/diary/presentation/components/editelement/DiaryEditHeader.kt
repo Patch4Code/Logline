@@ -15,6 +15,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * DiaryEditHeader - Composable function representing the header of the diary edit screen.
+ * Displays movie-poster, movie-title and release-year
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiaryEditHeader(movieTitle: String, moviePosterUrl: String, movieYear: String){
     Row (modifier = Modifier

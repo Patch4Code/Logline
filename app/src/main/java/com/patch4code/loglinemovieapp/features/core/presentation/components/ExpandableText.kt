@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
  *
  * @author Patch4Code
  */
-
 @Composable
 fun ExpandableText(text: String, maxLinesCollapsed: Int = 2) {
 
