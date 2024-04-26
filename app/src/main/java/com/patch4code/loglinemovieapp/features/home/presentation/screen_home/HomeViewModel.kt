@@ -13,7 +13,14 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import kotlinx.coroutines.launch
 
-
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * HomeViewModel - ViewModel responsible for managing data related to the home screen.
+ * Loads data for popular, top-rated, and upcoming movies from the TMDB API.
+ *
+ * @author Patch4Code
+ */
 class HomeViewModel : ViewModel(){
 
     private val tmdbApiService: TmdbApiService by lazy {
@@ -21,18 +28,16 @@ class HomeViewModel : ViewModel(){
     }
 
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     private val _popularMovies = MutableLiveData<List<Movie>>()
     private val _topRatedMovies = MutableLiveData<List<Movie>>()
     private val _upcomingMovies = MutableLiveData<List<Movie>>()
+
     private val _homeMoviesMap = MutableLiveData<Map<UiText.StringResource, List<Movie>>>()
+    val homeMoviesMap: LiveData<Map<UiText.StringResource, List<Movie>>> get() = _homeMoviesMap
 
-    val homeMoviesMap: LiveData<Map<UiText.StringResource, List<Movie>>>
-        get() = _homeMoviesMap
-
-
+    // Loads data for popular, top-rated, and upcoming movies from the TMDB API and updates loading status
     fun loadHomeViewData(){
         viewModelScope.launch {
             try {
@@ -61,7 +66,7 @@ class HomeViewModel : ViewModel(){
         }
     }
 
-
+    // creates homeMoviesMap from the loaded data
     private fun updateHomeMovieMap() {
         val popularMovies = _popularMovies.value ?: emptyList()
         val topRatedMovies = _topRatedMovies.value ?: emptyList()

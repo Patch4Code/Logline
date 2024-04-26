@@ -19,7 +19,13 @@ import com.patch4code.loglinemovieapp.features.home.presentation.components.Movi
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
-
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * HomeView - Composable function representing the home screen view.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun HomeView(navController: NavController, navViewModel: NavigationViewModel, homeViewModel: HomeViewModel = viewModel()){
 
@@ -38,9 +44,11 @@ fun HomeView(navController: NavController, navViewModel: NavigationViewModel, ho
         LazyColumn {
             homeMoviesMap?.forEach { (groupName, movies) ->
                 item {
+                    // row title
                     Text(text = groupName.asString(),
                         modifier = Modifier.padding(top = 16.dp, start = 16.dp),
                         fontWeight = FontWeight.Bold)
+                    // lazy row of movies based on given list
                     LazyRow {
                         items(movies) { movie ->
                             MovieHomeBrowseCard(navController, movie)

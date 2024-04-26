@@ -27,6 +27,14 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieHomeBrowseCard - Composable card component for displaying movie information in the home browsing section.
+ * Navigates to MovieView on-click
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieHomeBrowseCard(navController: NavController, movie: Movie) {
 
@@ -53,8 +61,7 @@ fun MovieHomeBrowseCard(navController: NavController, movie: Movie) {
                 .height(200.dp)
                 .width(133.dp),
                 backgroundColor = Color.DarkGray
-            )
-            {
+            ){
                 AsyncImage(
                     model = posterUrl,
                     contentDescription = "$title${stringResource(id = R.string.poster_description_appendage)}",
