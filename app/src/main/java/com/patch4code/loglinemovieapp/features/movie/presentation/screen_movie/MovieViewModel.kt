@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,10 +15,17 @@ import com.patch4code.loglinemovieapp.features.movie.domain.model.CountryProvide
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
-import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieViewModel - F responsible for managing movie data locally and from TMDB api.
+ *
+ * @param dao The DAO for accessing movie user data from the db.
+ * @author Patch4Code
+ */
 class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
 
     private val tmdbApiService: TmdbApiService by lazy {
@@ -32,7 +38,6 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     private val _movieVideo = MutableLiveData<MovieVideo?>()
     val movieVideo: LiveData<MovieVideo?> get() = _movieVideo
 
-    private lateinit var settingsDataStore: StoreSettings
     private val _countryProviders = MutableLiveData<CountryProviders?>()
     val countryProviders: LiveData<CountryProviders?> get() = _countryProviders
 
@@ -52,6 +57,7 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     val isLoading: LiveData<Boolean> get() = _isLoading
 
 
+    // Loads all movie data including details, credits, collection, videos, and providers from TMDB api.
     fun loadAllMovieData(movieId: Int) {
         _isLoading.value = true
 
@@ -83,9 +89,7 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         }
     }
 
-    fun initializeSettingsDataStore(context: Context) {
-        settingsDataStore = StoreSettings(context)
-    }
+    // Loads movie providers based on the provided country (from the settings) using TMDB api.
     fun loadMovieProviders(movieId: Int, country: String){
         //Log.e("MovieViewModel", "Country: $country")
         viewModelScope.launch {
@@ -102,7 +106,7 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         }
     }
 
-
+    // Loads user rating and watchlist status for a movie from the db.
     fun loadRatingAndWatchlistStatusById(id: Int){
         var movieUserData: MovieUserData?
         viewModelScope.launch {
@@ -117,6 +121,7 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         }
     }
 
+    // Updates the user rating for a movie by accessing the db.
     fun changeRating(id: Int?, rating: Int){
         val movie = Movie(
             title = _detailsData.value?.title ?: "N/A",
@@ -131,6 +136,7 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         _myRating.value = rating
     }
 
+    // Updates the watchlist status for a movie by accessing the db.
     fun changeOnWatchlist(id: Int?, newOnWatchlistState: Boolean){
         val movie = Movie(
             title = _detailsData.value?.title ?: "N/A",
@@ -146,6 +152,7 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     }
 }
 
+// Factory-class for creating MovieViewModel instances to manage access to the database
 class MovieViewModelFactory(private val dao: MovieUserDataDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MovieViewModel::class.java)) {

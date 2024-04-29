@@ -40,6 +40,13 @@ import kotlinx.coroutines.launch
 import java.net.URLDecoder
 import java.time.LocalDateTime
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieLogView - Composable function that displays the UI for logging a movie.
+ *
+ * @author Patch4Code
+ */
 @SuppressLint("SimpleDateFormat")
 @Composable
 fun MovieLogView(

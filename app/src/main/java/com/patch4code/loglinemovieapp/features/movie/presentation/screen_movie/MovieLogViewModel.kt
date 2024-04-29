@@ -12,11 +12,21 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneOffset
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieLogViewModel - MovieLogViewModel responsible for managing the logging of a movie.
+ *
+ * @param loggedMovieDao The DAO for accessing logged movie data from the db.
+ * @param userDataDao The DAO for accessing movie user data from the db.
+ * @author Patch4Code
+ */
 class MovieLogViewModel(
     private val loggedMovieDao: LoggedMovieDao,
     private val userDataDao: MovieUserDataDao
 ): ViewModel() {
 
+    // Adds a movie log entry with the provided details to the db.
     fun addMovieLog(movie: Movie, date: LocalDateTime, rating: Int, review: String){
 
         viewModelScope.launch {
@@ -30,14 +40,14 @@ class MovieLogViewModel(
         removeFromWatchlist(movie)
     }
 
-
+    // Updates the rating of a movie in the db.
     private fun updateRating(movie: Movie, rating: Int){
         viewModelScope.launch {
             userDataDao.updateOrInsertRating(movie, rating)
         }
     }
 
-
+    // Adjusts the date and time of a log entry to avoid conflicts with existing entries on the same date.
     suspend fun adjustedDateTime(date: LocalDateTime): LocalDateTime{
         // Filter out entries with the same date as the given date - here with sample data
         val startOfDayMillis = date.toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.UTC)
@@ -58,7 +68,7 @@ class MovieLogViewModel(
         }
     }
 
-
+    // Removes a movie from the user's watchlist by accessing the db.
     private fun removeFromWatchlist(movie: Movie){
         viewModelScope.launch {
             userDataDao.updateOrInsertOnWatchlist(movie, false)
@@ -66,7 +76,7 @@ class MovieLogViewModel(
     }
 }
 
-
+// Factory-class for creating MovieLogViewModel instances to manage access to the database
 class MovieLogViewModelFactory(private val loggedMovieDao: LoggedMovieDao, private val movieUserDataDao: MovieUserDataDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MovieLogViewModel::class.java)) {

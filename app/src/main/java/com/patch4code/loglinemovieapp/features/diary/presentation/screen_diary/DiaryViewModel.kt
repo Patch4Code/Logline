@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
  * DiaryViewModel - ViewModel responsible for managing diary logs data.
  * Retrieves and provides diary logs from the db
  *
+ * @param loggedMovieDao The DAO for accessing movie log data from the db.
  * @author Patch4Code
  */
 class DiaryViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {

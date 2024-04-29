@@ -6,6 +6,13 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieCastAndCrew - Composable function that displays the cast and crew of a movie.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieCastAndCrew(movieCredits: MovieCredits?, navController: NavController){
 

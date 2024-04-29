@@ -13,6 +13,13 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Genre
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieGenres - Composable function that displays the genres of the movie.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieGenres(genres: List<Genre>?){
 

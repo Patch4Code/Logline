@@ -15,7 +15,15 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.CountryProviders
 
-
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieWatchProviders - Composable functions that displays the watch providers section for a movie.
+ * Shows streaming and rent/buy services and also provides a link to JustWatch for the movie to get
+ * more details about the watch providers.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieWatchProviders(
     movieProviders: CountryProviders?,
@@ -34,6 +42,7 @@ fun MovieWatchProviders(
         ProviderSection(movieProviders.rent, stringResource(id = R.string.rent_buy_title))
     }
 
+    // JustWatch reference
     Row(modifier = Modifier.padding(start = 10.dp, top = 10.dp)){
         Text(text = stringResource(id = R.string.source_title))
         Text(text = "JustWatch", fontStyle = FontStyle.Italic)

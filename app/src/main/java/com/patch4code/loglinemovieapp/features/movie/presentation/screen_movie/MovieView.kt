@@ -26,7 +26,13 @@ import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLEncoder
 
-
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieView - Composable function that displays details and related information about a movie.
+ *
+ * @author Patch4Code
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MovieView(
@@ -44,7 +50,7 @@ fun MovieView(
 
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MovieScreen)
-        movieViewModel.initializeSettingsDataStore(context)
+        //movieViewModel.initializeSettingsDataStore(context)
         movieViewModel.loadRatingAndWatchlistStatusById(movieId)
         movieViewModel.loadAllMovieData(movieId)
     }

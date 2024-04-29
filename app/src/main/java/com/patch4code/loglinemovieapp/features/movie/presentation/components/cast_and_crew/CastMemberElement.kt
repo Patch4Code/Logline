@@ -28,6 +28,15 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Cast
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * CastMemberElement - Composable function that Displays a single cast member element, including
+ * their profile image, name, and character played.
+ * Allows navigation to person's details screen upon clicking.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun CastMemberElement(castMember: Cast, navController: NavController) {
 
@@ -37,6 +46,7 @@ fun CastMemberElement(castMember: Cast, navController: NavController) {
             .clickable { navController.navigate("${Screen.PersonDetailsScreen.route}/${castMember.id}") },
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        // Display profile image if available
         if(!castMember.profilePath.isNullOrEmpty()){
             AsyncImage(
                 model = TmdbCredentials.OTHER_IMAGE_URL + castMember.profilePath,
@@ -51,6 +61,7 @@ fun CastMemberElement(castMember: Cast, navController: NavController) {
             )
         }
         else{
+            // If profile image is not available, display placeholder icon
             Icon(
                 imageVector = Icons.Default.AccountCircle,
                 modifier = Modifier

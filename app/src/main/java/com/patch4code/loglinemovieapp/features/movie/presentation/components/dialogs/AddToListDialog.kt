@@ -21,6 +21,13 @@ import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.A
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.AddToListViewModelFactory
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * AddToListDialog - Composable function that displays a dialog for adding a movie to a movie list.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun AddToListDialog(
     openAddToListDialog: MutableState<Boolean>,
@@ -30,8 +37,10 @@ fun AddToListDialog(
         factory = AddToListViewModelFactory(db.movieListDao)
     )
 ){
+    // If the dialog is not open, return early
     if (!openAddToListDialog.value) return
 
+    // Update user movie lists by calling the addToListViewModel when dialog is opened
     LaunchedEffect(Unit){
         addToListViewModel.updateUserMovieLists()
     }
@@ -39,6 +48,7 @@ fun AddToListDialog(
     val context = LocalContext.current
     val toastText = stringResource(id = R.string.add_to_list_dialog_toast)
 
+    // Create a Movie object from movie details
     val currentMovie = Movie(
         title = movieDetails?.title ?: "N/A",
         id = movieDetails?.id ?: -1,
@@ -46,9 +56,12 @@ fun AddToListDialog(
         posterUrl = movieDetails?.posterPath ?: ""
     )
 
+    // Set the movie to be added when dialog is opened
     LaunchedEffect(Unit){
         addToListViewModel.setMovieToAdd(currentMovie)
     }
+
+    // Get movie lists and track list
     val myUserMovieLists = addToListViewModel.userMovieLists.observeAsState().value
     val selectedList = remember { mutableStateOf<MovieList?>(null) }
 

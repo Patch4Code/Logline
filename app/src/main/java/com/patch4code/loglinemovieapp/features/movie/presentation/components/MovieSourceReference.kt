@@ -23,6 +23,13 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 import kotlinx.coroutines.launch
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieSourceReference - Composable function that displays the source reference for the movie data.
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieSourceReference(){

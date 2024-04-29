@@ -38,24 +38,35 @@ import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MoviePosterPopup - Composable function that displays a popup with the movie poster.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MoviePosterPopup(openPosterPopup: Boolean, movieDetails: MovieDetails?, onPosterPopupClose:() -> Unit){
 
     if(openPosterPopup){
 
+        // State variables to control the visibility of the close button and track touch events
         var isButtonVisible by remember { mutableStateOf(true) }
         var touchTime by remember { mutableStateOf(System.currentTimeMillis()) }
 
+        // Animate the close button based on its visibility state
         val translateY by animateFloatAsState(
             targetValue = if(isButtonVisible) 0f else -200f,
             animationSpec = tween(durationMillis = 1500),
             label = ""
         )
 
+        // Handle back button press to close the popup
         BackHandler {
             onPosterPopupClose()
         }
 
+        // Effect to automatically hide the close button after a delay
         LaunchedEffect(isButtonVisible) {
             if (isButtonVisible) {
                 delay(4000)
@@ -65,6 +76,7 @@ fun MoviePosterPopup(openPosterPopup: Boolean, movieDetails: MovieDetails?, onPo
             }
         }
 
+        // Surface containing the poster image and close button
         Surface(
             modifier = Modifier
                 .fillMaxSize()
@@ -87,6 +99,7 @@ fun MoviePosterPopup(openPosterPopup: Boolean, movieDetails: MovieDetails?, onPo
                     modifier = Modifier.fillMaxWidth(),
                     error = painterResource(id = R.drawable.movie_poster_placeholder)
                 )
+                // Close button aligned to the top right corner of the surface
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End

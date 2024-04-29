@@ -23,9 +23,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * CreditsSectionList - Composable function that Displays a list of items (cast or crew members)
+ * in a horizontal scrolling layout with a title. It supports lazy loading for large lists,
+ * displaying a loading indicator when more items are being loaded.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun <T> CreditsSectionList(title: String, items: List<T>, content: @Composable (T) -> Unit) {
 
+    // If the list is empty or null, return early
     if(items.isNullOrEmpty()) return
 
     var maxIndex by remember { mutableStateOf(5) }
@@ -41,14 +51,17 @@ fun <T> CreditsSectionList(title: String, items: List<T>, content: @Composable (
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             content = {
                 for (index in 0 until maxIndex.coerceAtMost(items.size)) {
+                    // Render each item using the provided content composable function
                     content(items[index])
+                    // If the scroll state reaches the end, trigger lazy loading
                     if (scrollState.value == scrollState.maxValue) {
                         LaunchedEffect(Unit) {
-                            delay(1000)
-                            maxIndex = items.size
+                            delay(1000) // Add delay for smooth scrolling
+                            maxIndex = items.size // Set maxIndex to show all items
                         }
                     }
                 }
+                // Display loading indicator if more items are available
                 if (maxIndex < items.size) {
                     Column(modifier = Modifier.padding(top = 8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,

@@ -2,6 +2,13 @@ package com.patch4code.loglinemovieapp.features.movie.domain.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieDetails - Represents detailed information about a movie from TMDB.
+ *
+ * @author Patch4Code
+ */
 data class MovieDetails(
     @SerializedName("adult") val adult: Boolean = false,
     @SerializedName("backdrop_path") val backdropPath: String = "",
@@ -30,6 +37,7 @@ data class MovieDetails(
     @SerializedName("vote_count") val voteCount: Int = 0
 )
 
+// Collection - Represents a collection to which a movie belongs.
 data class Collection(
     @SerializedName("id") val id: Int = 0,
     @SerializedName("name") val name: String = "",
@@ -37,11 +45,13 @@ data class Collection(
     @SerializedName("backdrop_path") val backdropPath: String = ""
 )
 
+// Genre - Represents a genre associated with a movie.
 data class Genre(
     @SerializedName("id") val id: Int = 0,
     @SerializedName("name") val name: String = ""
 )
 
+// ProductionCompany - Represents a production company involved in a movie.
 data class ProductionCompany(
     @SerializedName("id") val id: Int = 0,
     @SerializedName("logo_path") val logoPath: String = "",
@@ -49,11 +59,13 @@ data class ProductionCompany(
     @SerializedName("origin_country") val originCountry: String = ""
 )
 
+// ProductionCountry - Represents a production country for a movie.
 data class ProductionCountry(
     @SerializedName("iso_3166_1") val iso31661: String = "",
     @SerializedName("name") val name: String = ""
 )
 
+// SpokenLanguage - Represents a spoken language in a movie.
 data class SpokenLanguage(
     @SerializedName("english_name") val englishName: String = "",
     @SerializedName("iso_639_1") val iso6391: String = "",

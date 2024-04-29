@@ -24,6 +24,15 @@ import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieHeader - Composable function that displays the header section of the movie details.
+ * It shows the poster (clickable to maximise it), the title, year and runtime as well as
+ * the MovieHeaderToolbar (with users rating, onWatchlist-Button and add to list button)
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieHeader(
     movieDetails: MovieDetails?,
@@ -49,8 +58,10 @@ fun MovieHeader(
                 error = painterResource(id = R.drawable.movie_poster_placeholder))
         }
         Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)){
+            // movie title
             Text(text = movieTitle, style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.padding(4.dp))
+            // release year and runtime
             Text(text = "$movieYear | $movieRuntime min", style = MaterialTheme.typography.bodyMedium)
             MovieHeaderToolbar(movieDetails, movieViewModel, db)
         }

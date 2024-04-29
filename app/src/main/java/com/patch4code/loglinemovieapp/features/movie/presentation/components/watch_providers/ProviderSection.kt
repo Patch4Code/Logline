@@ -20,15 +20,24 @@ import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Provider
 
-
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * ProviderSection - Composable function that displays the section for a watch provider element
+ * (streaming or rent/buy)
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProviderSection(providerList: List<Provider>?, title: String){
 
     if (providerList != null){
         Column (modifier = Modifier.padding(4.dp)) {
+            // Title of the provider section
             Text(text = title, modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)
             Row {
                 var maxIndex = -1
+                // Display up to four provider icons
                 providerList.forEachIndexed { index, provider ->
                     maxIndex = index
                     if (index < 4){
@@ -43,6 +52,7 @@ fun ProviderSection(providerList: List<Provider>?, title: String){
                         )
                     }
                 }
+                // Display a "+" indicator if there are more than four watch providers
                 if(maxIndex > 4){
                     Card (modifier = Modifier
                         .size(30.dp)

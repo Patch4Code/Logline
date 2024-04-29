@@ -32,6 +32,14 @@ import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.M
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import com.patch4code.loglinemovieapp.ui.theme.LightBlue
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieHeaderToolbar - Composable function that displays the toolbar section in the movie header.
+ * Provides functionality of options for adding/editing rating, adding to watchlist, and adding to a list.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewModel, db: LoglineDatabase){
 

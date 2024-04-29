@@ -19,6 +19,16 @@ import com.patch4code.loglinemovieapp.features.movie.presentation.components.wat
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieContent - Composable function that displays the content of a movie including header-section
+ * (with poster, title, year, length and MovieHeaderToolbar), description, rating, genres, featuresBar
+ * (with trailer-, reviews- and share-button), watch-providers, cast and crew, more details, more movies
+ * like the current and the source reference.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieContent(
     movieDetails: MovieDetails?,

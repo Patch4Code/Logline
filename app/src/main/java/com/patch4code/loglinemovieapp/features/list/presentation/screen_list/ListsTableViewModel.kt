@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
  * ListsTableView - ViewModel responsible for managing data related to the lists table screen.
  * Functionality for deleting and adding lists communicating with db.
  *
+ * @param movieListDao The DAO for accessing movie list data from the db.
  * @author Patch4Code
  */
 class ListsTableViewModel(private val movieListDao: MovieListDao) : ViewModel(){

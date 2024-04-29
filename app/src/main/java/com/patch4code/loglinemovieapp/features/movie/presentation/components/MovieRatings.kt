@@ -12,6 +12,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieRatings - Composable function that displays the average rating of the movie.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieRatings(voteAverage: Double?){
 

@@ -27,6 +27,14 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
 const val TMDB_BASE_MOVIE_PAGE_URL = "https://www.themoviedb.org/movie"
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieFeaturesBar - Composable function that displays buttons for movie features such as trailer,
+ * viewing reviews, and sharing.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieFeaturesBar(movieVideo: MovieVideo?, movieDetails: MovieDetails?, navController: NavController){
 
@@ -47,6 +55,7 @@ fun MovieFeaturesBar(movieVideo: MovieVideo?, movieDetails: MovieDetails?, navCo
     val shareIntent = Intent.createChooser(sendIntent, null)
 
     Row {
+        // Trailer-Button
         FilledTonalButton(
             onClick = { uriHandler.openUri(YOUTUBE_BASE_URL + (movieVideo?.key ?: "")) },
             enabled = isTrailerButtonEnabled
@@ -55,11 +64,13 @@ fun MovieFeaturesBar(movieVideo: MovieVideo?, movieDetails: MovieDetails?, navCo
         }
         Spacer(modifier = Modifier.padding(4.dp))
 
+        // Reviews-Button
         FilledTonalButton(onClick = { navController.navigate(Screen.MoviePublicReviewsScreen.withArgs("$movieId/$title")) }) {
             Text(text = stringResource(id = R.string.reviews_button_text))
         }
         Spacer(modifier = Modifier.padding(4.dp))
 
+        // Share-Button
         FilledTonalButton(onClick = {  startActivity(context, shareIntent, null) }) {
             Icon(imageVector = Icons.Default.Share, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.padding(4.dp))

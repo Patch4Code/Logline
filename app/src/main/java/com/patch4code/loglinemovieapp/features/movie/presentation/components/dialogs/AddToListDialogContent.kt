@@ -19,14 +19,23 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * AddToListDialogContent - Composable function that Displays the content for selecting a list to add a movie to.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun AddToListDialogContent(myUserMovieLists: List<MovieList>?, currentMovie: Movie, selectedList: MutableState<MovieList?>){
 
     LazyColumn(modifier = Modifier.padding(8.dp)) {
         myUserMovieLists?.forEach { list ->
             item {
+                // Check if the movie is already on the list
                 val movieAlreadyOnList = list.movies.any { it.id == currentMovie.id }
 
+                // Display list item as a clickable button
                 TextButton(
                     onClick = { selectedList.value = list },
                     enabled = !movieAlreadyOnList,
@@ -38,6 +47,7 @@ fun AddToListDialogContent(myUserMovieLists: List<MovieList>?, currentMovie: Mov
                         .padding(top = 16.dp, bottom = 8.dp)
                     ){
 
+                        // Display list name and movie count of the list
                         Column (modifier = Modifier.weight(1f)
                         ){
                             Text(text = "${list.name} (${list.movies.size})", style = MaterialTheme.typography.titleMedium)

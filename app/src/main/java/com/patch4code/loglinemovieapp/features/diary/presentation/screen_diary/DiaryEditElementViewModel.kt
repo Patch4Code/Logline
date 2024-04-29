@@ -18,6 +18,7 @@ import java.time.ZoneOffset
  * DiaryEditElementViewModel - ViewModel responsible for managing the editing of diary entries
  * provides methods for updating or deleting a set diary entry (based on its id)
  *
+ * @param loggedMovieDao The DAO for accessing movie log data from the db.
  * @author Patch4Code
  */
 class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {

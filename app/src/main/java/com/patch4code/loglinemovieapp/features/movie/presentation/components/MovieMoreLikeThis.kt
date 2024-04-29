@@ -15,6 +15,13 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MovieMoreLikeThis - Composable function that displays movies similar to the current movie.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieMoreLikeThis(navController: NavController, collectionMovies: List<Movie>?, currentMovieTitle: String?){
 

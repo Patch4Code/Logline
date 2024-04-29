@@ -28,12 +28,23 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Crew
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * CrewMemberElement - Composable function that Displays a single crew member element, including
+ * their profile image, name, and job. Allows navigation to person's details screen upon clicking.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun CrewMemberElement(crewMember: Crew, navController: NavController){
-    Column (modifier = Modifier
-        .padding(top = 8.dp)
-        .clickable { navController.navigate("${Screen.PersonDetailsScreen.route}/${crewMember.id}") },
-        horizontalAlignment = Alignment.CenterHorizontally){
+    Column (
+        modifier = Modifier
+            .padding(top = 8.dp)
+            .clickable { navController.navigate("${Screen.PersonDetailsScreen.route}/${crewMember.id}") },
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        // Display crew member image if available
         if(!crewMember.profilePath.isNullOrEmpty()){
             AsyncImage(
                 model = TmdbCredentials.OTHER_IMAGE_URL + crewMember.profilePath,
@@ -48,6 +59,7 @@ fun CrewMemberElement(crewMember: Crew, navController: NavController){
             )
         }
         else{
+            // Display default icon if crew member image is not available
             Icon(
                 imageVector = Icons.Default.AccountCircle,
                 modifier = Modifier
