@@ -16,6 +16,14 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * LoglineMovieReviews - Composable function that displays the logline reviews for a movie.
+ * Loading indication until loading finished and placeholder text if no reviews available.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun LoglineMovieReviews(loglineMovieReviews: List<LoglineReview>?, loglineIsLoading: Boolean?, navController: NavController){
 

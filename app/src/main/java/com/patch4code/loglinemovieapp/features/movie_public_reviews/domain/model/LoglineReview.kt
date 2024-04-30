@@ -3,6 +3,13 @@ package com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.mode
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import java.time.LocalDateTime
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * LoglineReview - Represents a review published by a user from Logline app.
+ *
+ * @author Patch4Code
+ */
 data class LoglineReview(
     val objectId: String,
     val userId: String,

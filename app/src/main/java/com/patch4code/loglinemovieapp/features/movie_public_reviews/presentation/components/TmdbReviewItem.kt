@@ -29,6 +29,15 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Expa
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.TmdbReview
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * TmdbReviewItem - Composable function that displays a single TMDB review item.
+ * Consists of clickable user-icon (opens link to review on TMDB website),
+ * username, rating and review-text.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun TmdbReviewItem(tmdbReview: TmdbReview){
 
@@ -36,6 +45,7 @@ fun TmdbReviewItem(tmdbReview: TmdbReview){
 
     Column {
         Row (modifier = Modifier, verticalAlignment = Alignment.CenterVertically){
+            // users avatar image (clickable opens link to review on TMDB website)
             AsyncImage(
                 model = TmdbCredentials.OTHER_IMAGE_URL + tmdbReview.tmdbAuthorDetails.avatarPath,
                 contentDescription = null,
@@ -48,8 +58,10 @@ fun TmdbReviewItem(tmdbReview: TmdbReview){
                 error = painterResource(id = R.drawable.person_placeholder)
 
             )
+            // username
             Text(text = tmdbReview.author, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.padding(4.dp))
+            // rating if available
             if ((tmdbReview.tmdbAuthorDetails.rating != null) && (tmdbReview.tmdbAuthorDetails.rating > 0)){
                 Icon(
                     imageVector = Icons.Default.StarRate,
@@ -62,6 +74,7 @@ fun TmdbReviewItem(tmdbReview: TmdbReview){
                 Text(text = tmdbReview.tmdbAuthorDetails.rating.toString())
             }
         }
+        // review-text (expandable)
         Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp)){
             ExpandableText(text =  tmdbReview.content, maxLinesCollapsed = 8)
         }

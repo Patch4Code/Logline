@@ -2,6 +2,13 @@ package com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.mode
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * TmdbReviewResponse - Represents the response structure for reviews from TMDB api.
+ *
+ * @author Patch4Code
+ */
 data class TmdbReviewResponse(
     @SerializedName("id") val id: Int,
     @SerializedName("page") val page: Int,
@@ -10,6 +17,7 @@ data class TmdbReviewResponse(
     @SerializedName("total_results") val totalResults: Int
 )
 
+// TmdbReview - Represents a review retrieved from TMDB api.
 data class TmdbReview(
     @SerializedName("author") val author: String,
     @SerializedName("author_details") val tmdbAuthorDetails: TmdbAuthorDetails,
@@ -20,6 +28,7 @@ data class TmdbReview(
     @SerializedName("url") val url: String
 )
 
+// TmdbAuthorDetails - Contains additional details about the author of a TMDB review.
 data class TmdbAuthorDetails(
     @SerializedName("name") val name: String?,
     @SerializedName("username") val username: String,

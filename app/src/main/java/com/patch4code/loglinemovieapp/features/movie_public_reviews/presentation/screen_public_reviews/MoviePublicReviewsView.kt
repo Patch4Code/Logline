@@ -31,6 +31,13 @@ import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MoviePublicReviewsView - Composable function that displays public reviews for a movie.
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MoviePublicReviewsView(
@@ -49,6 +56,7 @@ fun MoviePublicReviewsView(
         moviePublicReviewsViewModel.loadLoglineReviews(movieId)
     }
 
+    // Observe the state of TMDB and Logline reviews and loading
     val tmdbMovieReviews = moviePublicReviewsViewModel.tmdbMovieReviews.observeAsState().value
     val tmdbIsLoading = moviePublicReviewsViewModel.tmdbIsLoading.observeAsState().value
     val loglineMovieReviews = moviePublicReviewsViewModel.loglineMovieReviews.observeAsState().value
@@ -68,7 +76,7 @@ fun MoviePublicReviewsView(
     }
 
     Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally){
-
+        // TabRow displaying Logline and TMDB review tabs
         TabRow(selectedTabIndex = selectedTabIndex) {
             tabItems.forEachIndexed {index, item->
                 Tab(
@@ -78,7 +86,7 @@ fun MoviePublicReviewsView(
                 )
             }
         }
-        
+        // HorizontalPager displaying Logline and TMDB reviews content and provides swipe-able functionality
         HorizontalPager(state = pagerState, modifier = Modifier
             .fillMaxWidth()
             .weight(1f)

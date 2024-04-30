@@ -16,6 +16,14 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Load
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.TmdbReview
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.screen_public_reviews.MoviePublicReviewsViewModel
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * TmdbMovieReviews - Composable function that displays TMDB reviews for a movie.
+ * Loading indication until loading finished and placeholder text if no reviews available.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun TmdbMovieReviews(tmdbMovieReviews: List<TmdbReview>?, tmdbIsLoading: Boolean?, moviePublicReviewsViewModel: MoviePublicReviewsViewModel){
 

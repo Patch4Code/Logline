@@ -19,6 +19,13 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * MoviePublicReviewsViewModel - ViewModel responsible for managing public reviews for a movie.
+ *
+ * @author Patch4Code
+ */
 class MoviePublicReviewsViewModel: ViewModel() {
 
     private val tmdbApiService: TmdbApiService by lazy {
@@ -40,6 +47,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
     private val _loglineIsLoading = MutableLiveData<Boolean>()
     val loglineIsLoading: LiveData<Boolean> get() = _loglineIsLoading
 
+    // Loads TMDB reviews for the given movieId
     fun loadTmdbReviews(movieId: Int){
         currentMovieId = movieId
 
@@ -62,9 +70,9 @@ class MoviePublicReviewsViewModel: ViewModel() {
         }
     }
 
+    // Loads more TMDB reviews for the current movie (next page)
     fun loadMoreTmdbReviews(){
-
-        Log.e("MoviePublicReviewsViewModel", "highestLoadedPage: $highestLoadedPage, pageAmount: $pageAmount")
+        //Log.e("MoviePublicReviewsViewModel", "highestLoadedPage: $highestLoadedPage, pageAmount: $pageAmount")
         if(highestLoadedPage < pageAmount){
             highestLoadedPage++
             val currentReviews = _tmdbMovieReviews.value?.toMutableList() ?: mutableListOf()
@@ -75,7 +83,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
 
                     if(loadMoreReviewsResponse.isSuccessful){
                         val newLoadedReviews = loadMoreReviewsResponse.body()?.results
-                        Log.e("MoviePublicReviewsViewModel", "newLoadedReviews: $newLoadedReviews")
+                        //Log.e("MoviePublicReviewsViewModel", "newLoadedReviews: $newLoadedReviews")
 
                         if (newLoadedReviews != null) {
                             currentReviews.addAll(newLoadedReviews)
@@ -89,16 +97,17 @@ class MoviePublicReviewsViewModel: ViewModel() {
         }
     }
 
-
-
+    // Loads Logline reviews for the given movieId by accessing the Back4App database
     fun loadLoglineReviews(movieId: Int){
         viewModelScope.launch{
             try {
                 _loglineIsLoading.value = true
 
+                // Kotlin suspendCoroutine waits for the completion of the background operation
                 val movieReviews = suspendCoroutine<List<ParseObject>> {continuation ->
                     val reviewQuery = ParseQuery<ParseObject>("LoggedMovie")
                     reviewQuery.whereEqualTo("movieId", movieId)
+                    // Execute query in background
                     reviewQuery.findInBackground { foundReviewLogs, e ->
                         if (e!=null){
                             Log.e("MoviePublicReviewsViewModel", "Error: ", e)
@@ -112,6 +121,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
                     _loglineMovieReviews.value = emptyList()
                 }else{
                     val loglineMovieReviews = buildLoglineMovieReviews(movieReviews)
+                    // set the reviews sorted by date
                     _loglineMovieReviews.value = loglineMovieReviews.sortedByDescending { it.createdAt }
                 }
             }catch (e: Exception){
@@ -122,6 +132,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
         }
     }
 
+    // Builds a list of LoglineReview from ParseObjects retrieved from Back4App
     private suspend fun buildLoglineMovieReviews(movieReviews:List<ParseObject>): List<LoglineReview>{
         return suspendCoroutine { continuation ->
             val publicMovieLoglineReviews = mutableListOf<LoglineReview>()
@@ -166,6 +177,7 @@ class MoviePublicReviewsViewModel: ViewModel() {
                     publicMovieLoglineReviews.add(review)
 
                     countDownLatch.countDown()
+                    // only resume (return List<LoglineReview>) when all async operations finished
                     if (countDownLatch.count == 0L){
                         continuation.resume(publicMovieLoglineReviews)
                     }

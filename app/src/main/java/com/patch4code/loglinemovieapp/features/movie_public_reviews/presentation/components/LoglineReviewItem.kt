@@ -30,6 +30,14 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Expa
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ *
+ * LoglineReviewItem - Composable function that displays a single logline review item.
+ * Consists of clickable user-icon (leads to public user profile), username, rating and review-text.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun LoglineReviewItem(loglineReview: LoglineReview, navController: NavController){
 
@@ -39,6 +47,7 @@ fun LoglineReviewItem(loglineReview: LoglineReview, navController: NavController
 
     Column {
         Row (modifier = Modifier, verticalAlignment = Alignment.CenterVertically){
+            // users avatar image (clickable leads to PublicProfileScreen)
             AsyncImage(
                 model = loglineReview.avatarPath,
                 contentDescription = null,
@@ -53,8 +62,10 @@ fun LoglineReviewItem(loglineReview: LoglineReview, navController: NavController
                 error = painterResource(id = if(isProfilePublic) R.drawable.default_profile_image else R.drawable.person_placeholder)
 
             )
+            // username
             Text(text = loglineReview.authorName, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.padding(4.dp))
+            // rating if available
             if ((loglineReview.rating != null) && (loglineReview.rating > 0)){
                 Icon(
                     imageVector = Icons.Default.StarRate,
@@ -67,6 +78,7 @@ fun LoglineReviewItem(loglineReview: LoglineReview, navController: NavController
                 Text(text = loglineReview.rating.toString())
             }
         }
+        // review-text (expandable)
         Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp)){
             ExpandableText(text =  loglineReview.content, maxLinesCollapsed = 8)
         }
