@@ -35,6 +35,14 @@ import com.patch4code.loglinemovieapp.features.home.presentation.components.Movi
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PersonDetailsView - Composable function for displaying details of a person (cast/crew),
+ * including their biography, image, and movie credits (films in which they were involved).
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PersonDetailsView(
     navController: NavController,
@@ -70,6 +78,7 @@ fun PersonDetailsView(
         LazyColumn(modifier = Modifier.padding(16.dp)){
             item{
                 Row(modifier = Modifier.padding(bottom = 16.dp)){
+                    // person image
                     Card (modifier = Modifier
                         .height(200.dp)
                         .width(133.dp),
@@ -82,18 +91,18 @@ fun PersonDetailsView(
                         )
                     }
 
-                    Column (modifier = Modifier
-                        .height(200.dp)
-                        .padding(8.dp)){
+                    Column (modifier = Modifier.height(200.dp).padding(8.dp)){
+                        // person name and main department
                         Text(text = personDetails?.name ?: "N/A", style = MaterialTheme.typography.headlineMedium)
                         Text(text = "${stringResource(id = R.string.known_for_title)} ${personDetails?.knownForDepartment}")
                     }
                 }
+                // person bio text
                 Text(text = stringResource(id = R.string.bio_title))
                 ExpandableText(text = personDetails?.biography ?: "N/A", maxLinesCollapsed = 4)
                 Spacer(modifier = Modifier.padding(top = 16.dp))
 
-
+                // person movie credits grouped by department
                 personCreditsMap?.forEach { (groupName, movies) ->
                     Text(text = groupName,
                         modifier = Modifier.padding(top = 16.dp),
