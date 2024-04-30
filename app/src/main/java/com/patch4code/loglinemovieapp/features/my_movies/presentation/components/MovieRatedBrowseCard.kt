@@ -35,6 +35,14 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MovieRatedBrowseCard - Composable function for displaying a card representing a rated movie.
+ * Card with movie details such as title, release year, poster image, and rating.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserData) {
 
@@ -58,10 +66,10 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // poster image
             Card (modifier = Modifier.height(150.dp).width(100.dp),
                 backgroundColor = Color.DarkGray
-            )
-            {
+            ) {
                 AsyncImage(
                     model = posterUrl,
                     contentDescription = "$title${stringResource(id = R.string.poster_description_appendage)}",
@@ -69,6 +77,7 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
                 )
             }
             Spacer(modifier = Modifier.padding(4.dp))
+            // Movie title
             Text(
                 text = title,
                 color = Color.White,
@@ -77,6 +86,7 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(start = 4.dp, end = 4.dp)
             )
+            // Movie release year
             Text(
                 text = year,
                 color = Color.White,
@@ -84,6 +94,7 @@ fun MovieRatedBrowseCard(navController: NavController, movieUserData: MovieUserD
             )
             Spacer(modifier = Modifier.weight(1f))
 
+            // Movie rating if rated
             if(rating > 0){
                 Row (
                     modifier = Modifier.padding(4.dp, bottom = 8.dp),

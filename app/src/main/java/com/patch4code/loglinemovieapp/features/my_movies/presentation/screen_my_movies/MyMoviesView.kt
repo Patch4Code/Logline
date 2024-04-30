@@ -15,6 +15,13 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MyMoviesView - Composable function for displaying the users watched movies.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MyMoviesView(
     navController: NavController,
@@ -31,11 +38,11 @@ fun MyMoviesView(
 
     val userDataList = myMoviesViewModel.myUserDataList.observeAsState().value
 
-    //Profile Layout
     LazyVerticalGrid(
         modifier = Modifier.padding(8.dp),
         columns = GridCells.Fixed(3),
         content = {
+            // Filter and display rated items
             val ratedItems = userDataList?.filter {it.rating >= 0}
             ratedItems?.forEach{ ratedItem ->
                 item {
