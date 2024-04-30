@@ -20,6 +20,15 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * TopBar -Composable function to display the top bar.
+ * Displays the title of the  current screen (from navViewModel) and provides menu icon to
+ * expand the navigation drawer.
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(

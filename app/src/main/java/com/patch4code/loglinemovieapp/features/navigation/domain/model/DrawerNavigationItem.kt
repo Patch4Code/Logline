@@ -28,12 +28,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DrawerNavigationItem - Represents an item in the drawer navigation menu.
+ *
+ * @author Patch4Code
+ */
 data class DrawerNavigationItem(
     val title: String = "",
     val selectedIcon: ImageVector = Icons.Filled.Home,
     val unselectedIcon: ImageVector = Icons.Filled.Home,
     val route: String = "",
 ){
+    // Returns a list of predefined drawer navigation items.
     fun getDrawerNavigationItems(context: Context): List<DrawerNavigationItem> {
         return listOf(
             DrawerNavigationItem(

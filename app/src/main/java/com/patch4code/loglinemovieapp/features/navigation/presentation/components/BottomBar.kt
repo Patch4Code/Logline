@@ -13,6 +13,15 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.BottomNav
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * BottomBar - Composable function for displaying the bottom navigation bar.
+ * Uses predefined list of bottom navigation items and displays a NavigationBarItem for each element.
+ * Provides navigation to predefined destination on click.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun BottomBar(navController: NavController, navViewModel: NavigationViewModel){
 

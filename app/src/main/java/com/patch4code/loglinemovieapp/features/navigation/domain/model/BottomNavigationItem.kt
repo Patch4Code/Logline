@@ -14,12 +14,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * BottomNavigationItem - Represents an item in the bottom navigation bar.
+ *
+ * @author Patch4Code
+ */
 data class BottomNavigationItem(
     val title: String = "",
     val selectedIcon: ImageVector = Icons.Filled.Home,
     val unselectedIcon: ImageVector = Icons.Outlined.Home,
     val route: String = ""
 ) {
+    // Returns a list of predefined bottom navigation items.
     fun getBottomNavigationItems(context: Context): List<BottomNavigationItem> {
         return listOf(
             BottomNavigationItem(

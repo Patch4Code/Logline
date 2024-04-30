@@ -4,7 +4,14 @@ import android.util.Log
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 
-//to define the Screens for the Navigation
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * Screen - Represents the screens for navigation within the app.
+ * This sealed class defines all screens along with their routes and titles.
+ *
+ * @author Patch4Code
+ */
 sealed class Screen(val route: String, var title: UiText) {
     object HomeScreen : Screen("home_view", UiText.StringResource(R.string.home_text))
     object ProfileScreen : Screen("profile_view", UiText.StringResource(R.string.profile_text))

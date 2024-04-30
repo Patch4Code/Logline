@@ -53,6 +53,15 @@ import com.patch4code.loglinemovieapp.features.watchlist.presentation.screen_wat
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * Navigation - Handles the navigation within the app using Jetpack Compose navigation components.
+ * This function sets up the navigation graph and defines all available destinations.
+ * Also provides superordinate ui of top-bar, bottom-bar and navigationDrawer.
+ *
+ * @author Patch4Code
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

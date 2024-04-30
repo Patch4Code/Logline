@@ -23,6 +23,15 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DrawerContent - Composable function to display the content of the navigation drawer.
+ * Uses predefined list of drawer navigation items and displays a NavigationDrawerItem for each element.
+ * Provides navigation to predefined destination on click.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DrawerContent(
     navController: NavController,
