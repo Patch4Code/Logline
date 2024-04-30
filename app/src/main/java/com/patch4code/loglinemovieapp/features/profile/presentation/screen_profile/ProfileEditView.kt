@@ -23,6 +23,13 @@ import com.patch4code.loglinemovieapp.features.profile.presentation.components.p
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.dialogs.EditProfileNameDialog
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProfileEditView - Composable function for editing the user profile.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProfileEditView(
     navController: NavController,

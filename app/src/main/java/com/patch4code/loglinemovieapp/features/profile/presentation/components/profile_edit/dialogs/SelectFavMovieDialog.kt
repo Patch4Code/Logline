@@ -13,6 +13,14 @@ import com.patch4code.loglinemovieapp.features.core.presentation.GeneralMovieSea
 import com.patch4code.loglinemovieapp.features.core.presentation.components.movie_search_dialog.MovieSearchDialog
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SelectFavMovieDialog - Composable function that displays the dialog to select a favorite movie.
+ * Uses the MovieSearchDialog.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SelectFavMovieDialog(
     openSelectFavMovieDialog: MutableState<Boolean>,

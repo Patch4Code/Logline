@@ -19,6 +19,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ExpandableBio - Composable function for displaying expandable bio text for the profile.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ExpandableBio(text: String, maxLinesCollapsed: Int = 2) {
 

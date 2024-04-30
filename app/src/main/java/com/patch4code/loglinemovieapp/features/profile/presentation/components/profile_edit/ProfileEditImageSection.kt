@@ -33,6 +33,13 @@ import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileViewModel
 import com.patch4code.loglinemovieapp.features.profile.presentation.utils.ProfileEditExtensions
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProfileEditImageSection - Composable function for changing the profile image of the user profile.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProfileEditImageSection(userProfile: UserProfile?, profileViewModel: ProfileViewModel, navController: NavController){
 
@@ -40,12 +47,14 @@ fun ProfileEditImageSection(userProfile: UserProfile?, profileViewModel: Profile
 
     val profileImagePath = userProfile?.profileImagePath
 
+    // Activity result launcher for picking a visual media (image) from the device
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { localUri ->
-            //save image locally in app
+            // Save the image locally in the app's internal storage
             val internalMemoryUri = localUri?.let { ProfileEditExtensions.saveImageToStorage(context, it, "profile_image.jpg") }
             if (internalMemoryUri != null){
+                // Set the profile image path in the db via ViewModel
                 profileViewModel.setProfileImagePath(internalMemoryUri.toString())
                 //refresh
                 navController.navigate(Screen.ProfileEditScreen.route,
@@ -61,6 +70,7 @@ fun ProfileEditImageSection(userProfile: UserProfile?, profileViewModel: Profile
 
     Column(horizontalAlignment = Alignment.CenterHorizontally){
         Text(text = stringResource(id = R.string.profile_image_title), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
+        // card showing current profile image, launches singlePhotoPickerLauncher onClick
         Card(
             onClick = {
                 singlePhotoPickerLauncher.launch(
@@ -80,6 +90,7 @@ fun ProfileEditImageSection(userProfile: UserProfile?, profileViewModel: Profile
                 contentScale = ContentScale.Crop,
                 error = painterResource(id = R.drawable.default_profile_image))
         }
+        // reset button that empties the profile image path in the db via ViewModel
         TextButton(onClick = { profileViewModel.setProfileImagePath("") }) {
             Text(text = stringResource(id = R.string.reset_to_default_text))
         }

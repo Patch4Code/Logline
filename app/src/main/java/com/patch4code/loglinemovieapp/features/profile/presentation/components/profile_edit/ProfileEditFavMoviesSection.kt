@@ -30,6 +30,13 @@ import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.dialogs.SelectFavMovieDialog
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProfileEditFavMoviesSection - Composable function for editing the favorite movies  of the user profile.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: ProfileViewModel){
 
@@ -47,6 +54,7 @@ fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: Prof
             val movieId = movie.id
             val moviePosterUrl = TmdbCredentials.POSTER_URL + movie.posterUrl
             Box(modifier = Modifier.weight(1f)){
+                // movie poster, if no movie is selected open SelectFavMovieDialog on click
                 AsyncImage(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -58,6 +66,7 @@ fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: Prof
                     contentDescription = movie.title,
                     error = painterResource(id = R.drawable.add_favourite_movie)
                 )
+                // remove fav movie button (little x in the right upper corner of the poster)
                 if(movieId >= 0){
                     FilledTonalIconButton(
                         onClick = { profileViewModel.setFavMovieAtIndex(index, Movie()) },

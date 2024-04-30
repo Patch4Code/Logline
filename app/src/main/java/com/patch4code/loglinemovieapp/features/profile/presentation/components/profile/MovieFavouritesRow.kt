@@ -18,6 +18,15 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MovieFavouriteRow - Composable function for displaying a row of favorite movies on the profile.
+ * Displays 4 movie posters (non valid movies are displayed by placeholder image).
+ * Posters are clickable and lead to MovieView
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieFavouriteRow(navController: NavController, movies: List<Movie>){
 

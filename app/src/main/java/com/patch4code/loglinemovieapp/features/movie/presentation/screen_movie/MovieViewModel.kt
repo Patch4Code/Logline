@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * MovieViewModel - F responsible for managing movie data locally and from TMDB api.
+ * MovieViewModel - ViewModel responsible for managing movie data locally and from TMDB api.
  *
  * @param dao The DAO for accessing movie user data from the db.
  * @author Patch4Code

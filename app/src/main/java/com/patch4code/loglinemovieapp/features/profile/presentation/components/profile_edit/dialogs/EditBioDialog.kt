@@ -17,6 +17,13 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * EditBioDialog - Composable function that displays the edit bio dialog.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun EditBioDialog(openEditBioDialog: MutableState<Boolean>, bioText: String?, profileViewModel: ProfileViewModel){
 

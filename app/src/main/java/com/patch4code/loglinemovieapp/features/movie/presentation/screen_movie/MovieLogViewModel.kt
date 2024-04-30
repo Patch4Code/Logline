@@ -15,7 +15,7 @@ import java.time.ZoneOffset
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * MovieLogViewModel - MovieLogViewModel responsible for managing the logging of a movie.
+ * MovieLogViewModel - ViewModel responsible for managing the logging of a movie.
  *
  * @param loggedMovieDao The DAO for accessing logged movie data from the db.
  * @param userDataDao The DAO for accessing movie user data from the db.

@@ -10,6 +10,13 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProfileEditExtensions - Provides function to save a image to the internal memory
+ *
+ * @author Patch4Code
+ */
 object ProfileEditExtensions {
 
     fun saveImageToStorage(context: Context, uri: Uri, fileName: String): Uri? {

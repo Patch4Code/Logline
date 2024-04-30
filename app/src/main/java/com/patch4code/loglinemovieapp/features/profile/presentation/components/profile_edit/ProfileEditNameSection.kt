@@ -20,6 +20,13 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProfileEditNameSection - Composable function  for editing the profile name of the user profile.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProfileEditNameSection(openEditProfileNameDialog: MutableState<Boolean>, userName: String?){
 
@@ -29,6 +36,8 @@ fun ProfileEditNameSection(openEditProfileNameDialog: MutableState<Boolean>, use
     val isLoggedIn = !loginUserName.isNullOrEmpty()
 
     Text(text = "Profile Name", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(8.dp))
+    // button showing the user name and opening EditBioDialog on click
+    // if the user is logged in use the login username instead and disable editing
     ElevatedButton(
         onClick = { openEditProfileNameDialog.value = true },
         enabled = !isLoggedIn

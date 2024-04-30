@@ -12,12 +12,20 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProfileNavigationElement - Represents an element for navigation on the profile screen.
+ *
+ * @author Patch4Code
+ */
 data class ProfileNavigationElement(
     val title: String = "",
     val navIcon: ImageVector  = Icons.Filled.AccountBox,
     val route: String = ""
 )
 {
+    // Returns a list of predefined profile navigation elements.
     fun getProfileNavigationElements(context: Context): List<ProfileNavigationElement>{
         return listOf(
             ProfileNavigationElement(

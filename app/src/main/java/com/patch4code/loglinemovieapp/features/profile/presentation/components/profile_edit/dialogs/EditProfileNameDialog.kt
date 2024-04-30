@@ -14,6 +14,13 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * EditProfileNameDialog - Composable function that displays the edit profile name dialog.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun EditProfileNameDialog(openEditProfileNameDialog: MutableState<Boolean>, profileName: String?, profileViewModel: ProfileViewModel){
 

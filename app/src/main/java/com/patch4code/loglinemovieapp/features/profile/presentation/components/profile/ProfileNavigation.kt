@@ -17,6 +17,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.profile.domain.model.ProfileNavigationElement
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProfileNavigation - Composable function for displaying the profile navigation elements.
+ * Uses predefined list of profile navigation elements and displays a custom navigation element for each item.
+ * Provides navigation to predefined destination on click (MyMovies, Diary, Reviews and Lists).
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProfileNavigation(navController: NavController){
 

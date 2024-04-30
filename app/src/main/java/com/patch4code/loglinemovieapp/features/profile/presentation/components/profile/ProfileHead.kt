@@ -20,6 +20,14 @@ import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProfileHead - Composable function for displaying the profile header.
+ * It consists of the banner image and the circular profile image.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProfileHead(userProfile: UserProfile?){
 
