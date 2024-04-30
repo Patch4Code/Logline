@@ -36,7 +36,7 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLDecoder
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * ListsTableView - Composable function that displays a certain list of movies.
  * Provides options for adding and deleting movies and editing the list name.

@@ -14,7 +14,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import kotlinx.coroutines.launch
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * HomeViewModel - ViewModel responsible for managing data related to the home screen.
  * Loads data for popular, top-rated, and upcoming movies from the TMDB API.

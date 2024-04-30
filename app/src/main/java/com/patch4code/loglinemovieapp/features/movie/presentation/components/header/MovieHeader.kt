@@ -25,7 +25,7 @@ import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.M
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * MovieHeader - Composable function that displays the header section of the movie details.
  * It shows the poster (clickable to maximise it), the title, year and runtime as well as

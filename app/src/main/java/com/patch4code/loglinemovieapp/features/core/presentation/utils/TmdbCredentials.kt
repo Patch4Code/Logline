@@ -3,7 +3,7 @@ package com.patch4code.loglinemovieapp.features.core.presentation.utils
 import com.patch4code.loglinemovieapp.BuildConfig
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * TmdbCredentials - Helper class containing credentials and base URLs for TMDB API
  *

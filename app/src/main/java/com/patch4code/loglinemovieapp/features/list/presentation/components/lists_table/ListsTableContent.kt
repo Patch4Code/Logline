@@ -20,7 +20,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListsTabl
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListsTableContentExtensions.onDeleteList
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * ListsTableContent - Composable function displaying the content of the lists table.
  * Includes a LazyColumn of the list items and dialog components for adding and deleting lists

@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * DiaryEditElementView - Composable function for editing diary elements
  * This composable function provides  UI for editing diary elements, including ratings, dates, reviews, and deletion

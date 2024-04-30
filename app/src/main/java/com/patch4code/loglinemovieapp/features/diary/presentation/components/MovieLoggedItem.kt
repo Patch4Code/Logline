@@ -32,7 +32,7 @@ import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * MovieLoggedItem - Composable function representing a logged movie item.
  * Item displays date, poster, movie-name, release date and rating.

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * DiaryEditSaveChangesSection - Composable function representing the section of
  * the DiaryEditElementView for saving changes or discarding them.

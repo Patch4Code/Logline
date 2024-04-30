@@ -17,7 +17,7 @@ import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.screen_public_reviews.MoviePublicReviewsViewModel
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * TmdbMovieReviews - Composable function that displays TMDB reviews for a movie.
  * Loading indication until loading finished and placeholder text if no reviews available.

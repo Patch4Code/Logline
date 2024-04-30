@@ -10,7 +10,7 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import java.net.URLEncoder
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * ListDialogsExtensions - Provides extension functions for handling list dialogs and actions.
  *

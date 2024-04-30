@@ -21,7 +21,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Provider
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * ProviderSection - Composable function that displays the section for a watch provider element
  * (streaming or rent/buy)

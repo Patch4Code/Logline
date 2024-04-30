@@ -17,7 +17,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Load
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * LoglineMovieReviews - Composable function that displays the logline reviews for a movie.
  * Loading indication until loading finished and placeholder text if no reviews available.

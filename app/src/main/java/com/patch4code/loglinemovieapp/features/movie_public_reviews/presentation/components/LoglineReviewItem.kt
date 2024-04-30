@@ -31,7 +31,7 @@ import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * LoglineReviewItem - Composable function that displays a single logline review item.
  * Consists of clickable user-icon (leads to public user profile), username, rating and review-text.

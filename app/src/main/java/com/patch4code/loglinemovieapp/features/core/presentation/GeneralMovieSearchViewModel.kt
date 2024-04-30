@@ -12,7 +12,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import kotlinx.coroutines.launch
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * GeneralMovieSearchViewModel - ViewModel responsible for handling movie search functionality
  * This ViewModel communicates with TMDB API to search for movies based on given searchQuery

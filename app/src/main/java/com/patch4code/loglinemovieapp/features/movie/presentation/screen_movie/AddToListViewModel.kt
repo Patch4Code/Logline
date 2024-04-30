@@ -11,7 +11,7 @@ import com.patch4code.loglinemovieapp.room_database.MovieListDao
 import kotlinx.coroutines.launch
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * AddToListViewModel - ViewModel responsible for adding movies to a list from the MovieView.
  *

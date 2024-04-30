@@ -8,7 +8,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelp
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * ListsItemPreviewImages - Composable function displaying the preview images for a movie list.
  * Shows up to 3 posters of the list, with the first having full with and the other two half width.

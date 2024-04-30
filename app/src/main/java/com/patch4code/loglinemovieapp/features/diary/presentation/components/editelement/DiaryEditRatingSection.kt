@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * DiaryEditRatingSection - Composable function representing a section (button) of
  * the DiaryEditElementView for opening a dialog for editing the rating

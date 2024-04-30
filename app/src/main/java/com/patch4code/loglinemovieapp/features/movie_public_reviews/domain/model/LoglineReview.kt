@@ -4,7 +4,7 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import java.time.LocalDateTime
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * LoglineReview - Represents a review published by a user from Logline app.
  *

@@ -25,7 +25,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelp
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * ListItem - Composable function represents a single item in a list of movies.
  * Navigates to MovieView on click

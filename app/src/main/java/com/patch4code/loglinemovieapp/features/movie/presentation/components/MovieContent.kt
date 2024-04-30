@@ -20,7 +20,7 @@ import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.M
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * MovieContent - Composable function that displays the content of a movie including header-section
  * (with poster, title, year, length and MovieHeaderToolbar), description, rating, genres, featuresBar

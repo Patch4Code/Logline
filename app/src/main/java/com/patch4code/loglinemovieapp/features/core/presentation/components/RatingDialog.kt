@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.patch4code.loglinemovieapp.R
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * RatingDialog - Composable function for displaying a rating dialog.
  * Allows users to select a rating for a movie (no rating or number from 1 to 10)

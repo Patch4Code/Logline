@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * CreditsSectionList - Composable function that Displays a list of items (cast or crew members)
  * in a horizontal scrolling layout with a title. It supports lazy loading for large lists,

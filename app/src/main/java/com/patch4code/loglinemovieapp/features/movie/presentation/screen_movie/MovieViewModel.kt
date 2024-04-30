@@ -19,7 +19,7 @@ import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * MovieViewModel - F responsible for managing movie data locally and from TMDB api.
  *

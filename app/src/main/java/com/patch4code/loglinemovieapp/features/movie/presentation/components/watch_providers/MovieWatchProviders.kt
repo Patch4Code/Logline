@@ -16,7 +16,7 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.CountryProviders
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * MovieWatchProviders - Composable functions that displays the watch providers section for a movie.
  * Shows streaming and rent/buy services and also provides a link to JustWatch for the movie to get

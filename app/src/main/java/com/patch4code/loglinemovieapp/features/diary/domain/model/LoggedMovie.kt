@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * LoggedMovie - Data class representing a movie logged by a user
  *

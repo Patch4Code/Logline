@@ -14,7 +14,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.DateHelpe
 import java.time.LocalDateTime
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * DiaryEditDatePickerDialog - Composable function representing a date picker dialog for the diary edit section.
  * Uses Material3 DatePickerDialog

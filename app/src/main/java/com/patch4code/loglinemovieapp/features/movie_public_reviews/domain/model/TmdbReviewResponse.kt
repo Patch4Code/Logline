@@ -3,7 +3,7 @@ package com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.mode
 import com.google.gson.annotations.SerializedName
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * TmdbReviewResponse - Represents the response structure for reviews from TMDB api.
  *

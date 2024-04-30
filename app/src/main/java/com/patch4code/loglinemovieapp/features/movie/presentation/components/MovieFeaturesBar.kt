@@ -28,7 +28,7 @@ const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
 const val TMDB_BASE_MOVIE_PAGE_URL = "https://www.themoviedb.org/movie"
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * MovieFeaturesBar - Composable function that displays buttons for movie features such as trailer,
  * viewing reviews, and sharing.

@@ -7,7 +7,7 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * MovieCastAndCrew - Composable function that displays the cast and crew of a movie.
  *

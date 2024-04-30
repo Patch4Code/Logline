@@ -30,7 +30,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.TmdbReview
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * TmdbReviewItem - Composable function that displays a single TMDB review item.
  * Consists of clickable user-icon (opens link to review on TMDB website),

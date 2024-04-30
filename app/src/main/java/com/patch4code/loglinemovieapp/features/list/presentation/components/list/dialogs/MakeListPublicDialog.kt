@@ -12,7 +12,7 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * MakeListPublicDialog - Composable function representing a dialog for making a list public.
  * Calls the listViewModel and gets success or error response (launches corresponding toast)

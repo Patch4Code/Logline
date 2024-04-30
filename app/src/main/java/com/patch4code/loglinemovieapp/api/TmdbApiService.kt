@@ -16,7 +16,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * TmdbApiService - Interface defining endpoints to interact with The Movie Database (TMDB) API.
  * These endpoints, which are specific URLs provided by the API, offer functionality to retrieve various movie-related data.

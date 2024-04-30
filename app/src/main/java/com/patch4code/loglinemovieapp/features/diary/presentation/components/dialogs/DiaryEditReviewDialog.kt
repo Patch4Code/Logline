@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 
 /**
- * APACHE LICENSE, VERSION 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * DiaryEditReviewDialog - Composable function representing a dialog for editing or adding a review in the diary edit section.
  *
