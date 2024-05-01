@@ -10,7 +10,15 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * StoreUserData - DataStore for storing and retrieving user data using Preferences DataStore.
+ * Provides functionality to save and retrieve user-related data (related to the login for the
+ * social features using Back4App), such as user ID, session token, email, username,and profile visibility.
+ *
+ * @author Patch4Code
+ */
 class StoreUserData(private val context: Context) {
 
     companion object {

@@ -7,6 +7,14 @@ import androidx.room.Upsert
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * UserProfileDao - Data Access Object (DAO) interface for
+ * performing database operations related to UserProfile entities.
+ *
+ * @author Patch4Code
+ */
 @Dao
 interface UserProfileDao {
 

@@ -9,7 +9,14 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * StoreSettings - DataStore for storing and retrieving settings data using Preferences DataStore.
+ * Provides functionality to save and retrieve settings data, such as watch providers country.
+ *
+ * @author Patch4Code
+ */
 class StoreSettings(private val context: Context) {
 
     companion object {

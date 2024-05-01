@@ -8,6 +8,14 @@ import androidx.room.Upsert
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import java.time.LocalDateTime
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * LoggedMovieDao - Data Access Object (DAO) interface for
+ * performing database operations related to LoggedMovie entities.
+ *
+ * @author Patch4Code
+ */
 @Dao
 interface LoggedMovieDao {
 
