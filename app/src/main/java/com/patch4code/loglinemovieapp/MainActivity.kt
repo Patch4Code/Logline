@@ -10,10 +10,18 @@ import androidx.compose.ui.Modifier
 import androidx.room.Room
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.Navigation
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
-import com.patch4code.loglinemovieapp.ui.theme.MovieAppUiTestTheme
+import com.patch4code.loglinemovieapp.ui.theme.LoglineUiTheme
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MainActivity - Entry point of the App.
+ *
+ * @author Patch4Code
+ */
 class MainActivity : ComponentActivity() {
 
+    // Initializes the database instance
     private val db by lazy {
         Room.databaseBuilder(
             context = applicationContext,
@@ -25,12 +33,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MovieAppUiTestTheme {
+            // Applies the LoglineUiTheme to the entire activity
+            LoglineUiTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    // Initialize the navigation graph with the database
                     Navigation(db)
                 }
             }

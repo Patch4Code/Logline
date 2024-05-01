@@ -27,9 +27,15 @@ private val darkColorScheme = darkColorScheme(
     scrim = Black, // e.g. Drawer background blur color
 )
 
-
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MovieAppUiTestTheme - Composable function that applies custom a dark theme for the App.
+ *
+ * @author Patch4Code
+ */
 @Composable
-fun MovieAppUiTestTheme(
+fun LoglineUiTheme(
     //dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

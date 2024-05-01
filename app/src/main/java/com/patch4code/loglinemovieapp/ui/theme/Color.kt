@@ -2,6 +2,13 @@ package com.patch4code.loglinemovieapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * Color - Custom color constants defined using the Color class.
+ *
+ * @author Patch4Code
+ */
 val LightBlue = Color(0xFF99CCFB)
 val SapphireBlue = Color(0xFF085C72)
 val Charcoal = Color(0xFF394651)
