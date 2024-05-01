@@ -17,23 +17,34 @@ import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ReviewDetailsViewModel - ViewModel responsible for managing review details.
+ *
+ * @param loggedMovieDao The DAO for accessing logged movie data from the db.
+ * @author Patch4Code
+ */
 class ReviewDetailsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
 
     private val _currentReviewedLog = MutableLiveData<LoggedMovie>()
     val currentReviewedLog: LiveData<LoggedMovie> get() = _currentReviewedLog
 
+    // Retrieves log data for a given logId by accessing the db
     fun setCurrentReviewedLog(reviewedLogId: String){
         viewModelScope.launch {
             _currentReviewedLog.value = loggedMovieDao.getLoggedMovieById(reviewedLogId)
         }
     }
 
+    // makes the current review (reviewed log) public by communicating with Back4App
     fun makeReviewPublic(onSuccess:(publishStatus: String)->Unit, onError:(exception: Exception)->Unit){
         viewModelScope.launch {
-            val publishStatus: String
+            val publishStatus: String // is "Updated" or "Newly Published"
             try {
                 val user = ParseUser.getCurrentUser()
 
+                // finds out whether this review was published before or not and publishStatus is set accordingly
                 val query = ParseQuery<ParseObject>("LoggedMovie")
                 query.whereEqualTo("user", ParseUser.getCurrentUser())
                 _currentReviewedLog.value?.id?.let { query.whereEqualTo("logId", it) }
@@ -82,7 +93,7 @@ class ReviewDetailsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewMo
     }
 }
 
-
+// Factory-class for creating ReviewDetailsViewModel instances to manage access to the database
 class ReviewDetailsViewModelFactory(private val loggedMovieDao: LoggedMovieDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ReviewDetailsViewModel::class.java)) {

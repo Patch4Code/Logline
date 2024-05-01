@@ -11,6 +11,13 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewDetailsViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MakeReviewPublicDialog- Composable function displaying a dialog to make a review public.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MakeReviewPublicDialog(openMakeReviewPublicDialog: MutableState<Boolean>, reviewDetailsViewModel: ReviewDetailsViewModel){
 

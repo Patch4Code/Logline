@@ -15,6 +15,14 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewItem
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ReviewsView - Composable function that displays a list of the users reviews (logs that contain a review)
+ * Navigates the user to the ReviewDetailsView on click on ReviewItem.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ReviewsView(
     navController: NavController,

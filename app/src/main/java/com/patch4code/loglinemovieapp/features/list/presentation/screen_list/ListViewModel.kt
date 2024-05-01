@@ -76,10 +76,11 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
     // Makes the movie list public communicating with Back4App database
     fun makeListPublic(onSuccess:(publishStatus: String)->Unit, onError:(exception: Exception)->Unit){
         viewModelScope.launch {
-            val publishStatus: String
+            val publishStatus: String // is "Updated" or "Newly Published"
             try {
                 val user = ParseUser.getCurrentUser()
 
+                // finds out whether this list was published before or not and publishStatus is set accordingly
                 val query = ParseQuery<ParseObject>("MovieList")
                 query.whereEqualTo("user", ParseUser.getCurrentUser())
                 _movieList.value?.id?.let { query.whereEqualTo("listId", it) }

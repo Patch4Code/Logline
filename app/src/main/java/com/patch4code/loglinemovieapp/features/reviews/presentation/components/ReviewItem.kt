@@ -31,6 +31,15 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelp
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ReviewItem - Composable function for displaying a review item.
+ * Consists of movie-title, movie-year, rating, poster and a possibly shortened version of the review.
+ * Navigates to the ReviewDetailsView on click.
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
@@ -44,11 +53,13 @@ fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
 
         FlowRow (modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
         ){
+            // movie-title and release-year
             Text(
                 text = "${loggedItem.movie.title} (${MovieHelper.extractYear(loggedItem.movie.releaseDate)})",
                 style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.padding(start = 8.dp))
 
+            // rating if available
             if(loggedItem.rating > 0){
                 Row{
                     Icon(
@@ -66,6 +77,7 @@ fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
         }
 
         Row (modifier = Modifier.height(150.dp)){
+            // movie-poster
             AsyncImage(
                 model = MovieHelper.processPosterUrl(loggedItem.movie.posterUrl),
                 contentDescription = stringResource(id = R.string.poster_description),
@@ -73,6 +85,7 @@ fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
             )
 
             Spacer(modifier = Modifier.padding(8.dp))
+            // review text with max 7 lines
             Text(
                 text = loggedItem.review,
                 style = MaterialTheme.typography.bodyMedium,

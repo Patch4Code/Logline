@@ -33,6 +33,16 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewDetailsViewModel
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ReviewDetailsInfoAndActions - Composable function that displays detailed information and buttons
+ * which represents a section of the ReviewDetailsView. It shows the movie-title, the movie-year,
+ * the rating, the date of the review and a button to navigate to the DiaryEditElementView (to edit the review)
+ * as well as a button to make the review public (opens a dialog with which the user has to confirm the publishing).
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ReviewDetailsInfoAndActions(
     reviewedLog: LoggedMovie,

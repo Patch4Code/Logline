@@ -15,6 +15,13 @@ import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ReviewDetailsPoster - Composable function that displays the movie-poser section of the ReviewDetailsView.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ReviewDetailsPoster(movieTitle: String, posterPath: String, onPosterPressed:()->Unit){
 
