@@ -34,6 +34,14 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.search.presentation.components.MovieSearchCard
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SearchView -Composable function representing the search screen view.
+ * Lets the user search movies by typing in a text-field.
+ *
+ * @author Patch4Code
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SearchView(
@@ -62,12 +70,14 @@ fun SearchView(
             horizontalArrangement = Arrangement.Center,
         )
         {
+            // text-field for input of a movie name
             OutlinedTextField(
                 value = textInput.value,
                 onValueChange = {textInput.value = it},
                 label = { Text(text = stringResource(id = R.string.search_text_field_label))},
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
+                    // launches search onSearch keyboardActions
                     onSearch = {
                         if(textInput.value.isNotBlank()){
                             keyboardController?.hide()
@@ -76,6 +86,7 @@ fun SearchView(
                     }
                 )
             )
+            // search button that launches the search
             IconButton(
                 onClick = {
                     if(textInput.value.isNotBlank()){
@@ -88,11 +99,13 @@ fun SearchView(
             }
         }
         Spacer(modifier = Modifier.padding(4.dp))
+        // lazy column that displays the list of results represented by MovieSearchCards
         LazyColumn {
             searchResult?.forEachIndexed { index, movie->
                 item{
                     MovieSearchCard(navController, movie)
 
+                    // load more movies, when the end of the lazy column is reached
                     if(index == searchResult.lastIndex){
                         searchViewModel.loadMoreMovies()
                     }

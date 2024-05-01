@@ -22,6 +22,14 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MovieSearchCard - Composable function for displaying a movie search item.
+ * Consists of a movie-poster, the movie-title and the release-year.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieSearchCard(navController: NavController, movie: Movie){
 
