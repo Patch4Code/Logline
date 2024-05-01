@@ -15,6 +15,14 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.MovieWatchlistBrowseCard
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * WatchlistView - Composable function representing the watchlist screen view.
+ * Shows all movies that are on the watchlist.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun WatchlistView(
     navController: NavController,

@@ -1,7 +1,5 @@
 package com.patch4code.loglinemovieapp.features.watchlist.presentation.components
 
-
-
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,11 +22,20 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.R
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MovieWatchlistBrowseCard - Composable function that displays an item of the WatchlistView.
+ * Shows poster, movie-name and release-year.
+ * Navigates to MovieView on click.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun MovieWatchlistBrowseCard(navController: NavController, movie: Movie) {
 

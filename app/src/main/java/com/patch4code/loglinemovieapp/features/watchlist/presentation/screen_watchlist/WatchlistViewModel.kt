@@ -9,6 +9,14 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * WatchlistViewModel - ViewModel responsible for for managing movie user data of movies on watchlist.
+ *
+ * @param dao MovieUserDataDao instance for accessing movie user data from the db.
+ * @author Patch4Code
+ */
 class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
 
     private val _myUserDataList = MutableLiveData<List<MovieUserData>>()
@@ -21,7 +29,7 @@ class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
     }
 }
 
-
+// Factory-class for creating WatchlistViewModel instances to manage access to the database
 class WatchlistViewModelFactory(private val dao: MovieUserDataDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WatchlistViewModel::class.java)) {
