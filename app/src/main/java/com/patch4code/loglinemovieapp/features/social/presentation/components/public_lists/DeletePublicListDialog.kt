@@ -12,6 +12,14 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_lists.PublicListViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DeletePublicListDialog - Composable function to display the delete public list dialog.
+ * Calls the ViewModel and deletes the current list on confirm.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DeletePublicListDialog(
     showDeletePublicListDialog: MutableState<Boolean>,

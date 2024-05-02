@@ -28,6 +28,13 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.social.domain.model.PublicList
 import java.net.URLEncoder
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicListsTableItem - Composable function that displays an item of the public list table.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicListsTableItem(navController: NavController, publicList: PublicList, isProfileListItem: Boolean = false){
 
@@ -43,6 +50,7 @@ fun PublicListsTableItem(navController: NavController, publicList: PublicList, i
         }
     ){
 
+        // only displays user info if this is no profile list item
         if(!isProfileListItem){
             Row (modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 4.dp), verticalAlignment = Alignment.CenterVertically){
                 AsyncImage(

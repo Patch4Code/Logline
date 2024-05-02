@@ -10,6 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * LoginOutlinedTextField - Composable function for displaying an outlined text-field for login.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun LoginOutlinedTextField(input: MutableState<String>, label: String){
     OutlinedTextField(

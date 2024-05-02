@@ -14,6 +14,13 @@ import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 import kotlinx.coroutines.launch
 import java.lang.reflect.Type
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicProfileViewModel - ViewModel responsible for fetching and managing public user profile data.
+ *
+ * @author Patch4Code
+ */
 class PublicProfileViewModel: ViewModel() {
 
 
@@ -23,6 +30,7 @@ class PublicProfileViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    // Fetches the public user profile with the given userId
     fun getPublicUserProfile(userId: String?){
         viewModelScope.launch {
             if (userId == null) return@launch
@@ -61,5 +69,4 @@ class PublicProfileViewModel: ViewModel() {
             }
         }
     }
-
 }

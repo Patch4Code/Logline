@@ -29,6 +29,13 @@ import com.patch4code.loglinemovieapp.features.social.presentation.components.lo
 import com.patch4code.loglinemovieapp.features.social.presentation.components.login.SignUpDialog
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.LoginViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialLoginCard - Composable function that displays the login-card.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialLoginCard(loginViewModel: LoginViewModel = viewModel()){
 
@@ -43,6 +50,7 @@ fun SocialLoginCard(loginViewModel: LoginViewModel = viewModel()){
 
     val showSignupDialog = remember { mutableStateOf(false) }
 
+    // Toast messages
     val successToastText = stringResource(id = R.string.login_success_toast)
     val errorToastText = stringResource(id = R.string.login_error_toast)
 
@@ -51,7 +59,7 @@ fun SocialLoginCard(loginViewModel: LoginViewModel = viewModel()){
             .fillMaxWidth()
             .padding(8.dp)
         ) {
-
+            // Title row with login tooltip
             Row (modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp,bottom = 8.dp),
                 horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
             ){
@@ -59,12 +67,13 @@ fun SocialLoginCard(loginViewModel: LoginViewModel = viewModel()){
                 LoginTooltip()
             }
 
-
+            // Username and password fields
             LoginOutlinedTextField(input = userNameInput, label = stringResource(id = R.string.username_label))
             Spacer(modifier = Modifier.padding(4.dp))
             PasswordOutlinedTextField(passwordInput = passwordInput)
             Spacer(modifier = Modifier.padding(8.dp))
 
+            // Login and signup buttons
             Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
                 Button(
                     onClick = {

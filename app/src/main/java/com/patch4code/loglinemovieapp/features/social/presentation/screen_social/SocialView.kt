@@ -12,6 +12,14 @@ import com.patch4code.loglinemovieapp.features.social.presentation.components.so
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialView - Composable function representing the social screen view.
+ * Responsible for displaying the social features of the app.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialView(
     navController: NavController,

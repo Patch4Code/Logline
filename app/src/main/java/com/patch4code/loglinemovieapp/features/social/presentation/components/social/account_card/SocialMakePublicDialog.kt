@@ -11,12 +11,20 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialMakePublicDialog - Composable function that displays a dialog for making the profile public.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialMakePublicDialog(openMakePublicDialog: MutableState<Boolean>, socialViewModel: SocialViewModel){
 
     if(openMakePublicDialog.value){
         val context = LocalContext.current
 
+        // Strings for toast messages
         val successToastText = stringResource(id = R.string.success_public_toast)
         val errorToastText = stringResource(id = R.string.error_public_toast)
 
@@ -25,6 +33,7 @@ fun SocialMakePublicDialog(openMakePublicDialog: MutableState<Boolean>, socialVi
             confirmButton = {
                 Button(onClick = {
                     openMakePublicDialog.value = false
+                    // Change profile visibility state to public
                     socialViewModel.changeProfileVisibilityState(
                         publicState = true,
                         onSuccess = { Toast.makeText(context, successToastText, Toast.LENGTH_SHORT).show() },

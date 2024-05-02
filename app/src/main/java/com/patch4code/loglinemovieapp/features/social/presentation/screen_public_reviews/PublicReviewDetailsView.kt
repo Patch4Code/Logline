@@ -24,6 +24,14 @@ import com.patch4code.loglinemovieapp.features.reviews.presentation.components.R
 import com.patch4code.loglinemovieapp.features.social.presentation.components.public_reviews.PublicReviewDetailsInfoAndActions
 import java.net.URLDecoder
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicReviewDetailsView - Composable function representing the public-review-details screen view.
+ * Shows the full public  review of a user with all related information.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicReviewDetailsView(
     navController: NavController,

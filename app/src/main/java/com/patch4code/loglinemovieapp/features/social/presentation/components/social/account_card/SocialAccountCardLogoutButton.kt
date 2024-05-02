@@ -9,6 +9,14 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialAccountCardLogoutButton - Composable function that displays the logout button for the SocialAccountCard.
+ * Calls the ViewModel to trigger logout-process on click.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialAccountCardLogoutButton(socialViewModel: SocialViewModel){
 

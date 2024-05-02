@@ -19,6 +19,13 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicListsTableViewModel - ViewModel responsible for fetching and managing public lists data.
+ *
+ * @author Patch4Code
+ */
 class PublicListsTableViewModel: ViewModel() {
 
     private val _publicLists = MutableLiveData<List<PublicList>>()
@@ -27,14 +34,16 @@ class PublicListsTableViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    // Fetches public lists from the database.
     fun getPublicLists(){
         viewModelScope.launch {
             try {
                 _isLoading.value = true
 
+                // Kotlin suspendCoroutine waits for the completion of the background operation
                 val publicListsAsParseObjects = suspendCoroutine<List<ParseObject>> { continuation ->
                     val listsQuery = ParseQuery<ParseObject>("MovieList")
-
+                    // Execute query in background
                     listsQuery.findInBackground { publicListsAsParseObjects, e ->
                         if(e != null){
                             Log.e("PublicListsViewModel", "Error: ", e)
@@ -55,6 +64,7 @@ class PublicListsTableViewModel: ViewModel() {
         }
     }
 
+    // Creates List<PublicList> from given List<ParseObject>
     private suspend fun buildPublicMovieLists(publicListsAsParseObjects: List<ParseObject>): List<PublicList>{
         return suspendCoroutine {continuation ->
             val publicMovieLists = mutableListOf<PublicList>()

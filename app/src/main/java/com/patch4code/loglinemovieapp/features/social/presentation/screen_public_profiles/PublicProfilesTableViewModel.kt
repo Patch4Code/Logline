@@ -15,6 +15,13 @@ import com.patch4code.loglinemovieapp.features.social.domain.model.PublicUserPro
 import kotlinx.coroutines.launch
 import java.lang.reflect.Type
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicProfilesTableViewModel - ViewModel responsible for managing public profiles table
+ *
+ * @author Patch4Code
+ */
 class PublicProfilesTableViewModel: ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -24,6 +31,7 @@ class PublicProfilesTableViewModel: ViewModel() {
     private val _publicUserProfiles = MutableLiveData<List<PublicUserProfile>>()
     val publicUserProfiles: LiveData<List<PublicUserProfile>> get() = _publicUserProfiles
 
+    // Fetches public user profiles from the database
     fun getPublicUserProfiles(){
         viewModelScope.launch {
             try {

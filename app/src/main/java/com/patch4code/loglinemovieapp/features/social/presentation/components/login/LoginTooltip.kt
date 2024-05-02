@@ -21,6 +21,13 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.ui.theme.SonicSilver
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * LoginTooltip - Composable function for displaying a login tooltip.
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginTooltip(){

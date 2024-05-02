@@ -33,6 +33,14 @@ import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import java.net.URLEncoder
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicProfileReviewItem - Composable function for displaying a review item of the PublicProfileReviewsView.
+ * Navigates to the PublicReviewDetailsView on click.
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PublicProfileReviewItem(loglineReview: LoglineReview, navController: NavController){
@@ -48,11 +56,12 @@ fun PublicProfileReviewItem(loglineReview: LoglineReview, navController: NavCont
 
         FlowRow (modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
         ){
+            // Movie title and year
             Text(
                 text = "${loglineReview.movie.title} (${MovieHelper.extractYear(loglineReview.movie.releaseDate)})",
                 style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.padding(start = 8.dp))
-
+            // Rating if available
             if(loglineReview.rating > 0){
                 Row{
                     Icon(
@@ -70,6 +79,7 @@ fun PublicProfileReviewItem(loglineReview: LoglineReview, navController: NavCont
         }
 
         Row (modifier = Modifier.height(150.dp)){
+            // Movie-poster
             AsyncImage(
                 model = MovieHelper.processPosterUrl(loglineReview.movie.posterUrl),
                 contentDescription = stringResource(id = R.string.poster_description),
@@ -77,6 +87,7 @@ fun PublicProfileReviewItem(loglineReview: LoglineReview, navController: NavCont
             )
 
             Spacer(modifier = Modifier.padding(8.dp))
+            // portion of the review text (max up to 7 lines)
             Text(
                 text = loglineReview.content,
                 style = MaterialTheme.typography.bodyMedium,

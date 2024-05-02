@@ -25,6 +25,13 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.social.presentation.components.public_lists.PublicListsTableItem
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicProfileListsView - Composable function representing the public-profile-lists screen view.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicProfileListsView(
     navController: NavController,
@@ -47,13 +54,14 @@ fun PublicProfileListsView(
     if(isLoading){
         LoadingIndicator()
     }else{
+        // placeholder text if profile has no public lists
         if (publicProfileLists.isNullOrEmpty()){
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Text(text = stringResource(id = R.string.no_lists_text))
             }
             return
         }
-
+        // lazy column with movie list elements represented by PublicListsTableItem
         LazyColumn(modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)) {

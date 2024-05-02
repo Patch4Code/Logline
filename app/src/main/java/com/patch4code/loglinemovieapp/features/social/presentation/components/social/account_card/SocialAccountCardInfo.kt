@@ -19,10 +19,19 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialAccountCardInfo - Composable function that displays the account card info.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialAccountCardInfo(savedLoginData: StoreUserData){
 
+    // title
     Text(text = stringResource(id = R.string.account_text), style = MaterialTheme.typography.titleMedium)
+    // profile icon, user-name and e-mail
     Row (verticalAlignment = Alignment.CenterVertically){
         Icon(imageVector = Icons.Default.AccountBox, contentDescription = null, modifier = Modifier.size(50.dp))
         Column (modifier = Modifier.padding(8.dp)){

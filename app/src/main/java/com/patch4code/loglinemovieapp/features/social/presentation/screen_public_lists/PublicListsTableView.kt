@@ -17,6 +17,14 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.social.presentation.components.public_lists.PublicListsTableItem
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicListsTableView - Composable function representing the public-lists-table screen view.
+ * Shows a list of all public lists.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicListsTableView(navController: NavController, navViewModel: NavigationViewModel, publicListsViewViewModel: PublicListsTableViewModel = viewModel()){
 
@@ -38,5 +46,4 @@ fun PublicListsTableView(navController: NavController, navViewModel: NavigationV
             }
         }
     }
-
 }

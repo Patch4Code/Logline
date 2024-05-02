@@ -17,6 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialExploreCard - Composable function that displays a SocialExploreCard with a given title and image-vector
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialExploreCard(onClick:()->Unit, icon: ImageVector, text: String){
 

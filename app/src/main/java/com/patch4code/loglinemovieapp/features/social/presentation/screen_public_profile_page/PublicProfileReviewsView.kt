@@ -25,6 +25,13 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.features.social.presentation.components.public_profile.PublicProfileReviewItem
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicProfileReviewsView - Composable function representing the public-profiles-reviews screen view.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicProfileReviewsView(
     navController: NavController,
@@ -47,13 +54,14 @@ fun PublicProfileReviewsView(
     if(isLoading){
         LoadingIndicator()
     }else{
+        // placeholder text if profile has no public lists
         if (publicProfileReviews.isNullOrEmpty()){
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Text(text = stringResource(id = R.string.no_reviews_text))
             }
             return
         }
-
+        // lazy column with review elements represented by PublicProfileReviewItem
         LazyColumn(modifier = Modifier.padding(16.dp)) {
             items(publicProfileReviews)
             { loglineReview ->

@@ -19,6 +19,13 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicReviewsViewModel - ViewModel responsible for managing public reviews.
+ *
+ * @author Patch4Code
+ */
 class PublicReviewsViewModel: ViewModel() {
 
     private val _publicReviews = MutableLiveData<List<LoglineReview>>()

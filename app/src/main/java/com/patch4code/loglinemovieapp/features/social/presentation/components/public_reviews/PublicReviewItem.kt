@@ -36,7 +36,14 @@ import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import java.net.URLEncoder
 
-
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicReviewItem - Composable function for displaying a review item for the PublicReviewsView.
+ * Navigates to the PublicReviewDetailsView on click.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
 
@@ -53,6 +60,7 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
         }
     ){
         Row (modifier = Modifier.padding(top = 16.dp, bottom = 8.dp), verticalAlignment = Alignment.CenterVertically){
+            // user-icon (navigates to PublicProfileView on click) and -name
             AsyncImage(
                 model = publicReview.avatarPath,
                 contentDescription = null,
@@ -68,6 +76,7 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
             )
             Text(text = publicReview.authorName, style = MaterialTheme.typography.titleMedium)
 
+            // rating if available
             if(publicReview.rating > 0){
                 Spacer(modifier = Modifier.padding(8.dp))
                 Row{
@@ -86,7 +95,7 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
         }
 
         Row (modifier = Modifier.height(150.dp)){
-
+            // portion of the review text (max up to 7 lines)
             Box(modifier = Modifier.weight(1f)) {
                 Text(text = publicReview.content,
                     style = MaterialTheme.typography.bodyMedium,
@@ -97,7 +106,7 @@ fun PublicReviewItem(publicReview: LoglineReview, navController: NavController){
             }
 
             Spacer(modifier = Modifier.padding(8.dp))
-
+            // Movie-poster
             AsyncImage(
                 model = MovieHelper.processPosterUrl(publicReview.movie.posterUrl),
                 contentDescription = stringResource(id = R.string.poster_description),

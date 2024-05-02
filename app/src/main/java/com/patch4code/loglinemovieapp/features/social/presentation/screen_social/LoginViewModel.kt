@@ -12,6 +12,13 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelpe
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * LoginViewModel - ViewModel responsible for login and sign-up functionalities.
+ *
+ * @author Patch4Code
+ */
 class LoginViewModel: ViewModel() {
 
     private lateinit var dataStore: StoreUserData

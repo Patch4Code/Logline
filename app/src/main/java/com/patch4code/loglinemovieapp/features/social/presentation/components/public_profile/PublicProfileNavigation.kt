@@ -21,6 +21,13 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicProfileNavigation - Composable function that displays the navigation elements of public profile.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicProfileNavigation(userId: String, userName: String, navController: NavController){
 

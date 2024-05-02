@@ -42,6 +42,14 @@ import com.patch4code.loglinemovieapp.features.social.domain.model.PublicList
 import com.patch4code.loglinemovieapp.features.social.presentation.components.public_lists.DeletePublicListDialog
 import java.net.URLDecoder
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicListView - Composable function representing the public list screen view.
+ * Shows a public list of movies.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicListView(
     navController: NavController,
@@ -61,7 +69,7 @@ fun PublicListView(
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.PublicListScreen)
         navViewModel.overrideCurrentScreenTitle(UiText.DynamicString("${UiText.StringResource(R.string.list_by_text).asString(context)} ${publicList.authorName}"))
-        publicListViewModel.isYourReview(publicList.userId)
+        publicListViewModel.isYourLis(publicList.userId)
     }
 
     val isYourReview = publicListViewModel.isYourList.observeAsState().value
@@ -71,6 +79,7 @@ fun PublicListView(
     Column{
 
         Column(modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp)) {
+            // user-icon (clickable and navigates to PublicProfileView) and -name
             Row (verticalAlignment = Alignment.CenterVertically){
                 AsyncImage(
                     model = publicList.avatarPath,
@@ -87,7 +96,7 @@ fun PublicListView(
                 )
                 Text(text = publicList.authorName, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
-
+            // delete button if this is the review of the current user (opens DeletePublicListDialog)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = publicList.movieList.name,
@@ -101,7 +110,7 @@ fun PublicListView(
                 }
             }
         }
-
+        // lis of movies
         LazyColumn(modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)

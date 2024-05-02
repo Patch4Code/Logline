@@ -12,6 +12,14 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews.PublicReviewDetailsViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DeletePublicReviewDialog - Composable function to display the delete public review dialog.
+ * Calls the ViewModel and deletes the current review on confirm.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DeletePublicReviewDialog(
     showDeletePublicReviewDialog: MutableState<Boolean>,

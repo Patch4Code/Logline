@@ -36,6 +36,15 @@ import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews.PublicReviewDetailsViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicReviewDetailsInfoAndActions - Composable function that displays details and action element
+ * for the PublicReviewDetailsView. Consists of user-icon and name, movie-title, release-year, date
+ * of the review and delete button if this is your review.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicReviewDetailsInfoAndActions(
     review: LoglineReview,
@@ -55,6 +64,7 @@ fun PublicReviewDetailsInfoAndActions(
 
     Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)){
 
+        // user-icon (navigates to PublicProfileView on click) and -name
         Row (modifier = Modifier.padding(bottom = 4.dp), verticalAlignment = Alignment.CenterVertically){
             AsyncImage(
                 model = review.avatarPath,
@@ -72,10 +82,11 @@ fun PublicReviewDetailsInfoAndActions(
             Text(text = review.authorName, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
 
-
+        // movie-title and -year
         Text(text = review.movie.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
         Text(text = movieYear, style = MaterialTheme.typography.bodyMedium)
 
+        // rating if available
         if(rating > 0){
             Row (
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
@@ -95,9 +106,11 @@ fun PublicReviewDetailsInfoAndActions(
             }
         }
 
+        // date óf the review
         Text(text = "${formatedDate[0]}. ${formatedDate[1]} ${formatedDate[2]}", style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.padding(4.dp))
 
+        // delete button if this is your review that opens DeletePublicReviewDialog
         if(isYourReview == true){
             IconButton(onClick = { showDeletePublicReviewDialog.value = true }) {
                 Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(id = R.string.delete_review_description))

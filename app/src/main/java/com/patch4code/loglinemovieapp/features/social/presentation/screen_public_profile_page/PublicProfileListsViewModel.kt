@@ -19,6 +19,13 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicProfileListsViewModel - ViewModel responsible for fetching and managing public user profile lists data.
+ *
+ * @author Patch4Code
+ */
 class PublicProfileListsViewModel: ViewModel() {
 
     private val _publicProfileLists = MutableLiveData<List<PublicList>>()
@@ -27,14 +34,17 @@ class PublicProfileListsViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    // Fetches public lists from a user based on given userId
     fun getPublicProfileLists(userId: String?){
         viewModelScope.launch {
             try {
                 _isLoading.value = true
 
+                // Kotlin suspendCoroutine waits for the completion of the background operation
                 val publicProfileListsAsParseObjects = suspendCoroutine<List<ParseObject>> { continuation ->
                     val profileListsQuery = ParseQuery<ParseObject>("MovieList")
                     profileListsQuery.whereEqualTo("user", ParseObject.createWithoutData("_User", userId))
+                    // Execute query in background
                     profileListsQuery.findInBackground { publicListsAsParseObjects, e ->
                         if(e != null){
                             Log.e("PublicProfileListsViewModel", "Error: ", e)
@@ -59,6 +69,7 @@ class PublicProfileListsViewModel: ViewModel() {
         }
     }
 
+    // Creates List<PublicList> from given List<ParseObject>
     private suspend fun buildPublicMovieLists(publicProfileListsAsParseObjects: List<ParseObject>): List<PublicList>{
         return suspendCoroutine {continuation ->
             val publicProfileMovieLists = mutableListOf<PublicList>()
@@ -114,5 +125,4 @@ class PublicProfileListsViewModel: ViewModel() {
             }
         }
     }
-
 }

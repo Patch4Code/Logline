@@ -11,6 +11,13 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialUpdateDialog - Composable function that displays a dialog for updating the profile.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialUpdateDialog(openUpdateDialog: MutableState<Boolean>, socialViewModel: SocialViewModel){
 

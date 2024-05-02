@@ -31,6 +31,14 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Load
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicProfilesTableView - Composable function representing the public-profiles-table screen view.
+ * Shows a list of all public profiles (the current user excluded)
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicProfilesTableView(
     navController: NavController,
@@ -52,6 +60,7 @@ fun PublicProfilesTableView(
         LazyColumn(modifier = Modifier.padding(16.dp)){
             publicUserProfiles?.forEach{publicProfile->
                 item {
+                    // User element
                     Row (modifier = Modifier
                         .fillMaxWidth()
                         .clickable {

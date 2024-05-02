@@ -14,6 +14,15 @@ import com.patch4code.loglinemovieapp.features.social.presentation.components.so
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialAccountCard - Composable function that displays the account card of the SocialView.
+ * Displays account info (username and e-mail), action buttons to view your profile, making the
+ * profile public/private and updating the profile as well as a logout button.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialAccountCard(savedLoginData: StoreUserData, socialViewModel: SocialViewModel, navController: NavController){
 

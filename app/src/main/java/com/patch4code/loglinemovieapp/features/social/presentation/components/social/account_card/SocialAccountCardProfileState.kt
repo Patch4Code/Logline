@@ -27,6 +27,14 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialAccountCardProfileState - Composable function that displays a button to view your profile
+ * and shows the profile state (private/public).
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialAccountCardProfileState(savedLoginData: StoreUserData, socialViewModel: SocialViewModel, navController: NavController){
 
@@ -40,10 +48,12 @@ fun SocialAccountCardProfileState(savedLoginData: StoreUserData, socialViewModel
 
     Column {
 
+        // navigates to the current users profile (PublicProfileView)
         TextButton(onClick = { navController.navigate(Screen.PublicProfileScreen.route + "/$profileId/$userName") }) {
             Text(text = stringResource(id = R.string.view_your_profile_text))
         }
 
+        // Display profile state (public/private) and buttons to change the state and to update the profile
         Row (verticalAlignment = Alignment.CenterVertically){
             if(savedLoginData.getIsProfilePublic.collectAsState(initial = false).value == true){
                 Text(text = stringResource(id = R.string.profile_public_text), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)

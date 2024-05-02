@@ -34,6 +34,13 @@ import com.patch4code.loglinemovieapp.features.profile.presentation.components.p
 import com.patch4code.loglinemovieapp.features.social.presentation.components.public_profile.PublicProfileNavigation
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreUserData
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PublicProfileView - Composable function representing the public-profile screen view.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PublicProfileView(
     navController: NavController,

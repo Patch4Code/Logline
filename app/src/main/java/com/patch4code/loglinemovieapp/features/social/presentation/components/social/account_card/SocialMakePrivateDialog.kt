@@ -11,12 +11,20 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SocialMakePrivateDialog - Composable function that displays a dialog for making the profile private.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SocialMakePrivateDialog(openMakePrivateDialog: MutableState<Boolean>, socialViewModel: SocialViewModel){
 
     if(openMakePrivateDialog.value){
         val context = LocalContext.current
 
+        // Strings for toast messages
         val successToastText = stringResource(id = R.string.success_private_toast)
         val errorToastText = stringResource(id = R.string.error_private_toast)
 
@@ -25,6 +33,7 @@ fun SocialMakePrivateDialog(openMakePrivateDialog: MutableState<Boolean>, social
             confirmButton = {
                 Button(onClick = {
                     openMakePrivateDialog.value = false
+                    // Change profile visibility state to private
                     socialViewModel.changeProfileVisibilityState(
                         publicState = false,
                         onSuccess = { Toast.makeText(context, successToastText, Toast.LENGTH_SHORT).show() },

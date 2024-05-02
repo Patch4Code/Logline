@@ -19,6 +19,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PasswordOutlinedTextField - Composable function for displaying a password outlined text-field with visibility toggle.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun PasswordOutlinedTextField(passwordInput: MutableState<String>, label: String = "Password"){
 
