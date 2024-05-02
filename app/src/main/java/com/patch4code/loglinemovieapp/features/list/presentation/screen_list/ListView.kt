@@ -38,8 +38,8 @@ import java.net.URLDecoder
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * ListsTableView - Composable function that displays a certain list of movies.
- * Provides options for adding and deleting movies and editing the list name.
+ * ListsTableView - Composable function representing the list screen view. Displays a certain list
+ * of movies and provides options for adding and deleting movies and editing the list name.
  *
  * @author Patch4Code
  */

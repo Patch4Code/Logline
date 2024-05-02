@@ -34,7 +34,8 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * MoviePublicReviewsView - Composable function that displays public reviews for a movie.
+ * MoviePublicReviewsView - Composable function representing the movie-public-reviews screen view.
+ * Displays public reviews for a movie.
  *
  * @author Patch4Code
  */

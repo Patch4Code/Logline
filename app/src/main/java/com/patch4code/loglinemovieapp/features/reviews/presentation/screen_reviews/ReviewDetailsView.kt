@@ -22,7 +22,7 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * ReviewDetailsView - Composable function that displays the details of a review.
+ * ReviewDetailsView - Composable function representing the review-details screen view.
  * Consists of poster, name, release-year, rating, date of the review, edit and publish button and review text.
  * Lets the user navigate to the MovieView by clicking the movie-poster, navigate to the DiaryEditElementView
  * by clicking the edit button and publish the review by clicking the publish-button (when the user is logged in).

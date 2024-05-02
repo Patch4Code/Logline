@@ -40,7 +40,7 @@ import java.time.LocalDateTime
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * DiaryEditElementView - Composable function for editing diary elements
+ * DiaryEditElementView - Composable function representing the diary-edit-element screen view.
  * This composable function provides  UI for editing diary elements, including ratings, dates, reviews, and deletion
  *
  * @author Patch4Code

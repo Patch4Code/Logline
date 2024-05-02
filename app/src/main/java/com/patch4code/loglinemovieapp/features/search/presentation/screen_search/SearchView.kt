@@ -37,7 +37,7 @@ import com.patch4code.loglinemovieapp.features.search.presentation.components.Mo
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * SearchView -Composable function representing the search screen view.
+ * SearchView - Composable function representing the search screen view.
  * Lets the user search movies by typing in a text-field.
  *
  * @author Patch4Code

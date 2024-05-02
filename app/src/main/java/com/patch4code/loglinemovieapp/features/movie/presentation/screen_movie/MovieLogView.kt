@@ -43,7 +43,8 @@ import java.time.LocalDateTime
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * MovieLogView - Composable function that displays the UI for logging a movie.
+ * MovieLogView - Composable function representing the movie-log screen view.
+ * Displays the UI for logging a movie.
  *
  * @author Patch4Code
  */

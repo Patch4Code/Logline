@@ -18,7 +18,8 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * MyMoviesView - Composable function for displaying the users watched movies.
+ * MyMoviesView - Composable function representing the my-movies screen view.
+ * Displays the users watched movies.
  *
  * @author Patch4Code
  */

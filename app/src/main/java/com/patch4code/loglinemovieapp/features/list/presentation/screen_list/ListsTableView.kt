@@ -24,7 +24,7 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * ListsTableView - Composable function that displays the ListsTable screen.
+ * ListsTableView - Composable function representing the lists-table screen view.
  * Displays the user's movie lists and provides options to add, delete and navigate to a list.
  *
  * @author Patch4Code

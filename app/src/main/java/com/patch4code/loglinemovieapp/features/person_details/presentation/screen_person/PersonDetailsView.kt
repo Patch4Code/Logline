@@ -38,8 +38,9 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * PersonDetailsView - Composable function for displaying details of a person (cast/crew),
- * including their biography, image, and movie credits (films in which they were involved).
+ * PersonDetailsView - Composable function representing the person-details screen view.
+ * Displays details of a person (cast/crew) including their biography, image,
+ * and movie credits (films in which they were involved).
  *
  * @author Patch4Code
  */

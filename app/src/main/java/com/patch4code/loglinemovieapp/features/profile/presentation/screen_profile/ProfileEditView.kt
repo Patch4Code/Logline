@@ -26,7 +26,8 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * ProfileEditView - Composable function for editing the user profile.
+ * ProfileEditView - Composable function representing the profile-edit screen view.
+ * Provides functionality for editing the user profile.
  *
  * @author Patch4Code
  */

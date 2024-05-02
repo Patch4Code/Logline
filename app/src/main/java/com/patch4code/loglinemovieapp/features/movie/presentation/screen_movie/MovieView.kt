@@ -29,7 +29,8 @@ import java.net.URLEncoder
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * MovieView - Composable function that displays details and related information about a movie.
+ * MovieView - Composable function representing the movie screen view.
+ * Displays details and related information about a movie.
  *
  * @author Patch4Code
  */

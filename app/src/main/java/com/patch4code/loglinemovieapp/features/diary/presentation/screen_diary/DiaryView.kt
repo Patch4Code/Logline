@@ -20,8 +20,8 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * DiaryView - Composable function to display diary logs from the db
- * displays list of MovieLoggedItems and provides swipe to edit functionality
+ * DiaryView - Composable function representing the diary screen view.
+ * Displays list of MovieLoggedItems and provides swipe to edit functionality.
  *
  * @author Patch4Code
  */
