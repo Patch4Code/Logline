@@ -19,6 +19,14 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsViewModel
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SelectCountrySection - Composable function to display the section for selecting a country.
+ * On button click the CountryPickerDialog opens.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SelectCountrySection(settingsViewModel: SettingsViewModel){
 

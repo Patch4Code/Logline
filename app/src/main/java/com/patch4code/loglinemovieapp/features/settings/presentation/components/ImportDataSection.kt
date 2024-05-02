@@ -27,11 +27,20 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.settings.presentation.utils.SettingsExtensions
 import com.patch4code.loglinemovieapp.ui.theme.Beige
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ImportDataSection - Composable function to display the section for importing data.
+ * Uses Activity result launcher for picking a single zip-file from the device.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ImportDataSection(){
 
     val context = LocalContext.current
 
+    // Activity result launcher for picking a single file
     val singleFilePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { localUri ->
@@ -39,7 +48,8 @@ fun ImportDataSection(){
                 Log.e("ImportDataSection", "uri: $localUri")
                 SettingsExtensions.importDatabaseFile(context, localUri,
                     onImportSuccess = {
-                        Log.e("ImportDataSection", "onImportSuccess")
+                        //Log.e("ImportDataSection", "onImportSuccess")
+                        // restarts the app on import success
                         val packageManager: PackageManager = context.packageManager
                         val intent: Intent = packageManager.getLaunchIntentForPackage(context.packageName)!!
                         val componentName: ComponentName = intent.component!!
@@ -54,6 +64,7 @@ fun ImportDataSection(){
 
     HorizontalDivider()
     Column (modifier = Modifier.padding(20.dp)){
+        // info text
         Text(text = stringResource(id = R.string.import_title), style = MaterialTheme.typography.titleMedium, color = Beige)
         Text(text = stringResource(id = R.string.import_text),
             style = MaterialTheme.typography.bodyMedium)
@@ -65,6 +76,7 @@ fun ImportDataSection(){
                 style = MaterialTheme.typography.labelMedium)
         }
         Spacer(modifier = Modifier.padding(8.dp))
+        // button that launches Activity result launcher and sets the file-typ to zip
         Button(onClick = { singleFilePickerLauncher.launch("application/zip") }) {
             Text(text = stringResource(id = R.string.import_button_text))
         }

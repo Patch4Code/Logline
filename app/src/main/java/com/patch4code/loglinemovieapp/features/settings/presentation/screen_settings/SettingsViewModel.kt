@@ -7,10 +7,18 @@ import com.patch4code.loglinemovieapp.features.settings.domain.model.Country
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SettingsViewModel - ViewModel for managing settings data.
+ *
+ * @author Patch4Code
+ */
 class SettingsViewModel: ViewModel() {
 
     private lateinit var settingsDataStore: StoreSettings
 
+    // List of countries with their country code, name, and flag code
     private val countries = listOf(
         Country("AE", "United Arab Emirates", "\uD83C\uDDE6\uD83C\uDDEA"),
         Country("AL", "Albania", "\uD83C\uDDE6\uD83C\uDDF1"),

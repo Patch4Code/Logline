@@ -23,6 +23,14 @@ import androidx.compose.ui.window.Dialog
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * CountryPickerDialog - Composable function for displaying a country picker dialog.
+ * Lets the user select a country that is then used for the watch provides in the MovieView.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun CountryPickerDialog(openCountryPickerDialog: MutableState<Boolean>, selectedCountryCode: String?, settingsViewModel: SettingsViewModel){
 

@@ -22,6 +22,13 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.ui.theme.Beige
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * EditProfileButton - Composable function to display a button that navigates to the ProfileEditView
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun EditProfileButton(navController: NavController){
 

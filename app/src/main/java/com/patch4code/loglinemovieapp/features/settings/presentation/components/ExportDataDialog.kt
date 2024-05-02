@@ -11,6 +11,14 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.settings.presentation.utils.SettingsExtensions
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ExportDataDialog - Composable function to display a dialog for exporting the app data.
+ * Calls corresponding function in SettingsExtensions on confirm.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ExportDataDialog(openExportDataDialog: MutableState<Boolean>){
 
