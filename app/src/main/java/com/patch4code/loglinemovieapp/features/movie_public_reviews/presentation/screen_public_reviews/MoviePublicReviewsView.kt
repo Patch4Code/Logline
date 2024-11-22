@@ -26,7 +26,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
-import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components.LoglineMovieReviews
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components.TmdbMovieReviews
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
@@ -50,20 +49,22 @@ fun MoviePublicReviewsView(
 ){
     val movieId = id?.toIntOrNull() ?: -1
 
+    // TODO: some lines are currently not used due to temporary deactivation of social media features.
+
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MoviePublicReviewsScreen)
         title?.let { navViewModel.overrideCurrentScreenTitle(UiText.DynamicString(it)) }
         moviePublicReviewsViewModel.loadTmdbReviews(movieId)
-        moviePublicReviewsViewModel.loadLoglineReviews(movieId)
+        //moviePublicReviewsViewModel.loadLoglineReviews(movieId)
     }
 
     // Observe the state of TMDB and Logline reviews and loading
     val tmdbMovieReviews = moviePublicReviewsViewModel.tmdbMovieReviews.observeAsState().value
     val tmdbIsLoading = moviePublicReviewsViewModel.tmdbIsLoading.observeAsState().value
-    val loglineMovieReviews = moviePublicReviewsViewModel.loglineMovieReviews.observeAsState().value
-    val loglineIsLoading = moviePublicReviewsViewModel.loglineIsLoading.observeAsState().value
+    //val loglineMovieReviews = moviePublicReviewsViewModel.loglineMovieReviews.observeAsState().value
+    //val loglineIsLoading = moviePublicReviewsViewModel.loglineIsLoading.observeAsState().value
 
-    val tabItems = listOf(stringResource(id = R.string.logline_reviews_title), stringResource(id = R.string.tmdb_reviews_title))
+    val tabItems = listOf(/*stringResource(id = R.string.logline_reviews_title),*/ stringResource(id = R.string.tmdb_reviews_title))
     var selectedTabIndex by remember { mutableStateOf(0) }
     val pagerState = rememberPagerState { tabItems.size }
 
@@ -94,11 +95,11 @@ fun MoviePublicReviewsView(
         ) {index->
             Box(modifier = Modifier.fillMaxSize().padding(8.dp)
             ){
-                if(index == 0){
+                /*if(index == 0){
                     LoglineMovieReviews(loglineMovieReviews, loglineIsLoading, navController)
-                }else{
+                }else{*/
                     TmdbMovieReviews(tmdbMovieReviews, tmdbIsLoading, moviePublicReviewsViewModel)
-                }
+                //}
             }
         }
     }

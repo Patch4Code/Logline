@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.map
  *
  * @author Patch4Code
  */
+// TODO: This class is currently unused due to temporary deactivation of social media features.
+
 class StoreUserData(private val context: Context) {
 
     companion object {
@@ -76,5 +78,3 @@ class StoreUserData(private val context: Context) {
         }
     }
 }
-
-

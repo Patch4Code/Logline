@@ -9,7 +9,6 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Movie
-import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -19,7 +18,6 @@ import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Movie
-import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.Reviews
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
@@ -92,12 +90,15 @@ data class DrawerNavigationItem(
                 unselectedIcon = Icons.AutoMirrored.Outlined.FeaturedPlayList,
                 route = Screen.ListsTableScreen.route,
             ),
+            // TODO: This element is currently unused due to temporary deactivation of social media features.
+            /*
             DrawerNavigationItem(
                 title = UiText.StringResource(R.string.social_text).asString(context),
                 selectedIcon = Icons.Filled.Public,
                 unselectedIcon = Icons.Outlined.Public,
                 route = Screen.SocialScreen.route,
-            ),
+            )
+             */
             DrawerNavigationItem(
                 title = UiText.StringResource(R.string.settings_text).asString(context),
                 selectedIcon = Icons.Filled.Settings,
