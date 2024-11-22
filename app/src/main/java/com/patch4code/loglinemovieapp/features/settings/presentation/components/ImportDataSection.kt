@@ -56,6 +56,7 @@ fun ImportDataSection(){
                         val restartIntent: Intent = Intent.makeRestartActivityTask(componentName)
                         context.startActivity(restartIntent)
                         Runtime.getRuntime().exit(0)
+
                     }
                 )
             }

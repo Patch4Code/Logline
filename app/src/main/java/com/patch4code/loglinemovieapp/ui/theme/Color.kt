@@ -17,6 +17,7 @@ val AzureishWhite = Color(0xFFD4E5F6)
 val Beige = Color(0xFFDEDFF0)
 
 val ChineseBlack = Color(0xFF0E1319)
+
 val Black = Color(0xFF000000)
 
 val PhilippineGray = Color(0xFF8C9197)

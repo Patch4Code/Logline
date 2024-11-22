@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -25,12 +23,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
-        //save api key from local.properties in BuildConfig
-        android.buildFeatures.buildConfig = true
-        val key: String = gradleLocalProperties(rootDir).getProperty("apiKey")
-        buildConfigField("String", "apiKey", "\"$key\"")
-
     }
 
     buildTypes {
@@ -67,6 +59,7 @@ dependencies {
 
     val navVersion = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$navVersion")
+    
 
     implementation("androidx.compose.ui:ui:1.6.3")
     implementation("androidx.compose.material:material:1.6.3")
