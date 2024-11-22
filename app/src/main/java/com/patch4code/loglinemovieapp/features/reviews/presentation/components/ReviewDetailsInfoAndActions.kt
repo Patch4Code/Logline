@@ -51,14 +51,6 @@ fun ReviewDetailsInfoAndActions(
 
     val comingFromDiaryView = navController.previousBackStackEntry?.destination?.route == Screen.DiaryScreen.route
 
-    /*
-    // TODO: This part is currently unused due to temporary deactivation of social media features.
-    val context = LocalContext.current
-    val dataLoginStore = remember { StoreUserData(context) }
-    val savedLoginData = dataLoginStore.getUserId.collectAsState(initial = "")
-    val openMakeReviewPublicDialog = remember { mutableStateOf(false)  }
-     */
-
     Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)){
         Text(text = movieTitle, style = MaterialTheme.typography.titleMedium, maxLines = 2)
         Text(text = movieYear, style = MaterialTheme.typography.bodyMedium)
@@ -90,16 +82,6 @@ fun ReviewDetailsInfoAndActions(
             IconButton(onClick = { navController.navigate("${Screen.DiaryEditElementScreen.route}/${reviewedLog.id}/$comingFromDiaryView") }) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = stringResource(id = R.string.edit_review_icon_description))
             }
-            /*
-            // TODO: This part is currently unused due to temporary deactivation of social media features.
-            IconButton(enabled = savedLoginData.value?.isNotEmpty() == true,
-                onClick = {openMakeReviewPublicDialog.value = true}) {
-                Icon(imageVector = Icons.Default.Public, contentDescription = stringResource(id = R.string.publish_review_icon_description))
-            }
-             */
         }
     }
-
-    // TODO: This element is currently unused due to temporary deactivation of social media features.
-    //MakeReviewPublicDialog(openMakeReviewPublicDialog, reviewDetailsViewModel)
 }

@@ -45,27 +45,13 @@ fun ListContent(
     listViewModel: ListViewModel
 ){
 
-    /*
-    // TODO: This part is currently unused due to temporary deactivation of social media features.
-    val context = LocalContext.current
-    val dataLoginStore = remember { StoreUserData(context) }
-    val savedLoginData = dataLoginStore.getUserId.collectAsState(initial = "")
-    val openMakeListPublicDialog = remember { mutableStateOf(false)  }
-     */
-
     Column {
         Row (
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(text = movieList?.name ?: "N/A", modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
-            /*
-            // TODO: This element is currently unused due to temporary deactivation of social media features.
-            IconButton(enabled = savedLoginData.value?.isNotEmpty() == true,
-                onClick = { openMakeListPublicDialog.value = true}) {
-                Icon(imageVector = Icons.Default.Public, contentDescription = stringResource(id = R.string.make_public_text))
-            }
-            */
+
             IconButton(onClick = { showBottomSheet.value = true }) {
                 Icon(imageVector = Icons.Default.MoreVert, contentDescription = stringResource(id = R.string.list_settings_icon_description))
             }
@@ -91,6 +77,4 @@ fun ListContent(
             }
         }
     }
-    // TODO: This element is currently unused due to temporary deactivation of social media features.
-    //MakeListPublicDialog(openMakeListPublicDialog, listViewModel)
 }

@@ -90,15 +90,6 @@ data class DrawerNavigationItem(
                 unselectedIcon = Icons.AutoMirrored.Outlined.FeaturedPlayList,
                 route = Screen.ListsTableScreen.route,
             ),
-            // TODO: This element is currently unused due to temporary deactivation of social media features.
-            /*
-            DrawerNavigationItem(
-                title = UiText.StringResource(R.string.social_text).asString(context),
-                selectedIcon = Icons.Filled.Public,
-                unselectedIcon = Icons.Outlined.Public,
-                route = Screen.SocialScreen.route,
-            )
-             */
             DrawerNavigationItem(
                 title = UiText.StringResource(R.string.settings_text).asString(context),
                 selectedIcon = Icons.Filled.Settings,

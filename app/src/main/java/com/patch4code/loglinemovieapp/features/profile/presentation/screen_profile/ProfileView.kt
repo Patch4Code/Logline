@@ -54,13 +54,6 @@ fun ProfileView(
 
     val userProfile = profileViewModel.userProfileData.observeAsState().value
 
-    /*
-    // TODO: This part is currently unused due to temporary deactivation of social media features.
-    val context = LocalContext.current
-    val dataLoginStore = remember { StoreUserData(context) }
-    val loginUserName = dataLoginStore.getUsername.collectAsState(initial = "").value
-     */
-
     //Profile Layout
     Column(horizontalAlignment = CenterHorizontally)
     {
@@ -75,15 +68,8 @@ fun ProfileView(
         Spacer(modifier = Modifier.padding(10.dp))
 
         //Username
-        /*
-        // TODO: This part is currently unused due to temporary deactivation of social media features.
-        if(!loginUserName.isNullOrEmpty()){
-            Row (horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically){
-                Text(text = loginUserName, fontWeight = FontWeight.Bold)
-                Icon(imageVector = Icons.Default.Verified, modifier = Modifier.size(16.dp),contentDescription = null)}
-        }else{*/
-            Text(text = userProfile?.username ?: "Anonymous", modifier = Modifier.align(CenterHorizontally), fontWeight = FontWeight.Bold)
-        //}
+        Text(text = userProfile?.username ?: "Anonymous", modifier = Modifier.align(CenterHorizontally), fontWeight = FontWeight.Bold)
+
 
         Spacer(modifier = Modifier.padding(4.dp))
 

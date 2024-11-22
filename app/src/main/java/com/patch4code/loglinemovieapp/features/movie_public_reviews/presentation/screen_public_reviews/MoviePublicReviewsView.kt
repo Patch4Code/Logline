@@ -49,22 +49,17 @@ fun MoviePublicReviewsView(
 ){
     val movieId = id?.toIntOrNull() ?: -1
 
-    // TODO: some lines are currently not used due to temporary deactivation of social media features.
-
     LaunchedEffect(Unit) {
         navViewModel.updateScreen(Screen.MoviePublicReviewsScreen)
         title?.let { navViewModel.overrideCurrentScreenTitle(UiText.DynamicString(it)) }
         moviePublicReviewsViewModel.loadTmdbReviews(movieId)
-        //moviePublicReviewsViewModel.loadLoglineReviews(movieId)
     }
 
-    // Observe the state of TMDB and Logline reviews and loading
+    // Observe the state of TMDB (and Logline) reviews and loading
     val tmdbMovieReviews = moviePublicReviewsViewModel.tmdbMovieReviews.observeAsState().value
     val tmdbIsLoading = moviePublicReviewsViewModel.tmdbIsLoading.observeAsState().value
-    //val loglineMovieReviews = moviePublicReviewsViewModel.loglineMovieReviews.observeAsState().value
-    //val loglineIsLoading = moviePublicReviewsViewModel.loglineIsLoading.observeAsState().value
 
-    val tabItems = listOf(/*stringResource(id = R.string.logline_reviews_title),*/ stringResource(id = R.string.tmdb_reviews_title))
+    val tabItems = listOf(stringResource(id = R.string.tmdb_reviews_title))
     var selectedTabIndex by remember { mutableStateOf(0) }
     val pagerState = rememberPagerState { tabItems.size }
 
@@ -78,7 +73,7 @@ fun MoviePublicReviewsView(
     }
 
     Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally){
-        // TabRow displaying Logline and TMDB review tabs
+        // TabRow displaying (Logline and) TMDB review tabs
         TabRow(selectedTabIndex = selectedTabIndex) {
             tabItems.forEachIndexed {index, item->
                 Tab(
@@ -95,11 +90,7 @@ fun MoviePublicReviewsView(
         ) {index->
             Box(modifier = Modifier.fillMaxSize().padding(8.dp)
             ){
-                /*if(index == 0){
-                    LoglineMovieReviews(loglineMovieReviews, loglineIsLoading, navController)
-                }else{*/
-                    TmdbMovieReviews(tmdbMovieReviews, tmdbIsLoading, moviePublicReviewsViewModel)
-                //}
+                TmdbMovieReviews(tmdbMovieReviews, tmdbIsLoading, moviePublicReviewsViewModel)
             }
         }
     }
