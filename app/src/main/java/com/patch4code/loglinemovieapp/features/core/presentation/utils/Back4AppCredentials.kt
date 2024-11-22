@@ -6,6 +6,7 @@ package com.patch4code.loglinemovieapp.features.core.presentation.utils
  *
  * @author Patch4Code
  */
+// TODO: This class is currently unused due to temporary deactivation of social media features.
 class Back4AppCredentials {
     companion object {
         private const val ENC_BACK4APP_APP_ID = "emZKWFdrQnZSR2R5czYzWDAySDhaQjFMN1c4dDlhTzZIVXByVldRQw=="
