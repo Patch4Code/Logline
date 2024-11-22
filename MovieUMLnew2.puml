@@ -1,0 +1,27 @@
+@startuml
+interface MovieUserDataDao {
+}
+class MainActivity {
+}
+class NavigationViewModel {
+}
+interface TmdbApiService {
+}
+class MovieViewModel {
+}
+class MovieViewModelFactory {
+}
+abstract class LoglineDatabase {
+}
+class RetrofitHelper {
+}
+class RoomConverters {
+}
+
+
+ComponentActivity <|-- MainActivity
+ViewModel <|-- NavigationViewModel
+ViewModel <|-- MovieViewModel
+Factory <|.. MovieViewModelFactory
+RoomDatabase <|-- LoglineDatabase
+@enduml

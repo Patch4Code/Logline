@@ -1,0 +1,32 @@
+@startuml
+class com.patch4code.loglinemovieapp.features.diary.presentation.utils.DateHelper {
++ LocalDateTime convertLongToLocalDateTime(Long?)
++ Long convertDateTimeToLong(LocalDateTime)
++ String formatDateToDisplay(LocalDateTime)
+}
+class com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie {
+}
+class com.patch4code.loglinemovieapp.features.diary.presentation.utils.DiaryNavigationExtensions {
++ void navigateOnDiaryEditSaveOrDiscard(Boolean,Boolean?)
+- void handleDiaryScreenNavigation(Boolean)
+- void handleReviewScreenNavigation(Boolean)
+}
+class com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary.DiaryEditElementViewModel {
+-  _diaryEntry
++ LiveData<LoggedMovie> diaryEntry
++ void setDiaryEntryToEdit(String?)
++ void updatedDiaryEntry(Int,LocalDateTime,String)
++ LocalDateTime adjustedDateTime(LocalDateTime)
++ void deleteDiaryEntry()
+}
+class com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary.DiaryViewModel {
+-  _diaryLogs
++ LiveData<List<LoggedMovie>> diaryLogs
+- void getDiaryLogs()
+- void printLoggedMoviesWithoutReview(List<LoggedMovie>)
+}
+
+
+androidx.lifecycle.ViewModel <|-- com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary.DiaryEditElementViewModel
+androidx.lifecycle.ViewModel <|-- com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary.DiaryViewModel
+@enduml

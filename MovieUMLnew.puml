@@ -1,0 +1,99 @@
+@startuml
+interface com.patch4code.loglinemovieapp.room_database.MovieUserDataDao {
++ void upsertMovieUserData(MovieUserData)
++ void deleteMovieUserData(MovieUserData)
++ void updateOrInsertRating(Movie,Int)
++ void updateOrInsertOnWatchlist(Movie,Boolean)
++ MovieUserData? getMovieUserDataByMovieId(Int)
++ List<MovieUserData> getMovieUserDataList()
+}
+
+class com.patch4code.loglinemovieapp.MainActivity {
+-  db
++ void onCreate(Bundle?)
+}
+
+
+class com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel {
+-  _currentScreen
++ LiveData<Screen> currentScreen
++ void updateScreen(Screen)
++ void overrideCurrentScreenTitle(UiText)
+}
+
+
+interface com.patch4code.loglinemovieapp.api.TmdbApiService {
++ void getPopularMovies(void)
++ void getTopRated(void)
++ void getUpcoming(void)
++ void searchMovie(void)
++ void getMovieCredits(void)
++ void getMovieDetails(void)
++ void getMovieVideos(void)
++ void getWatchProviders(void)
++ void getMoviesFromCollection(void)
++ void getPersonDetails(void)
++ void getPersonMovieCredits(void)
++ void getTmdbMovieReviews(void)
+}
+
+class com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel {
+- TmdbApiService tmdbApiService
+-  _detailsData
++ LiveData<MovieDetails> detailsData
+-  _movieVideo
++ LiveData<MovieVideo?> movieVideo
+-  _countryProviders
++ LiveData<CountryProviders?> countryProviders
+-  _creditsData
++ LiveData<MovieCredits> creditsData
+-  _collectionMovies
++ LiveData<List<Movie>> collectionMovies
+-  _myRating
++ LiveData<Int> myRating
+-  _onWatchlist
++ LiveData<Boolean> onWatchlist
+-  _isLoading
++ LiveData<Boolean> isLoading
++ <<Create>> MovieViewModel(MovieUserDataDao)
++ void loadAllMovieData(Int)
++ void loadMovieProviders(Int,String)
++ void loadRatingAndWatchlistStatusById(Int)
++ void changeRating(Int?,Int)
++ void changeOnWatchlist(Int?,Boolean)
+}
+
+
+class com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModelFactory {
++ <<Create>> MovieViewModelFactory(MovieUserDataDao)
++ T create(Class<T>)
+}
+
+abstract class com.patch4code.loglinemovieapp.room_database.LoglineDatabase {
++ MovieUserDataDao movieUserDataDao
++ LoggedMovieDao loggedMovieDao
++ MovieListDao movieListDao
++ UserProfileDao userProfileDao
+}
+
+class com.patch4code.loglinemovieapp.api.RetrofitHelper {
++ Retrofit getInstance(String)
+}
+
+class com.patch4code.loglinemovieapp.room_database.RoomConverters {
++ String? fromMovie(Movie?)
++ Movie? toMovie(String?)
++ String? fromMovieList(List<Movie>?)
++ List<Movie>? toMovieList(String?)
++ Long? fromLocalDateTime(LocalDateTime?)
++ LocalDateTime? toLocalDateTime(Long?)
+}
+
+
+
+androidx.activity.ComponentActivity <|-- com.patch4code.loglinemovieapp.MainActivity
+androidx.lifecycle.ViewModel <|-- com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+androidx.lifecycle.ViewModel <|-- com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
+com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.Factory <|.. com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModelFactory
+androidx.room.RoomDatabase <|-- com.patch4code.loglinemovieapp.room_database.LoglineDatabase
+@enduml

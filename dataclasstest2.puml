@@ -1,0 +1,6 @@
+@startuml
+class com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie {
++ <<Create>> LoggedMovie(,,String,,Movie,,LocalDateTime,,Int,,String)
+}
+
+@enduml

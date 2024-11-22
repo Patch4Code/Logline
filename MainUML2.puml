@@ -1,0 +1,50 @@
+@startuml
+class com.patch4code.loglinemovieapp.MainActivity {
+-  db
++ void onCreate(Bundle?)
+}
+
+
+class com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel {
+-  _currentScreen
++ LiveData<Screen> currentScreen
++ void updateScreen(Screen)
++ void overrideCurrentScreenTitle(UiText)
+}
+
+
+interface com.patch4code.loglinemovieapp.api.TmdbApiService {
++ void getPopularMovies(void)
++ void getTopRated(void)
++ void getUpcoming(void)
++ void searchMovie(void)
++ void getMovieCredits(void)
++ void getMovieDetails(void)
++ void getMovieVideos(void)
++ void getWatchProviders(void)
++ void getMoviesFromCollection(void)
++ void getPersonDetails(void)
++ void getPersonMovieCredits(void)
++ void getTmdbMovieReviews(void)
+}
+
+class com.patch4code.loglinemovieapp.features.home.presentation.screen_home.HomeViewModel {
+- TmdbApiService tmdbApiService
+-  _isLoading
++ LiveData<Boolean> isLoading
+-  _popularMovies
+-  _topRatedMovies
+-  _upcomingMovies
+-  _homeMoviesMap
++ LiveData<Map<UiText.StringResource, List<Movie>>> homeMoviesMap
++ void loadHomeViewData()
+- void updateHomeMovieMap()
+}
+
+
+
+
+androidx.activity.ComponentActivity <|-- com.patch4code.loglinemovieapp.MainActivity
+androidx.lifecycle.ViewModel <|-- com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+androidx.lifecycle.ViewModel <|-- com.patch4code.loglinemovieapp.features.home.presentation.screen_home.HomeViewModel
+@enduml

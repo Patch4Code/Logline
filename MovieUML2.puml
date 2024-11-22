@@ -1,0 +1,36 @@
+@startuml
+class com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel {
+- TmdbApiService tmdbApiService
+-  _detailsData
++ LiveData<MovieDetails> detailsData
+-  _movieVideo
++ LiveData<MovieVideo?> movieVideo
+-  _countryProviders
++ LiveData<CountryProviders?> countryProviders
+-  _creditsData
++ LiveData<MovieCredits> creditsData
+-  _collectionMovies
++ LiveData<List<Movie>> collectionMovies
+-  _myRating
++ LiveData<Int> myRating
+-  _onWatchlist
++ LiveData<Boolean> onWatchlist
+-  _isLoading
++ LiveData<Boolean> isLoading
++ void loadAllMovieData(Int)
++ void loadMovieProviders(Int,String)
++ void loadRatingAndWatchlistStatusById(Int)
++ void changeRating(Int?,Int)
++ void changeOnWatchlist(Int?,Boolean)
+}
+
+
+class com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModelFactory {
++ T create(Class<T>)
+}
+
+
+
+androidx.lifecycle.ViewModel <|-- com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModel
+com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.Factory <|.. com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.MovieViewModelFactory
+@enduml
