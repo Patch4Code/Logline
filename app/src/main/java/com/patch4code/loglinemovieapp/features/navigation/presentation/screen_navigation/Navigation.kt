@@ -40,15 +40,6 @@ import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_revie
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewsView
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchView
 import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_lists.PublicListView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_lists.PublicListsTableView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profile_page.PublicProfileListsView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profile_page.PublicProfileReviewsView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profile_page.PublicProfileView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_profiles.PublicProfilesTableView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews.PublicReviewDetailsView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_public_reviews.PublicReviewsView
-import com.patch4code.loglinemovieapp.features.social.presentation.screen_social.SocialView
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.screen_watchlist.WatchlistView
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import kotlinx.coroutines.launch
@@ -252,106 +243,6 @@ fun Navigation(db: LoglineDatabase){
 
                     composable(route = Screen.ProfileEditScreen.route){
                         ProfileEditView(navController = navController, navViewModel = navigationViewModel, db = db)
-                    }
-
-                    composable(route = Screen.SocialScreen.route){
-                        SocialView(navController = navController, navViewModel = navigationViewModel, db = db)
-                    }
-
-                    composable(route = Screen.PublicProfilesTableScreen.route){
-                        PublicProfilesTableView(navController = navController, navViewModel = navigationViewModel)
-                    }
-
-                    composable(route = Screen.PublicProfileScreen.route + "/{user_id}/{user_name}",
-                        arguments = listOf(
-                            navArgument("user_id"){
-                                type = NavType.StringType
-                            },
-                            navArgument("user_name"){
-                                type = NavType.StringType
-                            }
-                        )
-                    ){
-                        PublicProfileView(
-                            navController = navController,
-                            navViewModel = navigationViewModel,
-                            userId = it.arguments?.getString("user_id"),
-                            userName = it.arguments?.getString("user_name")
-                        )
-                    }
-
-                    composable(route = Screen.PublicProfileReviewsScreen.route + "/{user_id}/{user_name}",
-                        arguments = listOf(
-                            navArgument("user_id"){
-                                type = NavType.StringType
-                            },
-                            navArgument("user_name"){
-                                type = NavType.StringType
-                            }
-                        )
-                    ){
-                        PublicProfileReviewsView(
-                            navController = navController,
-                            navViewModel = navigationViewModel,
-                            userId = it.arguments?.getString("user_id"),
-                            userName = it.arguments?.getString("user_name")
-                        )
-                    }
-
-                    composable(route = Screen.PublicProfileListsScreen.route + "/{user_id}/{user_name}",
-                        arguments = listOf(
-                            navArgument("user_id"){
-                                type = NavType.StringType
-                            },
-                            navArgument("user_name"){
-                                type = NavType.StringType
-                            }
-                        )
-                    ){
-                        PublicProfileListsView(
-                            navController = navController,
-                            navViewModel = navigationViewModel,
-                            userId = it.arguments?.getString("user_id"),
-                            userName = it.arguments?.getString("user_name"),
-                        )
-                    }
-
-                    composable(route = Screen.PublicReviewsScreen.route){
-                        PublicReviewsView(navController = navController, navViewModel = navigationViewModel)
-                    }
-
-                    composable(
-                        route = Screen.PublicReviewDetailsScreen.route + "/{loglineReview}",
-                        arguments = listOf(
-                            navArgument("loglineReview"){
-                                type = NavType.StringType
-                            }
-                        )
-                        ){
-                        PublicReviewDetailsView(
-                            navController = navController,
-                            navViewModel = navigationViewModel,
-                            loglineReviewJson = it.arguments?.getString("loglineReview")
-                        )
-                    }
-
-                    composable(route = Screen.PublicListsTableScreen.route){
-                        PublicListsTableView(navController = navController, navViewModel = navigationViewModel)
-                    }
-
-                    composable(
-                        route = Screen.PublicListScreen.route + "/{publicList}",
-                        arguments = listOf(
-                            navArgument("publicList"){
-                                type = NavType.StringType
-                            }
-                        )
-                    ){
-                        PublicListView(
-                            navController = navController,
-                            navViewModel = navigationViewModel,
-                            publicListJson = it.arguments?.getString("publicList")
-                        )
                     }
 
                     composable(route = Screen.SettingsScreen.route){
