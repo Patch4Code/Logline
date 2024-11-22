@@ -78,9 +78,4 @@ class SearchViewModel: ViewModel(){
             }
         }
     }
-
-    // Method to set test data for preview
-    fun setTestMovies(movies: List<Movie>) {
-        _searchedMovies.value = movies
-    }
 }

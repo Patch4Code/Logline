@@ -1,7 +1,5 @@
 package com.patch4code.loglinemovieapp.features.core.presentation.utils
-
 import java.util.Base64
-
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
