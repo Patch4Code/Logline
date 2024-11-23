@@ -46,6 +46,13 @@ class AddToListViewModel(private val movieListDao: MovieListDao): ViewModel() {
             }
         }
     }
+
+    fun createMovieList(movieList: MovieList) {
+        viewModelScope.launch {
+            movieListDao.upsertMovieList(movieList)
+            _userMovieLists.value = movieListDao.getMovieLists()
+        }
+    }
 }
 
 // Factory-class for creating AddToListViewModel instances to manage access to the database

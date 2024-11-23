@@ -1,8 +1,16 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.components.dialogs
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,12 +18,15 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.AddListDialog
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.AddToListViewModel
 import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.AddToListViewModelFactory
@@ -48,6 +59,8 @@ fun AddToListDialog(
     val context = LocalContext.current
     val toastText = stringResource(id = R.string.add_to_list_dialog_toast)
 
+    val openAddListDialog = remember { mutableStateOf(false)  }
+
     // Create a Movie object from movie details
     val currentMovie = Movie(
         title = movieDetails?.title ?: "N/A",
@@ -66,10 +79,18 @@ fun AddToListDialog(
     val selectedList = remember { mutableStateOf<MovieList?>(null) }
 
     AlertDialog(
+        modifier = Modifier.height(450.dp),
         onDismissRequest = { openAddToListDialog.value = false  },
         title = { Text(text = stringResource(id = R.string.add_to_list_dialog_title)) },
         text = {
-            AddToListDialogContent(myUserMovieLists, currentMovie, selectedList)
+            Column {
+                FilledTonalButton(onClick = {openAddListDialog.value = true}) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                    Spacer(modifier = Modifier.padding(2.dp))
+                    Text(text = "Create new List")
+                }
+                AddToListDialogContent(myUserMovieLists, currentMovie, selectedList)
+            }
         },
         confirmButton = {
             Button(onClick = {
@@ -90,5 +111,14 @@ fun AddToListDialog(
                 Text(text = stringResource(id = R.string.cancel_button_text))
             }
         }
+    )
+
+    AddListDialog(
+        openAddListDialog = openAddListDialog.value,
+        onSave = { listName, isRanked ->
+            addToListViewModel.createMovieList(MovieList(listName, isRanked, emptyList()))
+            openAddListDialog.value = false
+        },
+        onCancel = {openAddListDialog.value = false}
     )
 }
