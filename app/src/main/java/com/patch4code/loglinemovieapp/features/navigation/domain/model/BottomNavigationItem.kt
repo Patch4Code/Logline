@@ -43,16 +43,16 @@ data class BottomNavigationItem(
                 route = Screen.SearchScreen.route
             ),
             BottomNavigationItem(
-                title = UiText.StringResource(R.string.profile_text).asString(context),
-                selectedIcon = Icons.Filled.AccountCircle,
-                unselectedIcon = Icons.Outlined.AccountCircle,
-                route = Screen.ProfileScreen.route
-            ),
-            BottomNavigationItem(
                 title = UiText.StringResource(R.string.watchlist_text).asString(context),
                 selectedIcon = Icons.Filled.WatchLater,
                 unselectedIcon = Icons.Outlined.WatchLater,
                 route = Screen.WatchlistScreen.route
+            ),
+            BottomNavigationItem(
+                title = UiText.StringResource(R.string.profile_text).asString(context),
+                selectedIcon = Icons.Filled.AccountCircle,
+                unselectedIcon = Icons.Outlined.AccountCircle,
+                route = Screen.ProfileScreen.route
             )
         )
     }
