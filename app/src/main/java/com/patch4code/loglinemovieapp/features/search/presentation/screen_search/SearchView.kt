@@ -72,9 +72,11 @@ fun SearchView(
         {
             // text-field for input of a movie name
             OutlinedTextField(
+                modifier = Modifier.weight(1f).padding(start = 16.dp),
                 value = textInput.value,
                 onValueChange = {textInput.value = it},
                 label = { Text(text = stringResource(id = R.string.search_text_field_label))},
+                singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
                     // launches search onSearch keyboardActions
@@ -97,6 +99,7 @@ fun SearchView(
                 modifier = Modifier.align(Alignment.CenterVertically)) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = stringResource(id = R.string.search_icon_description))
             }
+            Spacer(modifier = Modifier.padding(end = 18.dp))
         }
         Spacer(modifier = Modifier.padding(4.dp))
         // lazy column that displays the list of results represented by MovieSearchCards
