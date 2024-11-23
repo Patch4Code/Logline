@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val darkColorScheme = darkColorScheme(
-    primary = LightBlue, // e.g. status Bar ...
+    primary = LightBlue, // e.g. status Bar
     primaryContainer = SapphireBlue, // e.g. Floating Action Button
     secondaryContainer = Charcoal, // e.g. BottomBar and Drawer Elevation
     onSecondaryContainer = AzureishWhite, // e.g. Elevated Icon-color on BottomBar and Drawer
@@ -19,8 +19,11 @@ private val darkColorScheme = darkColorScheme(
     background = ChineseBlack, // Screen Background color
     onBackground = Beige, // Default Element and Font Color
 
-    surface = ChineseBlack, // Color TopBar, BottomBar and Drawer
+    surface = ChineseBlack, // Color TopBar not scrolled
     onSurface = Beige, // Element and Font Color on Surface
+    surfaceContainer = MidnightBlue, // e.g. BottomBar, TopBar scrolled
+    surfaceContainerLow = MidnightBlue, // e.g. Drawer color
+    surfaceContainerHigh = MidnightBlue, //dialog popup color bg
 
     outline = PhilippineGray, // e.g. Search-box line
     outlineVariant = SonicSilver, // e.g. Divider Lines

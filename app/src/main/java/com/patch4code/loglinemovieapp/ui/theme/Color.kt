@@ -21,3 +21,5 @@ val Black = Color(0xFF000000)
 
 val PhilippineGray = Color(0xFF8C9197)
 val SonicSilver = Color(0xFF42484E)
+
+val MidnightBlue = Color(0xFF19232C)
