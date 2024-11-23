@@ -39,9 +39,8 @@ fun ListSettingsBottomSheet(showBottomSheet: Boolean, onClose:()->Unit, onEdit:(
     if(showBottomSheet){
         ModalBottomSheet(
             onDismissRequest = { onClose() },
-            modifier = Modifier.height(300.dp)
         ){
-            Column (modifier = Modifier.padding(16.dp)){
+            Column (modifier = Modifier.height(200.dp).padding(16.dp)){
                 Text(text = stringResource(id = R.string.list_bottom_sheet_title), style = MaterialTheme.typography.titleLarge)
                 HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
                 TextButton(onClick = { onEdit() })
