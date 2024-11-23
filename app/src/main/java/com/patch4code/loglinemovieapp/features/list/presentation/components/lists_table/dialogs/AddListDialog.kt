@@ -34,7 +34,9 @@ fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String, isPublic
                     OutlinedTextField(
                         value = textInput.value,
                         onValueChange = { textInput.value = it },
-                        label = { Text(text = stringResource(id = R.string.list_dialog_text_field_label)) })
+                        label = { Text(text = stringResource(id = R.string.list_dialog_text_field_label)) },
+                        singleLine = true
+                    )
 
                     /*
                     Row (modifier = Modifier.padding(top = 8.dp)){

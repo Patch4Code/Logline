@@ -36,6 +36,7 @@ fun MovieSearchDialogTextField(
         value = textInput.value,
         onValueChange = {textInput.value = it},
         label = { Text(text = stringResource(id = R.string.search_text_field_label)) },
+        singleLine = true,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions(
             onSearch = {

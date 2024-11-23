@@ -37,7 +37,8 @@ fun EditProfileNameDialog(openEditProfileNameDialog: MutableState<Boolean>, prof
             text = {
                 OutlinedTextField(
                     value = textInput.value,
-                    onValueChange = {textInput.value = it}
+                    onValueChange = {textInput.value = it},
+                    singleLine = true
                 )
             },
             confirmButton = {

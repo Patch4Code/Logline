@@ -41,7 +41,9 @@ fun EditListDialog(
                     OutlinedTextField(
                         value = textInput.value,
                         onValueChange = { textInput.value = it },
-                        label = { Text(text = stringResource(id = R.string.list_dialog_text_field_label)) })
+                        label = { Text(text = stringResource(id = R.string.list_dialog_text_field_label)) },
+                        singleLine = true
+                    )
 
                     // ranked list not implemented yet
                     /*
