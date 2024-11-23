@@ -115,6 +115,10 @@
 
     <!-- Movie Strings -->
     <string name="movie_log_toast">Diary Entry Added</string>
+
+    <string name="watchlist_add_toast">Movie was added to Watchlist</string>
+    <string name="watchlist_remove_toast">Movie was removed from Watchlist</string>
+
     <string name="trailer_button_text">Trailer</string>
     <string name="reviews_button_text">Reviews</string>
     <string name="share_button_text">Share</string>

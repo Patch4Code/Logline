@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.components.header
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
@@ -51,6 +53,10 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
     val rating = movieViewModel.myRating.observeAsState().value
     val onWatchlist = movieViewModel.onWatchlist.observeAsState().value
 
+    val context = LocalContext.current
+    val toastTextAddToWatchlist = stringResource(id = R.string.watchlist_add_toast)
+    val toastTextRemoveFromWatchlist = stringResource(id = R.string.watchlist_remove_toast)
+
     //Rating, Watchlist and addToList
     Spacer(modifier = Modifier.padding(8.dp))
     Row{
@@ -74,7 +80,12 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
         }
 
         //Watchlist Button
-        IconButton(onClick = { movieViewModel.changeOnWatchlist(id, !(onWatchlist ?: false)) }) {
+        IconButton(
+            onClick = {
+                Toast.makeText(context, if(onWatchlist == false) toastTextAddToWatchlist else toastTextRemoveFromWatchlist, Toast.LENGTH_LONG).show()
+                movieViewModel.changeOnWatchlist(id, !(onWatchlist ?: false))
+            }
+        ){
             Icon(imageVector = if (onWatchlist == true) Icons.Default.WatchLater else Icons.Outlined.WatchLater,
                 contentDescription = null,
                 tint = if (onWatchlist == true) LightBlue else Color.DarkGray,
