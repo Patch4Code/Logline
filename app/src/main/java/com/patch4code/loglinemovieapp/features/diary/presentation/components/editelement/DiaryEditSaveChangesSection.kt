@@ -36,6 +36,11 @@ fun DiaryEditSaveChangesSection(isEdit: Boolean = true, onSaveChanges: () -> Uni
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
 
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        // discard DiaryEdit changes button
+        IconButton(onClick = { onDiscardChanges() }) {
+            Icon(imageVector = Icons.Default.Close, contentDescription = stringResource(id = R.string.diary_edit_exit_description_text))
+        }
+
         // save DiaryEdit button with toast message
         IconButton(
             onClick = {
@@ -44,10 +49,6 @@ fun DiaryEditSaveChangesSection(isEdit: Boolean = true, onSaveChanges: () -> Uni
             }
         ){
             Icon(imageVector = Icons.Default.Check, contentDescription = stringResource(id = R.string.diary_edit_save_description_text))
-        }
-        // discard DiaryEdit changes button
-        IconButton(onClick = { onDiscardChanges() }) {
-            Icon(imageVector = Icons.Default.Close, contentDescription = stringResource(id = R.string.diary_edit_exit_description_text))
         }
     }
 }
