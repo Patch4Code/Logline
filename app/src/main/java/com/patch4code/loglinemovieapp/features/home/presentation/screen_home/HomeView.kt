@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -27,12 +27,14 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
  * @author Patch4Code
  */
 @Composable
-fun HomeView(navController: NavController, navViewModel: NavigationViewModel, homeViewModel: HomeViewModel = viewModel()){
+fun HomeView(navController: NavController, homeViewModel: HomeViewModel = viewModel()){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.HomeScreen)
         homeViewModel.loadHomeViewData()
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.HomeScreen.title.asString())
 
     val isLoading by homeViewModel.isLoading.observeAsState(initial = false)
     val homeMoviesMap = homeViewModel.homeMoviesMap.observeAsState().value

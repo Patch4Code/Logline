@@ -11,7 +11,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewItem
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
@@ -27,7 +29,6 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 @Composable
 fun ReviewsView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     reviewsViewModel: ReviewsViewModel = viewModel(
         factory = ReviewsViewModelFactory(db.loggedMovieDao)
@@ -35,9 +36,14 @@ fun ReviewsView(
 ){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.ReviewsScreen)
         reviewsViewModel.getReviewedLogs()
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.ReviewsScreen.title.asString())
+    ProvideTopBarBackNavigationIcon(navController)
+    ProvideTopBarFilterActions(onClickAction = {})
+
 
     val reviewedLogs = reviewsViewModel.reviewedLogs.observeAsState().value
 

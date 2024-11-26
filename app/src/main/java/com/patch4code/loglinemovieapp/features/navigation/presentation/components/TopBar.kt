@@ -14,7 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.patch4code.loglinemovieapp.R
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.TopBarViewModel
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -36,9 +36,9 @@ fun TopBar(
 
     backStackEntry?.let { entry ->
 
-        val navViewModel: NavigationViewModel = viewModel(
+        val navViewModel: TopBarViewModel = viewModel(
             viewModelStoreOwner = entry,
-            initializer = { NavigationViewModel() },
+            initializer = { TopBarViewModel() },
         )
 
         TopAppBar (

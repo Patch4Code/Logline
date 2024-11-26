@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,7 +33,8 @@ import com.patch4code.loglinemovieapp.features.diary.presentation.components.edi
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.editelement.DiaryEditReviewSection
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.editelement.DiaryEditSaveChangesSection
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarNoNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import kotlinx.coroutines.launch
 import java.net.URLDecoder
@@ -52,17 +52,17 @@ import java.time.LocalDateTime
 @Composable
 fun MovieLogView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     movieString: String?,
     movieLogViewModel: MovieLogViewModel = viewModel(
         factory = MovieLogViewModelFactory(db.loggedMovieDao ,db.movieUserDataDao)
-    ),
-    ){
+    )
+){
 
-    LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.MovieLogScreen)
-    }
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.MovieLogScreen.title.asString())
+    ProvideTopBarNoNavigationIcon()
+
 
     val decodedMovieString = URLDecoder.decode(movieString, "UTF-8")
     val movie: Movie = JSONHelper.fromJson(decodedMovieString)

@@ -13,7 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.ProfileEditBannerSection
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.ProfileEditBioSection
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.ProfileEditFavMoviesSection
@@ -34,7 +35,6 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 @Composable
 fun ProfileEditView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     profileViewModel: ProfileViewModel = viewModel(
         factory = ProfileViewModelFactory(db.userProfileDao)
@@ -42,9 +42,13 @@ fun ProfileEditView(
 ){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.ProfileEditScreen)
         profileViewModel.getUserProfileData()
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.ProfileEditScreen.title.asString())
+    ProvideTopBarBackNavigationIcon(navController)
+
 
     val userProfile = profileViewModel.userProfileData.observeAsState().value
 

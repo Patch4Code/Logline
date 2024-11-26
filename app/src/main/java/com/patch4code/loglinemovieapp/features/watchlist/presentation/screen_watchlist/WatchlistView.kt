@@ -11,7 +11,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.MovieWatchlistBrowseCard
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
@@ -26,7 +27,6 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 @Composable
 fun WatchlistView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     watchlistViewModel: WatchlistViewModel = viewModel(
         factory = WatchlistViewModelFactory(db.movieUserDataDao)
@@ -34,9 +34,12 @@ fun WatchlistView(
 ){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.WatchlistScreen)
         watchlistViewModel.setUserdataList()
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.WatchlistScreen.title.asString())
+    ProvideTopBarFilterActions(onClickAction = {})
 
     val userDataList = watchlistViewModel.myUserDataList.observeAsState().value
 

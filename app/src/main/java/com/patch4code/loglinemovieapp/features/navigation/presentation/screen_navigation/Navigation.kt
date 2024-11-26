@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -60,7 +59,6 @@ fun Navigation(db: LoglineDatabase){
 
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val navigationViewModel: NavigationViewModel = viewModel()
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -89,23 +87,23 @@ fun Navigation(db: LoglineDatabase){
                 {
 
                     composable(route = Screen.HomeScreen.route){
-                        HomeView(navController = navController, navViewModel = navigationViewModel)
+                        HomeView(navController = navController)
                     }
 
                     composable(route = Screen.ProfileScreen.route){
-                        ProfileView(navController = navController, navViewModel = navigationViewModel, db = db)
+                        ProfileView(navController = navController, db = db)
                     }
 
                     composable(route = Screen.WatchlistScreen.route){
-                        WatchlistView(navController = navController, navViewModel = navigationViewModel, db = db)
+                        WatchlistView(navController = navController, db = db)
                     }
 
                     composable(route = Screen.SearchScreen.route){
-                        SearchView(navController = navController, navViewModel = navigationViewModel)
+                        SearchView(navController = navController)
                     }
 
                     composable(route = Screen.AboutScreen.route){
-                        AboutView(navViewModel = navigationViewModel)
+                        AboutView(navController)
                     }
 
                     composable(
@@ -121,7 +119,6 @@ fun Navigation(db: LoglineDatabase){
                         val movieId = parsedId.arguments?.getString("movie_id")
                         MovieView(
                             navController = navController,
-                            navViewModel = navigationViewModel,
                             db = db,
                             id = movieId
                         )
@@ -137,7 +134,6 @@ fun Navigation(db: LoglineDatabase){
                     ){
                         PersonDetailsView(
                             navController = navController,
-                            navViewModel = navigationViewModel,
                             id = it.arguments?.getInt("person_id")
                         )
                     }
@@ -152,7 +148,6 @@ fun Navigation(db: LoglineDatabase){
                     ){
                         MovieLogView(
                             navController = navController,
-                            navViewModel = navigationViewModel,
                             db = db,
                             movieString = it.arguments?.getString("movie"),
                         )
@@ -166,18 +161,17 @@ fun Navigation(db: LoglineDatabase){
                         val movieTitle = parsedId.arguments?.getString("movie_title")
                         MoviePublicReviewsView(
                             navController = navController,
-                            navViewModel = navigationViewModel,
                             id = movieId,
                             title = movieTitle
                         )
                     }
 
                     composable(route = Screen.MyMoviesScreen.route){
-                        MyMoviesView(navController = navController, navViewModel = navigationViewModel, db = db)
+                        MyMoviesView(navController = navController, db = db)
                     }
 
                     composable(route = Screen.DiaryScreen.route){
-                        DiaryView(navController = navController, navViewModel = navigationViewModel, db = db)
+                        DiaryView(navController = navController, db = db)
                     }
 
                     composable(route = Screen.DiaryEditElementScreen.route + "/{loggedElement}/{comingFromDiaryView}",
@@ -192,7 +186,6 @@ fun Navigation(db: LoglineDatabase){
                     ){parsedLoggedElement->
                         DiaryEditElementView(
                             navController = navController,
-                            navViewModel = navigationViewModel,
                             db = db,
                             loggedElementId = parsedLoggedElement.arguments?.getString("loggedElement"),
                             comingFromDiaryView = parsedLoggedElement.arguments?.getBoolean("comingFromDiaryView")
@@ -200,7 +193,7 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.ReviewsScreen.route){
-                        ReviewsView(navController = navController, navViewModel = navigationViewModel, db = db)
+                        ReviewsView(navController = navController, db = db)
                     }
 
                     composable(route = Screen.ReviewDetailScreen.route + "/{loggedElement}",
@@ -214,14 +207,13 @@ fun Navigation(db: LoglineDatabase){
                     ){parsedLoggedElement->
                         ReviewDetailsView(
                             navController = navController,
-                            navViewModel = navigationViewModel,
                             db = db,
                             loggedElementId = parsedLoggedElement.arguments?.getString("loggedElement")
                         )
                     }
 
                     composable(route = Screen.ListsTableScreen.route){
-                        ListsTableView(navController = navController, navViewModel = navigationViewModel, db = db)
+                        ListsTableView(navController = navController, db = db)
                     }
 
                     composable(route = Screen.ListScreen.route + "/{movieList}",
@@ -235,18 +227,17 @@ fun Navigation(db: LoglineDatabase){
                     ){parsedMovieList->
                         ListView(
                             navController = navController,
-                            navViewModel = navigationViewModel,
                             db = db,
                             movieListString = parsedMovieList.arguments?.getString("movieList")
                         )
                     }
 
                     composable(route = Screen.ProfileEditScreen.route){
-                        ProfileEditView(navController = navController, navViewModel = navigationViewModel, db = db)
+                        ProfileEditView(navController = navController, db = db)
                     }
 
                     composable(route = Screen.SettingsScreen.route){
-                        SettingsView(navController = navController, navViewModel = navigationViewModel)
+                        SettingsView(navController = navController)
                     }
                 }
             }

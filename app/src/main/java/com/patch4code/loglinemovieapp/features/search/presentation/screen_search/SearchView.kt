@@ -17,7 +17,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.search.presentation.components.MovieSearchCard
 
 /**
@@ -46,8 +45,7 @@ import com.patch4code.loglinemovieapp.features.search.presentation.components.Mo
 @Composable
 fun SearchView(
     navController: NavController,
-    searchViewModel: SearchViewModel = viewModel(),
-    navViewModel: NavigationViewModel
+    searchViewModel: SearchViewModel = viewModel()
 ){
 
     val textInput = remember { mutableStateOf("")}
@@ -55,9 +53,9 @@ fun SearchView(
 
     val searchResult = searchViewModel.searchedMovies.observeAsState().value
 
-    LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.SearchScreen)
-    }
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.SearchScreen.title.asString())
+
 
     Column(modifier = Modifier
             .fillMaxWidth()

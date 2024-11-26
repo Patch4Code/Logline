@@ -22,7 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ExpandableBio
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.MovieFavouriteRow
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ProfileHead
@@ -40,7 +40,6 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 @Composable
 fun ProfileView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     profileViewModel: ProfileViewModel = viewModel(
         factory = ProfileViewModelFactory(db.userProfileDao)
@@ -48,9 +47,11 @@ fun ProfileView(
 ) {
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.ProfileScreen)
         profileViewModel.getUserProfileData()
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.ProfileScreen.title.asString())
 
     val userProfile = profileViewModel.userProfileData.observeAsState().value
 

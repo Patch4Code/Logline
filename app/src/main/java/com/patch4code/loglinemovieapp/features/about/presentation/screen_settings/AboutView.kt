@@ -13,16 +13,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -35,11 +36,11 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
  */
 
 @Composable
-fun AboutView(navViewModel: NavigationViewModel){
+fun AboutView(navController: NavController){
 
-    LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.AboutScreen)
-    }
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.AboutScreen.title.asString())
+    ProvideTopBarBackNavigationIcon(navController)
 
     val uriHandler = LocalUriHandler.current
 

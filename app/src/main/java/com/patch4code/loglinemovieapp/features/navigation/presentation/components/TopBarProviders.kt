@@ -16,15 +16,15 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.TopBarViewModel
 
 @Composable
 fun ProvideTopBarTitle(title: String) {
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
     (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: NavigationViewModel = viewModel(
+        val viewModel: TopBarViewModel = viewModel(
             viewModelStoreOwner = owner,
-            initializer = { NavigationViewModel() },
+            initializer = { TopBarViewModel() },
         )
         LaunchedEffect(title) {
             viewModel.title = {
@@ -43,9 +43,9 @@ fun ProvideTopBarTitle(title: String) {
 fun ProvideTopBarBackNavigationIcon(navController: NavController) {
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
     (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: NavigationViewModel = viewModel(
+        val viewModel: TopBarViewModel = viewModel(
             viewModelStoreOwner = owner,
-            initializer = { NavigationViewModel() },
+            initializer = { TopBarViewModel() },
         )
         LaunchedEffect(navController) {
             viewModel.navigationIcon = {
@@ -61,13 +61,27 @@ fun ProvideTopBarBackNavigationIcon(navController: NavController) {
 }
 
 @Composable
+fun ProvideTopBarNoNavigationIcon() {
+    val viewModelStoreOwner = LocalViewModelStoreOwner.current
+    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
+        val viewModel: TopBarViewModel = viewModel(
+            viewModelStoreOwner = owner,
+            initializer = { TopBarViewModel() },
+        )
+        LaunchedEffect(null) {
+            viewModel.navigationIcon = {}
+        }
+    }
+}
+
+@Composable
 fun ProvideTopBarFilterActions(onClickAction: () -> Unit) {
 
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
     (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
-        val viewModel: NavigationViewModel = viewModel(
+        val viewModel: TopBarViewModel = viewModel(
             viewModelStoreOwner = owner,
-            initializer = { NavigationViewModel() },
+            initializer = { TopBarViewModel() },
         )
         LaunchedEffect(onClickAction) {
             viewModel.actions = {

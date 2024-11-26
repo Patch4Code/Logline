@@ -25,10 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.UiText
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components.TmdbMovieReviews
-import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -42,7 +41,6 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 @Composable
 fun MoviePublicReviewsView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     id: String?,
     title: String?,
     moviePublicReviewsViewModel: MoviePublicReviewsViewModel = viewModel()
@@ -50,10 +48,12 @@ fun MoviePublicReviewsView(
     val movieId = id?.toIntOrNull() ?: -1
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.MoviePublicReviewsScreen)
-        title?.let { navViewModel.overrideCurrentScreenTitle(UiText.DynamicString(it)) }
         moviePublicReviewsViewModel.loadTmdbReviews(movieId)
     }
+
+    // TopBar config
+    title?.let { ProvideTopBarTitle(title = it) }
+    ProvideTopBarBackNavigationIcon(navController)
 
     // Observe the state of TMDB (and Logline) reviews and loading
     val tmdbMovieReviews = moviePublicReviewsViewModel.tmdbMovieReviews.observeAsState().value

@@ -33,7 +33,8 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Load
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -48,16 +49,18 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 fun PersonDetailsView(
     navController: NavController,
     personDetailsViewModel: PersonDetailsViewModel = viewModel(),
-    navViewModel: NavigationViewModel,
     id: Int?
 ){
 
     val personId = id?: -1
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.PersonDetailsScreen)
         personDetailsViewModel.loadPersonDetails(personId)
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.PersonDetailsScreen.title.asString())
+    ProvideTopBarBackNavigationIcon(navController)
 
     val personDetails = personDetailsViewModel.personDetails.observeAsState().value
 

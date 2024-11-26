@@ -32,7 +32,8 @@ import com.patch4code.loglinemovieapp.features.diary.presentation.components.edi
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.editelement.DiaryEditSaveChangesSection
 import com.patch4code.loglinemovieapp.features.diary.presentation.utils.DiaryNavigationExtensions.navigateOnDiaryEditSaveOrDiscard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarNoNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -48,7 +49,6 @@ import java.time.LocalDateTime
 @Composable
 fun DiaryEditElementView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     loggedElementId: String?,
     comingFromDiaryView: Boolean?,
     db: LoglineDatabase,
@@ -58,9 +58,13 @@ fun DiaryEditElementView(
 ){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.DiaryEditElementScreen)
         diaryEditElementViewModel.setDiaryEntryToEdit(loggedElementId)
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.DiaryEditElementScreen.title.asString())
+    ProvideTopBarNoNavigationIcon()
+
 
     val scope = rememberCoroutineScope()
 

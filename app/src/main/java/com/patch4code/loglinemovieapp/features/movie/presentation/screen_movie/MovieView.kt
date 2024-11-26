@@ -21,7 +21,8 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Load
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.MovieContent
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLEncoder
@@ -38,7 +39,6 @@ import java.net.URLEncoder
 @Composable
 fun MovieView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     id: String?,
     movieViewModel: MovieViewModel = viewModel(
@@ -50,11 +50,14 @@ fun MovieView(
     val movieId = id?.toIntOrNull() ?: 0
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.MovieScreen)
-        //movieViewModel.initializeSettingsDataStore(context)
         movieViewModel.loadRatingAndWatchlistStatusById(movieId)
         movieViewModel.loadAllMovieData(movieId)
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.MovieScreen.title.asString())
+    ProvideTopBarBackNavigationIcon(navController)
+
 
     val movieDetails = movieViewModel.detailsData.observeAsState().value
     val movieCredits = movieViewModel.creditsData.observeAsState().value

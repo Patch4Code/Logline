@@ -14,7 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewDetailsInfoAndActions
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewDetailsPoster
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
@@ -32,7 +33,6 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 @Composable
 fun ReviewDetailsView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     loggedElementId: String?,
     db: LoglineDatabase,
     reviewDetailsViewModel: ReviewDetailsViewModel = viewModel(
@@ -40,9 +40,13 @@ fun ReviewDetailsView(
     )
 ){
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.ReviewDetailScreen)
         loggedElementId?.let { reviewDetailsViewModel.setCurrentReviewedLog(it) }
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.ReviewDetailScreen.title.asString())
+    ProvideTopBarBackNavigationIcon(navController)
+
 
     val reviewedLog = reviewDetailsViewModel.currentReviewedLog.observeAsState().value
     val review: String = reviewedLog?.review ?: ""

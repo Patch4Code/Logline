@@ -14,7 +14,9 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToEditContainer
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.MovieLoggedItem
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 /**
@@ -28,7 +30,6 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 @Composable
 fun DiaryView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     diaryViewModel: DiaryViewModel = viewModel(
         factory = DiaryViewModelFactory(db.loggedMovieDao)
@@ -36,9 +37,14 @@ fun DiaryView(
 ){
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.DiaryScreen)
         diaryViewModel.getDiaryLogs()
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.DiaryScreen.title.asString())
+    ProvideTopBarBackNavigationIcon(navController)
+    ProvideTopBarFilterActions(onClickAction = {})
+
 
     val diaryLogs = diaryViewModel.diaryLogs.observeAsState().value
 

@@ -31,7 +31,9 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialo
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onEditListBottomSheet
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onSaveEditList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLDecoder
 
@@ -47,7 +49,6 @@ import java.net.URLDecoder
 @Composable
 fun ListView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     movieListString: String?,
     db: LoglineDatabase,
     listViewModel: ListViewModel = viewModel(
@@ -59,9 +60,15 @@ fun ListView(
     val movieListData: MovieList = JSONHelper.fromJson(decodedMovieListString)
 
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.ListScreen)
         listViewModel.setList(movieListData)
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.ListScreen.title.asString())
+    ProvideTopBarBackNavigationIcon(navController)
+    ProvideTopBarFilterActions(onClickAction = {})
+
+
     val movieList = listViewModel.movieList.observeAsState().value
 
     val openAddMovieDialog = remember { mutableStateOf(false)  }

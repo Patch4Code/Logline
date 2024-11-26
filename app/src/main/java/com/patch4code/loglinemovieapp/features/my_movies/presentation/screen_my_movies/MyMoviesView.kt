@@ -15,7 +15,6 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 /**
@@ -29,24 +28,19 @@ import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 @Composable
 fun MyMoviesView(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     db: LoglineDatabase,
     myMoviesViewModel: MyMoviesViewModel = viewModel(
         factory = MyMoviesViewModelFactory(db.movieUserDataDao)
     )
 ){
     LaunchedEffect(Unit) {
-        navViewModel.updateScreen(Screen.MyMoviesScreen)
         myMoviesViewModel.setUserdataList()
     }
 
     // TopBar config
-    ProvideTopBarTitle(title = "My Movies")
+    ProvideTopBarTitle(title = Screen.MyMoviesScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
     ProvideTopBarFilterActions(onClickAction = {})
-
-
-
 
     val userDataList = myMoviesViewModel.myUserDataList.observeAsState().value
 
