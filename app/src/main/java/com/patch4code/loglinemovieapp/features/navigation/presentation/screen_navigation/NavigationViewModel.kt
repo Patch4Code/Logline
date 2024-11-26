@@ -1,5 +1,11 @@
 package com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation
 
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.referentialEqualityPolicy
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +21,15 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  * @author Patch4Code
  */
 class NavigationViewModel: ViewModel() {
+
+    var title by mutableStateOf<@Composable () -> Unit>({ }, referentialEqualityPolicy())
+
+    val defaultNavigationIcon: @Composable () -> Unit = {}
+    var navigationIcon by mutableStateOf<@Composable () -> Unit>(defaultNavigationIcon)
+
+    var actions by mutableStateOf<@Composable RowScope.() -> Unit>({ }, referentialEqualityPolicy())
+
+
 
     private var _currentScreen = MutableLiveData<Screen>(Screen.HomeScreen)
     val currentScreen: LiveData<Screen>

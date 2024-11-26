@@ -12,6 +12,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MovieRatedBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
@@ -36,6 +39,14 @@ fun MyMoviesView(
         navViewModel.updateScreen(Screen.MyMoviesScreen)
         myMoviesViewModel.setUserdataList()
     }
+
+    // TopBar config
+    ProvideTopBarTitle(title = "My Movies")
+    ProvideTopBarBackNavigationIcon(navController)
+    ProvideTopBarFilterActions(onClickAction = {})
+
+
+
 
     val userDataList = myMoviesViewModel.myUserDataList.observeAsState().value
 

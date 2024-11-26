@@ -75,7 +75,7 @@ fun Navigation(db: LoglineDatabase){
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 bottomBar = { BottomBar(navController, navigationViewModel) },
                 topBar = {
-                    TopBar(navController, navigationViewModel, scrollBehavior) {
+                    TopBar(navController, scrollBehavior) {
                         scope.launch{ drawerState.open() }
                     }
                 }
