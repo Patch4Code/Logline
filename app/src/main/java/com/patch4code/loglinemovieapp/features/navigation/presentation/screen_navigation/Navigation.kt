@@ -67,13 +67,13 @@ fun Navigation(db: LoglineDatabase){
 
     ModalNavigationDrawer(
         drawerState = drawerState,
-        drawerContent = { DrawerContent(navController, navigationViewModel,drawerState, scope, navigationViewModel) },
+        drawerContent = { DrawerContent(navController,drawerState, scope) },
         content = {
             Scaffold (
                 modifier = Modifier
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
-                bottomBar = { BottomBar(navController, navigationViewModel) },
+                bottomBar = { BottomBar(navController) },
                 topBar = {
                     TopBar(navController, scrollBehavior) {
                         scope.launch{ drawerState.open() }

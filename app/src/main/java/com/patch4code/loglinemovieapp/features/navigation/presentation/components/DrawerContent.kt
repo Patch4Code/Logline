@@ -12,14 +12,12 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.DrawerNavigationItem
-import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.NavigationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -35,13 +33,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun DrawerContent(
     navController: NavController,
-    navViewModel: NavigationViewModel,
     drawerState: DrawerState,
     scope: CoroutineScope,
-    navigationViewModel: NavigationViewModel
 ){
     val context = LocalContext.current
-    val currentScreen by navViewModel.currentScreen.observeAsState(Screen.HomeScreen)
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     ModalDrawerSheet (
         modifier = Modifier.width(300.dp)
@@ -50,7 +48,7 @@ fun DrawerContent(
         DrawerNavigationItem().getDrawerNavigationItems(context).forEach { drawerNavigationItem ->
             NavigationDrawerItem(
                 label = { Text(text = drawerNavigationItem.title) },
-                selected = drawerNavigationItem.title == currentScreen.title.asString(),
+                selected = drawerNavigationItem.route == currentRoute,
                 onClick = {
                     scope.launch{
                         drawerState.close()
@@ -60,7 +58,7 @@ fun DrawerContent(
                 },
                 icon = {
                     Icon(
-                        imageVector = if(drawerNavigationItem.title == currentScreen.title.asString()) {
+                        imageVector = if(drawerNavigationItem.route == currentRoute) {
                             drawerNavigationItem.selectedIcon
                         } else {drawerNavigationItem.unselectedIcon},
                         contentDescription = drawerNavigationItem.title
