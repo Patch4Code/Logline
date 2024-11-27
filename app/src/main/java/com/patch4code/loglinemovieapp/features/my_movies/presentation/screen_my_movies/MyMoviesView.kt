@@ -12,9 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.my_movies.domain.model.MyMoviesSortOption
 import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.EmptyMyMoviesText
 import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MovieRatedBrowseCard
-import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MyMoviesSortOption
+import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MyMoviesSortBottomSheet
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
@@ -38,7 +39,7 @@ fun MyMoviesView(
     )
 ){
 
-    val selectedSortOption = remember { mutableStateOf(MyMoviesSortOption.ByRatingAsc) }
+    val selectedSortOption = remember { mutableStateOf(MyMoviesSortOption.ByReleaseDateDesc) }
     val showBottomSheet = remember { mutableStateOf(false)  }
 
     LaunchedEffect(Unit) {
@@ -48,7 +49,7 @@ fun MyMoviesView(
     // TopBar config
     ProvideTopBarTitle(title = Screen.MyMoviesScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
-    ProvideTopBarSortActions(onClickAction = {})
+    ProvideTopBarSortActions(onClickAction = {showBottomSheet.value = true})
 
     val watchedMoviesItems = myMoviesViewModel.myUserDataList.observeAsState().value
 
@@ -67,4 +68,5 @@ fun MyMoviesView(
             }
         )
     }
+    MyMoviesSortBottomSheet(showBottomSheet, selectedSortOption, myMoviesViewModel)
 }

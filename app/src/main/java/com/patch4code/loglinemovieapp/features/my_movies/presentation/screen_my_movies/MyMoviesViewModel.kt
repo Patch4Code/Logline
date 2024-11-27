@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
-import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MyMoviesSortOption
+import com.patch4code.loglinemovieapp.features.my_movies.domain.model.MyMoviesSortOption
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 

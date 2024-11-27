@@ -1,5 +1,12 @@
-package com.patch4code.loglinemovieapp.features.my_movies.presentation.components
+package com.patch4code.loglinemovieapp.features.my_movies.domain.model
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MyMoviesSortOption - Enum representing sorting options for MyMovies.
+ *
+ * @author Patch4Code
+ */
 enum class MyMoviesSortOption(val label: String) {
     ByAddedDesc("Date Added (Newest First)"),
     ByAddedAsc("Date Added (Oldest First)"),
