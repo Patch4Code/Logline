@@ -43,9 +43,24 @@ interface LoggedMovieDao {
     @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.release_date') DESC")
     suspend fun getLoggedMoviesOrderedByReleaseDateDesc() : List<LoggedMovie>
 
-
+    // Reviews Queries
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY date ASC")
+    suspend fun getReviewsOrderedByDateAsc() : List<LoggedMovie>
     @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY date DESC")
-    suspend fun getLoggedMovieWithReviewListByDate() : List<LoggedMovie>
+    suspend fun getReviewsOrderedByDateDesc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY rating ASC")
+    suspend fun getReviewsOrderedByRatingAsc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY rating DESC")
+    suspend fun getReviewsOrderedByRatingDesc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY json_extract(movie, '\$.title') ASC")
+    suspend fun getReviewsOrderedByTitleAsc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY json_extract(movie, '\$.title') DESC")
+    suspend fun getReviewsOrderedByTitleDesc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY json_extract(movie, '\$.release_date') ASC")
+    suspend fun getReviewsOrderedByReleaseDateAsc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY json_extract(movie, '\$.release_date') DESC")
+    suspend fun getReviewsOrderedByReleaseDateDesc() : List<LoggedMovie>
+
 
     @Query("SELECT * FROM LoggedMovie WHERE date BETWEEN :startOfDayMillis AND :endOfDayMillis")
     suspend fun getLoggedMoviesWithSameDate(startOfDayMillis: Long, endOfDayMillis: Long): List<LoggedMovie>

@@ -7,7 +7,7 @@ package com.patch4code.loglinemovieapp.features.diary.domain.model
  *
  * @author Patch4Code
  */
-enum class DiarySortOptions(val label: String) {
+enum class DiaryAndReviewSortOptions(val label: String) {
     ByAddedDesc("Log Date (Newest First)"),
     ByAddedAsc("Log Date (Oldest First)"),
     ByTitleAsc("Title (A-Z)"),

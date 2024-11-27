@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.diary.presentation.components
+package com.patch4code.loglinemovieapp.features.reviews.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,23 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.diary.domain.model.DiaryAndReviewSortOptions
-import com.patch4code.loglinemovieapp.features.diary.presentation.screen_diary.DiaryViewModel
+import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewsViewModel
 
-/**
- * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
- *
- * DiarySortBottomSheet - Composable function that displays a bottom sheet for sorting the diary.
- *
- * @author Patch4Code
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DiarySortBottomSheet(
+fun ReviewsSortBottomSheet(
     showBottomSheet: MutableState<Boolean>,
     selectedSortOption: MutableState<DiaryAndReviewSortOptions>,
-    diaryViewModel: DiaryViewModel
+    reviewsViewModel: ReviewsViewModel
 ){
-
     if(!showBottomSheet.value) return
 
     ModalBottomSheet(
@@ -57,7 +49,7 @@ fun DiarySortBottomSheet(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
                             selectedSortOption.value = sortOption
-                            diaryViewModel.getDiaryLogs(selectedSortOption.value)
+                            reviewsViewModel.getReviewedLogs(selectedSortOption.value)
                         }
                     ){
                         Text(text = sortOption.label, modifier = Modifier.weight(1f))

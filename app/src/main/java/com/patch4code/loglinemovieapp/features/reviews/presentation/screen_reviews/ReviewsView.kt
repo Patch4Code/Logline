@@ -6,15 +6,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.diary.domain.model.DiaryAndReviewSortOptions
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
+import com.patch4code.loglinemovieapp.features.reviews.presentation.components.EmptyReviewsText
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewItem
+import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewsSortBottomSheet
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 /**
@@ -35,22 +40,30 @@ fun ReviewsView(
     )
 ){
 
+    val selectedSortOption = remember { mutableStateOf(DiaryAndReviewSortOptions.ByAddedDesc) }
+    val showBottomSheet = remember { mutableStateOf(false)  }
+
     LaunchedEffect(Unit) {
-        reviewsViewModel.getReviewedLogs()
+        reviewsViewModel.getReviewedLogs(selectedSortOption.value)
     }
 
     // TopBar config
     ProvideTopBarTitle(title = Screen.ReviewsScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
-    ProvideTopBarSortActions(onClickAction = {})
+    ProvideTopBarSortActions(onClickAction = { showBottomSheet.value = true })
 
 
     val reviewedLogs = reviewsViewModel.reviewedLogs.observeAsState().value
 
-    LazyColumn(modifier = Modifier.padding(16.dp)) {
-        items(reviewedLogs ?: emptyList())
-        { loggedItem ->
-            ReviewItem(loggedItem, navController)
+    if(reviewedLogs.isNullOrEmpty()){
+        EmptyReviewsText()
+    }else{
+        LazyColumn(modifier = Modifier.padding(16.dp)) {
+            items(reviewedLogs)
+            { loggedItem ->
+                ReviewItem(loggedItem, navController)
+            }
         }
     }
+    ReviewsSortBottomSheet(showBottomSheet, selectedSortOption, reviewsViewModel)
 }

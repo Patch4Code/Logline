@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.features.diary.domain.model.DiaryAndReviewSortOptions
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
 import kotlinx.coroutines.launch
@@ -22,9 +23,19 @@ class ReviewsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel(){
     private val _reviewedLogs = MutableLiveData<List<LoggedMovie>>()
     val reviewedLogs: LiveData<List<LoggedMovie>> get() = _reviewedLogs
 
-    fun getReviewedLogs(){
+    fun getReviewedLogs(sortOption: DiaryAndReviewSortOptions){
         viewModelScope.launch {
-            _reviewedLogs.value = loggedMovieDao.getLoggedMovieWithReviewListByDate()
+            val sortedList = when (sortOption) {
+                DiaryAndReviewSortOptions.ByAddedDesc -> loggedMovieDao.getReviewsOrderedByDateDesc()
+                DiaryAndReviewSortOptions.ByAddedAsc -> loggedMovieDao.getReviewsOrderedByDateAsc()
+                DiaryAndReviewSortOptions.ByTitleAsc -> loggedMovieDao.getReviewsOrderedByTitleAsc()
+                DiaryAndReviewSortOptions.ByTitleDesc -> loggedMovieDao.getReviewsOrderedByTitleDesc()
+                DiaryAndReviewSortOptions.ByReleaseDateDesc -> loggedMovieDao.getReviewsOrderedByReleaseDateDesc()
+                DiaryAndReviewSortOptions.ByReleaseDateAsc -> loggedMovieDao.getReviewsOrderedByReleaseDateAsc()
+                DiaryAndReviewSortOptions.ByRatingDesc -> loggedMovieDao.getReviewsOrderedByRatingDesc()
+                DiaryAndReviewSortOptions.ByRatingAsc -> loggedMovieDao.getReviewsOrderedByRatingAsc()
+            }
+            _reviewedLogs.value = sortedList
         }
     }
 }

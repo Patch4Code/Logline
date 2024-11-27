@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToEditContainer
-import com.patch4code.loglinemovieapp.features.diary.domain.model.DiarySortOptions
+import com.patch4code.loglinemovieapp.features.diary.domain.model.DiaryAndReviewSortOptions
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.DiarySortBottomSheet
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.EmptyDiaryText
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.MovieLoggedItem
@@ -41,7 +41,7 @@ fun DiaryView(
     )
 ){
 
-    val selectedSortOption = remember { mutableStateOf(DiarySortOptions.ByAddedDesc) }
+    val selectedSortOption = remember { mutableStateOf(DiaryAndReviewSortOptions.ByAddedDesc) }
     val showBottomSheet = remember { mutableStateOf(false)  }
 
     LaunchedEffect(Unit) {
@@ -74,5 +74,4 @@ fun DiaryView(
         }
     }
     DiarySortBottomSheet(showBottomSheet, selectedSortOption, diaryViewModel)
-
 }
