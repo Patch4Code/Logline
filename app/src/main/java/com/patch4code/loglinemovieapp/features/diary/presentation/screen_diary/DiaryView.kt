@@ -15,7 +15,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.swip
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.MovieLoggedItem
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
@@ -43,7 +43,7 @@ fun DiaryView(
     // TopBar config
     ProvideTopBarTitle(title = Screen.DiaryScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
-    ProvideTopBarFilterActions(onClickAction = {})
+    ProvideTopBarSortActions(onClickAction = {})
 
 
     val diaryLogs = diaryViewModel.diaryLogs.observeAsState().value

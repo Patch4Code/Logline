@@ -11,6 +11,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * EmptyWatchlistText - Composable function that displays a message when the watchlist is empty.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun EmptyWatchlistText(){
 

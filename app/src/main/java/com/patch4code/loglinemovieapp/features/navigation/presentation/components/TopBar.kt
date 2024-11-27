@@ -20,8 +20,8 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
  * TopBar -Composable function to display the top bar.
- * Displays the title of the  current screen (from navViewModel) and provides menu icon to
- * expand the navigation drawer.
+ * Displays the title of the  current screen (from navViewModel) and a navigation Icon
+ * as well as an optional action.
  *
  * @author Patch4Code
  */

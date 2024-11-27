@@ -26,12 +26,12 @@ class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
     fun getWatchlistItems(sortOption: WatchlistSortOption) {
         viewModelScope.launch {
             val sortedList = when (sortOption) {
-                WatchlistSortOption.ByAddedAsc -> dao.getWatchlistItemsOrderedByAddedAsc()
                 WatchlistSortOption.ByAddedDesc -> dao.getWatchlistItemsOrderedByAddedDesc()
+                WatchlistSortOption.ByAddedAsc -> dao.getWatchlistItemsOrderedByAddedAsc()
                 WatchlistSortOption.ByTitleAsc -> dao.getWatchlistItemsOrderedByTitleAsc()
                 WatchlistSortOption.ByTitleDesc -> dao.getWatchlistItemsOrderedByTitleDesc()
-                WatchlistSortOption.ByReleaseDateAsc -> dao.getWatchlistItemsOrderedByReleaseDateAsc()
                 WatchlistSortOption.ByReleaseDateDesc -> dao.getWatchlistItemsOrderedByReleaseDateDesc()
+                WatchlistSortOption.ByReleaseDateAsc -> dao.getWatchlistItemsOrderedByReleaseDateAsc()
             }
             _myUserDataList.value = sortedList
             //_myUserDataList.postValue(sortedList)

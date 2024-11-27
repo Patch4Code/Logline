@@ -2,7 +2,7 @@ package com.patch4code.loglinemovieapp.features.navigation.presentation.componen
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.FilterList
+import androidx.compose.material.icons.automirrored.outlined.Sort
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +18,13 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.TopBarViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProvideTopBarTitle - Composable function that sets the title for the top app bar.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProvideTopBarTitle(title: String) {
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
@@ -39,6 +46,14 @@ fun ProvideTopBarTitle(title: String) {
     }
 }
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProvideTopBarBackNavigationIcon - Composable function that adds a back navigation icon to the top app bar.
+ *
+ * @param navController The NavController used to manage navigation actions within the app.
+ * @author Patch4Code
+ */
 @Composable
 fun ProvideTopBarBackNavigationIcon(navController: NavController) {
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
@@ -60,6 +75,13 @@ fun ProvideTopBarBackNavigationIcon(navController: NavController) {
     }
 }
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProvideTopBarNoNavigationIcon - Composable function that removes the navigation icon from the top app bar.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProvideTopBarNoNavigationIcon() {
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
@@ -74,8 +96,16 @@ fun ProvideTopBarNoNavigationIcon() {
     }
 }
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProvideTopBarSortActions - Composable function that adds a sort action icon to the top app bar.
+ *
+ * @param onClickAction A lambda function to execute when the sort icon is clicked.
+ * @author Patch4Code
+ */
 @Composable
-fun ProvideTopBarFilterActions(onClickAction: () -> Unit) {
+fun ProvideTopBarSortActions(onClickAction: () -> Unit) {
 
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
     (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
@@ -87,7 +117,7 @@ fun ProvideTopBarFilterActions(onClickAction: () -> Unit) {
             viewModel.actions = {
                 IconButton(onClick = {onClickAction()}) {
                     Icon(
-                        imageVector = Icons.Outlined.FilterList,
+                        imageVector = Icons.AutoMirrored.Outlined.Sort,
                         contentDescription = "Add",
                         tint = Color.White
                     )

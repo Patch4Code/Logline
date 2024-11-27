@@ -19,7 +19,7 @@ import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.ListsTableContent
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
@@ -48,7 +48,7 @@ fun ListsTableView(
     // TopBar config
     ProvideTopBarTitle(title = Screen.ListsTableScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
-    ProvideTopBarFilterActions(onClickAction = {})
+    ProvideTopBarSortActions(onClickAction = {})
 
 
     val openAddListDialog = remember { mutableStateOf(false)  }

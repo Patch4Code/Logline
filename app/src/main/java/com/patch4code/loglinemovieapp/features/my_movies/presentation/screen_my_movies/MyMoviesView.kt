@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MovieRatedBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
@@ -40,7 +40,7 @@ fun MyMoviesView(
     // TopBar config
     ProvideTopBarTitle(title = Screen.MyMoviesScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
-    ProvideTopBarFilterActions(onClickAction = {})
+    ProvideTopBarSortActions(onClickAction = {})
 
     val userDataList = myMoviesViewModel.myUserDataList.observeAsState().value
 

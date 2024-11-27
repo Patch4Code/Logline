@@ -32,7 +32,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialo
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onSaveEditList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLDecoder
@@ -66,7 +66,7 @@ fun ListView(
     // TopBar config
     ProvideTopBarTitle(title = Screen.ListScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
-    ProvideTopBarFilterActions(onClickAction = {})
+    ProvideTopBarSortActions(onClickAction = {})
 
 
     val movieList = listViewModel.movieList.observeAsState().value

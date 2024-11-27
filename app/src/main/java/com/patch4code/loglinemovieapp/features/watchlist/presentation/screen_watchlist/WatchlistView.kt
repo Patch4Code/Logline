@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOption
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.EmptyWatchlistText
@@ -38,7 +38,7 @@ fun WatchlistView(
     )
 ){
 
-    val selectedSortOption = remember { mutableStateOf(WatchlistSortOption.ByReleaseDateDesc) }
+    val selectedSortOption = remember { mutableStateOf(WatchlistSortOption.ByAddedDesc) }
     val showBottomSheet = remember { mutableStateOf(false)  }
 
     LaunchedEffect(Unit) {
@@ -47,7 +47,7 @@ fun WatchlistView(
 
     // TopBar config
     ProvideTopBarTitle(title = Screen.WatchlistScreen.title.asString())
-    ProvideTopBarFilterActions(onClickAction = {showBottomSheet.value = true})
+    ProvideTopBarSortActions(onClickAction = {showBottomSheet.value = true})
 
 
     val watchlistItems = watchlistViewModel.myUserDataList.observeAsState().value
@@ -68,6 +68,5 @@ fun WatchlistView(
         )
     }
 
-    WatchlistSortBottomSheet(showBottomSheet, selectedSortOption)
-
+    WatchlistSortBottomSheet(showBottomSheet, selectedSortOption, watchlistViewModel)
 }
