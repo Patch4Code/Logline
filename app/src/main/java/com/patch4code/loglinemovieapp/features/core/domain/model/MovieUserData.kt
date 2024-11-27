@@ -16,6 +16,8 @@ data class MovieUserData(
     val movie: Movie? = null,
     var onWatchlist: Boolean = false,
     var rating: Int = -1,
+    var addedToWatchlistTime: Long = 0,
+    var addedToWatchedTime: Long = 0,
     @PrimaryKey(autoGenerate = false)
     val id: Int = movie?.id ?: -1
 )

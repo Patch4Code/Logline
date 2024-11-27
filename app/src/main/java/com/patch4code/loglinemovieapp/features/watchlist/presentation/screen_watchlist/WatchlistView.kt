@@ -6,6 +6,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -13,7 +15,10 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarFilterActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
+import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOption
+import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.EmptyWatchlistText
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.MovieWatchlistBrowseCard
+import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.WatchlistSortBottomSheet
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 /**
@@ -33,28 +38,36 @@ fun WatchlistView(
     )
 ){
 
+    val selectedSortOption = remember { mutableStateOf(WatchlistSortOption.ByReleaseDateDesc) }
+    val showBottomSheet = remember { mutableStateOf(false)  }
+
     LaunchedEffect(Unit) {
-        watchlistViewModel.setUserdataList()
+        watchlistViewModel.getWatchlistItems(selectedSortOption.value)
     }
 
     // TopBar config
     ProvideTopBarTitle(title = Screen.WatchlistScreen.title.asString())
-    ProvideTopBarFilterActions(onClickAction = {})
+    ProvideTopBarFilterActions(onClickAction = {showBottomSheet.value = true})
 
-    val userDataList = watchlistViewModel.myUserDataList.observeAsState().value
 
-    LazyVerticalGrid(
-        modifier = Modifier.padding(8.dp),
-        columns = GridCells.Fixed(3),
-        content = {
-            val watchlistItems = userDataList?.filter {it.onWatchlist}
-            watchlistItems?.forEach{ userData ->
-                item {
-                    if(userData.onWatchlist){
+    val watchlistItems = watchlistViewModel.myUserDataList.observeAsState().value
+
+    if (watchlistItems.isNullOrEmpty()){
+        EmptyWatchlistText()
+    }else{
+        LazyVerticalGrid(
+            modifier = Modifier.padding(8.dp),
+            columns = GridCells.Fixed(3),
+            content = {
+                watchlistItems.forEach{ userData ->
+                    item {
                         userData.movie?.let { MovieWatchlistBrowseCard(navController, it) }
                     }
                 }
             }
-        }
-    )
+        )
+    }
+
+    WatchlistSortBottomSheet(showBottomSheet, selectedSortOption)
+
 }

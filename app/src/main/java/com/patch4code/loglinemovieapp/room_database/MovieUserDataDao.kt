@@ -34,8 +34,10 @@ interface MovieUserDataDao {
             deleteMovieUserData(existingEntry)
         }else{
             // Otherwise, update or insert the entry as usual
-            val updatedEntry = existingEntry ?: MovieUserData(movie = movie)
+            val updatedEntry = existingEntry
+                ?: MovieUserData(movie = movie, addedToWatchedTime = System.currentTimeMillis())
             updatedEntry.rating = rating
+            if(updatedEntry.addedToWatchedTime == 0L)updatedEntry.addedToWatchedTime = System.currentTimeMillis()
             upsertMovieUserData(updatedEntry)
         }
     }
@@ -49,8 +51,10 @@ interface MovieUserDataDao {
             deleteMovieUserData(existingEntry)
         } else {
             // Otherwise, update or insert the entry as usual
-            val updatedEntry = existingEntry ?: MovieUserData(movie = movie)
+            val updatedEntry = existingEntry
+                ?: MovieUserData(movie = movie, addedToWatchlistTime = System.currentTimeMillis())
             updatedEntry.onWatchlist = onWatchlist
+            updatedEntry.addedToWatchlistTime = System.currentTimeMillis()
             upsertMovieUserData(updatedEntry)
         }
     }
@@ -60,4 +64,18 @@ interface MovieUserDataDao {
 
     @Query("SELECT * FROM movieUserData")
     suspend fun getMovieUserDataList() : List<MovieUserData>
+
+    // Watchlist Queries
+    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY addedToWatchlistTime ASC")
+    suspend fun getWatchlistItemsOrderedByAddedAsc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY addedToWatchlistTime DESC")
+    suspend fun getWatchlistItemsOrderedByAddedDesc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.title') ASC")
+    suspend fun getWatchlistItemsOrderedByTitleAsc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.title') DESC")
+    suspend fun getWatchlistItemsOrderedByTitleDesc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.release_date') ASC")
+    suspend fun getWatchlistItemsOrderedByReleaseDateAsc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.release_date') DESC")
+    suspend fun getWatchlistItemsOrderedByReleaseDateDesc(): List<MovieUserData>
 }

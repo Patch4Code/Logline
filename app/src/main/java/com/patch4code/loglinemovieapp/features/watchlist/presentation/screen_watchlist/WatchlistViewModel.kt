@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
+import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOption
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
@@ -22,9 +23,18 @@ class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
     private val _myUserDataList = MutableLiveData<List<MovieUserData>>()
     val myUserDataList: LiveData<List<MovieUserData>> get() = _myUserDataList
 
-    fun setUserdataList() {
+    fun getWatchlistItems(sortOption: WatchlistSortOption) {
         viewModelScope.launch {
-            _myUserDataList.value = dao.getMovieUserDataList()
+            val sortedList = when (sortOption) {
+                WatchlistSortOption.ByAddedAsc -> dao.getWatchlistItemsOrderedByAddedAsc()
+                WatchlistSortOption.ByAddedDesc -> dao.getWatchlistItemsOrderedByAddedDesc()
+                WatchlistSortOption.ByTitleAsc -> dao.getWatchlistItemsOrderedByTitleAsc()
+                WatchlistSortOption.ByTitleDesc -> dao.getWatchlistItemsOrderedByTitleDesc()
+                WatchlistSortOption.ByReleaseDateAsc -> dao.getWatchlistItemsOrderedByReleaseDateAsc()
+                WatchlistSortOption.ByReleaseDateDesc -> dao.getWatchlistItemsOrderedByReleaseDateDesc()
+            }
+            _myUserDataList.value = sortedList
+            //_myUserDataList.postValue(sortedList)
         }
     }
 }
