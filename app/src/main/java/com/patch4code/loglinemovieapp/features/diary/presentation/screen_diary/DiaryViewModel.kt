@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.features.diary.domain.model.DiarySortOptions
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
 import kotlinx.coroutines.launch
@@ -24,9 +25,19 @@ class DiaryViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
     val diaryLogs: LiveData<List<LoggedMovie>> get() = _diaryLogs
 
     // function to get all diary entry's from the db
-    fun getDiaryLogs(){
+    fun getDiaryLogs(sortOption: DiarySortOptions){
         viewModelScope.launch {
-            _diaryLogs.value = loggedMovieDao.getLoggedMovieListByDate()
+           val sortedList = when (sortOption) {
+               DiarySortOptions.ByAddedDesc -> loggedMovieDao.getLoggedMoviesOrderedByDateDesc()
+               DiarySortOptions.ByAddedAsc -> loggedMovieDao.getLoggedMoviesOrderedByDateAsc()
+               DiarySortOptions.ByTitleAsc -> loggedMovieDao.getLoggedMoviesOrderedByTitleAsc()
+               DiarySortOptions.ByTitleDesc -> loggedMovieDao.getLoggedMoviesOrderedByTitleDesc()
+               DiarySortOptions.ByReleaseDateDesc -> loggedMovieDao.getLoggedMoviesOrderedByReleaseDateDesc()
+               DiarySortOptions.ByReleaseDateAsc -> loggedMovieDao.getLoggedMoviesOrderedByReleaseDateAsc()
+               DiarySortOptions.ByRatingDesc -> loggedMovieDao.getLoggedMoviesOrderedByRatingDesc()
+               DiarySortOptions.ByRatingAsc -> loggedMovieDao.getLoggedMoviesOrderedByRatingAsc()
+           }
+            _diaryLogs.value = sortedList
         }
     }
 }

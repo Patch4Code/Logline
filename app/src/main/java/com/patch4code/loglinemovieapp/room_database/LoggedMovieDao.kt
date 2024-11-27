@@ -25,8 +25,24 @@ interface LoggedMovieDao {
     @Delete
     suspend fun deleteLoggedMovie(loggedMovie: LoggedMovie)
 
+    // Diary Queries
+    @Query("SELECT * FROM LoggedMovie ORDER BY date ASC")
+    suspend fun getLoggedMoviesOrderedByDateAsc() : List<LoggedMovie>
     @Query("SELECT * FROM LoggedMovie ORDER BY date DESC")
-    suspend fun getLoggedMovieListByDate() : List<LoggedMovie>
+    suspend fun getLoggedMoviesOrderedByDateDesc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY rating ASC")
+    suspend fun getLoggedMoviesOrderedByRatingAsc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY rating DESC")
+    suspend fun getLoggedMoviesOrderedByRatingDesc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.title') ASC")
+    suspend fun getLoggedMoviesOrderedByTitleAsc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.title') DESC")
+    suspend fun getLoggedMoviesOrderedByTitleDesc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.release_date') ASC")
+    suspend fun getLoggedMoviesOrderedByReleaseDateAsc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.release_date') DESC")
+    suspend fun getLoggedMoviesOrderedByReleaseDateDesc() : List<LoggedMovie>
+
 
     @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY date DESC")
     suspend fun getLoggedMovieWithReviewListByDate() : List<LoggedMovie>
