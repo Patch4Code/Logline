@@ -3,6 +3,7 @@ package com.patch4code.loglinemovieapp.features.navigation.presentation.componen
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Sort
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -119,6 +120,45 @@ fun ProvideTopBarSortActions(onClickAction: () -> Unit) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.Sort,
                         contentDescription = "Add",
+                        tint = Color.White
+                    )
+                }
+            }
+        }
+    }
+}
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProvideTopBarSortActionsAndMoreVert - Composable function that adds a sort action icon
+ * and a MoreVert icon to the top app bar.
+ *
+ * @param sortOnClickAction A lambda function to execute when the sort icon is clicked.
+ * @author Patch4Code
+ */
+@Composable
+fun ProvideTopBarSortActionsAndMoreVert(sortOnClickAction: () -> Unit, moreVertOnClickAction: () -> Unit) {
+
+    val viewModelStoreOwner = LocalViewModelStoreOwner.current
+    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
+        val viewModel: TopBarViewModel = viewModel(
+            viewModelStoreOwner = owner,
+            initializer = { TopBarViewModel() },
+        )
+        LaunchedEffect(sortOnClickAction, moreVertOnClickAction) {
+            viewModel.actions = {
+                IconButton(onClick = {sortOnClickAction()}) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.Sort,
+                        contentDescription = "Add",
+                        tint = Color.White
+                    )
+                }
+                IconButton(onClick = {moreVertOnClickAction()}) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "More",
                         tint = Color.White
                     )
                 }

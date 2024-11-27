@@ -17,7 +17,9 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListElementsSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.features.list.presentation.components.list.EmptyListText
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.ListContent
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.AddMovieToListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.DeleteMovieFromListDialog
@@ -32,7 +34,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialo
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onSaveEditList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActionsAndMoreVert
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLDecoder
@@ -59,24 +61,31 @@ fun ListView(
     val decodedMovieListString = URLDecoder.decode(movieListString, "UTF-8")
     val movieListData: MovieList = JSONHelper.fromJson(decodedMovieListString)
 
+    val selectedSortOption = remember { mutableStateOf(ListElementsSortOptions.ByTitleAsc) }
+
     LaunchedEffect(Unit) {
-        listViewModel.setList(movieListData)
+        listViewModel.setList(movieListData, selectedSortOption.value)
     }
 
-    // TopBar config
-    ProvideTopBarTitle(title = Screen.ListScreen.title.asString())
-    ProvideTopBarBackNavigationIcon(navController)
-    ProvideTopBarSortActions(onClickAction = {})
-
-
     val movieList = listViewModel.movieList.observeAsState().value
+    val sortedMovies = listViewModel.sortedMovies.observeAsState().value
 
     val openAddMovieDialog = remember { mutableStateOf(false)  }
     val openDeleteMovieDialog = remember { mutableStateOf(false)  }
     val movieToDelete = remember { mutableStateOf<Movie?>(null) }
     val openEditListDialog = remember { mutableStateOf(false)  }
     val openDeleteListDialog = remember { mutableStateOf(false)  }
-    val showBottomSheet = remember { mutableStateOf(false)  }
+    val showListSettingsBottomSheet = remember { mutableStateOf(false)  }
+
+    val showSortBottomSheet = remember { mutableStateOf(false)  }
+
+    // TopBar config
+    ProvideTopBarTitle(title = Screen.ListScreen.title.asString())
+    ProvideTopBarBackNavigationIcon(navController)
+    ProvideTopBarSortActionsAndMoreVert(
+        sortOnClickAction = {},
+        moreVertOnClickAction = { showListSettingsBottomSheet.value = true }
+    )
 
     Scaffold (
         floatingActionButton = {
@@ -85,8 +94,11 @@ fun ListView(
             }
         }
     ){
-        ListContent(movieList, showBottomSheet, openDeleteMovieDialog, movieToDelete, navController, listViewModel)
-
+        if (sortedMovies.isNullOrEmpty()){
+            EmptyListText()
+        }else{
+            ListContent(movieList, sortedMovies, openDeleteMovieDialog, movieToDelete, navController, listViewModel)
+        }
 
         //Dialogs and BottomSheet
 
@@ -96,10 +108,10 @@ fun ListView(
 
         AddMovieToListDialog(openAddMovieDialog = openAddMovieDialog, listViewModel = listViewModel)
 
-        ListSettingsBottomSheet(showBottomSheet = showBottomSheet.value,
-            onClose = {showBottomSheet.value = false},
-            onEdit = { onEditListBottomSheet(showBottomSheet, openEditListDialog) },
-            onDelete = { onDeleteListBottomSheet(showBottomSheet, openDeleteListDialog) })
+        ListSettingsBottomSheet(showBottomSheet = showListSettingsBottomSheet.value,
+            onClose = {showListSettingsBottomSheet.value = false},
+            onEdit = { onEditListBottomSheet(showListSettingsBottomSheet, openEditListDialog) },
+            onDelete = { onDeleteListBottomSheet(showListSettingsBottomSheet, openDeleteListDialog) })
 
         EditListDialog(
             initialMovieTitle = movieList?.name ?: "",

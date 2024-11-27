@@ -12,6 +12,7 @@ import com.parse.ParseQuery
 import com.parse.ParseUser
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListElementsSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.room_database.MovieListDao
 import kotlinx.coroutines.launch
@@ -30,10 +31,23 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
     private val _movieList = MutableLiveData<MovieList>()
     val movieList: LiveData<MovieList> get() = _movieList
 
-    // Sets the movie list data based on id by calling the db
-    fun setList(movieList: MovieList) {
+    private val _sortedMovies = MutableLiveData<List<Movie>>()
+    val sortedMovies: LiveData<List<Movie>> get() = _sortedMovies
+
+    // Sets the movie list data based on id by calling the db and ordering with kotlin
+    fun setList(movieList: MovieList, sortOption: ListElementsSortOptions) {
         viewModelScope.launch {
             _movieList.value = movieListDao.getMovieListById(movieList.id)
+
+            val unsortedList = movieListDao.getMovieListById(movieList.id).movies
+            val sortedList = when (sortOption) {
+                ListElementsSortOptions.ByOrderDesc -> unsortedList
+                ListElementsSortOptions.ByTitleAsc -> unsortedList.sortedBy {it.title}
+                ListElementsSortOptions.ByTitleDesc -> unsortedList.sortedByDescending { it.title }
+                ListElementsSortOptions.ByReleaseDateAsc -> unsortedList.sortedBy { it.releaseDate }
+                ListElementsSortOptions.ByReleaseDateDesc -> unsortedList.sortedByDescending { it.releaseDate }
+            }
+            _sortedMovies.value = sortedList
         }
     }
     // Adds a movie to the movie list calling the db
