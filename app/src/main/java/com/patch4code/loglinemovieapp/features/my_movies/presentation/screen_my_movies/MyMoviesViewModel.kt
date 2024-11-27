@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
+import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MyMoviesSortOption
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
@@ -22,9 +23,19 @@ class MyMoviesViewModel(private val dao: MovieUserDataDao): ViewModel() {
     private val _myUserDataList = MutableLiveData<List<MovieUserData>>()
     val myUserDataList: LiveData<List<MovieUserData>> get() = _myUserDataList
 
-    fun setUserdataList() {
+    fun getWatchedMovies(sortOption: MyMoviesSortOption) {
         viewModelScope.launch {
-            _myUserDataList.value = dao.getMovieUserDataList()
+            val sortedList = when (sortOption) {
+                MyMoviesSortOption.ByAddedDesc -> dao.getWatchedMoviesOrderedByAddedDesc()
+                MyMoviesSortOption.ByAddedAsc -> dao.getWatchedMoviesOrderedByAddedAsc()
+                MyMoviesSortOption.ByTitleAsc -> dao.getWatchedMoviesOrderedByTitleAsc()
+                MyMoviesSortOption.ByTitleDesc -> dao.getWatchedMoviesOrderedByTitleDesc()
+                MyMoviesSortOption.ByReleaseDateDesc -> dao.getWatchedMoviesOrderedByReleaseDateDesc()
+                MyMoviesSortOption.ByReleaseDateAsc -> dao.getWatchedMoviesOrderedByReleaseDateAsc()
+                MyMoviesSortOption.ByRatingDesc -> dao.getWatchedMoviesOrderedByRatingDesc()
+                MyMoviesSortOption.ByRatingAsc -> dao.getWatchedMoviesOrderedByRatingAsc()
+            }
+            _myUserDataList.value = sortedList
         }
     }
 }

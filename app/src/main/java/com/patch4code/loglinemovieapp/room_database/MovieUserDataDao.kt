@@ -62,8 +62,23 @@ interface MovieUserDataDao {
     @Query("SELECT * FROM movieUserData WHERE id = :movieId LIMIT 1")
     suspend fun getMovieUserDataByMovieId(movieId: Int): MovieUserData?
 
-    @Query("SELECT * FROM movieUserData")
-    suspend fun getMovieUserDataList() : List<MovieUserData>
+    // MyMovies Queries
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY addedToWatchedTime ASC")
+    suspend fun getWatchedMoviesOrderedByAddedAsc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY addedToWatchedTime DESC")
+    suspend fun getWatchedMoviesOrderedByAddedDesc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.title') ASC")
+    suspend fun getWatchedMoviesOrderedByTitleAsc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.title') DESC")
+    suspend fun getWatchedMoviesOrderedByTitleDesc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.release_date') ASC")
+    suspend fun getWatchedMoviesOrderedByReleaseDateAsc() : List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.release_date') DESC")
+    suspend fun getWatchedMoviesOrderedByReleaseDateDesc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY rating ASC")
+    suspend fun getWatchedMoviesOrderedByRatingAsc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY rating DESC")
+    suspend fun getWatchedMoviesOrderedByRatingDesc(): List<MovieUserData>
 
     // Watchlist Queries
     @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY addedToWatchlistTime ASC")

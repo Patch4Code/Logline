@@ -6,11 +6,15 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.EmptyMyMoviesText
 import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MovieRatedBrowseCard
+import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MyMoviesSortOption
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
@@ -33,8 +37,12 @@ fun MyMoviesView(
         factory = MyMoviesViewModelFactory(db.movieUserDataDao)
     )
 ){
+
+    val selectedSortOption = remember { mutableStateOf(MyMoviesSortOption.ByRatingAsc) }
+    val showBottomSheet = remember { mutableStateOf(false)  }
+
     LaunchedEffect(Unit) {
-        myMoviesViewModel.setUserdataList()
+        myMoviesViewModel.getWatchedMovies(selectedSortOption.value)
     }
 
     // TopBar config
@@ -42,19 +50,21 @@ fun MyMoviesView(
     ProvideTopBarBackNavigationIcon(navController)
     ProvideTopBarSortActions(onClickAction = {})
 
-    val userDataList = myMoviesViewModel.myUserDataList.observeAsState().value
+    val watchedMoviesItems = myMoviesViewModel.myUserDataList.observeAsState().value
 
-    LazyVerticalGrid(
-        modifier = Modifier.padding(8.dp),
-        columns = GridCells.Fixed(3),
-        content = {
-            // Filter and display rated items
-            val ratedItems = userDataList?.filter {it.rating >= 0}
-            ratedItems?.forEach{ ratedItem ->
-                item {
-                    MovieRatedBrowseCard(navController, ratedItem)
+    if(watchedMoviesItems.isNullOrEmpty()){
+        EmptyMyMoviesText()
+    }else{
+        LazyVerticalGrid(
+            modifier = Modifier.padding(8.dp),
+            columns = GridCells.Fixed(3),
+            content = {
+                watchedMoviesItems.forEach{
+                    item {
+                        MovieRatedBrowseCard(navController, it)
+                    }
                 }
             }
-        }
-    )
+        )
+    }
 }
