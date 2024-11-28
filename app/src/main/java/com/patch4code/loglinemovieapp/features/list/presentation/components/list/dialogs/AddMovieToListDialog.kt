@@ -13,6 +13,7 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.GeneralMovieSearchViewModel
 import com.patch4code.loglinemovieapp.features.core.presentation.components.movie_search_dialog.MovieSearchDialog
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
 
 /**
@@ -28,6 +29,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.Lis
 fun AddMovieToListDialog(
     openAddMovieDialog: MutableState<Boolean>,
     listViewModel: ListViewModel,
+    sortOption: ListSortOptions,
     generalMovieSearchViewModel: GeneralMovieSearchViewModel = viewModel()
 ){
 
@@ -53,7 +55,7 @@ fun AddMovieToListDialog(
                 if (listViewModel.isMovieAlreadyOnList(movie)){
                     Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
                 }else{
-                    listViewModel.addMovieToList(movie = movie)
+                    listViewModel.addMovieToList(movie = movie, sortOption = sortOption)
                     openAddMovieDialog.value = false
                 }
             }

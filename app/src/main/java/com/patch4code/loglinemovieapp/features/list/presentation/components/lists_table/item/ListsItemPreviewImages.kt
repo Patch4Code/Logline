@@ -5,7 +5,7 @@ import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -16,13 +16,19 @@ import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
  * @author Patch4Code
  */
 @Composable
-fun ListsItemPreviewImages(list: MovieList){
+fun ListsItemPreviewImages(moviesInList :List<MovieInList>?){
+
+    val firstMovie = moviesInList?.find { it.position == 0 }
+    val secondMovie = moviesInList?.find { it.position == 1 }
+    val thirdMovie = moviesInList?.find { it.position == 2 }
 
     AsyncImage(
-        model = if(list.movies.isNotEmpty()) MovieHelper.processPosterUrl(list.movies[0].posterUrl) else null,
+        model = firstMovie?.posterUrl.let { MovieHelper.processPosterUrl(it) },
         contentDescription = null,
-        error = painterResource(id = R.drawable.no_movie_poster_placeholder)
+        error = painterResource(
+            id = if (firstMovie != null) R.drawable.movie_poster_placeholder else R.drawable.no_movie_poster_placeholder
+        )
     )
-    AsyncImageCutPoster(url = if (list.movies.size >= 2) MovieHelper.processPosterUrl(list.movies[1].posterUrl) else null)
-    AsyncImageCutPoster(url = if (list.movies.size >= 3) MovieHelper.processPosterUrl(list.movies[2].posterUrl) else null)
+    AsyncImageCutPoster(url = secondMovie?.posterUrl?.let { MovieHelper.processPosterUrl(it) })
+    AsyncImageCutPoster(url = thirdMovie?.posterUrl?.let { MovieHelper.processPosterUrl(it) })
 }

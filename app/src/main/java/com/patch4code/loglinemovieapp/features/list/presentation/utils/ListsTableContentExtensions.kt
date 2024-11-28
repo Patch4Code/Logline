@@ -25,7 +25,7 @@ object ListsTableContentExtensions{
     //Delete list and close dialog
     fun ListsTableViewModel.onDeleteList(listToDelete: MutableState<MovieList?>, openDeleteListDialog: MutableState<Boolean>) {
         listToDelete.value?.let { list ->
-            removeUserMovieList(list)
+            removeUserMovieList(list.id)
         }
         listToDelete.value = null
         openDeleteListDialog.value = false

@@ -37,12 +37,13 @@ fun ListsTableView(
     navController: NavController,
     db: LoglineDatabase,
     listsTableViewModel: ListsTableViewModel = viewModel(
-        factory = ListsTableViewModelFactory(db.movieListDao)
+        factory = ListsTableViewModelFactory(db.movieListDao, db.movieInListDao)
     )
 ){
 
     LaunchedEffect(Unit) {
         listsTableViewModel.updateUserMovieLists()
+        listsTableViewModel.getMoviesInLists()
     }
 
     // TopBar config
@@ -56,6 +57,7 @@ fun ListsTableView(
     val listToDelete = remember { mutableStateOf<MovieList?>(null) }
 
     val myUserMovieLists = listsTableViewModel.userMovieLists.observeAsState().value
+    val moviesInLists = listsTableViewModel.moviesInLists.observeAsState().value
 
     Scaffold (
         floatingActionButton = {
@@ -67,6 +69,7 @@ fun ListsTableView(
         content = {
             ListsTableContent(
                 myUserMovieLists = myUserMovieLists,
+                moviesInLists = moviesInLists,
                 openAddListDialog = openAddListDialog,
                 openDeleteListDialog = openDeleteListDialog,
                 listToDelete = listToDelete,

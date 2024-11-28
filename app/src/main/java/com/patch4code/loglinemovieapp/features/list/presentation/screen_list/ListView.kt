@@ -15,9 +15,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
-import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.EmptyListText
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.ListContent
@@ -73,7 +73,7 @@ fun ListView(
 
     val openAddMovieDialog = remember { mutableStateOf(false)  }
     val openDeleteMovieDialog = remember { mutableStateOf(false)  }
-    val movieToDelete = remember { mutableStateOf<Movie?>(null) }
+    val movieToDelete = remember { mutableStateOf<MovieInList?>(null) }
     val openEditListDialog = remember { mutableStateOf(false)  }
     val openDeleteListDialog = remember { mutableStateOf(false)  }
     val showListSettingsBottomSheet = remember { mutableStateOf(false)  }
@@ -104,10 +104,10 @@ fun ListView(
         //Dialogs and BottomSheet
 
         DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
-            onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog, movieList, navController) },
+            onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog, selectedSortOption.value) },
             onCancel = { onCancelDeleteMovieFromList(openDeleteMovieDialog, movieList, navController) })
 
-        AddMovieToListDialog(openAddMovieDialog = openAddMovieDialog, listViewModel = listViewModel)
+        AddMovieToListDialog(openAddMovieDialog = openAddMovieDialog, sortOption = selectedSortOption.value, listViewModel = listViewModel)
 
         ListSettingsBottomSheet(showBottomSheet = showListSettingsBottomSheet.value,
             onClose = {showListSettingsBottomSheet.value = false},

@@ -30,11 +30,15 @@ interface MovieInListDao {
     @Query("UPDATE MovieInList SET position = position - 1 WHERE movieListId = :listId AND position > :deletedPosition")
     suspend fun updatePositionsAfterRemoval(listId: String, deletedPosition: Int)
 
-
+    @Query("DELETE FROM MovieInList WHERE movieListId = :listId")
+    suspend fun deleteAllMoviesFromList(listId: String)
 
 
     @Query("SELECT * FROM movieInList WHERE movieListId = :listId AND movieId = :movieId LIMIT 1")
     suspend fun getMovieInListByIds(listId: String, movieId: Int): MovieInList
+
+    @Query("SELECT * FROM movieInList")
+    suspend fun getAllMoviesInLists(): List<MovieInList>
 
     // MovieInList Queries
     @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY position ASC")

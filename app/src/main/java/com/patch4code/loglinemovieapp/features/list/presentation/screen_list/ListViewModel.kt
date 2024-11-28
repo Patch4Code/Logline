@@ -34,7 +34,6 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
     fun getList(movieList: MovieList, sortOption: ListSortOptions) {
         viewModelScope.launch {
             _movieList.value = movieListDao.getMovieListById(movieList.id)
-
             val sortedList = when (sortOption) {
                 ListSortOptions.ByPositionAsc -> movieInListDao.getMoviesInListOrderedByPositionAsc(movieList.id)
                 ListSortOptions.ByPositionDesc -> movieInListDao.getMoviesInListOrderedByPositionDesc(movieList.id)
@@ -49,55 +48,53 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
         }
     }
     // Adds a movie to the movie list calling the db
-    fun addMovieToList(movie: Movie) {
-        val listId = _movieList.value?.id ?: ""
+    fun addMovieToList(movie: Movie, sortOption: ListSortOptions) {
+        val listId = _movieList.value?.id ?: return
         viewModelScope.launch {
-            listId?.let { movieListDao.addMovieToList(it, movie) }
-            _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
-
             val highestListPosition = movieInListDao.getHighestPositionInList(listId) ?: -1
-            val newMovieInList =
-                MovieInList(
-                    movieListId = listId,
-                    position = highestListPosition+1,
-                    movieId = movie.id,
-                    title = movie.title,
-                    releaseDate = movie.releaseDate,
-                    posterUrl = movie.posterUrl,
-                    timeAdded = System.currentTimeMillis()
-                )
+
+            val newMovieInList = MovieInList(
+                movieListId = listId,
+                position = highestListPosition + 1,
+                movieId = movie.id,
+                title = movie.title.orEmpty(),
+                releaseDate = movie.releaseDate.orEmpty(),
+                posterUrl = movie.posterUrl.orEmpty(),
+                timeAdded = System.currentTimeMillis()
+            )
             movieInListDao.upsertMovieInList(newMovieInList)
-            //getList()
+
+            //Update
+            getList(movieList.value!!, sortOption)
         }
     }
     // Checks if a movie is already on the current list
     fun isMovieAlreadyOnList(movie: Movie): Boolean{
-        val movieList = _movieList.value?.movies
-        return movieList?.contains(movie) ?: false
+        val currentMoviesInList = _moviesInList.value ?: emptyList()
+        return currentMoviesInList.any { it.movieId == movie.id }
     }
     // Removes a movie from the movie list calling the db
-    fun removeMovieFromList(movieId: Int) {
-        val listId = _movieList.value?.id ?: ""
+    fun removeMovieFromList(movieId: Int, sortOption: ListSortOptions) {
+        val listId = _movieList.value?.id ?: return
         viewModelScope.launch {
-            listId?.let { movieListDao.removeMovieFromList(it, movieId) }
-            _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
-
             movieInListDao.removeMovieFromList(listId, movieId)
+            getList(movieList.value!!, sortOption)
         }
     }
     // Edits the movie list parameters calling the db
     fun editList(newTitle: String, newIsPublicState: Boolean){
-        val listId = _movieList.value?.id
+        val listId = _movieList.value?.id ?: return
         viewModelScope.launch {
-            listId?.let { movieListDao.editListParameters(it, newTitle, newIsPublicState) }
-            _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
+            movieListDao.editListParameters(listId, newTitle, newIsPublicState)
+            _movieList.value = movieListDao.getMovieListById(listId)
         }
     }
     // Deletes the movie list calling the db
     fun deleteList(){
-        val listId = _movieList.value?.id
+        val listId = _movieList.value?.id ?: return
         viewModelScope.launch {
-            listId?.let { movieListDao.deleteMovieListById(it) }
+            movieListDao.deleteMovieListById(listId)
+            movieInListDao.deleteAllMoviesFromList(listId)
         }
     }
 }

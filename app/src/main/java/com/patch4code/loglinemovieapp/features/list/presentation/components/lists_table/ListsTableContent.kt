@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToDeleteContainer
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.AddListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.DeleteListDialog
@@ -31,6 +32,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListsTabl
 @Composable
 fun ListsTableContent(
     myUserMovieLists: List<MovieList>?,
+    moviesInLists: List<MovieInList>?,
     openAddListDialog: MutableState<Boolean>,
     openDeleteListDialog: MutableState<Boolean>,
     listToDelete: MutableState<MovieList?>,
@@ -52,7 +54,8 @@ fun ListsTableContent(
                     openDeleteListDialog.value = true
                 }
             ) {
-                ListsTableItem(navController, list)
+                val moviesInSpecificList = moviesInLists?.filter { it.movieListId == list.id}
+                ListsTableItem(navController, list, moviesInSpecificList)
             }
         }
     }

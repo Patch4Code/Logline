@@ -2,8 +2,9 @@ package com.patch4code.loglinemovieapp.features.list.presentation.utils
 
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -20,25 +21,13 @@ object ListDialogsExtensions{
 
     // Deletes a movie from a list calling the ListViewModel
     fun ListViewModel.onDeleteMovieFromList(
-        movieToDelete: MutableState<Movie?>,
+        movieToDelete: MutableState<MovieInList?>,
         openDeleteMovieDialog: MutableState<Boolean>,
-        movieList:  MovieList?,
-        navController: NavController
+        sortOption: ListSortOptions
     ) {
-        movieToDelete.value?.id?.let { movie->
-            removeMovieFromList(movie)
-        }
+        movieToDelete.value?.let { removeMovieFromList(it.movieId, sortOption) }
         movieToDelete.value = null
         openDeleteMovieDialog.value = false
-
-        //workaround with scene reload
-        val jsonMovieList = movieList?.toJson()
-        val encodedJsonMovieList = URLEncoder.encode(jsonMovieList, "UTF-8")
-        navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList)){
-            popUpTo(Screen.ListsTableScreen.route){
-                inclusive = false
-            }
-        }
     }
     // Cancels the deletion of a movie from a list
     fun onCancelDeleteMovieFromList(openDeleteMovieDialog: MutableState<Boolean>, movieList:  MovieList?, navController: NavController){

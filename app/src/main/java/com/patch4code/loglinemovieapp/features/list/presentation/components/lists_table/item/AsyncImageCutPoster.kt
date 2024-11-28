@@ -32,6 +32,6 @@ fun AsyncImageCutPoster(url:String?){
                     placeable.place(-100, 0)
                 }
             },
-        error = painterResource(id = R.drawable.poster_placeholder)
+        error = painterResource(id = if(url != null) R.drawable.movie_poster_placeholder else R.drawable.poster_placeholder)
     )
 }

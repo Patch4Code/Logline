@@ -12,7 +12,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToDeleteContainer
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
@@ -33,7 +32,7 @@ fun ListContent(
     movieList: MovieList?,
     moviesInList: List<MovieInList>,
     openDeleteMovieDialog : MutableState<Boolean>,
-    movieToDelete:  MutableState<Movie?>,
+    movieToDelete:  MutableState<MovieInList?>,
     navController: NavController,
     listViewModel: ListViewModel
 ){
@@ -48,15 +47,15 @@ fun ListContent(
             itemsIndexed(
                 items = moviesInList,
                 key = { _, item -> item.hashCode() }
-            ) { _, movie ->
+            ) { _, movieInList ->
                 swipeToDeleteContainer(
-                    item = movie,
+                    item = movieInList,
                     onDelete = {
-                        //movieToDelete.value = movie
+                        movieToDelete.value = movieInList
                         openDeleteMovieDialog.value = true
                     }
                 ) {
-                    ListItem(navController, movie)
+                    ListItem(navController, movieInList)
                 }
             }
         }

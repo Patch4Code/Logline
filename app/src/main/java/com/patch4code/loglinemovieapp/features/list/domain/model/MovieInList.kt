@@ -14,8 +14,8 @@ data class MovieInList(
     val movieListId: String,
     val position: Int,
     val movieId: Int,
-    val title: String,
-    val releaseDate: String,
-    val posterUrl: String,
+    val title: String = "N/A",
+    val releaseDate: String = "N/A-date",
+    val posterUrl: String = "",
     val timeAdded: Long
 )

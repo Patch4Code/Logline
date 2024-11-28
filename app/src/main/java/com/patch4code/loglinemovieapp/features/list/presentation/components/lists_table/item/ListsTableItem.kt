@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import java.net.URLEncoder
@@ -26,7 +27,7 @@ import java.net.URLEncoder
  * @author Patch4Code
  */
 @Composable
-fun ListsTableItem(navController: NavController, list: MovieList){
+fun ListsTableItem(navController: NavController, list: MovieList, moviesInSpecificList :List<MovieInList>?){
 
     val jsonMovieList = list.toJson()
     val encodedJsonMovieList = URLEncoder.encode(jsonMovieList, "UTF-8")
@@ -41,12 +42,12 @@ fun ListsTableItem(navController: NavController, list: MovieList){
                     navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList))
                 }
         ){
-            ListsItemPreviewImages(list)
+            ListsItemPreviewImages(moviesInSpecificList)
 
             Column (modifier = Modifier
                 .padding(start = 8.dp)
                 .weight(1f)){
-                Text(text = "${list.name} (${list.movies.size})", style = MaterialTheme.typography.titleMedium)
+                Text(text = "${list.name} (${moviesInSpecificList?.size})", style = MaterialTheme.typography.titleMedium)
             }
         }
         //HorizontalDivider(modifier = Modifier.padding(start = 8.dp))
