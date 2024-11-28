@@ -2,13 +2,11 @@ package com.patch4code.loglinemovieapp.features.list.presentation.utils
 
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import java.net.URLEncoder
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -34,9 +32,8 @@ object ListDialogsExtensions{
         openDeleteMovieDialog.value = false
 
         //workaround with scene reload
-        val jsonMovieList = movieList?.toJson()
-        val encodedJsonMovieList = URLEncoder.encode(jsonMovieList, "UTF-8")
-        navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList)){
+        val listId = movieList?.id ?: return
+        navController.navigate(Screen.ListScreen.withArgs(listId)){
             popUpTo(Screen.ListsTableScreen.route){
                 inclusive = false
             }

@@ -16,10 +16,11 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 object ListsTableContentExtensions{
 
     // add a new list to the table
-    fun ListsTableViewModel.onAddList(listName: String, isPublic: Boolean, openAddListDialog: MutableState<Boolean>
+    fun ListsTableViewModel.onAddList(listName: String, isRanked: Boolean, openAddListDialog: MutableState<Boolean>
     ) {
+        val currentTime = System.currentTimeMillis()
         openAddListDialog.value = false
-        addUserMovieList(MovieList(name = listName, movies = mutableListOf()))
+        addUserMovieList(MovieList(name = listName, timeCreated = currentTime, timeUpdated = currentTime))
     }
 
     //Delete list and close dialog

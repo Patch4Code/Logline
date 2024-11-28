@@ -51,7 +51,7 @@ fun ListSortBottomSheet(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
                             selectedSortOption.value = sortOption
-                            listViewModel.getList(movieList, selectedSortOption.value)
+                            listViewModel.getList(movieList.id, selectedSortOption.value)
                         }
                     ){
                         Text(text = sortOption.label, modifier = Modifier.weight(1f))

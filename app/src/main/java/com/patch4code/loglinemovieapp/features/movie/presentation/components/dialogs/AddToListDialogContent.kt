@@ -18,7 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.features.movie.presentation.screen_movie.AddToListViewModel
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -28,13 +30,20 @@ import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
  * @author Patch4Code
  */
 @Composable
-fun AddToListDialogContent(myUserMovieLists: List<MovieList>?, currentMovie: Movie, selectedList: MutableState<MovieList?>, ){
+fun AddToListDialogContent(
+    addToListViewModel: AddToListViewModel,
+    myUserMovieLists: List<MovieList>?,
+    currentMovie: Movie,
+    moviesInLists: List<MovieInList>?,
+    selectedList: MutableState<MovieList?>
+){
 
     LazyColumn(modifier = Modifier.padding(8.dp)) {
         myUserMovieLists?.forEach { list ->
             item {
                 // Check if the movie is already on the list
-                val movieAlreadyOnList = list.movies.any { it.id == currentMovie.id }
+                val movieAlreadyOnList = addToListViewModel.isMovieAlreadyInList(list.id, currentMovie.id)
+                val listSize = moviesInLists?.filter { it.movieListId == list.id}?.size ?: 0
 
                 // Display list item as a clickable button
                 TextButton(
@@ -51,7 +60,7 @@ fun AddToListDialogContent(myUserMovieLists: List<MovieList>?, currentMovie: Mov
                         Column (modifier = Modifier.weight(1f)
                         ){
                             Row {
-                                Text(text = "${list.name} (${list.movies.size})", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                                Text(text = "${list.name} (${listSize})", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                                 if(selectedList.value == list){
                                     Icon(imageVector = Icons.Default.Check, contentDescription = null)
                                 }

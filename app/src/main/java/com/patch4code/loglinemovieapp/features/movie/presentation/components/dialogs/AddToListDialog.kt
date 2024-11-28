@@ -45,7 +45,7 @@ fun AddToListDialog(
     movieDetails: MovieDetails?,
     db: LoglineDatabase,
     addToListViewModel: AddToListViewModel = viewModel(
-        factory = AddToListViewModelFactory(db.movieListDao)
+        factory = AddToListViewModelFactory(db.movieListDao, db.movieInListDao)
     )
 ){
     // If the dialog is not open, return early
@@ -53,7 +53,7 @@ fun AddToListDialog(
 
     // Update user movie lists by calling the addToListViewModel when dialog is opened
     LaunchedEffect(Unit){
-        addToListViewModel.updateUserMovieLists()
+        addToListViewModel.loadUserMovieLists()
     }
 
     val context = LocalContext.current
@@ -76,6 +76,7 @@ fun AddToListDialog(
 
     // Get movie lists and track list
     val myUserMovieLists = addToListViewModel.userMovieLists.observeAsState().value
+    val moviesInLists = addToListViewModel.moviesInLists.observeAsState().value
     val selectedList = remember { mutableStateOf<MovieList?>(null) }
 
     AlertDialog(
@@ -89,7 +90,7 @@ fun AddToListDialog(
                     Spacer(modifier = Modifier.padding(2.dp))
                     Text(text = "Create new List")
                 }
-                AddToListDialogContent(myUserMovieLists, currentMovie, selectedList)
+                AddToListDialogContent(addToListViewModel, myUserMovieLists, currentMovie, moviesInLists, selectedList)
             }
         },
         confirmButton = {
@@ -115,8 +116,11 @@ fun AddToListDialog(
 
     AddListDialog(
         openAddListDialog = openAddListDialog.value,
-        onSave = { listName, isRanked ->
-            addToListViewModel.createMovieList(MovieList(name = listName, movies = emptyList()))
+        onSave = { listName, _ ->
+            val currentTime = System.currentTimeMillis()
+            addToListViewModel.createMovieList(
+                MovieList(name = listName, timeCreated = currentTime, timeUpdated = currentTime)
+            )
             openAddListDialog.value = false
         },
         onCancel = {openAddListDialog.value = false}

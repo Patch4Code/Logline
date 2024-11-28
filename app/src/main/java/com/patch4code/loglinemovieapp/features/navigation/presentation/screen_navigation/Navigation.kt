@@ -216,9 +216,9 @@ fun Navigation(db: LoglineDatabase){
                         ListsTableView(navController = navController, db = db)
                     }
 
-                    composable(route = Screen.ListScreen.route + "/{movieList}",
+                    composable(route = Screen.ListScreen.route + "/{listId}",
                         arguments = listOf(
-                            navArgument("movieList"){
+                            navArgument("listId"){
                                 type = NavType.StringType
                                 defaultValue = ""
                                 nullable = true
@@ -228,7 +228,7 @@ fun Navigation(db: LoglineDatabase){
                         ListView(
                             navController = navController,
                             db = db,
-                            movieListString = parsedMovieList.arguments?.getString("movieList")
+                            listId = parsedMovieList.arguments?.getString("listId")
                         )
                     }
 

@@ -2,7 +2,6 @@ package com.patch4code.loglinemovieapp.features.list.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import java.util.UUID
 
 /**
@@ -18,7 +17,6 @@ data class MovieList(
     val id: String = UUID.randomUUID().toString(),
     var name: String,
     var isRanked: Boolean = false, //not used yet
-    var timeCreated: Long = 0,
-    var timeUpdated: Long = 0,
-    var movies: List<Movie>
+    var timeCreated: Long,
+    var timeUpdated: Long
 )

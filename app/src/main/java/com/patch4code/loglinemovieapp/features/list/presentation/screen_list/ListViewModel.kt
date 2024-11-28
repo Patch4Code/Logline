@@ -31,18 +31,18 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
     val moviesInList: LiveData<List<MovieInList>> get() = _moviesInList
 
     // Sets the movie list data based on id by calling the db and ordering with kotlin
-    fun getList(movieList: MovieList, sortOption: ListSortOptions) {
+    fun getList(listId: String, sortOption: ListSortOptions) {
         viewModelScope.launch {
-            _movieList.value = movieListDao.getMovieListById(movieList.id)
+            _movieList.value = movieListDao.getMovieListById(listId)
             val sortedList = when (sortOption) {
-                ListSortOptions.ByPositionAsc -> movieInListDao.getMoviesInListOrderedByPositionAsc(movieList.id)
-                ListSortOptions.ByPositionDesc -> movieInListDao.getMoviesInListOrderedByPositionDesc(movieList.id)
-                ListSortOptions.ByTitleAsc -> movieInListDao.getMoviesInListOrderedByTitleAsc(movieList.id)
-                ListSortOptions.ByTitleDesc -> movieInListDao.getMoviesInListOrderedByTitleDesc(movieList.id)
-                ListSortOptions.ByReleaseDateAsc -> movieInListDao.getMoviesInListOrderedByReleaseDateAsc(movieList.id)
-                ListSortOptions.ByReleaseDateDesc -> movieInListDao.getMoviesInListOrderedByReleaseDateDesc(movieList.id)
-                ListSortOptions.ByTimeAddedAsc -> movieInListDao.getMoviesInListOrderedByTimeAddedAsc(movieList.id)
-                ListSortOptions.ByTimeAddedDesc -> movieInListDao.getMoviesInListOrderedByTimeAddedDesc(movieList.id)
+                ListSortOptions.ByPositionAsc -> movieInListDao.getMoviesInListOrderedByPositionAsc(listId)
+                ListSortOptions.ByPositionDesc -> movieInListDao.getMoviesInListOrderedByPositionDesc(listId)
+                ListSortOptions.ByTitleAsc -> movieInListDao.getMoviesInListOrderedByTitleAsc(listId)
+                ListSortOptions.ByTitleDesc -> movieInListDao.getMoviesInListOrderedByTitleDesc(listId)
+                ListSortOptions.ByReleaseDateAsc -> movieInListDao.getMoviesInListOrderedByReleaseDateAsc(listId)
+                ListSortOptions.ByReleaseDateDesc -> movieInListDao.getMoviesInListOrderedByReleaseDateDesc(listId)
+                ListSortOptions.ByTimeAddedAsc -> movieInListDao.getMoviesInListOrderedByTimeAddedAsc(listId)
+                ListSortOptions.ByTimeAddedDesc -> movieInListDao.getMoviesInListOrderedByTimeAddedDesc(listId)
             }
             _moviesInList.value = sortedList
         }
@@ -63,9 +63,10 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
                 timeAdded = System.currentTimeMillis()
             )
             movieInListDao.upsertMovieInList(newMovieInList)
+            movieListDao.updateListTimeUpdated(listId, System.currentTimeMillis())
 
             //Update
-            getList(movieList.value!!, sortOption)
+            getList(movieList.value!!.id, sortOption)
         }
     }
     // Checks if a movie is already on the current list
@@ -78,7 +79,9 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
         val listId = _movieList.value?.id ?: return
         viewModelScope.launch {
             movieInListDao.removeMovieFromList(listId, movieId)
-            getList(movieList.value!!, sortOption)
+            movieListDao.updateListTimeUpdated(listId, System.currentTimeMillis())
+
+            getList(movieList.value!!.id, sortOption)
         }
     }
     // Edits the movie list parameters calling the db
@@ -86,6 +89,8 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
         val listId = _movieList.value?.id ?: return
         viewModelScope.launch {
             movieListDao.editListParameters(listId, newTitle, newIsPublicState)
+            movieListDao.updateListTimeUpdated(listId, System.currentTimeMillis())
+
             _movieList.value = movieListDao.getMovieListById(listId)
         }
     }

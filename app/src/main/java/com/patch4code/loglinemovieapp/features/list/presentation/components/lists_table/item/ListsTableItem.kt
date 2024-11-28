@@ -12,11 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import java.net.URLEncoder
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -29,9 +27,6 @@ import java.net.URLEncoder
 @Composable
 fun ListsTableItem(navController: NavController, list: MovieList, moviesInSpecificList :List<MovieInList>?){
 
-    val jsonMovieList = list.toJson()
-    val encodedJsonMovieList = URLEncoder.encode(jsonMovieList, "UTF-8")
-
     Column {
         Row(
             modifier = Modifier
@@ -39,7 +34,7 @@ fun ListsTableItem(navController: NavController, list: MovieList, moviesInSpecif
                 .height(110.dp)
                 .padding(8.dp)
                 .clickable {
-                    navController.navigate(Screen.ListScreen.withArgs(encodedJsonMovieList))
+                    navController.navigate(Screen.ListScreen.withArgs(list.id))
                 }
         ){
             ListsItemPreviewImages(moviesInSpecificList)

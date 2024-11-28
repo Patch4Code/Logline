@@ -15,10 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
-import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.EmptyListText
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.ListContent
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.AddMovieToListDialog
@@ -38,7 +36,6 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.component
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActionsAndMoreVert
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
-import java.net.URLDecoder
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -52,20 +49,17 @@ import java.net.URLDecoder
 @Composable
 fun ListView(
     navController: NavController,
-    movieListString: String?,
+    listId: String?,
     db: LoglineDatabase,
     listViewModel: ListViewModel = viewModel(
         factory = ListViewModelFactory(db.movieListDao, db.movieInListDao)
     )
 ){
-
-    val decodedMovieListString = URLDecoder.decode(movieListString, "UTF-8")
-    val movieListData: MovieList = JSONHelper.fromJson(decodedMovieListString)
-
+    val movieListId: String = listId ?: return
     val selectedSortOption = remember { mutableStateOf(ListSortOptions.ByPositionAsc) }
 
     LaunchedEffect(Unit) {
-        listViewModel.getList(movieListData, selectedSortOption.value)
+        listViewModel.getList(movieListId, selectedSortOption.value)
     }
 
     val movieList = listViewModel.movieList.observeAsState().value

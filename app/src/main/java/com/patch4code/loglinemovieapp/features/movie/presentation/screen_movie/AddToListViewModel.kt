@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.room_database.MovieInListDao
 import com.patch4code.loglinemovieapp.room_database.MovieListDao
 import kotlinx.coroutines.launch
 
@@ -18,17 +20,21 @@ import kotlinx.coroutines.launch
  * @param movieListDao The DAO for accessing movie list data from the db.
  * @author Patch4Code
  */
-class AddToListViewModel(private val movieListDao: MovieListDao): ViewModel() {
+class AddToListViewModel(private val movieListDao: MovieListDao, private val movieInListDao: MovieInListDao): ViewModel() {
 
     private val _movieToAdd = MutableLiveData<Movie>()
 
     private val _userMovieLists = MutableLiveData<List<MovieList>>()
     val userMovieLists: LiveData<List<MovieList>> get() = _userMovieLists
 
+    private val _moviesInLists = MutableLiveData<List<MovieInList>>()
+    val moviesInLists: LiveData<List<MovieInList>> get() = _moviesInLists
+
     // Updates the user's movie lists by accessing the db
-    fun updateUserMovieLists(){
+    fun loadUserMovieLists(){
         viewModelScope.launch {
             _userMovieLists.value = movieListDao.getMovieLists()
+            _moviesInLists.value = movieInListDao.getAllMoviesInLists()
         }
     }
 
@@ -37,13 +43,29 @@ class AddToListViewModel(private val movieListDao: MovieListDao): ViewModel() {
         _movieToAdd.value = movie
     }
 
+    fun isMovieAlreadyInList(listId: String, movieId: Int): Boolean{
+        val currentMoviesInList: List<MovieInList> = _moviesInLists.value?.filter  { it.movieListId == listId} ?: emptyList()
+        return currentMoviesInList.any { it.movieId == movieId }
+    }
+
     // Adds the movie to the specified list by accessing the db.
     fun addMovieToList(list: MovieList?){
-        if(list != null){
-            val listId = list.id
-            viewModelScope.launch {
-                _movieToAdd.value?.let { movieListDao.addMovieToList(listId, it) }
-            }
+        val listId = list?.id ?: return
+        viewModelScope.launch {
+            val highestListPosition = movieInListDao.getHighestPositionInList(listId) ?: -1
+
+            val newMovieInList = MovieInList(
+                movieListId = listId,
+                position = highestListPosition + 1,
+                movieId = _movieToAdd.value?.id ?: return@launch,
+                title = _movieToAdd.value?.title.orEmpty(),
+                releaseDate = _movieToAdd.value?.releaseDate.orEmpty(),
+                posterUrl = _movieToAdd.value?.posterUrl.orEmpty(),
+                timeAdded = System.currentTimeMillis()
+            )
+            movieInListDao.upsertMovieInList(newMovieInList)
+
+            movieListDao.updateListTimeUpdated(listId, System.currentTimeMillis())
         }
     }
 
@@ -56,11 +78,11 @@ class AddToListViewModel(private val movieListDao: MovieListDao): ViewModel() {
 }
 
 // Factory-class for creating AddToListViewModel instances to manage access to the database
-class AddToListViewModelFactory(private val movieListDao: MovieListDao) : ViewModelProvider.Factory {
+class AddToListViewModelFactory(private val movieListDao: MovieListDao, private val movieInListDao: MovieInListDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AddToListViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return AddToListViewModel(movieListDao) as T
+            return AddToListViewModel(movieListDao, movieInListDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
