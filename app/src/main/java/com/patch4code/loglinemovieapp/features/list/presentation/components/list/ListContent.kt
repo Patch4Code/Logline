@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToDeleteContainer
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.items.ListItem
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
@@ -30,7 +31,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.Lis
 @Composable
 fun ListContent(
     movieList: MovieList?,
-    sortedMovies: List<Movie>,
+    moviesInList: List<MovieInList>,
     openDeleteMovieDialog : MutableState<Boolean>,
     movieToDelete:  MutableState<Movie?>,
     navController: NavController,
@@ -45,13 +46,13 @@ fun ListContent(
             .padding(8.dp)
         ){
             itemsIndexed(
-                items = movieList?.movies ?: emptyList(),
+                items = moviesInList,
                 key = { _, item -> item.hashCode() }
             ) { _, movie ->
                 swipeToDeleteContainer(
                     item = movie,
                     onDelete = {
-                        movieToDelete.value = movie
+                        //movieToDelete.value = movie
                         openDeleteMovieDialog.value = true
                     }
                 ) {

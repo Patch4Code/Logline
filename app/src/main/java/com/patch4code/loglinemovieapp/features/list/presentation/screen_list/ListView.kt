@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper
-import com.patch4code.loglinemovieapp.features.list.domain.model.ListElementsSortOptions
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.EmptyListText
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.ListContent
@@ -25,6 +25,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.components.list
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.DeleteMovieFromListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.EditListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.ListSettingsBottomSheet
+import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.ListSortBottomSheet
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.DeleteListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onCancelDeleteMovieFromList
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onDeleteList
@@ -54,21 +55,21 @@ fun ListView(
     movieListString: String?,
     db: LoglineDatabase,
     listViewModel: ListViewModel = viewModel(
-        factory = ListViewModelFactory(db.movieListDao)
+        factory = ListViewModelFactory(db.movieListDao, db.movieInListDao)
     )
 ){
 
     val decodedMovieListString = URLDecoder.decode(movieListString, "UTF-8")
     val movieListData: MovieList = JSONHelper.fromJson(decodedMovieListString)
 
-    val selectedSortOption = remember { mutableStateOf(ListElementsSortOptions.ByTitleAsc) }
+    val selectedSortOption = remember { mutableStateOf(ListSortOptions.ByPositionAsc) }
 
     LaunchedEffect(Unit) {
-        listViewModel.setList(movieListData, selectedSortOption.value)
+        listViewModel.getList(movieListData, selectedSortOption.value)
     }
 
     val movieList = listViewModel.movieList.observeAsState().value
-    val sortedMovies = listViewModel.sortedMovies.observeAsState().value
+    val moviesInList = listViewModel.moviesInList.observeAsState().value
 
     val openAddMovieDialog = remember { mutableStateOf(false)  }
     val openDeleteMovieDialog = remember { mutableStateOf(false)  }
@@ -83,7 +84,7 @@ fun ListView(
     ProvideTopBarTitle(title = Screen.ListScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
     ProvideTopBarSortActionsAndMoreVert(
-        sortOnClickAction = {},
+        sortOnClickAction = { showSortBottomSheet.value = true },
         moreVertOnClickAction = { showListSettingsBottomSheet.value = true }
     )
 
@@ -94,10 +95,10 @@ fun ListView(
             }
         }
     ){
-        if (sortedMovies.isNullOrEmpty()){
+        if (moviesInList.isNullOrEmpty()){
             EmptyListText()
         }else{
-            ListContent(movieList, sortedMovies, openDeleteMovieDialog, movieToDelete, navController, listViewModel)
+            ListContent(movieList, moviesInList, openDeleteMovieDialog, movieToDelete, navController, listViewModel)
         }
 
         //Dialogs and BottomSheet
@@ -124,5 +125,10 @@ fun ListView(
             openDeleteListDialog = openDeleteListDialog.value,
             onDelete = { listViewModel.onDeleteList(openDeleteListDialog, navController) },
             onCancel = { openDeleteListDialog.value = false })
+
+
+        if (movieList != null) {
+            ListSortBottomSheet(showSortBottomSheet, selectedSortOption, listViewModel, movieList)
+        }
     }
 }

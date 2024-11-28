@@ -1,19 +1,15 @@
 package com.patch4code.loglinemovieapp.features.list.presentation.screen_list
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.parse.ParseACL
-import com.parse.ParseObject
-import com.parse.ParseQuery
-import com.parse.ParseUser
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
-import com.patch4code.loglinemovieapp.features.list.domain.model.ListElementsSortOptions
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.room_database.MovieInListDao
 import com.patch4code.loglinemovieapp.room_database.MovieListDao
 import kotlinx.coroutines.launch
 
@@ -26,36 +22,52 @@ import kotlinx.coroutines.launch
  * @param movieListDao The DAO for accessing movie list data from the db.
  * @author Patch4Code
  */
-class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
+class ListViewModel(private val movieListDao: MovieListDao, private val movieInListDao: MovieInListDao): ViewModel() {
 
     private val _movieList = MutableLiveData<MovieList>()
     val movieList: LiveData<MovieList> get() = _movieList
 
-    private val _sortedMovies = MutableLiveData<List<Movie>>()
-    val sortedMovies: LiveData<List<Movie>> get() = _sortedMovies
+    private val _moviesInList = MutableLiveData<List<MovieInList>>()
+    val moviesInList: LiveData<List<MovieInList>> get() = _moviesInList
 
     // Sets the movie list data based on id by calling the db and ordering with kotlin
-    fun setList(movieList: MovieList, sortOption: ListElementsSortOptions) {
+    fun getList(movieList: MovieList, sortOption: ListSortOptions) {
         viewModelScope.launch {
             _movieList.value = movieListDao.getMovieListById(movieList.id)
 
-            val unsortedList = movieListDao.getMovieListById(movieList.id).movies
             val sortedList = when (sortOption) {
-                ListElementsSortOptions.ByOrderDesc -> unsortedList
-                ListElementsSortOptions.ByTitleAsc -> unsortedList.sortedBy {it.title}
-                ListElementsSortOptions.ByTitleDesc -> unsortedList.sortedByDescending { it.title }
-                ListElementsSortOptions.ByReleaseDateAsc -> unsortedList.sortedBy { it.releaseDate }
-                ListElementsSortOptions.ByReleaseDateDesc -> unsortedList.sortedByDescending { it.releaseDate }
+                ListSortOptions.ByPositionAsc -> movieInListDao.getMoviesInListOrderedByPositionAsc(movieList.id)
+                ListSortOptions.ByPositionDesc -> movieInListDao.getMoviesInListOrderedByPositionDesc(movieList.id)
+                ListSortOptions.ByTitleAsc -> movieInListDao.getMoviesInListOrderedByTitleAsc(movieList.id)
+                ListSortOptions.ByTitleDesc -> movieInListDao.getMoviesInListOrderedByTitleDesc(movieList.id)
+                ListSortOptions.ByReleaseDateAsc -> movieInListDao.getMoviesInListOrderedByReleaseDateAsc(movieList.id)
+                ListSortOptions.ByReleaseDateDesc -> movieInListDao.getMoviesInListOrderedByReleaseDateDesc(movieList.id)
+                ListSortOptions.ByTimeAddedAsc -> movieInListDao.getMoviesInListOrderedByTimeAddedAsc(movieList.id)
+                ListSortOptions.ByTimeAddedDesc -> movieInListDao.getMoviesInListOrderedByTimeAddedDesc(movieList.id)
             }
-            _sortedMovies.value = sortedList
+            _moviesInList.value = sortedList
         }
     }
     // Adds a movie to the movie list calling the db
     fun addMovieToList(movie: Movie) {
-        val listId = _movieList.value?.id
+        val listId = _movieList.value?.id ?: ""
         viewModelScope.launch {
             listId?.let { movieListDao.addMovieToList(it, movie) }
             _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
+
+            val highestListPosition = movieInListDao.getHighestPositionInList(listId) ?: -1
+            val newMovieInList =
+                MovieInList(
+                    movieListId = listId,
+                    position = highestListPosition+1,
+                    movieId = movie.id,
+                    title = movie.title,
+                    releaseDate = movie.releaseDate,
+                    posterUrl = movie.posterUrl,
+                    timeAdded = System.currentTimeMillis()
+                )
+            movieInListDao.upsertMovieInList(newMovieInList)
+            //getList()
         }
     }
     // Checks if a movie is already on the current list
@@ -65,10 +77,12 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
     }
     // Removes a movie from the movie list calling the db
     fun removeMovieFromList(movieId: Int) {
-        val listId = _movieList.value?.id
+        val listId = _movieList.value?.id ?: ""
         viewModelScope.launch {
             listId?.let { movieListDao.removeMovieFromList(it, movieId) }
             _movieList.value = listId?.let { movieListDao.getMovieListById(it) }
+
+            movieInListDao.removeMovieFromList(listId, movieId)
         }
     }
     // Edits the movie list parameters calling the db
@@ -86,66 +100,14 @@ class ListViewModel(private val movieListDao: MovieListDao): ViewModel() {
             listId?.let { movieListDao.deleteMovieListById(it) }
         }
     }
-
-    // Makes the movie list public communicating with Back4App database
-    fun makeListPublic(onSuccess:(publishStatus: String)->Unit, onError:(exception: Exception)->Unit){
-        viewModelScope.launch {
-            val publishStatus: String // is "Updated" or "Newly Published"
-            try {
-                val user = ParseUser.getCurrentUser()
-
-                // finds out whether this list was published before or not and publishStatus is set accordingly
-                val query = ParseQuery<ParseObject>("MovieList")
-                query.whereEqualTo("user", ParseUser.getCurrentUser())
-                _movieList.value?.id?.let { query.whereEqualTo("listId", it) }
-                val existingMovieList = query.find().firstOrNull()
-                //Log.e("ListViewModel", "existingMovieList: $existingMovieList")
-
-                val movieList: ParseObject
-                if(existingMovieList != null){
-                    publishStatus = "Updated"
-                    movieList = existingMovieList
-                    //Log.e("ListViewModel", "Update")
-                }else{
-                    publishStatus = "Newly Published"
-                    movieList = ParseObject("MovieList")
-                    //Log.e("ListViewModel", "create")
-                }
-
-                movieList.put("user", user)
-                _movieList.value?.name?.let { movieList.put("name", it) }
-                _movieList.value?.id?.let { movieList.put("listId", it) }
-                _movieList.value?.isRanked?.let { movieList.put("isRanked", it) }
-                val moviesJson = _movieList.value?.movies?.toJson() ?: "[]"
-                movieList.put("moviesString", moviesJson)
-
-                val acl = ParseACL()
-                acl.setWriteAccess(ParseUser.getCurrentUser(), true)
-                acl.publicReadAccess = true
-                movieList.acl = acl
-
-                movieList.saveInBackground{exception->
-                    if(exception == null){
-                        onSuccess(publishStatus)
-                    }else{
-                        onError(exception)
-                        Log.e("ListViewModel", "Error: ", exception)
-                    }
-                }
-            }catch (e: Exception){
-                Log.e("ListViewModel", "Catch Error: ", e)
-                onError(e)
-            }
-        }
-    }
 }
 
 // Factory-class for creating ListViewModel instances to manage access to the database
-class ListViewModelFactory(private val movieListDao: MovieListDao) : ViewModelProvider.Factory {
+class ListViewModelFactory(private val movieListDao: MovieListDao, private val movieInListDao: MovieInListDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return ListViewModel(movieListDao) as T
+            return ListViewModel(movieListDao, movieInListDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

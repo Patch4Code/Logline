@@ -116,7 +116,7 @@ fun AddToListDialog(
     AddListDialog(
         openAddListDialog = openAddListDialog.value,
         onSave = { listName, isRanked ->
-            addToListViewModel.createMovieList(MovieList(listName, isRanked, emptyList()))
+            addToListViewModel.createMovieList(MovieList(name = listName, movies = emptyList()))
             openAddListDialog.value = false
         },
         onCancel = {openAddListDialog.value = false}

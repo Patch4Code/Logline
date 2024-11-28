@@ -7,10 +7,13 @@ package com.patch4code.loglinemovieapp.features.list.domain.model
  *
  * @author Patch4Code
  */
-enum class ListElementsSortOptions(val label: String) {
-    ByOrderDesc("List order"),
+enum class ListSortOptions(val label: String) {
+    ByPositionAsc("List order Asc"),
+    ByPositionDesc("List order Desc"),
     ByTitleAsc("Title (A-Z)"),
     ByTitleDesc("Title (Z-A)"),
     ByReleaseDateDesc("Release Date (Newest First)"),
     ByReleaseDateAsc("Release Date (Oldest First)"),
+    ByTimeAddedDesc("Time Added (Newest First)"),
+    ByTimeAddedAsc("Time Added (Oldest First)"),
 }

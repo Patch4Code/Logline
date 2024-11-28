@@ -19,7 +19,7 @@ object ListsTableContentExtensions{
     fun ListsTableViewModel.onAddList(listName: String, isPublic: Boolean, openAddListDialog: MutableState<Boolean>
     ) {
         openAddListDialog.value = false
-        addUserMovieList(MovieList(listName, isPublic, mutableListOf()))
+        addUserMovieList(MovieList(name = listName, movies = mutableListOf()))
     }
 
     //Delete list and close dialog

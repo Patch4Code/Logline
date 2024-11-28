@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
-import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
@@ -33,12 +33,12 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  * @author Patch4Code
  */
 @Composable
-fun ListItem(navController: NavController, movie: Movie){
+fun ListItem(navController: NavController, movieInList: MovieInList){
 
-    val movieId = movie.id.toString()
-    val movieTitle = movie.title
-    val movieYear = MovieHelper.extractYear(movie.releaseDate)
-    val moviePosterUrl = MovieHelper.processPosterUrl(movie.posterUrl)
+    val movieId = movieInList.movieId.toString()
+    val movieTitle = movieInList.title
+    val movieYear = MovieHelper.extractYear(movieInList.releaseDate)
+    val moviePosterUrl = MovieHelper.processPosterUrl(movieInList.posterUrl)
 
     Column {
         Row(
@@ -57,7 +57,7 @@ fun ListItem(navController: NavController, movie: Movie){
             )
             Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp).width(140.dp))
             {
-                Text(text = movie.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                Text(text = movieTitle, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = movieYear, style = MaterialTheme.typography.titleSmall)
             }

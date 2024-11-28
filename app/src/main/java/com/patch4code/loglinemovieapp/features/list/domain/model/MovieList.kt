@@ -14,9 +14,11 @@ import java.util.UUID
  */
 @Entity
 data class MovieList(
-    var name: String,
-    var isRanked: Boolean, //not used yet
-    var movies: List<Movie>,
     @PrimaryKey
-    val id: String = UUID.randomUUID().toString()
+    val id: String = UUID.randomUUID().toString(),
+    var name: String,
+    var isRanked: Boolean = false, //not used yet
+    var timeCreated: Long = 0,
+    var timeUpdated: Long = 0,
+    var movies: List<Movie>
 )
