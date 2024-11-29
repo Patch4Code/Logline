@@ -33,7 +33,7 @@ class AddToListViewModel(private val movieListDao: MovieListDao, private val mov
     // Updates the user's movie lists by accessing the db
     fun loadUserMovieLists(){
         viewModelScope.launch {
-            _userMovieLists.value = movieListDao.getMovieLists()
+            _userMovieLists.value = movieListDao.getMovieListsOrderedByTimeUpdated()
             _moviesInLists.value = movieInListDao.getAllMoviesInLists()
         }
     }
@@ -72,7 +72,7 @@ class AddToListViewModel(private val movieListDao: MovieListDao, private val mov
     fun createMovieList(movieList: MovieList) {
         viewModelScope.launch {
             movieListDao.upsertMovieList(movieList)
-            _userMovieLists.value = movieListDao.getMovieLists()
+            _userMovieLists.value = movieListDao.getMovieListsOrderedByTimeUpdated()
         }
     }
 }

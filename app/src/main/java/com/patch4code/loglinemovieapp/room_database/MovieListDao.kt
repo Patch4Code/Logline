@@ -30,9 +30,6 @@ interface MovieListDao {
         deleteMovieList(listToDelete)
     }
 
-    @Query("SELECT * FROM movieList")
-    suspend fun getMovieLists() : List<MovieList>
-
     @Query("SELECT * FROM movieList WHERE id = :listId LIMIT 1")
     suspend fun getMovieListById(listId: String): MovieList
 
@@ -47,4 +44,16 @@ interface MovieListDao {
         listToUpdate.isRanked = newIsPublicState
         upsertMovieList(listToUpdate)
     }
+
+    // MovieList Queries
+    @Query("SELECT * FROM movieList ORDER BY timeUpdated DESC")
+    suspend fun getMovieListsOrderedByTimeUpdated() : List<MovieList>
+    @Query("SELECT * FROM movieList ORDER BY name ASC")
+    suspend fun getMovieListsOrderedByNameAsc() : List<MovieList>
+    @Query("SELECT * FROM movieList ORDER BY name DESC")
+    suspend fun getMovieListsOrderedByNameDesc() : List<MovieList>
+    @Query("SELECT * FROM movieList ORDER BY timeCreated ASC")
+    suspend fun getMovieListsOrderedByTimeCreatedAsc() : List<MovieList>
+    @Query("SELECT * FROM movieList ORDER BY timeCreated DESC")
+    suspend fun getMovieListsOrderedByTimeCreatedDesc() : List<MovieList>
 }

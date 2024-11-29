@@ -19,7 +19,7 @@ import com.patch4code.loglinemovieapp.R
  * @author Patch4Code
  */
 @Composable
-fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String, isPublic: Boolean)->Unit, onCancel:()->Unit){
+fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String)->Unit, onCancel:()->Unit){
 
     if(openAddListDialog){
 
@@ -54,7 +54,7 @@ fun AddListDialog(openAddListDialog: Boolean, onSave:(listName: String, isPublic
                 }
             },
             confirmButton = {
-                Button(onClick = { onSave(textInput.value, isRanked.value) }) {
+                Button(onClick = { onSave(textInput.value) }) {
                     Text(text = stringResource(id = R.string.save_button_text))
                 }
             },

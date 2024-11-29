@@ -116,7 +116,7 @@ fun AddToListDialog(
 
     AddListDialog(
         openAddListDialog = openAddListDialog.value,
-        onSave = { listName, _ ->
+        onSave = { listName ->
             val currentTime = System.currentTimeMillis()
             addToListViewModel.createMovieList(
                 MovieList(name = listName, timeCreated = currentTime, timeUpdated = currentTime)

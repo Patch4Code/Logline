@@ -2,6 +2,7 @@ package com.patch4code.loglinemovieapp.features.list.presentation.utils
 
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListsTableViewModel
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -16,17 +17,18 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 object ListsTableContentExtensions{
 
     // add a new list to the table
-    fun ListsTableViewModel.onAddList(listName: String, isRanked: Boolean, openAddListDialog: MutableState<Boolean>
+    fun ListsTableViewModel.onAddList(listName: String, openAddListDialog: MutableState<Boolean>, sortOption: ListTableSortOptions
     ) {
         val currentTime = System.currentTimeMillis()
         openAddListDialog.value = false
-        addUserMovieList(MovieList(name = listName, timeCreated = currentTime, timeUpdated = currentTime))
+        addMovieList(MovieList(name = listName, timeCreated = currentTime, timeUpdated = currentTime), sortOption)
     }
 
     //Delete list and close dialog
-    fun ListsTableViewModel.onDeleteList(listToDelete: MutableState<MovieList?>, openDeleteListDialog: MutableState<Boolean>) {
+    fun ListsTableViewModel.onDeleteList(listToDelete: MutableState<MovieList?>, openDeleteListDialog: MutableState<Boolean> , sortOption: ListTableSortOptions
+    ) {
         listToDelete.value?.let { list ->
-            removeUserMovieList(list.id)
+            removeMovieList(list.id, sortOption)
         }
         listToDelete.value = null
         openDeleteListDialog.value = false

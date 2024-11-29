@@ -5,14 +5,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.DismissState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToDeleteContainer
+import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainer
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.items.ListItem
@@ -27,6 +31,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.Lis
  *
  * @author Patch4Code
  */
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ListContent(
     movieList: MovieList?,
@@ -36,6 +41,8 @@ fun ListContent(
     navController: NavController,
     listViewModel: ListViewModel
 ){
+
+    val currentDismissState = remember { mutableStateOf<DismissState?>(null) }
 
     Column {
         Text(text = movieList?.name ?: "N/A", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
@@ -48,7 +55,7 @@ fun ListContent(
                 items = moviesInList,
                 key = { _, item -> item.hashCode() }
             ) { _, movieInList ->
-                swipeToDeleteContainer(
+                SwipeToDeleteContainer(
                     item = movieInList,
                     onDelete = {
                         movieToDelete.value = movieInList

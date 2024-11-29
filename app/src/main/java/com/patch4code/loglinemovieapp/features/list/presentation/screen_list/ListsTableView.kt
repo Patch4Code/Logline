@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.ListsTableContent
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -41,8 +42,10 @@ fun ListsTableView(
     )
 ){
 
+    val selectedSortOption = remember { mutableStateOf(ListTableSortOptions.ByTimeUpdated) }
+
     LaunchedEffect(Unit) {
-        listsTableViewModel.updateUserMovieLists()
+        listsTableViewModel.getMovieLists(selectedSortOption.value)
         listsTableViewModel.getMoviesInLists()
     }
 
@@ -75,6 +78,7 @@ fun ListsTableView(
                 listToDelete = listToDelete,
                 navController = navController,
                 listsTableViewModel = listsTableViewModel,
+                sortOption = selectedSortOption.value
             )
         }
     )

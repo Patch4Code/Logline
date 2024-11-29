@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun <T> swipeToDeleteContainer(
+fun <T> SwipeToDeleteContainer(
     item: T,
     onDelete: (T) -> Unit,
     content: @Composable (T) -> Unit

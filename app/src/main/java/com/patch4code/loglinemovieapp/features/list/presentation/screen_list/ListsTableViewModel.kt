@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.room_database.MovieInListDao
@@ -29,9 +30,16 @@ class ListsTableViewModel(private val movieListDao: MovieListDao, private val mo
     val moviesInLists: LiveData<List<MovieInList>> get() = _moviesInLists
 
     // Gets the list of user movie lists from the database.
-    fun updateUserMovieLists(){
+    fun getMovieLists(sortOption: ListTableSortOptions){
         viewModelScope.launch {
-            _userMovieLists.value = movieListDao.getMovieLists()
+            val sortedMovieLists = when (sortOption) {
+                ListTableSortOptions.ByTimeUpdated -> movieListDao.getMovieListsOrderedByTimeUpdated()
+                ListTableSortOptions.ByNameAsc -> movieListDao.getMovieListsOrderedByNameAsc()
+                ListTableSortOptions.ByNameDesc -> movieListDao.getMovieListsOrderedByNameDesc()
+                ListTableSortOptions.ByTimeCreatedAsc -> movieListDao.getMovieListsOrderedByTimeCreatedAsc()
+                ListTableSortOptions.ByTimeCreatedDesc -> movieListDao.getMovieListsOrderedByTimeCreatedDesc()
+            }
+            _userMovieLists.value = sortedMovieLists
         }
     }
     fun getMoviesInLists(){
@@ -41,18 +49,18 @@ class ListsTableViewModel(private val movieListDao: MovieListDao, private val mo
     }
 
     // Adds a new movie list to the database and updates the user movie lists
-    fun addUserMovieList(movieList: MovieList) {
+    fun addMovieList(movieList: MovieList, sortOption: ListTableSortOptions) {
         viewModelScope.launch {
             movieListDao.upsertMovieList(movieList)
-            updateUserMovieLists()
+            getMovieLists(sortOption)
         }
     }
     // Removes a movie list from the database and updates the user movie lists
-    fun removeUserMovieList(listId: String) {
+    fun removeMovieList(listId: String, sortOption: ListTableSortOptions) {
         viewModelScope.launch {
             movieListDao.deleteMovieListById(listId)
             movieInListDao.deleteAllMoviesFromList(listId)
-            updateUserMovieLists()
+            getMovieLists(sortOption)
         }
     }
 }

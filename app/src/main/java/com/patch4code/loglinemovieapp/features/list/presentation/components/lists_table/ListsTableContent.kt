@@ -9,7 +9,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToDeleteContainer
+import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainer
+import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.AddListDialog
@@ -37,38 +38,43 @@ fun ListsTableContent(
     openDeleteListDialog: MutableState<Boolean>,
     listToDelete: MutableState<MovieList?>,
     navController: NavController,
-    listsTableViewModel: ListsTableViewModel
+    listsTableViewModel: ListsTableViewModel,
+    sortOption: ListTableSortOptions
 ){
 
-    LazyColumn(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
-        itemsIndexed(
-            items = myUserMovieLists ?: emptyList(),
-            key = { _, item -> item.hashCode() }
-        ) { _, list ->
-            swipeToDeleteContainer(
-                item = list,
-                onDelete = {
-                    listToDelete.value = list
-                    openDeleteListDialog.value = true
+    if(myUserMovieLists.isNullOrEmpty()){
+        EmptyListTableText()
+    }else{
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)) {
+            itemsIndexed(
+                items = myUserMovieLists ?: emptyList(),
+                key = { _, item -> item.hashCode() }
+            ) { _, list ->
+                SwipeToDeleteContainer(
+                    item = list,
+                    onDelete = {
+                        listToDelete.value = list
+                        openDeleteListDialog.value = true
+                    }
+                ) {
+                    val moviesInSpecificList = moviesInLists?.filter { it.movieListId == list.id}
+                    ListsTableItem(navController, list, moviesInSpecificList)
                 }
-            ) {
-                val moviesInSpecificList = moviesInLists?.filter { it.movieListId == list.id}
-                ListsTableItem(navController, list, moviesInSpecificList)
             }
         }
     }
     AddListDialog(
         openAddListDialog = openAddListDialog.value,
-        onSave = { listName, isRanked ->
-            listsTableViewModel.onAddList(listName, isRanked, openAddListDialog)
+        onSave = { listName ->
+            listsTableViewModel.onAddList(listName, openAddListDialog, sortOption)
         },
         onCancel = {openAddListDialog.value = false}
     )
     DeleteListDialog(
         openDeleteListDialog = openDeleteListDialog.value,
-        onDelete = { listsTableViewModel.onDeleteList(listToDelete, openDeleteListDialog) },
+        onDelete = { listsTableViewModel.onDeleteList(listToDelete, openDeleteListDialog, sortOption) },
         onCancel = { onCancelDeleteList(openDeleteListDialog, navController) }
     )
 }
