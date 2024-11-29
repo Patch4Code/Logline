@@ -15,6 +15,7 @@ import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.AddListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.DeleteListDialog
+import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.ListTableSortBottomSheet
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.item.ListsTableItem
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListsTableViewModel
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListsTableContentExtensions.onAddList
@@ -39,7 +40,8 @@ fun ListsTableContent(
     listToDelete: MutableState<MovieList?>,
     navController: NavController,
     listsTableViewModel: ListsTableViewModel,
-    sortOption: ListTableSortOptions
+    sortOption: MutableState<ListTableSortOptions>,
+    showSortBottomSheet: MutableState<Boolean>
 ){
 
     if(myUserMovieLists.isNullOrEmpty()){
@@ -68,13 +70,14 @@ fun ListsTableContent(
     AddListDialog(
         openAddListDialog = openAddListDialog.value,
         onSave = { listName ->
-            listsTableViewModel.onAddList(listName, openAddListDialog, sortOption)
+            listsTableViewModel.onAddList(listName, openAddListDialog, sortOption.value)
         },
         onCancel = {openAddListDialog.value = false}
     )
     DeleteListDialog(
         openDeleteListDialog = openDeleteListDialog.value,
-        onDelete = { listsTableViewModel.onDeleteList(listToDelete, openDeleteListDialog, sortOption) },
+        onDelete = { listsTableViewModel.onDeleteList(listToDelete, openDeleteListDialog, sortOption.value) },
         onCancel = { onCancelDeleteList(openDeleteListDialog, navController) }
     )
+    ListTableSortBottomSheet(showSortBottomSheet , sortOption, listsTableViewModel)
 }

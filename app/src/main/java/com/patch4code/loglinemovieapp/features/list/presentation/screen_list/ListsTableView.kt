@@ -43,6 +43,7 @@ fun ListsTableView(
 ){
 
     val selectedSortOption = remember { mutableStateOf(ListTableSortOptions.ByTimeUpdated) }
+    val showSortBottomSheet = remember { mutableStateOf(false)  }
 
     LaunchedEffect(Unit) {
         listsTableViewModel.getMovieLists(selectedSortOption.value)
@@ -52,7 +53,7 @@ fun ListsTableView(
     // TopBar config
     ProvideTopBarTitle(title = Screen.ListsTableScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
-    ProvideTopBarSortActions(onClickAction = {})
+    ProvideTopBarSortActions(onClickAction = { showSortBottomSheet.value = true })
 
 
     val openAddListDialog = remember { mutableStateOf(false)  }
@@ -78,7 +79,8 @@ fun ListsTableView(
                 listToDelete = listToDelete,
                 navController = navController,
                 listsTableViewModel = listsTableViewModel,
-                sortOption = selectedSortOption.value
+                sortOption = selectedSortOption,
+                showSortBottomSheet = showSortBottomSheet
             )
         }
     )

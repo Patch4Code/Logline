@@ -121,8 +121,8 @@ fun ListView(
             onCancel = { openDeleteListDialog.value = false })
 
 
-        if (movieList != null) {
-            ListSortBottomSheet(showSortBottomSheet, selectedSortOption, listViewModel, movieList)
-        }
+
+        ListSortBottomSheet(showSortBottomSheet, selectedSortOption, listViewModel, movieList!!)
+
     }
 }
