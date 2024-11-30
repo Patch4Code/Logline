@@ -92,7 +92,7 @@ fun ListView(
         if (moviesInList.isNullOrEmpty()){
             EmptyListText()
         }else{
-            ListContent(movieList, moviesInList, openDeleteMovieDialog, movieToDelete, navController, listViewModel)
+            ListContent(movieList, moviesInList, openDeleteMovieDialog, movieToDelete, navController)
         }
 
         //Dialogs and BottomSheet
@@ -122,7 +122,9 @@ fun ListView(
 
 
 
-        ListSortBottomSheet(showSortBottomSheet, selectedSortOption, listViewModel, movieList!!)
+        if (movieList != null) {
+            ListSortBottomSheet(showSortBottomSheet, selectedSortOption, listViewModel, movieList)
+        }
 
     }
 }

@@ -17,7 +17,6 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.swip
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.items.ListItem
-import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -36,7 +35,6 @@ fun ListContent(
     openDeleteMovieDialog : MutableState<Boolean>,
     movieToDelete:  MutableState<MovieInList?>,
     navController: NavController,
-    listViewModel: ListViewModel
 ){
 
     Column {
