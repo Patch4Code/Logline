@@ -18,6 +18,8 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -34,7 +36,10 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelp
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
+import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetailsSortOption
+import com.patch4code.loglinemovieapp.features.person_details.presentation.components.PersonDetailsSortBottomSheet
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -54,6 +59,9 @@ fun PersonDetailsView(
 
     val personId = id?: -1
 
+    val selectedSortOption = remember { mutableStateOf(PersonDetailsSortOption.ByPopularityDesc) }
+    val showBottomSheet = remember { mutableStateOf(false)  }
+
     LaunchedEffect(Unit) {
         personDetailsViewModel.loadPersonDetails(personId)
     }
@@ -61,13 +69,14 @@ fun PersonDetailsView(
     // TopBar config
     ProvideTopBarTitle(title = Screen.PersonDetailsScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
+    ProvideTopBarSortActions(onClickAction = {showBottomSheet.value = true})
 
     val personDetails = personDetailsViewModel.personDetails.observeAsState().value
 
     DisposableEffect(personDetails) {
         if (personDetails != null) {
             val mainDepartment = personDetails.knownForDepartment
-            personDetailsViewModel.loadPersonMovieCredits(personId, mainDepartment)
+            personDetailsViewModel.loadPersonMovieCredits(personId, mainDepartment, selectedSortOption.value)
         }
         onDispose {}
     }
@@ -118,6 +127,9 @@ fun PersonDetailsView(
                     }
                 }
             }
+        }
+        if (personDetails != null) {
+            PersonDetailsSortBottomSheet(showBottomSheet, selectedSortOption, personDetails.knownForDepartment, personDetailsViewModel)
         }
     }
 }

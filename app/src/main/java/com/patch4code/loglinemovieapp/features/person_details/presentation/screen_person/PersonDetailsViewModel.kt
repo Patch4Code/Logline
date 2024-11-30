@@ -10,6 +10,7 @@ import com.patch4code.loglinemovieapp.api.TmdbApiService
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetails
+import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetailsSortOption
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonMovieCredits
 import kotlinx.coroutines.launch
 
@@ -56,7 +57,7 @@ class PersonDetailsViewModel: ViewModel() {
     }
 
     // Loads the movie credits of the person with the given id from TMDB api
-    fun loadPersonMovieCredits(personId: Int, mainDepartment: String){
+    fun loadPersonMovieCredits(personId: Int, mainDepartment: String, sortOption: PersonDetailsSortOption){
         viewModelScope.launch {
             try {
                 _isLoading.value = true
@@ -68,14 +69,14 @@ class PersonDetailsViewModel: ViewModel() {
             } catch (e: Exception) {
                 Log.e("PersonDetailsViewModel", "Error getting person movie credits", e)
             }finally{
-                _personCreditsMap.value = createPersonCreditsMap(mainDepartment)
+                _personCreditsMap.value = createSortedPersonCreditsMap(mainDepartment, sortOption)
                 _isLoading.value = false
             }
         }
     }
 
     //formats data for displaying by creating a map with department name and associated list of films
-    private fun createPersonCreditsMap(mainDepartment: String): Map<String, List<Movie>> {
+    private fun createSortedPersonCreditsMap(mainDepartment: String, sortOption: PersonDetailsSortOption): Map<String, List<Movie>> {
 
         // Initialize a temp mutable map to store department names and associated movie lists
         val tempPersonCreditsMap: MutableMap<String, List<Movie>> = mutableMapOf()
@@ -84,16 +85,16 @@ class PersonDetailsViewModel: ViewModel() {
         // TODO: Possibly string resources would also have to be used here (“Acting”)
         //  if the data is obtained from TMDB in different languages in the future
         val mainDepartmentMovies = if (mainDepartment == "Acting") {
-            createCastMoviesList()
+            createCastMoviesList(sortOption)
         } else {
-            createCrewMoviesList(mainDepartment)
+            createCrewMoviesList(mainDepartment, sortOption)
         }
         // Add the main department and its associated movie list to the map
         tempPersonCreditsMap["$mainDepartment (${mainDepartmentMovies.size} movies)"] = mainDepartmentMovies
 
         // If the main department is not "Acting", add this department and its associated movie list to the map
         if (mainDepartment != "Acting") {
-            val castMovies = createCastMoviesList()
+            val castMovies = createCastMoviesList(sortOption)
             tempPersonCreditsMap["Acting (${castMovies.size} movies)"] = castMovies
         }
 
@@ -101,7 +102,7 @@ class PersonDetailsViewModel: ViewModel() {
         // movie list to the map (main department excluded here because this was handled above)
         getUniqueDepartments().forEach { department ->
             if (department != mainDepartment) {
-                val crewMovies = createCrewMoviesList(department)
+                val crewMovies = createCrewMoviesList(department, sortOption)
                 tempPersonCreditsMap["$department (${crewMovies.size} movies)"] = crewMovies
             }
         }
@@ -110,9 +111,18 @@ class PersonDetailsViewModel: ViewModel() {
     }
 
     // Creates a list of cast movies sorted by popularity
-    private fun createCastMoviesList(): List<Movie> {
+    private fun createCastMoviesList(sortOption: PersonDetailsSortOption): List<Movie> {
         return _personMovieCredits.value?.cast
-            ?.sortedByDescending { it.popularity}
+            ?.sortedWith(
+                when (sortOption) {
+                    PersonDetailsSortOption.ByPopularityDesc -> compareByDescending { it.popularity }
+                    PersonDetailsSortOption.ByPopularityAsc -> compareBy { it.popularity }
+                    PersonDetailsSortOption.ByTitleAsc -> compareBy { it.title }
+                    PersonDetailsSortOption.ByTitleDesc -> compareByDescending { it.title }
+                    PersonDetailsSortOption.ByReleaseDateDesc -> compareByDescending { it.releaseDate }
+                    PersonDetailsSortOption.ByReleaseDateAsc -> compareBy { it.releaseDate }
+                }
+            )
             ?.map {
                 Movie(
                     title = it.title ?: "N/A",
@@ -132,11 +142,20 @@ class PersonDetailsViewModel: ViewModel() {
     }
 
     // Creates a list of crew movies sorted by popularity
-    private fun createCrewMoviesList(department: String): List<Movie>{
+    private fun createCrewMoviesList(department: String, sortOption: PersonDetailsSortOption): List<Movie>{
         return _personMovieCredits.value?.crew
             ?.filter {it.department == department}
             ?.distinctBy { it.id }
-            ?.sortedByDescending { it.popularity }
+            ?.sortedWith(
+                when (sortOption) {
+                    PersonDetailsSortOption.ByPopularityDesc -> compareByDescending { it.popularity }
+                    PersonDetailsSortOption.ByPopularityAsc -> compareBy { it.popularity }
+                    PersonDetailsSortOption.ByTitleAsc -> compareBy { it.title }
+                    PersonDetailsSortOption.ByTitleDesc -> compareByDescending { it.title }
+                    PersonDetailsSortOption.ByReleaseDateDesc -> compareByDescending { it.releaseDate }
+                    PersonDetailsSortOption.ByReleaseDateAsc -> compareBy { it.releaseDate }
+                }
+            )
             ?.map{
                 Movie(
                     title = it.title ?: "N/A",
@@ -145,5 +164,9 @@ class PersonDetailsViewModel: ViewModel() {
                     posterUrl = it.posterUrl ?: "N/A"
                 )
             } ?: emptyList()
+    }
+
+    fun updateSortingForPersonMovieCredits(mainDepartment: String, sortOption: PersonDetailsSortOption) {
+        _personCreditsMap.value = createSortedPersonCreditsMap(mainDepartment, sortOption)
     }
 }
