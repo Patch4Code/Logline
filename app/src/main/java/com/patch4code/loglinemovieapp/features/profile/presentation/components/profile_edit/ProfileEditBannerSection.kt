@@ -89,7 +89,13 @@ fun ProfileEditBannerSection(userProfile: UserProfile?, profileViewModel: Profil
             )
         }
         // reset button that empties the banner image path in the db via ViewModel
-        TextButton(onClick = { profileViewModel.setBannerImagePath("") }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+        TextButton(
+            onClick = {
+                ProfileEditExtensions.deleteFile(bannerImagePath)
+                profileViewModel.setBannerImagePath("")
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
             Text(text = stringResource(id = R.string.reset_to_default_text))
         }
     }

@@ -50,4 +50,12 @@ object ProfileEditExtensions {
         }
         return file?.toUri()
     }
+
+    // Delete file from internal storage
+    fun deleteFile(path: String?){
+        val file = File(Uri.parse(path).path ?: "")
+        if (file.exists()) {
+            file.delete()
+        }
+    }
 }

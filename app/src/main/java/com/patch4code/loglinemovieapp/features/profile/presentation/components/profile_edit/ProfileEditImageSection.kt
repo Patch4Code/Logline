@@ -91,7 +91,10 @@ fun ProfileEditImageSection(userProfile: UserProfile?, profileViewModel: Profile
                 error = painterResource(id = R.drawable.default_profile_image))
         }
         // reset button that empties the profile image path in the db via ViewModel
-        TextButton(onClick = { profileViewModel.setProfileImagePath("") }) {
+        TextButton(onClick = {
+            ProfileEditExtensions.deleteFile(profileImagePath)
+            profileViewModel.setProfileImagePath("")
+        }) {
             Text(text = stringResource(id = R.string.reset_to_default_text))
         }
     }
