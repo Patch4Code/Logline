@@ -31,8 +31,18 @@ class HomeViewModel : ViewModel(){
     val isLoading: LiveData<Boolean> get() = _isLoading
 
     private val _popularMovies = MutableLiveData<List<Movie>>()
+    private var popularMoviesHighestLoadedPage = 1
+    private var popularMoviesPageAmount = 1
+
     private val _topRatedMovies = MutableLiveData<List<Movie>>()
+    private var topRatedMoviesHighestLoadedPage = 1
+    private var topRatedMoviesPageAmount = 1
+
     private val _upcomingMovies = MutableLiveData<List<Movie>>()
+    private var upcomingMoviesHighestLoadedPage = 1
+    private var upcomingMoviesPageAmount = 1
+
+
 
     private val _homeMoviesMap = MutableLiveData<Map<UiText.StringResource, List<Movie>>>()
     val homeMoviesMap: LiveData<Map<UiText.StringResource, List<Movie>>> get() = _homeMoviesMap
@@ -46,16 +56,19 @@ class HomeViewModel : ViewModel(){
                 val popularResponse = tmdbApiService.getPopularMovies()
                 if(popularResponse.isSuccessful){
                     _popularMovies.value = popularResponse.body()?.results
+                    popularMoviesPageAmount = popularResponse.body()?.totalPages ?: 1
                 }
 
                 val topRatedResponse = tmdbApiService.getTopRated()
                 if(topRatedResponse.isSuccessful){
                     _topRatedMovies.value = topRatedResponse.body()?.results
+                    topRatedMoviesPageAmount = topRatedResponse.body()?.totalPages ?: 1
                 }
 
                 val upcomingResponse = tmdbApiService.getUpcoming()
                 if(upcomingResponse.isSuccessful){
                     _upcomingMovies.value = upcomingResponse.body()?.results
+                    upcomingMoviesPageAmount = upcomingResponse.body()?.totalPages ?: 1
                 }
                 _isLoading.value = false
             } catch (e: Exception) {
@@ -79,5 +92,55 @@ class HomeViewModel : ViewModel(){
             UiText.StringResource(R.string.upcoming_movies_title) to upcomingMovies
         )
         _homeMoviesMap.value = newMovieMap
+    }
+
+    fun loadMoreMovies(groupName: UiText. StringResource){
+        viewModelScope.launch {
+            try {
+                when (groupName.resId) {
+                    UiText.StringResource(R.string.popular_movies_title).resId -> {
+                        if(popularMoviesHighestLoadedPage < popularMoviesPageAmount){
+                            val nextPage = popularMoviesHighestLoadedPage + 1
+                            val response = tmdbApiService.getPopularMovies(page = nextPage)
+                            if (response.isSuccessful) {
+                                val newMovies = response.body()?.results.orEmpty()
+                                _popularMovies.value = (_popularMovies.value.orEmpty() + newMovies)
+                                popularMoviesHighestLoadedPage = nextPage
+                                topRatedMoviesHighestLoadedPage = nextPage
+                            }
+                        }
+                    }
+                    UiText.StringResource(R.string.top_rated_movies_title).resId -> {
+                        if(topRatedMoviesHighestLoadedPage < topRatedMoviesPageAmount){
+                            val nextPage = topRatedMoviesHighestLoadedPage + 1
+                            val response = tmdbApiService.getTopRated(page = nextPage)
+                            if (response.isSuccessful) {
+                                val newMovies = response.body()?.results.orEmpty()
+                                _topRatedMovies.value = (_topRatedMovies.value.orEmpty() + newMovies)
+                                topRatedMoviesHighestLoadedPage = nextPage
+                            }
+                        }
+                    }
+                    UiText.StringResource(R.string.upcoming_movies_title).resId -> {
+                        if(upcomingMoviesHighestLoadedPage < upcomingMoviesPageAmount){
+                            val nextPage = upcomingMoviesHighestLoadedPage + 1
+                            val response = tmdbApiService.getUpcoming(page = nextPage)
+                            if (response.isSuccessful) {
+                                val newMovies = response.body()?.results.orEmpty()
+                                _upcomingMovies.value = (_upcomingMovies.value.orEmpty() + newMovies)
+                                upcomingMoviesHighestLoadedPage = nextPage
+                            }
+                        }
+                    }
+                    else -> {
+                        Log.e("HomeViewModel", "Invalid group name: $groupName")
+                    }
+                }
+                updateHomeMovieMap()
+
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Error loading more movies for $groupName", e)
+            }
+        }
     }
 }

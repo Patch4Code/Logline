@@ -3,7 +3,7 @@ package com.patch4code.loglinemovieapp.features.home.presentation.screen_home
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -52,8 +52,13 @@ fun HomeView(navController: NavController, homeViewModel: HomeViewModel = viewMo
                         fontWeight = FontWeight.Bold)
                     // lazy row of movies based on given list
                     LazyRow {
-                        items(movies) { movie ->
+                        itemsIndexed(movies) { index, movie ->
                             MovieHomeBrowseCard(navController, movie)
+
+                            // Load more movies when the last item in the row is reached
+                            if (index == movies.lastIndex - 1) {
+                                homeViewModel.loadMoreMovies(groupName)
+                            }
                         }
                     }
                 }
