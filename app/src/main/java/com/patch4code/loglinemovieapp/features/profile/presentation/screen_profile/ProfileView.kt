@@ -80,7 +80,7 @@ fun ProfileView(
             item{
                 ExpandableBio(text = userProfile?.bioText ?: "")
                 Spacer(modifier = Modifier.padding(8.dp))
-                MovieFavouriteRow(navController, userProfile?.favouriteMovies ?: emptyList())
+                MovieFavouriteRow(navController, userProfile?.favouriteMovies ?: emptyList(), profileViewModel)
             }
         }
     }

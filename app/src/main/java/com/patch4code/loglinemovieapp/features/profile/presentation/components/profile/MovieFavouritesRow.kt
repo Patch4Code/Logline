@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -17,6 +20,8 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
+import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.dialogs.SelectFavMovieDialog
+import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileViewModel
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -28,7 +33,15 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  * @author Patch4Code
  */
 @Composable
-fun MovieFavouriteRow(navController: NavController, movies: List<Movie>){
+fun MovieFavouriteRow(
+    navController: NavController,
+    movies: List<Movie>,
+    profileViewModel: ProfileViewModel
+){
+
+    val openSelectFavMovieDialog = remember { mutableStateOf(false)  }
+    val favMovieClickedIndex = remember { mutableIntStateOf(-1 ) }
+
 
     Text(text = stringResource(id = R.string.favourite_movies_title))
 
@@ -36,7 +49,7 @@ fun MovieFavouriteRow(navController: NavController, movies: List<Movie>){
         .fillMaxWidth()
         .padding(top = 8.dp, bottom = 8.dp),
     ){
-        movies.forEach {movie->
+        movies.forEachIndexed {index, movie->
 
             val movieId = movie.id
             val moviePosterUrl = TmdbCredentials.POSTER_URL + movie.posterUrl
@@ -47,13 +60,18 @@ fun MovieFavouriteRow(navController: NavController, movies: List<Movie>){
                     .clickable {
                         if (movie.id >= 0){
                             navController.navigate(Screen.MovieScreen.withArgs(movieId.toString()))
+                        }else{
+                            favMovieClickedIndex.intValue = index
+                            openSelectFavMovieDialog.value = true
                         }
                     },
                 model = moviePosterUrl,
                 contentDescription = movie.title,
-                error = painterResource(id = R.drawable.movie_poster_placeholder)
+                error = painterResource(id = R.drawable.add_favourite_movie)
             )
             Spacer(modifier = Modifier.padding(4.dp))
         }
     }
+
+    SelectFavMovieDialog(openSelectFavMovieDialog, favMovieClickedIndex, profileViewModel)
 }

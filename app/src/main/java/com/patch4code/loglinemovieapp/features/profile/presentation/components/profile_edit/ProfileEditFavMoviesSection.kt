@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -41,7 +42,7 @@ import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profi
 fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: ProfileViewModel){
 
     val openSelectFavMovieDialog = remember { mutableStateOf(false)  }
-    val favMovieClickedIndex = remember { mutableStateOf(-1 )}
+    val favMovieClickedIndex = remember { mutableIntStateOf(-1 ) }
 
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
 
@@ -59,7 +60,7 @@ fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: Prof
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable(enabled = movieId < 0) {
-                            favMovieClickedIndex.value = index
+                            favMovieClickedIndex.intValue = index
                             openSelectFavMovieDialog.value = true
                         },
                     model = moviePosterUrl,
