@@ -37,19 +37,45 @@ object SettingsExtensions {
 
             // Saves the database folder and a list of files in the database folder
             val dbFolder = File(context.applicationInfo.dataDir, "databases")
-            val filesToZip = dbFolder.listFiles() ?: arrayOf()
+            val dbFiles = dbFolder.listFiles() ?: arrayOf()
+
+            val profileImagePath = File(context.filesDir, "profile_image.jpg")
+            val bannerImagePath = File(context.filesDir, "banner_image.jpg")
+
 
             // Creates the zip file with a timestamp in its name
             val zipFile = File(downloadsDir, "logline_backup_${getCurrentDateTime()}.zip")
 
-            // Write the files from the dbFolder to the zip file
+            // Write the files to the zip file with the correct folder structure
             ZipOutputStream(FileOutputStream(zipFile)).use { zipOutputStream ->
-                for (file in filesToZip) {
-                    val entryName = file.name
+                for (file in dbFiles) {
+                    val entryName = "db/${file.name}"
                     val entry = ZipEntry(entryName)
                     zipOutputStream.putNextEntry(entry)
 
                     val input = file.inputStream()
+                    input.copyTo(zipOutputStream, DEFAULT_BUFFER_SIZE)
+                    input.close()
+                    zipOutputStream.closeEntry()
+                }
+                // Add profile image to "img" folder in the ZIP
+                if (profileImagePath.exists()) {
+                    val entryName = "img/${profileImagePath.name}"
+                    val entry = ZipEntry(entryName)
+                    zipOutputStream.putNextEntry(entry)
+
+                    val input = profileImagePath.inputStream()
+                    input.copyTo(zipOutputStream, DEFAULT_BUFFER_SIZE)
+                    input.close()
+                    zipOutputStream.closeEntry()
+                }
+                // Add banner image to "img" folder in the ZIP
+                if (bannerImagePath.exists()) {
+                    val entryName = "img/${bannerImagePath.name}"
+                    val entry = ZipEntry(entryName)
+                    zipOutputStream.putNextEntry(entry)
+
+                    val input = bannerImagePath.inputStream()
                     input.copyTo(zipOutputStream, DEFAULT_BUFFER_SIZE)
                     input.close()
                     zipOutputStream.closeEntry()
@@ -61,7 +87,7 @@ object SettingsExtensions {
     }
 
     // Import a database zip file
-    fun importDatabaseFile(context: Context, importZipFileUri: Uri, onImportSuccess:()->Unit){
+    fun importDatabaseFile(context: Context, importZipFileUri: Uri, onImportSuccess:()->Unit, onImportError:(errorMsg: String)->Unit){
 
         try {
             // creates inputStream to read the zip file (at the given uri) and
@@ -73,28 +99,62 @@ object SettingsExtensions {
             // Byte-Array-Buffer to read and write the files
             val buffer = ByteArray(1024)
 
+            // Directories for database and images
             val databaseDir = File(context.dataDir, "databases")
+            val filesDir = context.filesDir
+
+            // Flag to check structure validity
+            var hasDbFolder = false
 
             // Iterates over all files within the zip file and saves them to the databaseDir
             var zipEntry: ZipEntry? = zipInputStream.nextEntry
             while (zipEntry != null) {
-                val fileName = zipEntry.name
-                val outputFile = File(databaseDir, fileName)
-                val fileOutputStream = FileOutputStream(outputFile)
-                var length: Int
-                while (zipInputStream.read(buffer).also { length = it } > 0) {
-                    fileOutputStream.write(buffer, 0, length)
+                val entryName = zipEntry.name
+
+                // Check if entry is part of "db/" folder
+                if (entryName.startsWith("db/")) {
+                    hasDbFolder = true
+                    val dbFileName = entryName.removePrefix("db/")
+                    Log.e("importDatabaseFile", "dbFileName: $dbFileName")
+                    if (dbFileName.isNotEmpty()) {
+                        val outputFile = File(databaseDir, dbFileName)
+                        outputFile.outputStream().use { fileOutputStream ->
+                            var length: Int
+                            while (zipInputStream.read(buffer).also { length = it } > 0) {
+                                fileOutputStream.write(buffer, 0, length)
+                            }
+                        }
+                    }
                 }
-                fileOutputStream.close()
+
+                // Check if entry is part of "img/" folder
+                if (entryName.startsWith("img/")) {
+                    val imgFileName = entryName.removePrefix("img/")
+                    if (imgFileName.isNotEmpty()) {
+                        val outputFile = File(filesDir, imgFileName)
+                        outputFile.outputStream().use { fileOutputStream ->
+                            var length: Int
+                            while (zipInputStream.read(buffer).also { length = it } > 0) {
+                                fileOutputStream.write(buffer, 0, length)
+                            }
+                        }
+                    }
+                }
+
                 zipInputStream.closeEntry()
                 zipEntry = zipInputStream.nextEntry
             }
             zipInputStream.close()
 
+            if (!hasDbFolder) {
+                throw Exception("Invalid ZIP structure: Required folder 'db/' missing.")
+            }
+
             Log.d("SettingsHelper", "Import successful")
             onImportSuccess()
 
         } catch (e: Exception) {
+            onImportError("Import Error: ${e.message}")
             Log.e("SettingsHelper", "Import Error: ", e)
         }
     }

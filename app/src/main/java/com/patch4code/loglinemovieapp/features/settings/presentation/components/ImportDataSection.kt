@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
@@ -56,6 +57,9 @@ fun ImportDataSection(){
                         val restartIntent: Intent = Intent.makeRestartActivityTask(componentName)
                         context.startActivity(restartIntent)
                         Runtime.getRuntime().exit(0)
+                    },
+                    onImportError = {errorMsg ->
+                        Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show()
                     }
                 )
             }
