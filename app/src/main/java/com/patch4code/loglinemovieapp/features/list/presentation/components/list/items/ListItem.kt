@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,14 +32,14 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  * @author Patch4Code
  */
 @Composable
-fun ListItem(navController: NavController, movieInList: MovieInList){
+fun ListItem(navController: NavController, movieInList: MovieInList, modifier: Modifier){
 
     val movieId = movieInList.movieId.toString()
     val movieTitle = movieInList.title
     val movieYear = MovieHelper.extractYear(movieInList.releaseDate)
     val moviePosterUrl = MovieHelper.processPosterUrl(movieInList.posterUrl)
 
-    Column {
+    Column(modifier = modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -62,6 +61,6 @@ fun ListItem(navController: NavController, movieInList: MovieInList){
                 Text(text = movieYear, style = MaterialTheme.typography.titleSmall)
             }
         }
-        HorizontalDivider()
+        //HorizontalDivider()
     }
 }

@@ -9,7 +9,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainer
+import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainerOld
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
@@ -54,7 +54,7 @@ fun ListsTableContent(
                 items = myUserMovieLists ?: emptyList(),
                 key = { _, item -> item.hashCode() }
             ) { _, list ->
-                SwipeToDeleteContainer(
+                SwipeToDeleteContainerOld(
                     item = list,
                     onDelete = {
                         listToDelete.value = list

@@ -16,19 +16,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
-import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.EmptyListText
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.ListContent
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.AddMovieToListDialog
-import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.DeleteMovieFromListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.EditListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.ListSettingsBottomSheet
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.ListSortBottomSheet
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.DeleteListDialog
-import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onCancelDeleteMovieFromList
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onDeleteList
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onDeleteListBottomSheet
-import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onDeleteMovieFromList
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onEditListBottomSheet
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onSaveEditList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -66,8 +62,6 @@ fun ListView(
     val moviesInList = listViewModel.moviesInList.observeAsState().value
 
     val openAddMovieDialog = remember { mutableStateOf(false)  }
-    val openDeleteMovieDialog = remember { mutableStateOf(false)  }
-    val movieToDelete = remember { mutableStateOf<MovieInList?>(null) }
     val openEditListDialog = remember { mutableStateOf(false)  }
     val openDeleteListDialog = remember { mutableStateOf(false)  }
     val showListSettingsBottomSheet = remember { mutableStateOf(false)  }
@@ -92,14 +86,10 @@ fun ListView(
         if (moviesInList.isNullOrEmpty()){
             EmptyListText()
         }else{
-            ListContent(movieList, moviesInList, openDeleteMovieDialog, movieToDelete, navController)
+            ListContent(movieList, moviesInList, navController, listViewModel, selectedSortOption)
         }
 
         //Dialogs and BottomSheet
-
-        DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
-            onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog, selectedSortOption.value) },
-            onCancel = { onCancelDeleteMovieFromList(openDeleteMovieDialog, movieList, navController) })
 
         AddMovieToListDialog(openAddMovieDialog = openAddMovieDialog, sortOption = selectedSortOption.value, listViewModel = listViewModel)
 
@@ -121,10 +111,8 @@ fun ListView(
             onCancel = { openDeleteListDialog.value = false })
 
 
-
         if (movieList != null) {
             ListSortBottomSheet(showSortBottomSheet, selectedSortOption, listViewModel, movieList)
         }
-
     }
 }
