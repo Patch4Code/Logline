@@ -6,10 +6,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainerOld
+import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainer
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
@@ -19,7 +23,6 @@ import com.patch4code.loglinemovieapp.features.list.presentation.components.list
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.item.ListsTableItem
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListsTableViewModel
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListsTableContentExtensions.onAddList
-import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListsTableContentExtensions.onCancelDeleteList
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListsTableContentExtensions.onDeleteList
 
 /**
@@ -36,13 +39,16 @@ fun ListsTableContent(
     myUserMovieLists: List<MovieList>?,
     moviesInLists: List<MovieInList>?,
     openAddListDialog: MutableState<Boolean>,
-    openDeleteListDialog: MutableState<Boolean>,
-    listToDelete: MutableState<MovieList?>,
     navController: NavController,
     listsTableViewModel: ListsTableViewModel,
     sortOption: MutableState<ListTableSortOptions>,
     showSortBottomSheet: MutableState<Boolean>
 ){
+
+    val openDeleteListDialog = remember { mutableStateOf(false)  }
+    val listToDelete = remember { mutableStateOf<MovieList?>(null) }
+    val deletingStates = remember { mutableStateMapOf<MovieList, Boolean>() }
+
 
     if(myUserMovieLists.isNullOrEmpty()){
         EmptyListTableText()
@@ -54,15 +60,19 @@ fun ListsTableContent(
                 items = myUserMovieLists ?: emptyList(),
                 key = { _, item -> item.hashCode() }
             ) { _, list ->
-                SwipeToDeleteContainerOld(
+                val isDeleting = deletingStates[list] ?: false
+
+                SwipeToDeleteContainer(
                     item = list,
+                    isDeleting = isDeleting,
                     onDelete = {
                         listToDelete.value = list
                         openDeleteListDialog.value = true
+                        deletingStates[list] = true
                     }
-                ) {
+                ){_, deleting ->
                     val moviesInSpecificList = moviesInLists?.filter { it.movieListId == list.id}
-                    ListsTableItem(navController, list, moviesInSpecificList)
+                    ListsTableItem(navController, list, moviesInSpecificList, Modifier.alpha(if (deleting) 0f else 1f))
                 }
             }
         }
@@ -77,7 +87,12 @@ fun ListsTableContent(
     DeleteListDialog(
         openDeleteListDialog = openDeleteListDialog.value,
         onDelete = { listsTableViewModel.onDeleteList(listToDelete, openDeleteListDialog, sortOption.value) },
-        onCancel = { onCancelDeleteList(openDeleteListDialog, navController) }
+        onCancel = {
+            listToDelete.value?.let {
+                deletingStates[it] = false
+            }
+            openDeleteListDialog.value = false
+        }
     )
     ListTableSortBottomSheet(showSortBottomSheet , sortOption, listsTableViewModel)
 }

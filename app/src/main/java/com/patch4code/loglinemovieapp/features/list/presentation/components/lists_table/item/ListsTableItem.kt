@@ -25,9 +25,14 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  * @author Patch4Code
  */
 @Composable
-fun ListsTableItem(navController: NavController, list: MovieList, moviesInSpecificList :List<MovieInList>?){
+fun ListsTableItem(
+    navController: NavController,
+    list: MovieList,
+    moviesInSpecificList :List<MovieInList>?,
+    modifier: Modifier
+){
 
-    Column {
+    Column(modifier = modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

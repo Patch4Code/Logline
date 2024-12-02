@@ -61,6 +61,5 @@ fun ListItem(navController: NavController, movieInList: MovieInList, modifier: M
                 Text(text = movieYear, style = MaterialTheme.typography.titleSmall)
             }
         }
-        //HorizontalDivider()
     }
 }

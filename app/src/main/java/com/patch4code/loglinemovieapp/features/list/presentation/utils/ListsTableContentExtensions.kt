@@ -1,11 +1,9 @@
 package com.patch4code.loglinemovieapp.features.list.presentation.utils
 
 import androidx.compose.runtime.MutableState
-import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListsTableViewModel
-import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -32,17 +30,5 @@ object ListsTableContentExtensions{
         }
         listToDelete.value = null
         openDeleteListDialog.value = false
-    }
-
-    //Close DeleteDialog with workaround for slide problem
-    fun onCancelDeleteList(openDeleteListDialog: MutableState<Boolean>, navController: NavController) {
-        openDeleteListDialog.value = false
-
-        // workaround with scene reload
-        navController.navigate(Screen.ListsTableScreen.route) {
-            popUpTo(Screen.ListsTableScreen.route) {
-                inclusive = true
-            }
-        }
     }
 }
