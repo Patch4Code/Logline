@@ -1,17 +1,23 @@
 package com.patch4code.loglinemovieapp.features.list.presentation.screen_list
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
@@ -83,36 +89,38 @@ fun ListView(
             }
         }
     ){
-        if (moviesInList.isNullOrEmpty()){
-            EmptyListText()
-        }else{
-            ListContent(movieList, moviesInList, navController, listViewModel, selectedSortOption)
+        Column {
+            Text(text = movieList?.name ?: "N/A", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
+
+            if (moviesInList.isNullOrEmpty()){
+                EmptyListText()
+            }else{
+                ListContent(moviesInList, navController, listViewModel, selectedSortOption)
+            }
         }
+    }
+    //Dialogs and BottomSheet
+    AddMovieToListDialog(openAddMovieDialog = openAddMovieDialog, sortOption = selectedSortOption.value, listViewModel = listViewModel)
 
-        //Dialogs and BottomSheet
+    ListSettingsBottomSheet(showBottomSheet = showListSettingsBottomSheet.value,
+        onClose = {showListSettingsBottomSheet.value = false},
+        onEdit = { onEditListBottomSheet(showListSettingsBottomSheet, openEditListDialog) },
+        onDelete = { onDeleteListBottomSheet(showListSettingsBottomSheet, openDeleteListDialog) })
 
-        AddMovieToListDialog(openAddMovieDialog = openAddMovieDialog, sortOption = selectedSortOption.value, listViewModel = listViewModel)
+    EditListDialog(
+        initialMovieTitle = movieList?.name ?: "",
+        initialIsRankedState = movieList?.isRanked ?: false,
+        openEditListDialog = openEditListDialog.value,
+        onSave = {newName, isPublic-> listViewModel.onSaveEditList(newName, isPublic, openEditListDialog) },
+        onCancel = {openEditListDialog.value = false})
 
-        ListSettingsBottomSheet(showBottomSheet = showListSettingsBottomSheet.value,
-            onClose = {showListSettingsBottomSheet.value = false},
-            onEdit = { onEditListBottomSheet(showListSettingsBottomSheet, openEditListDialog) },
-            onDelete = { onDeleteListBottomSheet(showListSettingsBottomSheet, openDeleteListDialog) })
-
-        EditListDialog(
-            initialMovieTitle = movieList?.name ?: "",
-            initialIsRankedState = movieList?.isRanked ?: false,
-            openEditListDialog = openEditListDialog.value,
-            onSave = {newName, isPublic-> listViewModel.onSaveEditList(newName, isPublic, openEditListDialog) },
-            onCancel = {openEditListDialog.value = false})
-
-        DeleteListDialog(
-            openDeleteListDialog = openDeleteListDialog.value,
-            onDelete = { listViewModel.onDeleteList(openDeleteListDialog, navController) },
-            onCancel = { openDeleteListDialog.value = false })
+    DeleteListDialog(
+        openDeleteListDialog = openDeleteListDialog.value,
+        onDelete = { listViewModel.onDeleteList(openDeleteListDialog, navController) },
+        onCancel = { openDeleteListDialog.value = false })
 
 
-        if (movieList != null) {
-            ListSortBottomSheet(showSortBottomSheet, selectedSortOption, listViewModel, movieList)
-        }
+    if (movieList != null) {
+        ListSortBottomSheet(showSortBottomSheet, selectedSortOption, listViewModel, movieList)
     }
 }
