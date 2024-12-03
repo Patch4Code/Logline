@@ -12,11 +12,6 @@ import androidx.compose.material3.SwipeToDismissBoxState
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,19 +21,15 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun <T> SwipeToDeleteContainer(
     item: T,
-    isCanceled: Boolean,
-    openDeleteDialog:() -> Unit,
-    cancelReset:() -> Unit,
-    content: @Composable (T) -> Unit
+    isDeleting: Boolean,
+    onDelete: () -> Unit,
+    content: @Composable (T, Boolean) -> Unit
 ){
-
-    var stateToMaintain by remember { mutableStateOf<SwipeToDismissBoxValue?>(null) }
 
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = {dismissValue ->
             if(dismissValue == SwipeToDismissBoxValue.EndToStart){
-                openDeleteDialog()
-                stateToMaintain = dismissValue
+                onDelete()
             }
             false
         },
@@ -46,28 +37,13 @@ fun <T> SwipeToDeleteContainer(
         positionalThreshold = { it * .25f }
     )
 
-    // Maintain swipe state
-    LaunchedEffect(stateToMaintain) {
-        stateToMaintain?.let {
-            dismissState.snapTo(it)
-            stateToMaintain = null
-        }
-    }
-
-    // Reset swipe state if cancellation occurs
-    LaunchedEffect(isCanceled) {
-        dismissState.reset()
-        cancelReset()
-    }
-
     SwipeToDismissBox(
         state = dismissState,
         backgroundContent = { DismissBackground(dismissState)},
-        content = {  content(item) },
+        content = {  content(item, isDeleting) },
         enableDismissFromStartToEnd = false
     )
 }
-
 
 @Composable
 fun DismissBackground(dismissState: SwipeToDismissBoxState) {
