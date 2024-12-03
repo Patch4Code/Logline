@@ -30,7 +30,7 @@ import com.patch4code.loglinemovieapp.features.diary.presentation.components.edi
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.editelement.DiaryEditRatingSection
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.editelement.DiaryEditReviewSection
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.editelement.DiaryEditSaveChangesSection
-import com.patch4code.loglinemovieapp.features.diary.presentation.utils.DiaryNavigationExtensions.navigateOnDiaryEditSaveOrDiscard
+import com.patch4code.loglinemovieapp.features.diary.presentation.utils.DiaryNavigationExtensions.navigateOnDiaryEntryDelete
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarNoNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
@@ -114,7 +114,7 @@ fun DiaryEditElementView(
             DiaryEditSaveChangesSection(
                 onSaveChanges = {
                     diaryEditElementViewModel.updatedDiaryEntry(rating, watchDateTime, review)
-                    navController.navigateOnDiaryEditSaveOrDiscard(comingFromDiaryView = comingFromDiaryView)
+                    navController.popBackStack()
                 },
                 onDiscardChanges = {openDiscardDialog.value = true}
             )
@@ -153,7 +153,7 @@ fun DiaryEditElementView(
         DiaryEditDiscardDialog(
             openDiscardDialog = openDiscardDialog.value,
             onDiscard = { openDiscardDialog.value = false
-                navController.navigateOnDiaryEditSaveOrDiscard(comingFromDiaryView = comingFromDiaryView)
+                        navController.popBackStack()
             },
             onCancel = { openDiscardDialog.value = false }
         )
@@ -161,7 +161,7 @@ fun DiaryEditElementView(
             openDeleteDialog = openDeleteDialog.value,
             onDelete = { openDeleteDialog.value = false
                 diaryEditElementViewModel.deleteDiaryEntry()
-                navController.navigateOnDiaryEditSaveOrDiscard(isDeleteAction = true, comingFromDiaryView = comingFromDiaryView)
+                navController.navigateOnDiaryEntryDelete(comingFromDiaryView = comingFromDiaryView)
             },
             onCancel = {openDeleteDialog.value = false}
         )

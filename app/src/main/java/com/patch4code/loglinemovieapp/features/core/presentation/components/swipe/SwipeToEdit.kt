@@ -4,20 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.DismissDirection
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.DismissState
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.DismissValue
-import androidx.compose.material.ExperimentalMaterialApi
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxState
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,63 +26,75 @@ import kotlinx.coroutines.delay
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * swipeToEditContainer - Composable function for swipe-to-edit functionality
+ * SwipeToEditContainer - Composable function for swipe-to-edit functionality
  *
  * @author Patch4Code
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun <T> swipeToEditContainer(
+fun <T> SwipeToEditContainer(
     item: T,
-    onEdit: (T) -> Unit,
-    animationDuration: Int = 500,
+    onEdit: () -> Unit,
+    animationDuration: Int = 250,
     content: @Composable (T) -> Unit
-){
-    var editActivated by remember {
-        mutableStateOf(false)
-    }
-    val state = rememberDismissState(
-        confirmStateChange = {value->
-            if (value == DismissValue.DismissedToStart){
+) {
+    var editActivated by remember { mutableStateOf(false) }
+    var stateToMaintain by remember { mutableStateOf<SwipeToDismissBoxValue?>(null) }
+
+    val state = rememberSwipeToDismissBoxState(
+        confirmValueChange = { dismissValue ->
+            if (dismissValue == SwipeToDismissBoxValue.EndToStart) {
                 editActivated = true
-                true
-            }else{
-                false
+                stateToMaintain = dismissValue
             }
+            false
         }
     )
 
-    LaunchedEffect(key1 = editActivated){
-        if(editActivated){
-            delay(animationDuration.toLong())
-            onEdit(item)
+    LaunchedEffect(stateToMaintain) {
+        stateToMaintain?.let {
+            state.snapTo(it)
+            stateToMaintain = null
         }
     }
 
-    SwipeToDismiss(
+    LaunchedEffect(editActivated) {
+        if (editActivated) {
+            delay(animationDuration.toLong())
+            onEdit()
+            delay(animationDuration.toLong() * 2)
+            editActivated = false
+        } else {
+            state.reset()
+        }
+    }
+
+    SwipeToDismissBox(
         state = state,
-        background = {
-            SwipeEditBackground(swipeDismissState = state)
-        },
-        dismissContent = {content(item)},
-        directions = setOf(DismissDirection.EndToStart)
+        backgroundContent = { DismissEditBackground(state) },
+        content = { content(item) },
+        enableDismissFromStartToEnd = false
     )
 }
 
-// Composable function for the background of swipe-to-edit
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SwipeEditBackground(swipeDismissState: DismissState){
+fun DismissEditBackground(dismissState: SwipeToDismissBoxState) {
 
-    if(swipeDismissState.dismissDirection == DismissDirection.EndToStart){
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Gray)
-                .padding(16.dp),
-            contentAlignment = Alignment.CenterEnd
-        ){
-            Icon(imageVector = Icons.Default.Edit, contentDescription = null, tint = Color.White)
-        }
+    val color = when (dismissState.dismissDirection) {
+        SwipeToDismissBoxValue.EndToStart -> Color.Gray
+        else -> Color.Transparent
+    }
+    val iconColor = when (dismissState.dismissDirection) {
+        SwipeToDismissBoxValue.EndToStart -> Color.White
+        else -> Color.Transparent
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color)
+            .padding(16.dp),
+        contentAlignment = Alignment.CenterEnd
+    ){
+        Icon(imageVector = Icons.Default.Edit, contentDescription = null, tint = iconColor)
     }
 }

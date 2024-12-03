@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -40,7 +41,7 @@ fun ReviewsView(
     )
 ){
 
-    val selectedSortOption = remember { mutableStateOf(DiaryAndReviewSortOptions.ByAddedDesc) }
+    val selectedSortOption = rememberSaveable { mutableStateOf(DiaryAndReviewSortOptions.ByAddedDesc) }
     val showBottomSheet = remember { mutableStateOf(false)  }
 
     LaunchedEffect(Unit) {

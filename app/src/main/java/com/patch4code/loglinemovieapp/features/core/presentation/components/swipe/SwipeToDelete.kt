@@ -17,6 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SwipeToDeleteContainer - Composable function for swipe-to-delete functionality
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun <T> SwipeToDeleteContainer(
     item: T,

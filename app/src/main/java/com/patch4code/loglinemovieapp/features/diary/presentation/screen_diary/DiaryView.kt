@@ -9,11 +9,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.swipeToEditContainer
+import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToEditContainer
 import com.patch4code.loglinemovieapp.features.diary.domain.model.DiaryAndReviewSortOptions
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.DiarySortBottomSheet
 import com.patch4code.loglinemovieapp.features.diary.presentation.components.EmptyDiaryText
@@ -41,7 +42,7 @@ fun DiaryView(
     )
 ){
 
-    val selectedSortOption = remember { mutableStateOf(DiaryAndReviewSortOptions.ByAddedDesc) }
+    val selectedSortOption = rememberSaveable { mutableStateOf(DiaryAndReviewSortOptions.ByAddedDesc) }
     val showBottomSheet = remember { mutableStateOf(false)  }
 
     LaunchedEffect(Unit) {
@@ -59,16 +60,19 @@ fun DiaryView(
     if(diaryLogs.isNullOrEmpty()){
         EmptyDiaryText()
     }else{
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)) {
             items(diaryLogs) { loggedItem ->
-                swipeToEditContainer(
+
+                SwipeToEditContainer(
                     item = loggedItem,
                     onEdit = {
                         // navigate to DiaryEditElementScreen on swipe (parameters: loggedElementId and comingFromDiaryView (boolean))
                         navController.navigate("${Screen.DiaryEditElementScreen.route}/${loggedItem.id}/${true}")
-                    })
-                {_->
-                    MovieLoggedItem(navController = navController, loggedElement = loggedItem)
+                    }
+                ){
+                    MovieLoggedItem(navController, loggedItem)
                 }
             }
         }
