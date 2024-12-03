@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -47,7 +46,9 @@ fun ListsTableContent(
 
     val openDeleteListDialog = remember { mutableStateOf(false)  }
     val listToDelete = remember { mutableStateOf<MovieList?>(null) }
-    val deletingStates = remember { mutableStateMapOf<MovieList, Boolean>() }
+
+    val deletingActionActive = remember { mutableStateOf(false)  }
+    val canceledItemId = remember { mutableStateOf("") }
 
 
     if(myUserMovieLists.isNullOrEmpty()){
@@ -60,19 +61,23 @@ fun ListsTableContent(
                 items = myUserMovieLists ?: emptyList(),
                 key = { _, item -> item.hashCode() }
             ) { _, list ->
-                val isDeleting = deletingStates[list] ?: false
+                val deleteActionCanceled = canceledItemId.value == list.id
 
                 SwipeToDeleteContainer(
                     item = list,
-                    isDeleting = isDeleting,
-                    onDelete = {
+                    isCanceled = deleteActionCanceled,
+                    openDeleteDialog = {
                         listToDelete.value = list
                         openDeleteListDialog.value = true
-                        deletingStates[list] = true
+                        deletingActionActive.value = true
+                    },
+                    cancelReset = {
+                        deletingActionActive.value = false
+                        canceledItemId.value = ""
                     }
-                ){_, deleting ->
+                ){
                     val moviesInSpecificList = moviesInLists?.filter { it.movieListId == list.id}
-                    ListsTableItem(navController, list, moviesInSpecificList, Modifier.alpha(if (deleting) 0f else 1f))
+                    ListsTableItem(navController, list, moviesInSpecificList, Modifier.alpha(1f))
                 }
             }
         }
@@ -88,9 +93,7 @@ fun ListsTableContent(
         openDeleteListDialog = openDeleteListDialog.value,
         onDelete = { listsTableViewModel.onDeleteList(listToDelete, openDeleteListDialog, sortOption.value) },
         onCancel = {
-            listToDelete.value?.let {
-                deletingStates[it] = false
-            }
+            canceledItemId.value = listToDelete.value?.id ?: ""
             openDeleteListDialog.value = false
         }
     )

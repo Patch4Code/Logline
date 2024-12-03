@@ -12,50 +12,68 @@ import androidx.compose.material3.SwipeToDismissBoxState
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-/**
- * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
- *
- * SwipeToDeleteContainer - Composable function for swipe-to-delete functionality
- *
- * @author Patch4Code
- */
+
 @Composable
 fun <T> SwipeToDeleteContainer(
     item: T,
-    isDeleting: Boolean,
-    onDelete: () -> Unit,
-    content: @Composable (T, Boolean) -> Unit
+    isCanceled: Boolean,
+    openDeleteDialog:() -> Unit,
+    cancelReset:() -> Unit,
+    content: @Composable (T) -> Unit
 ){
+
+    var stateToMaintain by remember { mutableStateOf<SwipeToDismissBoxValue?>(null) }
 
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = {dismissValue ->
             if(dismissValue == SwipeToDismissBoxValue.EndToStart){
-                onDelete()
-
+                openDeleteDialog()
+                stateToMaintain = dismissValue
             }
             false
         },
         // positional threshold of 25%
         positionalThreshold = { it * .25f }
     )
+
+    // Maintain swipe state
+    LaunchedEffect(stateToMaintain) {
+        stateToMaintain?.let {
+            dismissState.snapTo(it)
+            stateToMaintain = null
+        }
+    }
+
+    // Reset swipe state if cancellation occurs
+    LaunchedEffect(isCanceled) {
+        dismissState.reset()
+        cancelReset()
+    }
+
     SwipeToDismissBox(
         state = dismissState,
         backgroundContent = { DismissBackground(dismissState)},
-        content = {  content(item, isDeleting) },
+        content = {  content(item) },
         enableDismissFromStartToEnd = false
     )
 }
+
 
 @Composable
 fun DismissBackground(dismissState: SwipeToDismissBoxState) {
 
     val color = when (dismissState.dismissDirection) {
-        SwipeToDismissBoxValue.EndToStart -> Color.Transparent
+        SwipeToDismissBoxValue.EndToStart -> Color.Gray
         else -> Color.Transparent
     }
     val iconColor = when (dismissState.dismissDirection) {

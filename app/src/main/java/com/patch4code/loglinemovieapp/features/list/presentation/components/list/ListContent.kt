@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -46,8 +46,9 @@ fun ListContent(
 
     val openDeleteMovieDialog = remember { mutableStateOf(false)  }
     val movieToDelete = remember { mutableStateOf<MovieInList?>(null) }
-    val deletingStates = remember { mutableStateMapOf<MovieInList, Boolean>() }
 
+    val deletingActionActive = remember { mutableStateOf(false)  }
+    val canceledItemId = remember { mutableIntStateOf(-1) }
 
     Column {
         Text(text = movieList?.name ?: "N/A", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
@@ -60,20 +61,24 @@ fun ListContent(
                 items = moviesInList,
                 key = { _, item -> item.hashCode() }
             ) { index, movieInList ->
-                val isDeleting = deletingStates[movieInList] ?: false
+                val deleteActionCanceled = canceledItemId.intValue == movieInList.movieId
 
                 SwipeToDeleteContainer(
                     item = movieInList,
-                    isDeleting = isDeleting,
-                    onDelete = {
+                    isCanceled = deleteActionCanceled,
+                    openDeleteDialog = {
                         movieToDelete.value = movieInList
                         openDeleteMovieDialog.value = true
-                        deletingStates[movieInList] = true
+                        deletingActionActive.value = true
+                    },
+                    cancelReset = {
+                        deletingActionActive.value = false
+                        canceledItemId.intValue = -1
                     }
-                ){_, deleting ->
-                    ListItem(navController, movieInList, Modifier.alpha(if (deleting) 0f else 1f))
+                ){
+                    ListItem(navController, movieInList, Modifier.alpha(1f))
                 }
-                if(index < moviesInList.lastIndex){
+                if(index < moviesInList.lastIndex + 1){
                     HorizontalDivider()
                 }
             }
@@ -82,9 +87,7 @@ fun ListContent(
     DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
         onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog, selectedSortOption.value) },
         onCancel = {
-            movieToDelete.value?.let {
-                deletingStates[it] = false
-            }
+            canceledItemId.intValue = movieToDelete.value?.movieId ?: -1
             openDeleteMovieDialog.value = false
         }
     )
