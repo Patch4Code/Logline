@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -37,10 +38,13 @@ fun HomeView(navController: NavController, homeViewModel: HomeViewModel = viewMo
     ProvideTopBarTitle(title = Screen.HomeScreen.title.asString())
 
     val isLoading by homeViewModel.isLoading.observeAsState(initial = false)
+    val hasLoadError by homeViewModel.hasLoadError.observeAsState(initial = false)
     val homeMoviesMap = homeViewModel.homeMoviesMap.observeAsState().value
 
     if(isLoading){
         LoadingIndicator()
+    }else if(hasLoadError){
+        LoadErrorDisplay(onReload = { homeViewModel.loadHomeViewData() })
     }
     else{
         LazyColumn {

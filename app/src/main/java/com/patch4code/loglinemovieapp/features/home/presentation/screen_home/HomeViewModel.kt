@@ -30,6 +30,9 @@ class HomeViewModel : ViewModel(){
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    private val _hasLoadError = MutableLiveData<Boolean>()
+    val hasLoadError: LiveData<Boolean> get() = _hasLoadError
+
     private val _popularMovies = MutableLiveData<List<Movie>>()
     private var popularMoviesHighestLoadedPage = 1
     private var popularMoviesPageAmount = 1
@@ -52,6 +55,7 @@ class HomeViewModel : ViewModel(){
         viewModelScope.launch {
             try {
                 _isLoading.value = true
+                _hasLoadError.value = false
 
                 val popularResponse = tmdbApiService.getPopularMovies()
                 if(popularResponse.isSuccessful){
@@ -71,10 +75,11 @@ class HomeViewModel : ViewModel(){
                     upcomingMoviesPageAmount = upcomingResponse.body()?.totalPages ?: 1
                 }
                 _isLoading.value = false
-            } catch (e: Exception) {
-                Log.e("HomeViewModel", "Error loading data", e)
-            } finally {
                 updateHomeMovieMap()
+            } catch (e: Exception) {
+                _isLoading.value = false
+                _hasLoadError.value = true
+                Log.e("HomeViewModel", "Error loading data", e)
             }
         }
     }
