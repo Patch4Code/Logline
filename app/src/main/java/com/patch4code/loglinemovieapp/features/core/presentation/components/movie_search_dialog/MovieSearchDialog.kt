@@ -38,7 +38,7 @@ fun MovieSearchDialog(
             val keyboardController = LocalSoftwareKeyboardController.current
             Column {
                 MovieSearchDialogTextField(textInput, keyboardController, selectedMovie, generalMovieSearchViewModel)
-                MovieSearchDialogLazyColumn(searchResult, selectedMovie)
+                MovieSearchDialogLazyColumn(searchResult, selectedMovie, generalMovieSearchViewModel)
             }
         },
         confirmButton = {

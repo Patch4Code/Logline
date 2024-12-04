@@ -24,6 +24,10 @@ class GeneralMovieSearchViewModel: ViewModel() {
     private val tmdbApiService: TmdbApiService by lazy {
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)
     }
+
+    private val _hasLoadError = MutableLiveData<Boolean>()
+    val hasLoadError: LiveData<Boolean> get() = _hasLoadError
+
     private val _searchedMovies = MutableLiveData<List<Movie>>()
     val searchedMovies: LiveData<List<Movie>> get() = _searchedMovies
 
@@ -31,11 +35,14 @@ class GeneralMovieSearchViewModel: ViewModel() {
     fun searchMovie(searchQuery: String){
         viewModelScope.launch {
             try {
+                _hasLoadError.value = false
+
                 val searchResponse = tmdbApiService.searchMovie(searchQuery = searchQuery)
                 if(searchResponse.isSuccessful){
                     _searchedMovies.value = searchResponse.body()?.results
                 }
             } catch (e: Exception) {
+                _hasLoadError.value = true
                 Log.e("SearchViewModel", "Error searching movies", e)
             }
         }
