@@ -28,29 +28,36 @@ class PersonDetailsViewModel: ViewModel() {
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)
     }
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _hasLoadError = MutableLiveData<Boolean>()
+    val hasLoadError: LiveData<Boolean> get() = _hasLoadError
+
+
     private val _personDetails = MutableLiveData<PersonDetails>()
     val personDetails: LiveData<PersonDetails> get() = _personDetails
-
 
     private val _personMovieCredits = MutableLiveData<PersonMovieCredits>()
 
     private val _personCreditsMap = MutableLiveData<Map<String, List<Movie>>>()
     val personCreditsMap: LiveData<Map<String, List<Movie>>> get() = _personCreditsMap
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
 
     // Loads the details of the person with the given id from TMDB api
     fun loadPersonDetails(personId: Int){
         viewModelScope.launch {
             try {
                 _isLoading.value = true
+                _hasLoadError.value = false
 
                 val personDetailsResponse = tmdbApiService.getPersonDetails(personId = personId)
                 if(personDetailsResponse.isSuccessful){
                     _personDetails.value = personDetailsResponse.body()
                 }
             } catch (e: Exception) {
+                _isLoading.value = false
+                _hasLoadError.value = true
                 Log.e("PersonDetailsViewModel", "Error getting person details", e)
             }
         }

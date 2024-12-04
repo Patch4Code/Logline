@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.ExpandableText
+import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
@@ -84,10 +85,14 @@ fun PersonDetailsView(
     val personCreditsMap = personDetailsViewModel.personCreditsMap.observeAsState().value
 
     val isLoading by personDetailsViewModel.isLoading.observeAsState(initial = false)
+    val hasLoadError by personDetailsViewModel.hasLoadError.observeAsState(initial = false)
 
     if(isLoading){
         LoadingIndicator()
-    }else{
+    }else if(hasLoadError){
+        LoadErrorDisplay(onReload = { personDetailsViewModel.loadPersonDetails(personId) })
+    }
+    else{
         LazyColumn(modifier = Modifier.padding(16.dp)){
             item{
                 Row(modifier = Modifier.padding(bottom = 16.dp)){
