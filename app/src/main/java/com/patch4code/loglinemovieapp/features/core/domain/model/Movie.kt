@@ -14,6 +14,12 @@ data class Movie(
     @SerializedName("title") val title: String = "N/A",
     @SerializedName("id") val id: Int = -1,
     @SerializedName("release_date") val releaseDate: String = "N/A-date",
-    @SerializedName("poster_path") val posterUrl: String = ""
+    @SerializedName("poster_path") val posterUrl: String = "",
+
+    //@SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
+    //@SerializedName("original_language") val originalLanguage: String = "N/A",
+    //@SerializedName("original_title") val originalTitle: String = "N/A",
+    //@SerializedName("popularity") val popularity: Double = 0.0,
+    //@SerializedName("vote_average") val voteAverage: Double = 0.0,
 )
 
