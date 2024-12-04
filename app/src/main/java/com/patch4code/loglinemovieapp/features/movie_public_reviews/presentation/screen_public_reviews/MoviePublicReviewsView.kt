@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,9 +54,6 @@ fun MoviePublicReviewsView(
     title?.let { ProvideTopBarTitle(title = it) }
     ProvideTopBarBackNavigationIcon(navController)
 
-    // Observe the state of TMDB (and Logline) reviews and loading
-    val tmdbMovieReviews = moviePublicReviewsViewModel.tmdbMovieReviews.observeAsState().value
-    val tmdbIsLoading = moviePublicReviewsViewModel.tmdbIsLoading.observeAsState().value
 
     val tabItems = listOf(stringResource(id = R.string.tmdb_reviews_title))
     var selectedTabIndex by remember { mutableStateOf(0) }
@@ -90,7 +86,7 @@ fun MoviePublicReviewsView(
         ) {index->
             Box(modifier = Modifier.fillMaxSize().padding(8.dp)
             ){
-                TmdbMovieReviews(tmdbMovieReviews, tmdbIsLoading, moviePublicReviewsViewModel)
+                TmdbMovieReviews(movieId, moviePublicReviewsViewModel)
             }
         }
     }

@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.MovieContent
@@ -76,9 +77,12 @@ fun MovieView(
     }
 
     val isLoading by movieViewModel.isLoading.observeAsState(initial = false)
+    val hasLoadError by movieViewModel.hasLoadError.observeAsState(initial = false)
 
     if(isLoading){
         LoadingIndicator()
+    }else if(hasLoadError){
+        LoadErrorDisplay(onReload = { movieViewModel.loadAllMovieData(movieId) })
     }else{
         Scaffold(
             floatingActionButton = {

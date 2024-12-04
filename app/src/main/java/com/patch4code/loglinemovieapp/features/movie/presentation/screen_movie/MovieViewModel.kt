@@ -32,6 +32,13 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)
     }
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _hasLoadError = MutableLiveData<Boolean>()
+    val hasLoadError: LiveData<Boolean> get() = _hasLoadError
+
+
     private val _detailsData = MutableLiveData<MovieDetails>()
     val detailsData: LiveData<MovieDetails> get() = _detailsData
 
@@ -53,16 +60,14 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     private val _onWatchlist = MutableLiveData<Boolean>()
     val onWatchlist: LiveData<Boolean> get() = _onWatchlist
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
-
 
     // Loads all movie data including details, credits, collection, videos, and providers from TMDB api.
     fun loadAllMovieData(movieId: Int) {
-        _isLoading.value = true
-
         viewModelScope.launch {
             try {
+                _isLoading.value = true
+                _hasLoadError.value = false
+
                 val movieDetailsResponse = tmdbApiService.getMovieDetails(movieId = movieId)
                 val movieCreditsResponse = tmdbApiService.getMovieCredits(movieId = movieId)
                 val movieCollectionResponse = tmdbApiService.getMoviesFromCollection(collectionId = movieDetailsResponse.body()?.collection?.id ?: 0)
@@ -81,10 +86,12 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
                     val firstYouTubeVideo = movieVideosResponse.body()?.videoList?.find { it.site == "YouTube" && it.type == "Trailer" }
                     _movieVideo.value = firstYouTubeVideo
                 }
-            } catch (e: Exception) {
-                Log.e("MovieViewModel", "Error loading movie data", e)
-            } finally {
+
                 _isLoading.value = false
+            } catch (e: Exception) {
+                _isLoading.value = false
+                _hasLoadError.value = true
+                Log.e("MovieViewModel", "Error loading movie data", e)
             }
         }
     }
