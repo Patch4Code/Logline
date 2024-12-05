@@ -45,4 +45,15 @@ class RoomConverters {
     fun toLocalDateTime(timestamp: Long?): LocalDateTime? {
         return timestamp?.let { LocalDateTime.ofEpochSecond(it, 0, ZoneOffset.UTC) }
     }
+
+    @TypeConverter
+    fun fromIntList(value: List<Int>?): String {
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun toIntList(value: String): List<Int> {
+        val listType = object : TypeToken<List<Int>>() {}.type
+        return Gson().fromJson(value, listType)
+    }
 }

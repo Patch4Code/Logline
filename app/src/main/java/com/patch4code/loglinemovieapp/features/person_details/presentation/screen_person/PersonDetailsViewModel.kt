@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.api.RetrofitHelper
 import com.patch4code.loglinemovieapp.api.TmdbApiService
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieMapper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetails
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetailsSortOption
@@ -130,13 +131,8 @@ class PersonDetailsViewModel: ViewModel() {
                     PersonDetailsSortOption.ByReleaseDateAsc -> compareBy { it.releaseDate }
                 }
             )
-            ?.map {
-                Movie(
-                    title = it.title ?: "N/A",
-                    id = it.id,
-                    releaseDate = it.releaseDate ?: "N/A",
-                    posterUrl = it.posterUrl ?: "N/A"
-                )
+            ?.map {movieAsCastMember->
+                MovieMapper.mapToMovie(movieAsCastMember)
             } ?: emptyList()
     }
 
@@ -163,13 +159,8 @@ class PersonDetailsViewModel: ViewModel() {
                     PersonDetailsSortOption.ByReleaseDateAsc -> compareBy { it.releaseDate }
                 }
             )
-            ?.map{
-                Movie(
-                    title = it.title ?: "N/A",
-                    id = it.id,
-                    releaseDate = it.releaseDate ?: "N/A",
-                    posterUrl = it.posterUrl ?: "N/A"
-                )
+            ?.map{movieAsCrewMember->
+                MovieMapper.mapToMovie(movieAsCrewMember)
             } ?: emptyList()
     }
 

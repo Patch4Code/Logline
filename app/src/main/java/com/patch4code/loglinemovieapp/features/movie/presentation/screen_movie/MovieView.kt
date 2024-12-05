@@ -16,10 +16,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieMapper
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.MovieContent
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
@@ -87,12 +87,7 @@ fun MovieView(
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(onClick = {
-                    val movieToLog = Movie(
-                        title = movieDetails?.title.toString(),
-                        id=movieId,
-                        releaseDate = movieDetails?.releaseDate.toString(),
-                        posterUrl = movieDetails?.posterPath.toString()
-                    )
+                    val movieToLog = MovieMapper.mapToMovie(movieDetails)
                     val jsonMovie = movieToLog.toJson()
                     val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
                     navController.navigate(Screen.MovieLogScreen.withArgs(encodedJsonMovie))

@@ -10,6 +10,7 @@ import com.patch4code.loglinemovieapp.api.RetrofitHelper
 import com.patch4code.loglinemovieapp.api.TmdbApiService
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieMapper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.CountryProviders
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
@@ -129,13 +130,8 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     }
 
     // Updates the user rating for a movie by accessing the db.
-    fun changeRating(id: Int?, rating: Int){
-        val movie = Movie(
-            title = _detailsData.value?.title ?: "N/A",
-            id = id ?: -1,
-            releaseDate = _detailsData.value?.releaseDate ?: "N/A",
-            posterUrl = _detailsData.value?.posterPath ?: ""
-        )
+    fun changeRating(rating: Int){
+        val movie = MovieMapper.mapToMovie(_detailsData.value)
 
         viewModelScope.launch {
             dao.updateOrInsertRating(movie, rating)
@@ -144,13 +140,8 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     }
 
     // Updates the watchlist status for a movie by accessing the db.
-    fun changeOnWatchlist(id: Int?, newOnWatchlistState: Boolean){
-        val movie = Movie(
-            title = _detailsData.value?.title ?: "N/A",
-            id = id ?: -1,
-            releaseDate = _detailsData.value?.releaseDate ?: "N/A",
-            posterUrl = _detailsData.value?.posterPath ?: ""
-        )
+    fun changeOnWatchlist(newOnWatchlistState: Boolean){
+        val movie = MovieMapper.mapToMovie(_detailsData.value)
 
         viewModelScope.launch {
             dao.updateOrInsertOnWatchlist(movie, newOnWatchlistState)

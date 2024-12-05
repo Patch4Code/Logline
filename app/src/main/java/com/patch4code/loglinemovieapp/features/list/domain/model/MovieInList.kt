@@ -17,5 +17,10 @@ data class MovieInList(
     val title: String = "N/A",
     val releaseDate: String = "N/A-date",
     val posterUrl: String = "",
-    val timeAdded: Long
+    val timeAdded: Long,
+    val genreIds: List<Int> = emptyList(),
+    val originalLanguage: String = "N/A",
+    val originalTitle: String = "N/A",
+    val popularity: Double = 0.0,
+    val voteAverage: Double = 0.0,
 )

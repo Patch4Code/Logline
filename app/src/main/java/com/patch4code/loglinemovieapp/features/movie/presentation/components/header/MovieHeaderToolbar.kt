@@ -45,8 +45,6 @@ import com.patch4code.loglinemovieapp.ui.theme.LightBlue
 @Composable
 fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewModel, db: LoglineDatabase){
 
-    val id = movieDetails?.id
-
     val openRatingDialog = remember { mutableStateOf(false)  }
     val openAddToListDialog = remember { mutableStateOf(false)  }
 
@@ -83,7 +81,7 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
         IconButton(
             onClick = {
                 Toast.makeText(context, if(onWatchlist == false) toastTextAddToWatchlist else toastTextRemoveFromWatchlist, Toast.LENGTH_LONG).show()
-                movieViewModel.changeOnWatchlist(id, !(onWatchlist ?: false))
+                movieViewModel.changeOnWatchlist(!(onWatchlist ?: false))
             }
         ){
             Icon(imageVector = if (onWatchlist == true) Icons.Default.WatchLater else Icons.Outlined.WatchLater,
@@ -107,11 +105,11 @@ fun MovieHeaderToolbar(movieDetails: MovieDetails?, movieViewModel: MovieViewMod
             openRatingDialog = openRatingDialog.value,
             onAccept = { newRating->
                 openRatingDialog.value = false
-                movieViewModel.changeRating(id, newRating)
+                movieViewModel.changeRating(newRating)
             },
             onCancel = {openRatingDialog.value = false},
             onDelete = {openRatingDialog.value = false
-                movieViewModel.changeRating(id, -1)
+                movieViewModel.changeRating(-1)
             }
         )
 

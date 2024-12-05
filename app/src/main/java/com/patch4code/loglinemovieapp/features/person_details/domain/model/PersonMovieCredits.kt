@@ -21,7 +21,11 @@ data class MovieAsCastMember(
     @SerializedName("id") val id: Int = -1,
     @SerializedName("release_date") val releaseDate: String? = "N/A-date",
     @SerializedName("poster_path") val posterUrl: String? = "",
-    @SerializedName("popularity") val popularity: Double? = 0.0
+    @SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
+    @SerializedName("original_language") val originalLanguage: String = "N/A",
+    @SerializedName("original_title") val originalTitle: String = "N/A",
+    @SerializedName("popularity") val popularity: Double = 0.0,
+    @SerializedName("vote_average") val voteAverage: Double = 0.0
 )
 
 // Representing a movie in which a person appeared as a cew member.
@@ -30,6 +34,10 @@ data class MovieAsCrewMember(
     @SerializedName("id") val id: Int = -1,
     @SerializedName("release_date") val releaseDate: String? = "N/A-date",
     @SerializedName("poster_path") val posterUrl: String? = "",
-    @SerializedName("popularity") val popularity: Double? = 0.0,
     @SerializedName("department") val department: String = "N/A",
+    @SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
+    @SerializedName("original_language") val originalLanguage: String = "N/A",
+    @SerializedName("original_title") val originalTitle: String = "N/A",
+    @SerializedName("popularity") val popularity: Double = 0.0,
+    @SerializedName("vote_average") val voteAverage: Double = 0.0
 )

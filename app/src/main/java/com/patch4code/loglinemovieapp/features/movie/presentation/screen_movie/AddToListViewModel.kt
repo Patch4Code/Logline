@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieInListMapper
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.room_database.MovieInListDao
@@ -54,14 +55,11 @@ class AddToListViewModel(private val movieListDao: MovieListDao, private val mov
         viewModelScope.launch {
             val highestListPosition = movieInListDao.getHighestPositionInList(listId) ?: -1
 
-            val newMovieInList = MovieInList(
+            val newMovieInList = MovieInListMapper.mapToMovieInListFromMovie(
                 movieListId = listId,
                 position = highestListPosition + 1,
-                movieId = _movieToAdd.value?.id ?: return@launch,
-                title = _movieToAdd.value?.title.orEmpty(),
-                releaseDate = _movieToAdd.value?.releaseDate.orEmpty(),
-                posterUrl = _movieToAdd.value?.posterUrl.orEmpty(),
-                timeAdded = System.currentTimeMillis()
+                timeAdded = System.currentTimeMillis(),
+                movie = _movieToAdd.value
             )
             movieInListDao.upsertMovieInList(newMovieInList)
 

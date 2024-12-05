@@ -24,7 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.patch4code.loglinemovieapp.R
-import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieMapper
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.AddListDialog
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
@@ -62,12 +62,7 @@ fun AddToListDialog(
     val openAddListDialog = remember { mutableStateOf(false)  }
 
     // Create a Movie object from movie details
-    val currentMovie = Movie(
-        title = movieDetails?.title ?: "N/A",
-        id = movieDetails?.id ?: -1,
-        releaseDate = movieDetails?.releaseDate ?: "N/A",
-        posterUrl = movieDetails?.posterPath ?: ""
-    )
+    val currentMovie = MovieMapper.mapToMovie(movieDetails)
 
     // Set the movie to be added when dialog is opened
     LaunchedEffect(Unit){
