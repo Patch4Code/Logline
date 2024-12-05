@@ -22,6 +22,9 @@ object MovieGenres {
         10752 to "War",
         37 to "Western"
     )
+    fun getAllGenres(): Map<Int, String>{
+        return genres
+    }
     fun getGenreNameById(id: Int): String? {
         return genres[id]
     }

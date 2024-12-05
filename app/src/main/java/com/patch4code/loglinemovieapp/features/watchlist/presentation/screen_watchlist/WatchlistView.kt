@@ -13,11 +13,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActionsAndFilter
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOption
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.EmptyWatchlistText
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.MovieWatchlistBrowseCard
+import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.WatchlistFilterDialog
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.WatchlistSortBottomSheet
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
@@ -40,6 +41,7 @@ fun WatchlistView(
 
     val selectedSortOption = remember { mutableStateOf(WatchlistSortOption.ByAddedDesc) }
     val showBottomSheet = remember { mutableStateOf(false)  }
+    val showFilterDialog = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         watchlistViewModel.getWatchlistItems(selectedSortOption.value)
@@ -47,8 +49,10 @@ fun WatchlistView(
 
     // TopBar config
     ProvideTopBarTitle(title = Screen.WatchlistScreen.title.asString())
-    ProvideTopBarSortActions(onClickAction = {showBottomSheet.value = true})
-
+    ProvideTopBarSortActionsAndFilter(
+        sortOnClickAction = {showBottomSheet.value = true},
+        filterOnClickAction = {showFilterDialog.value = true},
+    )
 
     val watchlistItems = watchlistViewModel.myUserDataList.observeAsState().value
 
@@ -69,4 +73,5 @@ fun WatchlistView(
     }
 
     WatchlistSortBottomSheet(showBottomSheet, selectedSortOption, watchlistViewModel)
+    WatchlistFilterDialog(showFilterDialog)
 }
