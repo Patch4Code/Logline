@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOption
-import com.patch4code.loglinemovieapp.features.watchlist.presentation.screen_watchlist.WatchlistViewModel
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -34,7 +33,7 @@ import com.patch4code.loglinemovieapp.features.watchlist.presentation.screen_wat
 fun WatchlistSortBottomSheet(
     showBottomSheet: MutableState<Boolean>,
     selectedSortOption: MutableState<WatchlistSortOption>,
-    watchlistViewModel: WatchlistViewModel
+    onSortChange:() -> Unit
 ){
 
     if(!showBottomSheet.value) return
@@ -57,7 +56,7 @@ fun WatchlistSortBottomSheet(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
                             selectedSortOption.value = sortOption
-                            watchlistViewModel.getWatchlistItems(selectedSortOption.value)
+                            onSortChange()
                         }
                     ){
                         Text(text = sortOption.label, modifier = Modifier.weight(1f))

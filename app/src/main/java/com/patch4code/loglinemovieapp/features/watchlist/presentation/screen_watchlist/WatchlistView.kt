@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActionsAndFilter
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
@@ -40,11 +42,13 @@ fun WatchlistView(
 ){
 
     val selectedSortOption = remember { mutableStateOf(WatchlistSortOption.ByAddedDesc) }
+    val selectedFilterOptions = remember { mutableStateOf(FilterOptions()) }
+
     val showBottomSheet = remember { mutableStateOf(false)  }
     val showFilterDialog = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        watchlistViewModel.getWatchlistItems(selectedSortOption.value)
+        watchlistViewModel.loadWatchlistItems(selectedSortOption.value, selectedFilterOptions.value)
     }
 
     // TopBar config
@@ -54,10 +58,10 @@ fun WatchlistView(
         filterOnClickAction = {showFilterDialog.value = true},
     )
 
-    val watchlistItems = watchlistViewModel.myUserDataList.observeAsState().value
+    val watchlistItems = watchlistViewModel.watchlistItems.observeAsState().value
 
     if (watchlistItems.isNullOrEmpty()){
-        EmptyWatchlistText()
+        EmptyWatchlistText(FilterHelper.isAnyFilterApplied(selectedFilterOptions.value))
     }else{
         LazyVerticalGrid(
             modifier = Modifier.padding(8.dp),
@@ -72,6 +76,10 @@ fun WatchlistView(
         )
     }
 
-    WatchlistSortBottomSheet(showBottomSheet, selectedSortOption, watchlistViewModel)
-    WatchlistFilterDialog(showFilterDialog)
+    WatchlistSortBottomSheet(showBottomSheet, selectedSortOption){
+        watchlistViewModel.loadWatchlistItems(selectedSortOption.value, selectedFilterOptions.value)
+    }
+    WatchlistFilterDialog(showFilterDialog, selectedFilterOptions){
+        watchlistViewModel.loadWatchlistItems(selectedSortOption.value, selectedFilterOptions.value)
+    }
 }

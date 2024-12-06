@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOption
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
@@ -20,12 +23,12 @@ import kotlinx.coroutines.launch
  */
 class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
 
-    private val _myUserDataList = MutableLiveData<List<MovieUserData>>()
-    val myUserDataList: LiveData<List<MovieUserData>> get() = _myUserDataList
+    private val _watchlistItems = MutableLiveData<List<MovieUserData>>()
+    val watchlistItems: LiveData<List<MovieUserData>> get() = _watchlistItems
 
-    fun getWatchlistItems(sortOption: WatchlistSortOption) {
+    fun loadWatchlistItems(sortOption: WatchlistSortOption, filterOptions: FilterOptions) {
         viewModelScope.launch {
-            val sortedList = when (sortOption) {
+            val sortedItems = when (sortOption) {
                 WatchlistSortOption.ByAddedDesc -> dao.getWatchlistItemsOrderedByAddedDesc()
                 WatchlistSortOption.ByAddedAsc -> dao.getWatchlistItemsOrderedByAddedAsc()
                 WatchlistSortOption.ByTitleAsc -> dao.getWatchlistItemsOrderedByTitleAsc()
@@ -33,9 +36,39 @@ class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
                 WatchlistSortOption.ByReleaseDateDesc -> dao.getWatchlistItemsOrderedByReleaseDateDesc()
                 WatchlistSortOption.ByReleaseDateAsc -> dao.getWatchlistItemsOrderedByReleaseDateAsc()
             }
-            _myUserDataList.value = sortedList
-            //_myUserDataList.postValue(sortedList)
+            val filteredAndSortedWatchlistItems = filterWatchlistItems(sortedItems, filterOptions)
+            _watchlistItems.value = filteredAndSortedWatchlistItems
         }
+    }
+
+    private fun filterWatchlistItems(items: List<MovieUserData>, filterOptions: FilterOptions): List<MovieUserData> {
+        return items.filter { item ->
+            val movie = item.movie
+            matchesGenre(movie?.genreIds, filterOptions.selectedGenres) &&
+                    matchesDecade(movie?.releaseDate, filterOptions.selectedDecades) &&
+                    matchesYear(movie?.releaseDate, filterOptions.selectedYears) &&
+                    matchesLanguage(movie?.originalLanguage, filterOptions.selectedLanguages)
+        }
+    }
+
+    // Helper function to check genres
+    private fun matchesGenre(genreIds: List<Int>?, selectedGenres: List<Int>): Boolean {
+        return selectedGenres.isEmpty() || genreIds?.any { selectedGenres.contains(it) } == true
+    }
+
+    // Helper function to check decades
+    private fun matchesDecade(releaseDate: String?, selectedDecades: List<String>): Boolean {
+        return selectedDecades.isEmpty() || selectedDecades.contains(FilterHelper.getDecadeFromReleaseDate(releaseDate))
+    }
+
+    // Helper function to check years
+    private fun matchesYear(releaseDate: String?, selectedYears: List<String>): Boolean {
+        return selectedYears.isEmpty() || selectedYears.contains(MovieHelper.extractYear(releaseDate))
+    }
+
+    // Helper function to check languages
+    private fun matchesLanguage(language: String?, selectedLanguages: List<String>): Boolean {
+        return selectedLanguages.isEmpty() || selectedLanguages.contains(language ?: "N/A")
     }
 }
 

@@ -19,14 +19,18 @@ import androidx.compose.ui.unit.dp
  * @author Patch4Code
  */
 @Composable
-fun EmptyWatchlistText(){
+fun EmptyWatchlistText(filtersActive: Boolean){
 
     Box(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         contentAlignment = Alignment.Center
     ){
         Text(
-            text = "Your watchlist is currently empty.",
+            text =
+            if(filtersActive)
+                "No items match your current filters."
+            else
+                "Your watchlist is currently empty.",
             textAlign = TextAlign.Center,
             color = Color.White
         )

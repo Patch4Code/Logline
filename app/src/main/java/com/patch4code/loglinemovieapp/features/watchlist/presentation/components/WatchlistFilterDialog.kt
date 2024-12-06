@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieGenres
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieYears
@@ -39,7 +40,8 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.filt
 @Composable
 fun WatchlistFilterDialog(
     showFilterDialog: MutableState<Boolean>,
-
+    selectedFilterOptions: MutableState<FilterOptions>,
+    onApplyFilters:() -> Unit
 ){
 
     if (!showFilterDialog.value) return
@@ -47,15 +49,15 @@ fun WatchlistFilterDialog(
     val chipWidth = 72.dp
 
     val availableGenres:  Map<Int, String> = MovieGenres.getAllGenres()
-    val selectedGenres = remember { mutableStateListOf<Int>() }
+    val selectedGenres = remember{ mutableStateListOf(*selectedFilterOptions.value.selectedGenres.toTypedArray()) }
 
     val decades = MovieYears.getDecades()
-    val selectedDecades = remember { mutableStateListOf<String>() }
+    val selectedDecades = remember { mutableStateListOf(*selectedFilterOptions.value.selectedDecades.toTypedArray()) }
     val years = MovieYears.getYears()
-    val selectedYears = remember { mutableStateListOf<String>() }
+    val selectedYears = remember { mutableStateListOf(*selectedFilterOptions.value.selectedYears.toTypedArray()) }
 
     val primaryLanguages = MovieLanguages.getPrimaryLanguages()
-    val selectedLanguages = remember { mutableStateListOf<String>() }
+    val selectedLanguages = remember { mutableStateListOf(*selectedFilterOptions.value.selectedLanguages.toTypedArray()) }
     val showLanguageDialog = remember { mutableStateOf(false) }
 
     Dialog(onDismissRequest =  {showFilterDialog.value = false},
@@ -210,9 +212,20 @@ fun WatchlistFilterDialog(
 
                 }
 
-                Button(onClick = { showFilterDialog.value = false }, modifier = Modifier.fillMaxWidth().padding(32.dp)) {
-                    Text("Apply Filters")
-                }
+                Button(
+                    modifier = Modifier.fillMaxWidth().padding(32.dp),
+                    onClick = {
+                        showFilterDialog.value = false
+                        selectedFilterOptions.value = selectedFilterOptions.value.copy(
+                            selectedGenres = selectedGenres,
+                            selectedDecades = selectedDecades,
+                            selectedYears = selectedYears,
+                            selectedLanguages = selectedLanguages
+                        )
+                        onApplyFilters()
+                    },
+                    content = { Text("Apply Filters") }
+                )
             }
         }
 
