@@ -5,23 +5,27 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+import com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog.SortFilterDialog
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.FilterOptionsSaver
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.SortOptionSaver
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActionsAndFilter
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortFilterActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
-import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOption
+import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOptions
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.EmptyWatchlistText
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.MovieWatchlistBrowseCard
-import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.WatchlistFilterDialog
-import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.WatchlistSortBottomSheet
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 /**
@@ -41,10 +45,11 @@ fun WatchlistView(
     )
 ){
 
-    val selectedSortOption = remember { mutableStateOf(WatchlistSortOption.ByAddedDesc) }
-    val selectedFilterOptions = remember { mutableStateOf(FilterOptions()) }
+    val selectedSortOption: MutableState<SortOption> =
+        rememberSaveable(stateSaver = SortOptionSaver.saver) { mutableStateOf(SortOption.ByAddedDesc) }
+    val selectedFilterOptions =
+        rememberSaveable(stateSaver = FilterOptionsSaver.saver) { mutableStateOf(FilterOptions()) }
 
-    val showBottomSheet = remember { mutableStateOf(false)  }
     val showFilterDialog = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -53,9 +58,8 @@ fun WatchlistView(
 
     // TopBar config
     ProvideTopBarTitle(title = Screen.WatchlistScreen.title.asString())
-    ProvideTopBarSortActionsAndFilter(
-        sortOnClickAction = {showBottomSheet.value = true},
-        filterOnClickAction = {showFilterDialog.value = true},
+    ProvideTopBarSortFilterActions(
+        sortFilterOnClickAction = {showFilterDialog.value = true},
     )
 
     val watchlistItems = watchlistViewModel.watchlistItems.observeAsState().value
@@ -75,11 +79,7 @@ fun WatchlistView(
             }
         )
     }
-
-    WatchlistSortBottomSheet(showBottomSheet, selectedSortOption){
-        watchlistViewModel.loadWatchlistItems(selectedSortOption.value, selectedFilterOptions.value)
-    }
-    WatchlistFilterDialog(showFilterDialog, selectedFilterOptions){
+    SortFilterDialog(showFilterDialog, WatchlistSortOptions.options, selectedSortOption, selectedFilterOptions){
         watchlistViewModel.loadWatchlistItems(selectedSortOption.value, selectedFilterOptions.value)
     }
 }

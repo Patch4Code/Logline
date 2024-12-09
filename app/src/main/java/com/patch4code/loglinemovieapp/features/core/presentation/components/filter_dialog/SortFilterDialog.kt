@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.watchlist.presentation.components
+package com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,12 +34,14 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieGenres
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieYears
-import com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog.LanguageSelectionDialog
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WatchlistFilterDialog(
+fun SortFilterDialog(
     showFilterDialog: MutableState<Boolean>,
+    sortOptions: List<SortOption>,
+    selectedSortOption: MutableState<SortOption>,
     selectedFilterOptions: MutableState<FilterOptions>,
     onApplyFilters:() -> Unit
 ){
@@ -47,6 +49,8 @@ fun WatchlistFilterDialog(
     if (!showFilterDialog.value) return
 
     val chipWidth = 72.dp
+
+    val tempSelectedSortOption = remember { mutableStateOf(selectedSortOption.value) }
 
     val availableGenres:  Map<Int, String> = MovieGenres.getAllGenres()
     val selectedGenres = remember{ mutableStateListOf(*selectedFilterOptions.value.selectedGenres.toTypedArray()) }
@@ -72,7 +76,7 @@ fun WatchlistFilterDialog(
                 TopAppBar(
                     title = {
                         Text(
-                            text = "Filter Watchlist",
+                            text = "Sort and Filter",
                             style = MaterialTheme.typography.titleLarge
                         )
                     },
@@ -84,6 +88,7 @@ fun WatchlistFilterDialog(
                     actions = {
                         TextButton(
                             onClick = {
+                                tempSelectedSortOption.value = sortOptions.first()
                                 selectedGenres.clear()
                                 selectedDecades.clear()
                                 selectedYears.clear()
@@ -93,6 +98,11 @@ fun WatchlistFilterDialog(
                     }
                 )
                 Column(modifier = Modifier.fillMaxSize().padding(16.dp).weight(1f)) {
+
+                    Text("Sort by")
+                    SortOptionDropdown(tempSelectedSortOption, sortOptions)
+
+                    Spacer(modifier = Modifier.padding(8.dp))
 
                     Text("Genre")
 
@@ -216,6 +226,7 @@ fun WatchlistFilterDialog(
                     modifier = Modifier.fillMaxWidth().padding(32.dp),
                     onClick = {
                         showFilterDialog.value = false
+                        selectedSortOption.value = tempSelectedSortOption.value
                         selectedFilterOptions.value = selectedFilterOptions.value.copy(
                             selectedGenres = selectedGenres,
                             selectedDecades = selectedDecades,

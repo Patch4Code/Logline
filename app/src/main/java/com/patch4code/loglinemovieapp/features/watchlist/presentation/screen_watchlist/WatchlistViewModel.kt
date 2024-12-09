@@ -7,9 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOption
+import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOptions
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
@@ -26,15 +27,24 @@ class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
     private val _watchlistItems = MutableLiveData<List<MovieUserData>>()
     val watchlistItems: LiveData<List<MovieUserData>> get() = _watchlistItems
 
-    fun loadWatchlistItems(sortOption: WatchlistSortOption, filterOptions: FilterOptions) {
+    fun loadWatchlistItems(sortOption: SortOption, filterOptions: FilterOptions) {
+        if (sortOption !in WatchlistSortOptions.options) {
+            throw IllegalArgumentException("Unsupported sort option for Watchlist: $sortOption")
+        }
+
         viewModelScope.launch {
             val sortedItems = when (sortOption) {
-                WatchlistSortOption.ByAddedDesc -> dao.getWatchlistItemsOrderedByAddedDesc()
-                WatchlistSortOption.ByAddedAsc -> dao.getWatchlistItemsOrderedByAddedAsc()
-                WatchlistSortOption.ByTitleAsc -> dao.getWatchlistItemsOrderedByTitleAsc()
-                WatchlistSortOption.ByTitleDesc -> dao.getWatchlistItemsOrderedByTitleDesc()
-                WatchlistSortOption.ByReleaseDateDesc -> dao.getWatchlistItemsOrderedByReleaseDateDesc()
-                WatchlistSortOption.ByReleaseDateAsc -> dao.getWatchlistItemsOrderedByReleaseDateAsc()
+                SortOption.ByAddedDesc -> dao.getWatchlistItemsOrderedByAddedDesc()
+                SortOption.ByAddedAsc -> dao.getWatchlistItemsOrderedByAddedAsc()
+                SortOption.ByTitleAsc -> dao.getWatchlistItemsOrderedByTitleAsc()
+                SortOption.ByTitleDesc -> dao.getWatchlistItemsOrderedByTitleDesc()
+                SortOption.ByReleaseDateDesc -> dao.getWatchlistItemsOrderedByReleaseDateDesc()
+                SortOption.ByReleaseDateAsc -> dao.getWatchlistItemsOrderedByReleaseDateAsc()
+                SortOption.ByPopularityDesc -> dao.getWatchlistItemsOrderedByPopularityDesc()
+                SortOption.ByPopularityAsc -> dao.getWatchlistItemsOrderedByPopularityAsc()
+                SortOption.ByVoteAverageDesc -> dao.getWatchlistItemsOrderedByVoteAverageDesc()
+                SortOption.ByVoteAverageAsc -> dao.getWatchlistItemsOrderedByVoteAverageAsc()
+                else -> emptyList()
             }
             val filteredAndSortedWatchlistItems = filterWatchlistItems(sortedItems, filterOptions)
             _watchlistItems.value = filteredAndSortedWatchlistItems
