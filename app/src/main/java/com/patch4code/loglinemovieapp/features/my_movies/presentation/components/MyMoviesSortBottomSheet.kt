@@ -1,27 +1,5 @@
 package com.patch4code.loglinemovieapp.features.my_movies.presentation.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.features.my_movies.domain.model.MyMoviesSortOption
-import com.patch4code.loglinemovieapp.features.my_movies.presentation.screen_my_movies.MyMoviesViewModel
-
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
@@ -29,6 +7,7 @@ import com.patch4code.loglinemovieapp.features.my_movies.presentation.screen_my_
  *
  * @author Patch4Code
  */
+/*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyMoviesSortBottomSheet(
@@ -56,7 +35,7 @@ fun MyMoviesSortBottomSheet(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
                             selectedSortOption.value = sortOption
-                            myMoviesViewModel.getWatchedMovies(selectedSortOption.value)
+                            myMoviesViewModel.loadWatchedMovies(selectedSortOption.value)
                         }
                     ){
                         Text(text = sortOption.label, modifier = Modifier.weight(1f))
@@ -69,3 +48,5 @@ fun MyMoviesSortBottomSheet(
         }
     }
 }
+
+ */

@@ -79,6 +79,14 @@ interface MovieUserDataDao {
     suspend fun getWatchedMoviesOrderedByRatingAsc(): List<MovieUserData>
     @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY rating DESC")
     suspend fun getWatchedMoviesOrderedByRatingDesc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.popularity') ASC")
+    suspend fun getWatchedMoviesOrderedByPopularityAsc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.popularity') DESC")
+    suspend fun getWatchedMoviesOrderedByPopularityDesc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.vote_average') ASC")
+    suspend fun getWatchedMoviesOrderedByVoteAverageAsc(): List<MovieUserData>
+    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.vote_average') DESC")
+    suspend fun getWatchedMoviesOrderedByVoteAverageDesc(): List<MovieUserData>
 
     // Watchlist Queries
     @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY addedToWatchlistTime ASC")

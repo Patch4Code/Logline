@@ -5,8 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
-import com.patch4code.loglinemovieapp.features.my_movies.domain.model.MyMoviesSortOption
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
+import com.patch4code.loglinemovieapp.features.my_movies.domain.model.MyMoviesSortOptions
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
@@ -20,23 +24,64 @@ import kotlinx.coroutines.launch
  */
 class MyMoviesViewModel(private val dao: MovieUserDataDao): ViewModel() {
 
-    private val _myUserDataList = MutableLiveData<List<MovieUserData>>()
-    val myUserDataList: LiveData<List<MovieUserData>> get() = _myUserDataList
+    private val _myMoviesItems = MutableLiveData<List<MovieUserData>>()
+    val myMoviesItems: LiveData<List<MovieUserData>> get() = _myMoviesItems
 
-    fun getWatchedMovies(sortOption: MyMoviesSortOption) {
-        viewModelScope.launch {
-            val sortedList = when (sortOption) {
-                MyMoviesSortOption.ByAddedDesc -> dao.getWatchedMoviesOrderedByAddedDesc()
-                MyMoviesSortOption.ByAddedAsc -> dao.getWatchedMoviesOrderedByAddedAsc()
-                MyMoviesSortOption.ByTitleAsc -> dao.getWatchedMoviesOrderedByTitleAsc()
-                MyMoviesSortOption.ByTitleDesc -> dao.getWatchedMoviesOrderedByTitleDesc()
-                MyMoviesSortOption.ByReleaseDateDesc -> dao.getWatchedMoviesOrderedByReleaseDateDesc()
-                MyMoviesSortOption.ByReleaseDateAsc -> dao.getWatchedMoviesOrderedByReleaseDateAsc()
-                MyMoviesSortOption.ByRatingDesc -> dao.getWatchedMoviesOrderedByRatingDesc()
-                MyMoviesSortOption.ByRatingAsc -> dao.getWatchedMoviesOrderedByRatingAsc()
-            }
-            _myUserDataList.value = sortedList
+    fun loadWatchedMovies(sortOption: SortOption, filterOptions: FilterOptions) {
+        if (sortOption !in MyMoviesSortOptions.options) {
+            throw IllegalArgumentException("Unsupported sort option for MyMovies: $sortOption")
         }
+
+        viewModelScope.launch {
+            val sortedItems = when (sortOption) {
+                SortOption.ByAddedDesc -> dao.getWatchedMoviesOrderedByAddedDesc()
+                SortOption.ByAddedAsc -> dao.getWatchedMoviesOrderedByAddedAsc()
+                SortOption.ByTitleAsc -> dao.getWatchedMoviesOrderedByTitleAsc()
+                SortOption.ByTitleDesc -> dao.getWatchedMoviesOrderedByTitleDesc()
+                SortOption.ByReleaseDateDesc -> dao.getWatchedMoviesOrderedByReleaseDateDesc()
+                SortOption.ByReleaseDateAsc -> dao.getWatchedMoviesOrderedByReleaseDateAsc()
+                SortOption.ByRatingDesc -> dao.getWatchedMoviesOrderedByRatingDesc()
+                SortOption.ByRatingAsc -> dao.getWatchedMoviesOrderedByRatingAsc()
+                SortOption.ByPopularityDesc -> dao.getWatchedMoviesOrderedByPopularityDesc()
+                SortOption.ByPopularityAsc -> dao.getWatchedMoviesOrderedByPopularityAsc()
+                SortOption.ByVoteAverageDesc -> dao.getWatchedMoviesOrderedByVoteAverageDesc()
+                SortOption.ByVoteAverageAsc -> dao.getWatchedMoviesOrderedByVoteAverageAsc()
+
+                else -> emptyList()
+            }
+            val filteredAndSortedMyMoviesItems = filterMyMoviesItems(sortedItems, filterOptions)
+            _myMoviesItems.value = filteredAndSortedMyMoviesItems
+        }
+    }
+
+    private fun filterMyMoviesItems(items: List<MovieUserData>, filterOptions: FilterOptions): List<MovieUserData> {
+        return items.filter { item ->
+            val movie = item.movie
+            matchesGenre(movie?.genreIds, filterOptions.selectedGenres) &&
+                    matchesDecade(movie?.releaseDate, filterOptions.selectedDecades) &&
+                    matchesYear(movie?.releaseDate, filterOptions.selectedYears) &&
+                    matchesLanguage(movie?.originalLanguage, filterOptions.selectedLanguages)
+        }
+    }
+
+    // Helper function to check genres
+    private fun matchesGenre(genreIds: List<Int>?, selectedGenres: List<Int>): Boolean {
+        return selectedGenres.isEmpty() || genreIds?.any { selectedGenres.contains(it) } == true
+    }
+
+    // Helper function to check decades
+    private fun matchesDecade(releaseDate: String?, selectedDecades: List<String>): Boolean {
+        return selectedDecades.isEmpty() || selectedDecades.contains(FilterHelper.getDecadeFromReleaseDate(releaseDate))
+    }
+
+    // Helper function to check years
+    private fun matchesYear(releaseDate: String?, selectedYears: List<String>): Boolean {
+        return selectedYears.isEmpty() || selectedYears.contains(MovieHelper.extractYear(releaseDate))
+    }
+
+    // Helper function to check languages
+    private fun matchesLanguage(language: String?, selectedLanguages: List<String>): Boolean {
+        return selectedLanguages.isEmpty() || selectedLanguages.contains(language ?: "N/A")
     }
 }
 
