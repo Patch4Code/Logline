@@ -12,17 +12,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EmptyReviewsText(){
+fun EmptyReviewsText(filtersActive: Boolean){
 
     Box(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         contentAlignment = Alignment.Center
     ){
         Text(
-            text = "Your have not written any reviews yet.",
+            text =
+            if(filtersActive)
+                "No items match your current filters."
+            else
+                "Your have not written any reviews yet.",
             textAlign = TextAlign.Center,
             color = Color.White
         )
     }
-
 }

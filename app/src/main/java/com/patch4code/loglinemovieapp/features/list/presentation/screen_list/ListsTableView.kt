@@ -58,7 +58,6 @@ fun ListsTableView(
     val openAddListDialog = remember { mutableStateOf(false)  }
 
 
-
     val myUserMovieLists = listsTableViewModel.userMovieLists.observeAsState().value
     val moviesInLists = listsTableViewModel.moviesInLists.observeAsState().value
 

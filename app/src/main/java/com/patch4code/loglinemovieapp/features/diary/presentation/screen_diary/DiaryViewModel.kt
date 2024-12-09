@@ -50,18 +50,18 @@ class DiaryViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
                SortOption.ByVoteAverageAsc -> loggedMovieDao.getLoggedMoviesOrderedByVoteAverageAsc()
                else -> emptyList()
            }
-            val filteredAndSortedWatchDiaryLogs = filterDiaryLogs(sortedItems, filterOptions)
-            _diaryLogs.value = filteredAndSortedWatchDiaryLogs
+            val filteredAndSortedDiaryLogs = filterDiaryLogs(sortedItems, filterOptions)
+            _diaryLogs.value = filteredAndSortedDiaryLogs
         }
     }
 
     private fun filterDiaryLogs(items: List<LoggedMovie>, filterOptions: FilterOptions): List<LoggedMovie> {
         return items.filter { item ->
             val movie = item.movie
-            matchesGenre(movie?.genreIds, filterOptions.selectedGenres) &&
-                    matchesDecade(movie?.releaseDate, filterOptions.selectedDecades) &&
-                    matchesYear(movie?.releaseDate, filterOptions.selectedYears) &&
-                    matchesLanguage(movie?.originalLanguage, filterOptions.selectedLanguages)
+            matchesGenre(movie.genreIds, filterOptions.selectedGenres) &&
+                    matchesDecade(movie.releaseDate, filterOptions.selectedDecades) &&
+                    matchesYear(movie.releaseDate, filterOptions.selectedYears) &&
+                    matchesLanguage(movie.originalLanguage, filterOptions.selectedLanguages)
         }
     }
 

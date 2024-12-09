@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.diary.domain.model.DiaryAndReviewSortOptions
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
@@ -23,23 +27,61 @@ class ReviewsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel(){
     private val _reviewedLogs = MutableLiveData<List<LoggedMovie>>()
     val reviewedLogs: LiveData<List<LoggedMovie>> get() = _reviewedLogs
 
-    fun getReviewedLogs(sortOption: DiaryAndReviewSortOptions){
-        viewModelScope.launch {
-            /*
-            val sortedList = when (sortOption) {
-                DiaryAndReviewSortOptions.ByAddedDesc -> loggedMovieDao.getReviewsOrderedByDateDesc()
-                DiaryAndReviewSortOptions.ByAddedAsc -> loggedMovieDao.getReviewsOrderedByDateAsc()
-                DiaryAndReviewSortOptions.ByTitleAsc -> loggedMovieDao.getReviewsOrderedByTitleAsc()
-                DiaryAndReviewSortOptions.ByTitleDesc -> loggedMovieDao.getReviewsOrderedByTitleDesc()
-                DiaryAndReviewSortOptions.ByReleaseDateDesc -> loggedMovieDao.getReviewsOrderedByReleaseDateDesc()
-                DiaryAndReviewSortOptions.ByReleaseDateAsc -> loggedMovieDao.getReviewsOrderedByReleaseDateAsc()
-                DiaryAndReviewSortOptions.ByRatingDesc -> loggedMovieDao.getReviewsOrderedByRatingDesc()
-                DiaryAndReviewSortOptions.ByRatingAsc -> loggedMovieDao.getReviewsOrderedByRatingAsc()
-            }
-            _reviewedLogs.value = sortedList*/
+    fun getReviewedLogs(sortOption: SortOption, filterOptions: FilterOptions){
+        if (sortOption !in DiaryAndReviewSortOptions.options) {
+            throw IllegalArgumentException("Unsupported sort option for Diary: $sortOption")
         }
 
+        viewModelScope.launch {
 
+            val sortedItems = when (sortOption) {
+                SortOption.ByAddedDesc -> loggedMovieDao.getReviewsOrderedByDateDesc()
+                SortOption.ByAddedAsc -> loggedMovieDao.getReviewsOrderedByDateAsc()
+                SortOption.ByReleaseDateDesc -> loggedMovieDao.getReviewsOrderedByReleaseDateDesc()
+                SortOption.ByReleaseDateAsc -> loggedMovieDao.getReviewsOrderedByReleaseDateAsc()
+                SortOption.ByRatingDesc -> loggedMovieDao.getReviewsOrderedByRatingDesc()
+                SortOption.ByRatingAsc -> loggedMovieDao.getReviewsOrderedByRatingAsc()
+                SortOption.ByTitleAsc -> loggedMovieDao.getReviewsOrderedByTitleAsc()
+                SortOption.ByTitleDesc -> loggedMovieDao.getReviewsOrderedByTitleDesc()
+                SortOption.ByPopularityDesc -> loggedMovieDao.getReviewsOrderedByPopularityDesc()
+                SortOption.ByPopularityAsc -> loggedMovieDao.getReviewsOrderedByPopularityAsc()
+                SortOption.ByVoteAverageDesc -> loggedMovieDao.getReviewsOrderedByVoteAverageDesc()
+                SortOption.ByVoteAverageAsc -> loggedMovieDao.getReviewsOrderedByVoteAverageAsc()
+                else -> emptyList()
+            }
+            val filteredAndSortedReviews = filterReviews(sortedItems, filterOptions)
+            _reviewedLogs.value = filteredAndSortedReviews
+        }
+    }
+
+    private fun filterReviews(items: List<LoggedMovie>, filterOptions: FilterOptions): List<LoggedMovie> {
+        return items.filter { item ->
+            val movie = item.movie
+            matchesGenre(movie.genreIds, filterOptions.selectedGenres) &&
+                    matchesDecade(movie.releaseDate, filterOptions.selectedDecades) &&
+                    matchesYear(movie.releaseDate, filterOptions.selectedYears) &&
+                    matchesLanguage(movie.originalLanguage, filterOptions.selectedLanguages)
+        }
+    }
+
+    // Helper function to check genres
+    private fun matchesGenre(genreIds: List<Int>?, selectedGenres: List<Int>): Boolean {
+        return selectedGenres.isEmpty() || genreIds?.any { selectedGenres.contains(it) } == true
+    }
+
+    // Helper function to check decades
+    private fun matchesDecade(releaseDate: String?, selectedDecades: List<String>): Boolean {
+        return selectedDecades.isEmpty() || selectedDecades.contains(FilterHelper.getDecadeFromReleaseDate(releaseDate))
+    }
+
+    // Helper function to check years
+    private fun matchesYear(releaseDate: String?, selectedYears: List<String>): Boolean {
+        return selectedYears.isEmpty() || selectedYears.contains(MovieHelper.extractYear(releaseDate))
+    }
+
+    // Helper function to check languages
+    private fun matchesLanguage(language: String?, selectedLanguages: List<String>): Boolean {
+        return selectedLanguages.isEmpty() || selectedLanguages.contains(language ?: "N/A")
     }
 }
 
