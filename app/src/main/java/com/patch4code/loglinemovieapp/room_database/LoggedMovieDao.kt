@@ -42,6 +42,14 @@ interface LoggedMovieDao {
     suspend fun getLoggedMoviesOrderedByReleaseDateAsc() : List<LoggedMovie>
     @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.release_date') DESC")
     suspend fun getLoggedMoviesOrderedByReleaseDateDesc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.popularity') ASC")
+    suspend fun getLoggedMoviesOrderedByPopularityAsc(): List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.popularity') DESC")
+    suspend fun getLoggedMoviesOrderedByPopularityDesc(): List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.vote_average') ASC")
+    suspend fun getLoggedMoviesOrderedByVoteAverageAsc(): List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie ORDER BY json_extract(movie, '\$.vote_average') DESC")
+    suspend fun getLoggedMoviesOrderedByVoteAverageDesc(): List<LoggedMovie>
 
     // Reviews Queries
     @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY date ASC")
@@ -60,6 +68,14 @@ interface LoggedMovieDao {
     suspend fun getReviewsOrderedByReleaseDateAsc() : List<LoggedMovie>
     @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY json_extract(movie, '\$.release_date') DESC")
     suspend fun getReviewsOrderedByReleaseDateDesc() : List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY json_extract(movie, '\$.popularity') ASC")
+    suspend fun getReviewsOrderedByPopularityAsc(): List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY json_extract(movie, '\$.popularity') DESC")
+    suspend fun getReviewsOrderedByPopularityDesc(): List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY json_extract(movie, '\$.vote_average') ASC")
+    suspend fun getReviewsOrderedByVoteAverageAsc(): List<LoggedMovie>
+    @Query("SELECT * FROM LoggedMovie WHERE review IS NOT NULL AND review != '' ORDER BY json_extract(movie, '\$.vote_average') DESC")
+    suspend fun getReviewsOrderedByVoteAverageDesc(): List<LoggedMovie>
 
 
     @Query("SELECT * FROM LoggedMovie WHERE date BETWEEN :startOfDayMillis AND :endOfDayMillis")

@@ -25,6 +25,7 @@ class ReviewsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel(){
 
     fun getReviewedLogs(sortOption: DiaryAndReviewSortOptions){
         viewModelScope.launch {
+            /*
             val sortedList = when (sortOption) {
                 DiaryAndReviewSortOptions.ByAddedDesc -> loggedMovieDao.getReviewsOrderedByDateDesc()
                 DiaryAndReviewSortOptions.ByAddedAsc -> loggedMovieDao.getReviewsOrderedByDateAsc()
@@ -35,8 +36,10 @@ class ReviewsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel(){
                 DiaryAndReviewSortOptions.ByRatingDesc -> loggedMovieDao.getReviewsOrderedByRatingDesc()
                 DiaryAndReviewSortOptions.ByRatingAsc -> loggedMovieDao.getReviewsOrderedByRatingAsc()
             }
-            _reviewedLogs.value = sortedList
+            _reviewedLogs.value = sortedList*/
         }
+
+
     }
 }
 

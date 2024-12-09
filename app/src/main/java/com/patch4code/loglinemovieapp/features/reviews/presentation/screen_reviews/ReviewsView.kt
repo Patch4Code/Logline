@@ -8,19 +8,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.diary.domain.model.DiaryAndReviewSortOptions
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.EmptyReviewsText
 import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewItem
-import com.patch4code.loglinemovieapp.features.reviews.presentation.components.ReviewsSortBottomSheet
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 /**
@@ -41,11 +38,11 @@ fun ReviewsView(
     )
 ){
 
-    val selectedSortOption = rememberSaveable { mutableStateOf(DiaryAndReviewSortOptions.ByAddedDesc) }
+    //val selectedSortOption = rememberSaveable { mutableStateOf(DiaryAndReviewSortOptions.ByAddedDesc) }
     val showBottomSheet = remember { mutableStateOf(false)  }
 
     LaunchedEffect(Unit) {
-        reviewsViewModel.getReviewedLogs(selectedSortOption.value)
+        //reviewsViewModel.getReviewedLogs(selectedSortOption.value)
     }
 
     // TopBar config
@@ -66,5 +63,5 @@ fun ReviewsView(
             }
         }
     }
-    ReviewsSortBottomSheet(showBottomSheet, selectedSortOption, reviewsViewModel)
+    //ReviewsSortBottomSheet(showBottomSheet, selectedSortOption, reviewsViewModel)
 }

@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog.SortFilterDialog
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.FilterOptionsSaver
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.SortOptionSaver
 import com.patch4code.loglinemovieapp.features.my_movies.domain.model.MyMoviesSortOptions
@@ -64,7 +65,7 @@ fun MyMoviesView(
     val watchedMoviesItems = myMoviesViewModel.myMoviesItems.observeAsState().value
 
     if(watchedMoviesItems.isNullOrEmpty()){
-        EmptyMyMoviesText()
+        EmptyMyMoviesText(FilterHelper.isAnyFilterApplied(selectedFilterOptions.value))
     }else{
         LazyVerticalGrid(
             modifier = Modifier.padding(8.dp),

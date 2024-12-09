@@ -19,14 +19,18 @@ import androidx.compose.ui.unit.dp
  * @author Patch4Code
  */
 @Composable
-fun EmptyDiaryText(){
+fun EmptyDiaryText(filtersActive: Boolean){
 
     Box(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         contentAlignment = Alignment.Center
     ){
         Text(
-            text = "Your diary is currently empty.",
+            text =
+            if(filtersActive)
+                "No items match your current filters."
+            else
+                "Your Diary is currently empty.",
             textAlign = TextAlign.Center,
             color = Color.White
         )

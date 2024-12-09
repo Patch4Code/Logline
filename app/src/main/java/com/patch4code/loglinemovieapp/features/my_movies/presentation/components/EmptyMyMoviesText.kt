@@ -19,17 +19,20 @@ import androidx.compose.ui.unit.dp
  * @author Patch4Code
  */
 @Composable
-fun EmptyMyMoviesText(){
+fun EmptyMyMoviesText(filtersActive: Boolean){
 
     Box(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         contentAlignment = Alignment.Center
     ){
         Text(
-            text = "No watched movies yet.",
+            text =
+            if(filtersActive)
+                "No items match your current filters."
+            else
+                "No watched movies yet.",
             textAlign = TextAlign.Center,
             color = Color.White
         )
     }
-
 }
