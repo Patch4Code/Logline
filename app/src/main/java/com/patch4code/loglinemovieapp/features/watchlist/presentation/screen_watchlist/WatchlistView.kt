@@ -21,8 +21,8 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHel
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.FilterOptionsSaver
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.SortOptionSaver
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortFilterActions
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarSortFilterActions
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.watchlist.domain.model.WatchlistSortOptions
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.EmptyWatchlistText
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.components.MovieWatchlistBrowseCard

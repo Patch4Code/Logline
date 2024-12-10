@@ -24,8 +24,8 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieMapp
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.MovieContent
 import com.patch4code.loglinemovieapp.features.movie.presentation.utils.MovieTopBarNavigationHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideCustomTopBarBackNavigationIcon
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideCustomTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 import java.net.URLEncoder

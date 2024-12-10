@@ -29,9 +29,10 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_na
 @Composable
 fun TopBar(
     navController: NavController,
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: TopAppBarScrollBehavior?,
     onDrawerStateChanged: () -> Unit
 ){
+
     val backStackEntry by navController.currentBackStackEntryAsState()
 
     backStackEntry?.let { entry ->

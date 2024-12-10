@@ -22,7 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ExpandableBio
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.MovieFavouriteRow
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile.ProfileHead

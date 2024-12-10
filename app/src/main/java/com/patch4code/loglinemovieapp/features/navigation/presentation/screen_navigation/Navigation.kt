@@ -18,6 +18,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.patch4code.loglinemovieapp.features.about.presentation.screen_settings.AboutView
@@ -63,6 +64,8 @@ fun Navigation(db: LoglineDatabase){
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     val searchFocusRequest = remember { mutableStateOf(false) }
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    val isSearchView = currentRoute == Screen.SearchScreen.route //used to fix SearchView TabRow
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -77,7 +80,7 @@ fun Navigation(db: LoglineDatabase){
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 bottomBar = { BottomBar(navController, searchFocusRequest) },
                 topBar = {
-                    TopBar(navController, scrollBehavior) {
+                    TopBar(navController, if(!isSearchView) scrollBehavior else null) {
                         scope.launch{ drawerState.open() }
                     }
                 }
