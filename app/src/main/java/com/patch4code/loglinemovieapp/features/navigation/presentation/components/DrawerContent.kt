@@ -53,7 +53,9 @@ fun DrawerContent(
                     scope.launch{
                         drawerState.close()
                     }
-                    navController.navigate(drawerNavigationItem.route)
+                    navController.navigate(drawerNavigationItem.route){
+                        popUpTo(drawerNavigationItem.route) { inclusive = true }
+                    }
 
                 },
                 icon = {

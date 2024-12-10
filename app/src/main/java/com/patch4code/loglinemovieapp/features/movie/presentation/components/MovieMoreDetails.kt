@@ -2,7 +2,6 @@ package com.patch4code.loglinemovieapp.features.movie.presentation.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -65,15 +64,11 @@ fun MovieMoreDetails(movieDetails: MovieDetails?
     HorizontalDivider(modifier = Modifier.padding(top = 32.dp, bottom = 16.dp))
 
     Card (
+        onClick = { showDetails = !showDetails },
         modifier = Modifier
             .animateContentSize(animationSpec = tween(100))
-            .clickable {
-                showDetails = !showDetails
-            }
             .fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.DarkGray,
-        ),
+        colors = CardDefaults.cardColors(containerColor = Color.DarkGray,),
     ){
         Row (modifier = Modifier.padding(8.dp).fillMaxWidth()){
             Text(text = stringResource(id = R.string.more_details_title), modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)

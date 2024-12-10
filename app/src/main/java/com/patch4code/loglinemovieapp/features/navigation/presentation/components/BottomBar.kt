@@ -5,11 +5,13 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.BottomNavigationItem
+import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -21,7 +23,7 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.BottomNav
  * @author Patch4Code
  */
 @Composable
-fun BottomBar(navController: NavController){
+fun BottomBar(navController: NavController, searchFocusRequest: MutableState<Boolean>){
 
     val context = LocalContext.current
 
@@ -42,7 +44,17 @@ fun BottomBar(navController: NavController){
                         contentDescription = item.title
                     )
                 },
-                onClick = { navController.navigate(item.route) }
+                onClick = {
+
+                    if(currentRoute == item.route && item.route == Screen.SearchScreen.route){
+                        // on SearchView when navigation symbol is pressed activate keyboard
+                        searchFocusRequest.value = true
+                    }else{
+                        navController.navigate(item.route) {
+                            popUpTo(item.route) { inclusive = true }
+                        }
+                    }
+                }
             )
         }
     }

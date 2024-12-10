@@ -17,11 +17,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -45,32 +49,38 @@ import com.patch4code.loglinemovieapp.features.search.presentation.components.Mo
 @Composable
 fun SearchView(
     navController: NavController,
+    searchFocusRequest: MutableState<Boolean>,
     searchViewModel: SearchViewModel = viewModel()
 ){
 
     val textInput = remember { mutableStateOf("")}
+    val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
+
 
     val searchResult = searchViewModel.searchedMovies.observeAsState().value
 
     // TopBar config
     ProvideTopBarTitle(title = Screen.SearchScreen.title.asString())
 
+    LaunchedEffect(searchFocusRequest.value) {
+        if (searchFocusRequest.value) {
+            focusRequester.requestFocus()
+            keyboardController?.show()
+            searchFocusRequest.value = false
+        }
+    }
 
-    Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp)
-    ){
-        Row (
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
+    Column(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)){
+
+        Row (modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
             horizontalArrangement = Arrangement.Center,
-        )
-        {
+        ) {
             // text-field for input of a movie name
             OutlinedTextField(
-                modifier = Modifier.weight(1f).padding(start = 16.dp),
+                modifier = Modifier
+                    .weight(1f).padding(start = 16.dp)
+                    .focusRequester(focusRequester),
                 value = textInput.value,
                 onValueChange = {textInput.value = it},
                 label = { Text(text = stringResource(id = R.string.search_text_field_label))},

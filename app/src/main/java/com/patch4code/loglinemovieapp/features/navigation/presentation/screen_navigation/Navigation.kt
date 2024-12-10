@@ -10,6 +10,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -60,6 +62,8 @@ fun Navigation(db: LoglineDatabase){
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
+    val searchFocusRequest = remember { mutableStateOf(false) }
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -71,7 +75,7 @@ fun Navigation(db: LoglineDatabase){
                 modifier = Modifier
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
-                bottomBar = { BottomBar(navController) },
+                bottomBar = { BottomBar(navController, searchFocusRequest) },
                 topBar = {
                     TopBar(navController, scrollBehavior) {
                         scope.launch{ drawerState.open() }
@@ -99,7 +103,10 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.SearchScreen.route){
-                        SearchView(navController = navController)
+                        SearchView(
+                            navController = navController,
+                            searchFocusRequest = searchFocusRequest
+                        )
                     }
 
                     composable(route = Screen.AboutScreen.route){
