@@ -1,9 +1,13 @@
 package com.patch4code.loglinemovieapp.features.list.domain.model
 
-enum class ListTableSortOptions(val label: String) {
-    ByTimeUpdated("When updated"),
-    ByNameAsc("List name (A-Z)"),
-    ByNameDesc("List name (Z-A)"),
-    ByTimeCreatedDesc("Time Added (Newest First)"),
-    ByTimeCreatedAsc("Time Added (Oldest First)"),
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+
+object ListTableSortOptions {
+    val options = listOf(
+        SortOption.ByTimeUpdated,
+        SortOption.ByListNameAsc,
+        SortOption.ByListNameDesc,
+        SortOption.ByAddedDesc,
+        SortOption.ByAddedAsc
+    )
 }

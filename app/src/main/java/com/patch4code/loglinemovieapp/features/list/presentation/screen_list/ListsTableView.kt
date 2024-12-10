@@ -8,14 +8,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
-import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.SortOptionSaver
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.ListsTableContent
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
@@ -41,7 +44,8 @@ fun ListsTableView(
     )
 ){
 
-    val selectedSortOption = remember { mutableStateOf(ListTableSortOptions.ByTimeUpdated) }
+    val selectedSortOption: MutableState<SortOption> =
+        rememberSaveable(stateSaver = SortOptionSaver.saver) { mutableStateOf(SortOption.ByTimeUpdated) }
     val showSortBottomSheet = remember { mutableStateOf(false)  }
 
     LaunchedEffect(Unit) {

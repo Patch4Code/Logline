@@ -22,6 +22,8 @@ object SortOptionSaver {
                 "ByVoteAverageAsc" -> SortOption.ByVoteAverageAsc
                 "ByPositionAsc" -> SortOption.ByPositionAsc
                 "ByTimeUpdated" -> SortOption.ByTimeUpdated
+                "ByListNameAsc" -> SortOption.ByListNameAsc
+                "ByListNameDesc" -> SortOption.ByListNameDesc
                 else -> throw IllegalArgumentException("Unknown SortOption: $className")
             }
         }

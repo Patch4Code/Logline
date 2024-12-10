@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainer
-import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.AddListDialog
@@ -41,7 +41,7 @@ fun ListsTableContent(
     openAddListDialog: MutableState<Boolean>,
     navController: NavController,
     listsTableViewModel: ListsTableViewModel,
-    sortOption: MutableState<ListTableSortOptions>,
+    sortOption: MutableState<SortOption>,
     showSortBottomSheet: MutableState<Boolean>
 ){
 

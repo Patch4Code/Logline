@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
@@ -30,14 +31,19 @@ class ListsTableViewModel(private val movieListDao: MovieListDao, private val mo
     val moviesInLists: LiveData<List<MovieInList>> get() = _moviesInLists
 
     // Gets the list of user movie lists from the database.
-    fun getMovieLists(sortOption: ListTableSortOptions){
+    fun getMovieLists(sortOption: SortOption){
+        if (sortOption !in ListTableSortOptions.options) {
+            throw IllegalArgumentException("Unsupported sort option for ListTable: $sortOption")
+        }
+
         viewModelScope.launch {
             val sortedMovieLists = when (sortOption) {
-                ListTableSortOptions.ByTimeUpdated -> movieListDao.getMovieListsOrderedByTimeUpdated()
-                ListTableSortOptions.ByNameAsc -> movieListDao.getMovieListsOrderedByNameAsc()
-                ListTableSortOptions.ByNameDesc -> movieListDao.getMovieListsOrderedByNameDesc()
-                ListTableSortOptions.ByTimeCreatedAsc -> movieListDao.getMovieListsOrderedByTimeCreatedAsc()
-                ListTableSortOptions.ByTimeCreatedDesc -> movieListDao.getMovieListsOrderedByTimeCreatedDesc()
+                SortOption.ByTimeUpdated -> movieListDao.getMovieListsOrderedByTimeUpdated()
+                SortOption.ByListNameAsc -> movieListDao.getMovieListsOrderedByNameAsc()
+                SortOption.ByListNameDesc -> movieListDao.getMovieListsOrderedByNameDesc()
+                SortOption.ByAddedAsc -> movieListDao.getMovieListsOrderedByTimeCreatedAsc()
+                SortOption.ByAddedDesc -> movieListDao.getMovieListsOrderedByTimeCreatedDesc()
+                else -> emptyList()
             }
             _userMovieLists.value = sortedMovieLists
         }
@@ -49,14 +55,14 @@ class ListsTableViewModel(private val movieListDao: MovieListDao, private val mo
     }
 
     // Adds a new movie list to the database and updates the user movie lists
-    fun addMovieList(movieList: MovieList, sortOption: ListTableSortOptions) {
+    fun addMovieList(movieList: MovieList, sortOption: SortOption) {
         viewModelScope.launch {
             movieListDao.upsertMovieList(movieList)
             getMovieLists(sortOption)
         }
     }
     // Removes a movie list from the database and updates the user movie lists
-    fun removeMovieList(listId: String, sortOption: ListTableSortOptions) {
+    fun removeMovieList(listId: String, sortOption: SortOption) {
         viewModelScope.launch {
             movieListDao.deleteMovieListById(listId)
             movieInListDao.deleteAllMoviesFromList(listId)

@@ -19,6 +19,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListsTableViewModel
 
@@ -26,7 +27,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.Lis
 @Composable
 fun ListTableSortBottomSheet(
     showBottomSheet: MutableState<Boolean>,
-    selectedSortOption: MutableState<ListTableSortOptions>,
+    selectedSortOption:  MutableState<SortOption>,
     listsTableViewModel: ListsTableViewModel
 ){
     if(!showBottomSheet.value) return
@@ -37,7 +38,7 @@ fun ListTableSortBottomSheet(
         scrimColor = Color.Transparent
     ){
 
-        val sortOptions = ListTableSortOptions.entries
+        val sortOptions = ListTableSortOptions.options
 
         Column (modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)){
             Text(text = "Sort by", style = MaterialTheme.typography.titleLarge)

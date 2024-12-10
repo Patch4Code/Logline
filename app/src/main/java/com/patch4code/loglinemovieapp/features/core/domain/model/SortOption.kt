@@ -15,5 +15,7 @@ sealed class SortOption(val label: String) {
     data object ByVoteAverageAsc : SortOption("Average Rating (Lowest first)")
     data object ByPositionAsc : SortOption("List order")
     data object ByTimeUpdated : SortOption("When updated")
+    data object ByListNameAsc : SortOption("List name (A-Z)")
+    data object ByListNameDesc : SortOption("List name (Z-A)")
 }
 
