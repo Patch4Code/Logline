@@ -12,22 +12,29 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+import com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog.SortFilterDialog
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.FilterOptionsSaver
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.SortOptionSaver
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.EmptyListText
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.ListContent
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.AddMovieToListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.EditListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.ListSettingsBottomSheet
-import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.ListSortBottomSheet
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.DeleteListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onDeleteList
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onDeleteListBottomSheet
@@ -35,7 +42,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialo
 import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialogsExtensions.onSaveEditList
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortActionsAndMoreVert
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarSortFilterActionsAndMoreVert
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
@@ -58,10 +65,16 @@ fun ListView(
     )
 ){
     val movieListId: String = listId ?: return
-    val selectedSortOption = remember { mutableStateOf(ListSortOptions.ByPositionAsc) }
+
+    val selectedSortOption: MutableState<SortOption> =
+        rememberSaveable(stateSaver = SortOptionSaver.saver) { mutableStateOf(SortOption.ByPositionAsc) }
+    val selectedFilterOptions =
+        rememberSaveable(stateSaver = FilterOptionsSaver.saver) { mutableStateOf(FilterOptions()) }
+
+    val showFilterDialog = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        listViewModel.getList(movieListId, selectedSortOption.value)
+        listViewModel.loadList(movieListId, selectedSortOption.value, selectedFilterOptions.value)
     }
 
     val movieList = listViewModel.movieList.observeAsState().value
@@ -72,13 +85,12 @@ fun ListView(
     val openDeleteListDialog = remember { mutableStateOf(false)  }
     val showListSettingsBottomSheet = remember { mutableStateOf(false)  }
 
-    val showSortBottomSheet = remember { mutableStateOf(false)  }
 
     // TopBar config
     ProvideTopBarTitle(title = Screen.ListScreen.title.asString())
     ProvideTopBarBackNavigationIcon(navController)
-    ProvideTopBarSortActionsAndMoreVert(
-        sortOnClickAction = { showSortBottomSheet.value = true },
+    ProvideTopBarSortFilterActionsAndMoreVert(
+        sortFilterOnClickAction = { showFilterDialog.value = true },
         moreVertOnClickAction = { showListSettingsBottomSheet.value = true }
     )
 
@@ -93,14 +105,14 @@ fun ListView(
             Text(text = movieList?.name ?: "N/A", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
 
             if (moviesInList.isNullOrEmpty()){
-                EmptyListText()
+                EmptyListText(FilterHelper.isAnyFilterApplied(selectedFilterOptions.value))
             }else{
-                ListContent(moviesInList, navController, listViewModel, selectedSortOption)
+                ListContent(moviesInList, navController, listViewModel, selectedSortOption.value, selectedFilterOptions.value)
             }
         }
     }
     //Dialogs and BottomSheet
-    AddMovieToListDialog(openAddMovieDialog = openAddMovieDialog, sortOption = selectedSortOption.value, listViewModel = listViewModel)
+    AddMovieToListDialog(openAddMovieDialog, listViewModel, selectedSortOption.value, selectedFilterOptions.value, )
 
     ListSettingsBottomSheet(showBottomSheet = showListSettingsBottomSheet.value,
         onClose = {showListSettingsBottomSheet.value = false},
@@ -120,7 +132,7 @@ fun ListView(
         onCancel = { openDeleteListDialog.value = false })
 
 
-    if (movieList != null) {
-        ListSortBottomSheet(showSortBottomSheet, selectedSortOption, listViewModel, movieList)
+    SortFilterDialog(showFilterDialog, ListSortOptions.options, selectedSortOption, selectedFilterOptions){
+        listViewModel.loadList(movieListId, selectedSortOption.value, selectedFilterOptions.value)
     }
 }

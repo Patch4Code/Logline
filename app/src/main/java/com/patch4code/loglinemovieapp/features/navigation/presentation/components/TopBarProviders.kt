@@ -135,11 +135,11 @@ fun ProvideTopBarSortActions(onClickAction: () -> Unit) {
  * ProvideTopBarSortActionsAndMoreVert - Composable function that adds a sort action icon
  * and a MoreVert icon to the top app bar.
  *
- * @param sortOnClickAction A lambda function to execute when the sort icon is clicked.
+ * @param sortFilterOnClickAction A lambda function to execute when the sort icon is clicked.
  * @author Patch4Code
  */
 @Composable
-fun ProvideTopBarSortActionsAndMoreVert(sortOnClickAction: () -> Unit, moreVertOnClickAction: () -> Unit) {
+fun ProvideTopBarSortFilterActionsAndMoreVert(sortFilterOnClickAction: () -> Unit, moreVertOnClickAction: () -> Unit) {
 
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
     (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
@@ -147,11 +147,11 @@ fun ProvideTopBarSortActionsAndMoreVert(sortOnClickAction: () -> Unit, moreVertO
             viewModelStoreOwner = owner,
             initializer = { TopBarViewModel() },
         )
-        LaunchedEffect(sortOnClickAction, moreVertOnClickAction) {
+        LaunchedEffect(sortFilterOnClickAction, moreVertOnClickAction) {
             viewModel.actions = {
-                IconButton(onClick = {sortOnClickAction()}) {
+                IconButton(onClick = {sortFilterOnClickAction()}) {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Outlined.Sort,
+                        imageVector = Icons.Default.FilterList,
                         contentDescription = "Add",
                         tint = Color.White
                     )

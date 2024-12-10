@@ -5,7 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieInListMapper
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
@@ -32,24 +36,63 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
     val moviesInList: LiveData<List<MovieInList>> get() = _moviesInList
 
     // Sets the movie list data based on id by calling the db and ordering with kotlin
-    fun getList(listId: String, sortOption: ListSortOptions) {
+    fun loadList(listId: String, sortOption: SortOption, filterOptions: FilterOptions) {
+        if (sortOption !in ListSortOptions.options) {
+            throw IllegalArgumentException("Unsupported sort option for List: $sortOption")
+        }
+
         viewModelScope.launch {
             _movieList.value = movieListDao.getMovieListById(listId)
-            val sortedList = when (sortOption) {
-                ListSortOptions.ByPositionAsc -> movieInListDao.getMoviesInListOrderedByPositionAsc(listId)
-                ListSortOptions.ByPositionDesc -> movieInListDao.getMoviesInListOrderedByPositionDesc(listId)
-                ListSortOptions.ByTitleAsc -> movieInListDao.getMoviesInListOrderedByTitleAsc(listId)
-                ListSortOptions.ByTitleDesc -> movieInListDao.getMoviesInListOrderedByTitleDesc(listId)
-                ListSortOptions.ByReleaseDateAsc -> movieInListDao.getMoviesInListOrderedByReleaseDateAsc(listId)
-                ListSortOptions.ByReleaseDateDesc -> movieInListDao.getMoviesInListOrderedByReleaseDateDesc(listId)
-                ListSortOptions.ByTimeAddedAsc -> movieInListDao.getMoviesInListOrderedByTimeAddedAsc(listId)
-                ListSortOptions.ByTimeAddedDesc -> movieInListDao.getMoviesInListOrderedByTimeAddedDesc(listId)
+            val sortedItems = when (sortOption) {
+                SortOption.ByPositionAsc -> movieInListDao.getMoviesInListOrderedByPositionAsc(listId)
+                SortOption.ByTitleAsc -> movieInListDao.getMoviesInListOrderedByTitleAsc(listId)
+                SortOption.ByTitleDesc -> movieInListDao.getMoviesInListOrderedByTitleDesc(listId)
+                SortOption.ByReleaseDateAsc -> movieInListDao.getMoviesInListOrderedByReleaseDateAsc(listId)
+                SortOption.ByReleaseDateDesc -> movieInListDao.getMoviesInListOrderedByReleaseDateDesc(listId)
+                SortOption.ByAddedAsc -> movieInListDao.getMoviesInListOrderedByTimeAddedAsc(listId)
+                SortOption.ByAddedDesc -> movieInListDao.getMoviesInListOrderedByTimeAddedDesc(listId)
+                SortOption.ByPopularityAsc -> movieInListDao.getMoviesInListOrderedByPopularityAsc(listId)
+                SortOption.ByPopularityDesc -> movieInListDao.getMoviesInListOrderedByPopularityDesc(listId)
+                SortOption.ByVoteAverageAsc -> movieInListDao.getMoviesInListOrderedByVoteAverageAsc(listId)
+                SortOption.ByVoteAverageDesc -> movieInListDao.getMoviesInListOrderedByVoteAverageDesc(listId)
+                else -> emptyList()
             }
-            _moviesInList.value = sortedList
+            val filteredAndSortedListItems = filterList(sortedItems, filterOptions)
+            _moviesInList.value = filteredAndSortedListItems
         }
     }
+
+    private fun filterList(items: List<MovieInList>, filterOptions: FilterOptions): List<MovieInList> {
+        return items.filter { movieInList ->
+            matchesGenre(movieInList.genreIds, filterOptions.selectedGenres) &&
+                    matchesDecade(movieInList.releaseDate, filterOptions.selectedDecades) &&
+                    matchesYear(movieInList.releaseDate, filterOptions.selectedYears) &&
+                    matchesLanguage(movieInList.originalLanguage, filterOptions.selectedLanguages)
+        }
+    }
+
+    // Helper function to check genres
+    private fun matchesGenre(genreIds: List<Int>?, selectedGenres: List<Int>): Boolean {
+        return selectedGenres.isEmpty() || genreIds?.any { selectedGenres.contains(it) } == true
+    }
+
+    // Helper function to check decades
+    private fun matchesDecade(releaseDate: String?, selectedDecades: List<String>): Boolean {
+        return selectedDecades.isEmpty() || selectedDecades.contains(FilterHelper.getDecadeFromReleaseDate(releaseDate))
+    }
+
+    // Helper function to check years
+    private fun matchesYear(releaseDate: String?, selectedYears: List<String>): Boolean {
+        return selectedYears.isEmpty() || selectedYears.contains(MovieHelper.extractYear(releaseDate))
+    }
+
+    // Helper function to check languages
+    private fun matchesLanguage(language: String?, selectedLanguages: List<String>): Boolean {
+        return selectedLanguages.isEmpty() || selectedLanguages.contains(language ?: "N/A")
+    }
+
     // Adds a movie to the movie list calling the db
-    fun addMovieToList(movie: Movie, sortOption: ListSortOptions) {
+    fun addMovieToList(movie: Movie, sortOption: SortOption, filterOptions: FilterOptions) {
         val listId = _movieList.value?.id ?: return
         viewModelScope.launch {
             val highestListPosition = movieInListDao.getHighestPositionInList(listId) ?: -1
@@ -64,7 +107,7 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
             movieListDao.updateListTimeUpdated(listId, System.currentTimeMillis())
 
             //Update
-            getList(movieList.value!!.id, sortOption)
+            loadList(movieList.value!!.id, sortOption, filterOptions)
         }
     }
     // Checks if a movie is already on the current list
@@ -73,13 +116,13 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
         return currentMoviesInList.any { it.movieId == movie.id }
     }
     // Removes a movie from the movie list calling the db
-    fun removeMovieFromList(movieId: Int, sortOption: ListSortOptions) {
+    fun removeMovieFromList(movieId: Int, sortOption: SortOption, filterOptions: FilterOptions) {
         val listId = _movieList.value?.id ?: return
         viewModelScope.launch {
             movieInListDao.removeMovieFromList(listId, movieId)
             movieListDao.updateListTimeUpdated(listId, System.currentTimeMillis())
 
-            getList(movieList.value!!.id, sortOption)
+            loadList(movieList.value!!.id, sortOption, filterOptions)
         }
     }
     // Edits the movie list parameters calling the db

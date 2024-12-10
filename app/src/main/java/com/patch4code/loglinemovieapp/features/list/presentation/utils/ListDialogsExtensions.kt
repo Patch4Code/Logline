@@ -2,7 +2,8 @@ package com.patch4code.loglinemovieapp.features.list.presentation.utils
 
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
+import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
@@ -20,9 +21,10 @@ object ListDialogsExtensions{
     fun ListViewModel.onDeleteMovieFromList(
         movieToDelete: MutableState<MovieInList?>,
         openDeleteMovieDialog: MutableState<Boolean>,
-        sortOption: ListSortOptions
+        sortOption: SortOption,
+        filterOptions: FilterOptions
     ) {
-        movieToDelete.value?.let { removeMovieFromList(it.movieId, sortOption) }
+        movieToDelete.value?.let { removeMovieFromList(it.movieId, sortOption, filterOptions) }
         movieToDelete.value = null
         openDeleteMovieDialog.value = false
     }

@@ -19,14 +19,18 @@ import androidx.compose.ui.unit.dp
  * @author Patch4Code
  */
 @Composable
-fun EmptyListText(){
+fun EmptyListText(filtersActive: Boolean){
 
     Box(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         contentAlignment = Alignment.Center
     ){
         Text(
-            text = "This List is empty.",
+            text =
+            if(filtersActive)
+                "No items match your current filters."
+            else
+                "This List is empty.",
             textAlign = TextAlign.Center,
             color = Color.White
         )

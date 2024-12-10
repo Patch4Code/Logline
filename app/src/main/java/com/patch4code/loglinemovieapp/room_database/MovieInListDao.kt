@@ -43,8 +43,6 @@ interface MovieInListDao {
     // MovieInList Queries
     @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY position ASC")
     suspend fun getMoviesInListOrderedByPositionAsc(listId: String): List<MovieInList>
-    @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY position DESC")
-    suspend fun getMoviesInListOrderedByPositionDesc(listId: String): List<MovieInList>
     @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY title ASC")
     suspend fun getMoviesInListOrderedByTitleAsc(listId: String): List<MovieInList>
     @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY title DESC")
@@ -57,4 +55,12 @@ interface MovieInListDao {
     suspend fun getMoviesInListOrderedByTimeAddedAsc(listId: String): List<MovieInList>
     @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY timeAdded DESC")
     suspend fun getMoviesInListOrderedByTimeAddedDesc(listId: String): List<MovieInList>
+    @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY popularity ASC")
+    suspend fun getMoviesInListOrderedByPopularityAsc(listId: String): List<MovieInList>
+    @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY popularity DESC")
+    suspend fun getMoviesInListOrderedByPopularityDesc(listId: String): List<MovieInList>
+    @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY voteAverage ASC")
+    suspend fun getMoviesInListOrderedByVoteAverageAsc(listId: String): List<MovieInList>
+    @Query("SELECT * FROM movieInList WHERE movieListId = :listId ORDER BY voteAverage DESC")
+    suspend fun getMoviesInListOrderedByVoteAverageDesc(listId: String): List<MovieInList>
 }

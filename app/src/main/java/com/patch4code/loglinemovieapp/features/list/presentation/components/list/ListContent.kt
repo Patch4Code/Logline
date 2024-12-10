@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -14,8 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainer
-import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.DeleteMovieFromListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.items.ListItem
@@ -36,7 +36,8 @@ fun ListContent(
     moviesInList: List<MovieInList>,
     navController: NavController,
     listViewModel: ListViewModel,
-    selectedSortOption: MutableState<ListSortOptions>
+    selectedSortOption: SortOption,
+    selectedFilterOptions: FilterOptions
 ){
 
     val openDeleteMovieDialog = remember { mutableStateOf(false)  }
@@ -69,7 +70,7 @@ fun ListContent(
     }
 
     DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
-        onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog, selectedSortOption.value) },
+        onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog, selectedSortOption, selectedFilterOptions) },
         onCancel = {
             movieToDelete.value?.let {
                 deletingStates[it] = false
