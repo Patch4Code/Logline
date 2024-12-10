@@ -12,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -21,8 +22,9 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Load
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieMapper
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.MovieContent
+import com.patch4code.loglinemovieapp.features.movie.presentation.utils.MovieTopBarNavigationHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarBackNavigationIcon
+import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideCustomTopBarBackNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
@@ -50,6 +52,8 @@ fun MovieView(
     val context = LocalContext.current
     val movieId = id?.toIntOrNull() ?: 0
 
+    val openPosterPopup = remember { mutableStateOf(false)  }
+
     LaunchedEffect(Unit) {
         movieViewModel.loadRatingAndWatchlistStatusById(movieId)
         movieViewModel.loadAllMovieData(movieId)
@@ -57,8 +61,9 @@ fun MovieView(
 
     // TopBar config
     ProvideTopBarTitle(title = Screen.MovieScreen.title.asString())
-    ProvideTopBarBackNavigationIcon(navController)
-
+    ProvideCustomTopBarBackNavigationIcon{
+        MovieTopBarNavigationHelper.handleBackNavigation(navController, openPosterPopup)
+    }
 
     val movieDetails = movieViewModel.detailsData.observeAsState().value
     val movieCredits = movieViewModel.creditsData.observeAsState().value
@@ -96,7 +101,18 @@ fun MovieView(
                 }
             }
         ){
-            MovieContent(movieDetails, movieCredits, collectionMovies, movieVideo, movieProviders, watchCountry, navController, movieViewModel, db)
+            MovieContent(
+                movieDetails = movieDetails,
+                movieCredits = movieCredits,
+                collectionMovies = collectionMovies,
+                movieVideo = movieVideo,
+                movieProviders = movieProviders,
+                watchCountry = watchCountry,
+                openPosterPopup = openPosterPopup,
+                navController = navController,
+                movieViewModel = movieViewModel,
+                db = db
+            )
         }
     }
 }

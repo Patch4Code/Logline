@@ -80,6 +80,37 @@ fun ProvideTopBarBackNavigationIcon(navController: NavController) {
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
+ * ProvideCustomTopBarBackNavigationIcon - Composable function that adds a back navigation icon to
+ * the top app bar with customizable onClick.
+ *
+ * @author Patch4Code
+ */
+@Composable
+fun ProvideCustomTopBarBackNavigationIcon(onClickAction: () -> Unit) {
+    val viewModelStoreOwner = LocalViewModelStoreOwner.current
+    (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->
+        val viewModel: TopBarViewModel = viewModel(
+            viewModelStoreOwner = owner,
+            initializer = { TopBarViewModel() },
+        )
+        LaunchedEffect(onClickAction) {
+            viewModel.navigationIcon = {
+                IconButton(onClick = { onClickAction() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                        contentDescription = "Back",
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
  * ProvideTopBarNoNavigationIcon - Composable function that removes the navigation icon from the top app bar.
  *
  * @author Patch4Code
