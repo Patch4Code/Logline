@@ -60,6 +60,7 @@ fun MovieContent(
             MovieCastAndCrew(movieCredits, navController)
             MovieMoreDetails(movieDetails)
             MovieMoreLikeThis(navController, collectionMovies, movieDetails?.title)
+            MovieOtherSites(movieDetails)
             MovieSourceReference()
         }
     }
