@@ -40,7 +40,8 @@ fun MovieSearchCard(navController: NavController, movie: Movie){
 
     Column {
         Row (
-            modifier = Modifier.height(100.dp).fillMaxWidth().padding(8.dp)
+            modifier = Modifier.height(100.dp).fillMaxWidth()
+                .padding(start = 12.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
                 .clickable {
                     navController.navigate(Screen.MovieScreen.withArgs(movieId))
                 },

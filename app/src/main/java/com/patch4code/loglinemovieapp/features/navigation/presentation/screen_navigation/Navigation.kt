@@ -40,7 +40,7 @@ import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profi
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileView
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewDetailsView
 import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewsView
-import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchView
+import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchDiscoverView
 import com.patch4code.loglinemovieapp.features.settings.presentation.screen_settings.SettingsView
 import com.patch4code.loglinemovieapp.features.watchlist.presentation.screen_watchlist.WatchlistView
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
@@ -106,9 +106,10 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.SearchScreen.route){
-                        SearchView(
+                        SearchDiscoverView(
                             navController = navController,
-                            searchFocusRequest = searchFocusRequest
+                            searchFocusRequest = searchFocusRequest,
+                            db = db
                         )
                     }
 

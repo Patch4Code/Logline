@@ -8,6 +8,7 @@ import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
 import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
+import com.patch4code.loglinemovieapp.features.search.domain.model.SearchHistoryItem
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -17,7 +18,7 @@ import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
  *
  * @author Patch4Code
  */
-@Database(entities = [MovieUserData::class, LoggedMovie::class, MovieList::class, MovieInList::class, UserProfile::class], version = 1)
+@Database(entities = [MovieUserData::class, LoggedMovie::class, MovieList::class, MovieInList::class, UserProfile::class, SearchHistoryItem::class], version = 1)
 @TypeConverters(RoomConverters::class)
 abstract class LoglineDatabase: RoomDatabase() {
 
@@ -26,4 +27,5 @@ abstract class LoglineDatabase: RoomDatabase() {
     abstract val movieListDao: MovieListDao
     abstract val movieInListDao: MovieInListDao
     abstract val userProfileDao: UserProfileDao
+    abstract val searchHistoryDao: SearchHistoryDao
 }
