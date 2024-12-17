@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 class SearchViewModel(private val dao: SearchHistoryDao): ViewModel(){
 
 
-
     private val tmdbApiService: TmdbApiService by lazy {
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)
     }
@@ -112,7 +111,7 @@ class SearchViewModel(private val dao: SearchHistoryDao): ViewModel(){
     }
     private fun addSearchStringToSearchHistory(searchString: String){
         viewModelScope.launch {
-            dao.addSearchString(searchString)
+            dao.addSearchString(searchString.trimEnd())
             loadSearchHistory()
         }
     }

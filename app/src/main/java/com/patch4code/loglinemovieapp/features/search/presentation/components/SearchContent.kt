@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.search.presentation.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -81,10 +80,7 @@ fun SearchContent(
             searchViewModel.clearSearchedMovies()
         }
     }
-    LaunchedEffect(Unit) {
-        searchViewModel.loadSearchHistory()
-    }
-    val searchHistory = searchViewModel.searchHistory.observeAsState().value
+
 
     Column {
         Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.Center
@@ -136,17 +132,12 @@ fun SearchContent(
         }else if(hasLoadError){
             LoadErrorDisplay(onReload = { searchViewModel.searchMovie(textInput.value.text) })
         }else if(searchResult == null){
-            //here search-history could be displayed
-            LazyColumn {
-                item {
-                    searchHistory?.forEach {searchHistoryItem->
-                        Text(text = searchHistoryItem.query,
-                            modifier = Modifier.clickable{ searchViewModel.deleteItemFromSearchHistory(searchHistoryItem) })
-                    }
-                }
+            SearchHistoryColumn(searchViewModel){itemString->
+                textInput.value = TextFieldValue(itemString)
+                keyboardController?.hide()
+                focusManager.clearFocus()
+                searchViewModel.searchMovie(textInput.value.text)
             }
-
-
         }else if(searchResult.isEmpty()){
             NoSearchResultText()
         }
