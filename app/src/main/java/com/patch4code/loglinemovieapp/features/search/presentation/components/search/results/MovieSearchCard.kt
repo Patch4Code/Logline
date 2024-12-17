@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.search.presentation.components
+package com.patch4code.loglinemovieapp.features.search.presentation.components.search.results
 
 
 import androidx.compose.foundation.clickable

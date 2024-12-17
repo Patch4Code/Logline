@@ -7,8 +7,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarSearchViewTabs
-import com.patch4code.loglinemovieapp.features.search.presentation.components.DiscoverContent
-import com.patch4code.loglinemovieapp.features.search.presentation.components.SearchContent
+import com.patch4code.loglinemovieapp.features.search.presentation.components.discover.DiscoverContent
+import com.patch4code.loglinemovieapp.features.search.presentation.components.search.SearchContent
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
 /**

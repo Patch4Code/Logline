@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.search.presentation.components
+package com.patch4code.loglinemovieapp.features.search.presentation.components.search.history
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -16,6 +16,7 @@ fun ClearHistoryDialog(searchViewModel: SearchViewModel, openClearHistoryDialog:
 
     AlertDialog(
         onDismissRequest = { openClearHistoryDialog.value = false },
+        title = { Text("Clear History") },
         text = { Text(text = "Do you want to clear the Search History?") },
         confirmButton = {
             Button(onClick = {
