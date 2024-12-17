@@ -8,13 +8,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.DiscoverViewModel
 
 @Composable
 fun DiscoverContent(
     navController: NavController,
     searchFocusRequest: MutableState<Boolean>,
     selectedTabIndex: Int,
+    discoverViewModel: DiscoverViewModel = viewModel()
 ){
 
     if (selectedTabIndex != 1) return

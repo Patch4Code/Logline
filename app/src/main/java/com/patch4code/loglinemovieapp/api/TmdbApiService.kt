@@ -113,4 +113,26 @@ interface TmdbApiService {
         @Query("page") page: Int = 1,
         @Query("api_key") apiKey: String = TmdbCredentials.getApiKey()
     ): Response<TmdbReviewResponse>
+
+    @GET("discover/movie")
+    suspend fun discoverMovies(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("sort_by") sortBy: String = "popularity.desc",
+        @Query("with_genres") genres: String? = null,
+        @Query("release_date.gte") releaseDateGte: String? = null,
+        @Query("release_date.lte") releaseDateLte: String? = null,
+        @Query("with_origin_country") originalCountry: String? = null,
+        @Query("with_original_language") originalLanguage: String? = null,
+        @Query("watch_region") watchRegion: String? = null,
+        @Query("with_watch_providers") watchProviders: String? = null,
+        @Query("with_runtime.gte") runtimeGte: Int? = null,
+        @Query("with_runtime.lte") runtimeLte: Int? = null,
+        @Query("vote_average.gte") voteAverageGte: Float? = null,
+        @Query("vote_average.lte") voteAverageLte: Float? = null,
+        @Query("vote_count.gte") voteCountGte: Int? = null,
+        @Query("with_people") people: String? = null,
+        @Query("with_companies") companies: String? = null,
+        @Query("api_key") apiKey: String,
+    ): Response<MoviePage>
 }
