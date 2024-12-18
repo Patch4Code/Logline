@@ -25,6 +25,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.Load
 import com.patch4code.loglinemovieapp.features.search.presentation.components.search.history.SearchHistoryColumn
 import com.patch4code.loglinemovieapp.features.search.presentation.components.search.results.NoSearchResultText
 import com.patch4code.loglinemovieapp.features.search.presentation.components.search.results.SearchResultsList
+import com.patch4code.loglinemovieapp.features.search.presentation.components.utils.TextInputSaver
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchViewModel
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchViewModelFactory
 import com.patch4code.loglinemovieapp.features.search.presentation.utils.HandleClearSearch
@@ -44,7 +45,7 @@ fun SearchContent(
     )
 ){
 
-    val textInput = remember { mutableStateOf(TextFieldValue("")) }
+    val textInput = rememberSaveable(stateSaver = TextInputSaver.saver) { mutableStateOf(TextFieldValue("")) }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
