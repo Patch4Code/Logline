@@ -7,7 +7,7 @@ data class DiscoverOptions(
     var primaryReleaseDateGte: String? = null,
     var primaryReleaseDateLte: String? = null,
     val originalCountry: String? = null,
-    val originalLanguage: String? = null,
+    var originalLanguage: String? = null,
     val watchRegion: String? = null,
     val watchProviders: String? = null,
     val runtimeGte: Int? = null,
@@ -21,9 +21,20 @@ data class DiscoverOptions(
     fun getGenresAsString(separator: String = ","): String {
         return genres.joinToString(separator)
     }
-    fun clearPrimaryRelease():DiscoverOptions  {
+    fun clearAllPrimaryReleases():DiscoverOptions  {
         return this.copy(
             primaryReleaseYear = null,
+            primaryReleaseDateGte = null,
+            primaryReleaseDateLte = null
+        )
+    }
+    fun clearPrimaryReleaseYear():DiscoverOptions {
+        return this.copy(
+            primaryReleaseYear = null,
+        )
+    }
+    fun clearPrimaryReleaseDates():DiscoverOptions {
+        return this.copy(
             primaryReleaseDateGte = null,
             primaryReleaseDateLte = null
         )

@@ -44,7 +44,7 @@ fun DiscoverOptionSelection(
     val years = MovieYears.getYears()
 
     val originCountries = ""
-    val originalLanguages = MovieLanguages.getPrimaryLanguages()
+    val primaryLanguages = MovieLanguages.getPrimaryLanguages()
 
     //Services (load from API)
 
@@ -107,7 +107,7 @@ fun DiscoverOptionSelection(
                             discoverOptions.value.primaryReleaseDateGte == null &&
                             discoverOptions.value.primaryReleaseDateLte == null,
                     onClick = {
-                        discoverOptions.value = discoverOptions.value.clearPrimaryRelease()
+                        discoverOptions.value = discoverOptions.value.clearAllPrimaryReleases()
                     },
                     label = { Text("Any Year") }
                 )
@@ -123,12 +123,13 @@ fun DiscoverOptionSelection(
                                     if (discoverOptions.value.primaryReleaseDateGte == discoverDecade.decadeStartDate &&
                                         discoverOptions.value.primaryReleaseDateLte == discoverDecade.decadeEndDate
                                     ) {
-                                        discoverOptions.value = discoverOptions.value.clearPrimaryRelease()
+                                        discoverOptions.value = discoverOptions.value.clearAllPrimaryReleases()
                                     } else {
                                         discoverOptions.value = discoverOptions.value.copy(
                                             primaryReleaseDateGte = discoverDecade.decadeStartDate,
                                             primaryReleaseDateLte = discoverDecade.decadeEndDate
                                         )
+                                        discoverOptions.value = discoverOptions.value.clearPrimaryReleaseYear()
                                     }
                                 },
                                 label = { Text(text = discoverDecade.decade, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) }
@@ -137,6 +138,75 @@ fun DiscoverOptionSelection(
                     }
                 }
                 Spacer(modifier = Modifier.padding(4.dp))
+
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    years.forEach{year->
+                        item {
+                            FilterChip(
+                                modifier = Modifier.width(chipWidth),
+                                selected = discoverOptions.value.primaryReleaseYear == year.toInt() ,
+                                onClick = {
+                                    if (discoverOptions.value.primaryReleaseYear == year.toInt()) {
+                                        discoverOptions.value = discoverOptions.value.clearAllPrimaryReleases()
+                                    } else {
+                                        discoverOptions.value = discoverOptions.value.copy(
+                                            primaryReleaseYear = year.toInt()
+                                        )
+                                        discoverOptions.value = discoverOptions.value.clearPrimaryReleaseDates()
+                                    }
+                                },
+                                label = { Text(text = year, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) }
+                            )
+                        }
+                    }
+                }
+
+                //Origin Country
+
+                //Original Country
+                Spacer(modifier = Modifier.padding(8.dp))
+                Text("Original Language")
+
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    item {
+                        FilterChip(
+                            selected = discoverOptions.value.originalLanguage == null,
+                            onClick = { discoverOptions.value = discoverOptions.value.copy(originalLanguage = null) },
+                            label = { Text("Any Language")},
+                        )
+                    }
+                    val sortedLanguages = primaryLanguages.entries.sortedBy { it.value }
+                    sortedLanguages.forEach{language ->
+                        item {
+                            FilterChip(
+                                label = {Text(language.value)},
+                                selected = discoverOptions.value.originalLanguage == language.key,
+                                onClick = {
+                                    if (discoverOptions.value.originalLanguage == language.key) {
+                                        discoverOptions.value = discoverOptions.value.copy(originalLanguage = null)
+                                    } else {
+                                        discoverOptions.value = discoverOptions.value.copy(originalLanguage = language.key)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                    item {
+                        FilterChip(
+                            selected = false,
+                            onClick = {  }, //showLanguageDialog.value = true
+                            label = { Text("Select other")},
+                        )
+                    }
+                }
+
+                //Service
+
+                //Length
+
+                //TMDB-Rating
+
+                //Vote Count
 
 
             }
