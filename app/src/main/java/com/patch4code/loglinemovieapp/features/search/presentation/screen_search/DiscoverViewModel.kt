@@ -38,9 +38,10 @@ class DiscoverViewModel(): ViewModel(){
 
                 val searchResponse = tmdbApiService.discoverMovies(
                     sortBy = discoverOptions.sortBy,
-                    genres = discoverOptions.genres,
-                    releaseDateGte = discoverOptions.releaseDateGte,
-                    releaseDateLte = discoverOptions.releaseDateLte,
+                    genres = discoverOptions.getGenresAsString(","),
+                    primaryReleaseYear = discoverOptions.primaryReleaseYear,
+                    primaryReleaseDateGte = discoverOptions.primaryReleaseDateGte,
+                    primaryReleaseDateLte = discoverOptions.primaryReleaseDateLte,
                     originCountry = discoverOptions.originalCountry,
                     originalLanguage = discoverOptions.originalLanguage,
                     watchRegion = discoverOptions.watchRegion,
@@ -80,9 +81,10 @@ class DiscoverViewModel(): ViewModel(){
                     val loadMoreResponse = tmdbApiService.discoverMovies(
                         page = highestLoadedPage,
                         sortBy = discoverOptions.sortBy,
-                        genres = discoverOptions.genres,
-                        releaseDateGte = discoverOptions.releaseDateGte,
-                        releaseDateLte = discoverOptions.releaseDateLte,
+                        genres = discoverOptions.getGenresAsString(","),
+                        primaryReleaseYear = discoverOptions.primaryReleaseYear,
+                        primaryReleaseDateGte = discoverOptions.primaryReleaseDateGte,
+                        primaryReleaseDateLte = discoverOptions.primaryReleaseDateLte,
                         originCountry = discoverOptions.originalCountry,
                         originalLanguage = discoverOptions.originalLanguage,
                         watchRegion = discoverOptions.watchRegion,

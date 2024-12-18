@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog
+package com.patch4code.loglinemovieapp.features.search.presentation.components.discover
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,12 +23,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+import com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog.customVerticalScrollbar
+import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
+import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverSortOptions
 
 @Composable
-fun SortOptionDropdown(
-    tempSelectedSortOption: MutableState<SortOption>,
-    sortOptions: List<SortOption>
+fun DiscoverSortDropdown(
+    discoverOptions: MutableState<DiscoverOptions>,
+    discoverSortOptions: List<DiscoverSortOptions>
 ) {
     var expanded by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
@@ -36,13 +38,15 @@ fun SortOptionDropdown(
     val dropdownHeight = 300.dp
     val dropdownItemHeight = 48.dp
 
+    val selectedSortLabel =  DiscoverSortOptions.getLabelFromQuery(discoverOptions.value.sortBy)
+
 
     Box {
         FilterChip(
             modifier = Modifier.width(260.dp),
             label = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(tempSelectedSortOption.value.label, modifier = Modifier.weight(1f))
+                    Text(selectedSortLabel, modifier = Modifier.weight(1f))
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Expand Menu")
                 }
             },
@@ -54,30 +58,29 @@ fun SortOptionDropdown(
                 .heightIn(max = dropdownHeight)
                 .customVerticalScrollbar(
                     state = scrollState,
-                    contentHeight = dropdownItemHeight * sortOptions.size,
+                    contentHeight = dropdownItemHeight * discoverSortOptions.size,
                     containerHeight = dropdownHeight,
                     alwaysShowScrollbar = true
-            ),
+                ),
             expanded = expanded,
             onDismissRequest = { expanded = false },
             scrollState = scrollState,
         ) {
             Box {
                 Column {
-                    sortOptions.forEach { sortOption ->
+                    discoverSortOptions.forEach { discoverSortOption ->
 
                         DropdownMenuItem(
                             modifier = Modifier.height(dropdownItemHeight).width(235.dp),
                             onClick = {
-                                tempSelectedSortOption.value = sortOption
+                                discoverOptions.value.sortBy = discoverSortOption.queryParam
                                 expanded = false
                             },
-                            text = { Text(text = sortOption.label) }
+                            text = { Text(text = discoverSortOption.label) }
                         )
                     }
                 }
             }
-
         }
     }
 }
