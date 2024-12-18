@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarSearchViewTabs
 import com.patch4code.loglinemovieapp.features.search.presentation.components.discover.DiscoverContent
@@ -26,7 +26,7 @@ fun SearchDiscoverView(
     searchFocusRequest: MutableState<Boolean>,
     db: LoglineDatabase
 ){
-    val selectedTabIndex = remember { mutableIntStateOf(0) }
+    val selectedTabIndex = rememberSaveable { mutableIntStateOf(0) }
 
     ProvideTopBarSearchViewTabs(selectedTabIndex)
 
