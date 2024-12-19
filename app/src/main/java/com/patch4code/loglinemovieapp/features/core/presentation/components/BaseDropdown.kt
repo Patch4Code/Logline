@@ -22,7 +22,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog.customVerticalScrollbar
 
 @Composable
 fun <T> BaseDropdown(

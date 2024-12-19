@@ -9,15 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.features.core.domain.model.MovieYears
 import com.patch4code.loglinemovieapp.features.core.presentation.components.BaseFilterChipRow
 
 @Composable
 fun FilterDecadeYearSelection(
     selectedDecades: SnapshotStateList<String>,
     selectedYears: SnapshotStateList<String>,
-    decades: List<String>,
-    years: List<String>
 ){
+
+    val decades = MovieYears.getDecades()
+    val years = MovieYears.getYears()
 
     val chipWidth = 72.dp
 
