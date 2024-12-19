@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -26,7 +25,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -47,8 +45,6 @@ fun SortFilterDialog(
 ){
 
     if (!showFilterDialog.value) return
-
-    val chipWidth = 72.dp
 
     val tempSelectedSortOption = remember { mutableStateOf(selectedSortOption.value) }
 
@@ -108,60 +104,12 @@ fun SortFilterDialog(
                     FilterGenreSelection(availableGenres, selectedGenres)
 
                     Spacer(modifier = Modifier.padding(8.dp))
+
                     Text("Decade/Year")
-
-                    FilterChip(
-                        selected = selectedDecades.isEmpty() && selectedYears.isEmpty(),
-                        onClick = {
-                            selectedDecades.clear()
-                            selectedYears.clear()
-                        },
-                        label = { Text("Any Year") }
-                    )
-                    Spacer(modifier = Modifier.padding(4.dp))
-
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        decades.forEach{decade->
-                            item {
-                                FilterChip(
-                                    modifier = Modifier.width(chipWidth),
-                                    selected = selectedDecades.contains(decade),
-                                    onClick = {
-                                        if (selectedDecades.contains(decade)) {
-                                            selectedDecades.remove(decade)
-                                        } else {
-                                            selectedDecades.add(decade)
-                                        }
-                                        selectedYears.clear()
-                                    },
-                                    label = { Text(text = decade, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) }
-                                )
-                            }
-                        }
-                    }
-                    Spacer(modifier = Modifier.padding(4.dp))
-
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        years.forEach{year->
-                            item {
-                                FilterChip(
-                                    modifier = Modifier.width(chipWidth),
-                                    selected = selectedYears.contains(year),
-                                    onClick = {
-                                        if (selectedYears.contains(year)) {
-                                            selectedYears.remove(year)
-                                        } else {
-                                            selectedYears.add(year)
-                                        }
-                                        selectedDecades.clear()
-                                    },
-                                    label = { Text(text = year, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) }
-                                )
-                            }
-                        }
-                    }
+                    FilterDecadeYearSelection(selectedDecades, selectedYears, decades, years)
 
                     Spacer(modifier = Modifier.padding(8.dp))
+
                     Text("Original Language")
 
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

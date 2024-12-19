@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Button
@@ -20,7 +19,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieGenres
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
@@ -35,7 +33,6 @@ fun DiscoverOptionSelection(
     discoverOptions: MutableState<DiscoverOptions>
 ){
 
-    val chipWidth = 72.dp
 
     val discoverSortOptions = DiscoverSortOptions.entries.toList()
 
@@ -78,69 +75,11 @@ fun DiscoverOptionSelection(
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 Text("Decade/Year")
-
-                FilterChip(
-                    selected = discoverOptions.value.primaryReleaseYear == null &&
-                            discoverOptions.value.primaryReleaseDateGte == null &&
-                            discoverOptions.value.primaryReleaseDateLte == null,
-                    onClick = {
-                        discoverOptions.value = discoverOptions.value.clearAllPrimaryReleases()
-                    },
-                    label = { Text("Any Year") }
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    discoverDecades.forEach{discoverDecade->
-                        item {
-                            FilterChip(
-                                modifier = Modifier.width(chipWidth),
-                                selected = discoverOptions.value.primaryReleaseDateGte == discoverDecade.decadeStartDate &&
-                                        discoverOptions.value.primaryReleaseDateLte == discoverDecade.decadeEndDate,
-                                onClick = {
-                                    if (discoverOptions.value.primaryReleaseDateGte == discoverDecade.decadeStartDate &&
-                                        discoverOptions.value.primaryReleaseDateLte == discoverDecade.decadeEndDate
-                                    ) {
-                                        discoverOptions.value = discoverOptions.value.clearAllPrimaryReleases()
-                                    } else {
-                                        discoverOptions.value = discoverOptions.value.copy(
-                                            primaryReleaseDateGte = discoverDecade.decadeStartDate,
-                                            primaryReleaseDateLte = discoverDecade.decadeEndDate
-                                        )
-                                        discoverOptions.value = discoverOptions.value.clearPrimaryReleaseYear()
-                                    }
-                                },
-                                label = { Text(text = discoverDecade.decade, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) }
-                            )
-                        }
-                    }
-                }
-                Spacer(modifier = Modifier.padding(4.dp))
-
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    years.forEach{year->
-                        item {
-                            FilterChip(
-                                modifier = Modifier.width(chipWidth),
-                                selected = discoverOptions.value.primaryReleaseYear == year.toInt() ,
-                                onClick = {
-                                    if (discoverOptions.value.primaryReleaseYear == year.toInt()) {
-                                        discoverOptions.value = discoverOptions.value.clearAllPrimaryReleases()
-                                    } else {
-                                        discoverOptions.value = discoverOptions.value.copy(
-                                            primaryReleaseYear = year.toInt()
-                                        )
-                                        discoverOptions.value = discoverOptions.value.clearPrimaryReleaseDates()
-                                    }
-                                },
-                                label = { Text(text = year, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) }
-                            )
-                        }
-                    }
-                }
+                DiscoverDecadeYearSelection(discoverOptions, discoverDecades, years)
 
                 //Origin Country
 
-                //Original Country
+                //Original Language
                 Spacer(modifier = Modifier.padding(8.dp))
                 Text("Original Language")
 
