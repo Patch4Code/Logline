@@ -35,7 +35,9 @@ fun BaseLanguageSelectionDialog(
     if (!showDialog.value) return
 
     Dialog(
-        onDismissRequest = { onClose() },
+        onDismissRequest = {
+            onClose()
+        },
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
         Surface(

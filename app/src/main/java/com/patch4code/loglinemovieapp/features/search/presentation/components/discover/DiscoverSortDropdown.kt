@@ -7,10 +7,9 @@ import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptio
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverSortOptions
 
 @Composable
-fun DiscoverSortDropdown(
-    discoverOptions: MutableState<DiscoverOptions>,
-    discoverSortOptions: List<DiscoverSortOptions>
-) {
+fun DiscoverSortDropdown(discoverOptions: MutableState<DiscoverOptions>) {
+
+    val discoverSortOptions = DiscoverSortOptions.entries.toList()
 
     val selectedSortOption = discoverSortOptions.firstOrNull { it.queryParam == discoverOptions.value.sortBy }
         ?: discoverSortOptions.first()

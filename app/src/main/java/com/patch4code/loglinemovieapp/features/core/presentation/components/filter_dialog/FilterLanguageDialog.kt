@@ -26,6 +26,8 @@ fun FilterLanguageDialog(
                 selectedLanguages.add(languageKey)
             }
         },
-        onClose = { showDialog.value = false }
+        onClose = {
+            showDialog.value = false
+        }
     )
 }

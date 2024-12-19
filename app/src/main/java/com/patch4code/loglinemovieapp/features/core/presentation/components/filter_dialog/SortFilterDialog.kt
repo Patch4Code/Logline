@@ -1,17 +1,14 @@
 package com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,7 +27,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieGenres
-import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieYears
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 
@@ -56,9 +52,8 @@ fun SortFilterDialog(
     val years = MovieYears.getYears()
     val selectedYears = remember { mutableStateListOf(*selectedFilterOptions.value.selectedYears.toTypedArray()) }
 
-    val primaryLanguages = MovieLanguages.getPrimaryLanguages()
     val selectedLanguages = remember { mutableStateListOf(*selectedFilterOptions.value.selectedLanguages.toTypedArray()) }
-    val showLanguageDialog = remember { mutableStateOf(false) }
+
 
     Dialog(onDismissRequest =  {showFilterDialog.value = false},
         properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -111,40 +106,7 @@ fun SortFilterDialog(
                     Spacer(modifier = Modifier.padding(8.dp))
 
                     Text("Original Language")
-
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        item {
-                            FilterChip(
-                                selected = selectedLanguages.isEmpty(),
-                                onClick = {selectedLanguages.clear()},
-                                label = { Text("Any Language")},
-                            )
-                        }
-                        val sortedLanguages = primaryLanguages.entries.sortedBy { it.value }
-                        sortedLanguages.forEach{language ->
-                            item {
-                                FilterChip(
-                                    label = {Text(language.value)},
-                                    selected = selectedLanguages.contains(language.key),
-                                    onClick = {
-                                        if (selectedLanguages.contains(language.key)) {
-                                            selectedLanguages.remove(language.key)
-                                        } else {
-                                            selectedLanguages.add(language.key)
-                                        }
-                                    }
-                                )
-                            }
-                        }
-                        item {
-                            FilterChip(
-                                selected = false,
-                                onClick = { showLanguageDialog.value = true },
-                                label = { Text("Select other")},
-                            )
-                        }
-                    }
-
+                    FilterLanguageSection(selectedLanguages)
                 }
 
                 Button(
@@ -165,6 +127,6 @@ fun SortFilterDialog(
             }
         }
 
-        FilterLanguageDialog(showLanguageDialog, selectedLanguages)
+
     }
 }

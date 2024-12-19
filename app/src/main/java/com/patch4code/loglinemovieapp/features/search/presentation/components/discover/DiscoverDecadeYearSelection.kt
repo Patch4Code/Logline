@@ -9,16 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.features.core.domain.model.MovieYears
 import com.patch4code.loglinemovieapp.features.core.presentation.components.BaseFilterChipRow
-import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverDecade
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
 @Composable
-fun DiscoverDecadeYearSelection(
-    discoverOptions: MutableState<DiscoverOptions>,
-    discoverDecades: List<DiscoverDecade>,
-    years: List<String>
-){
+fun DiscoverDecadeYearSelection(discoverOptions: MutableState<DiscoverOptions>){
+
+    val discoverDecades = MovieYears.getDiscoverDecades()
+    val years = MovieYears.getYears()
 
     val chipWidth = 72.dp
 

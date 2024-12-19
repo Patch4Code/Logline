@@ -22,6 +22,7 @@ fun FilterGenreSelection(
             }
         },
         hasAnyChip = true,
+        anyChipIsSelected = { selectedGenres.isEmpty() },
         anyChipLabel = "Any Genre",
         onAnyClick = { selectedGenres.clear() }
     )

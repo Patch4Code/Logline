@@ -17,8 +17,11 @@ fun <T>BaseFilterChipRow(
     isSelected: (T) -> Boolean,
     onItemToggle:(T) -> Unit,
     hasAnyChip: Boolean = false,
+    anyChipIsSelected: () -> Boolean = {false},
     anyChipLabel: String = "Any",
     onAnyClick: () -> Unit = {},
+    hasSelectOtherButton: Boolean = false,
+    onSelectOtherClick:() -> Unit = {},
     modifier: Modifier = Modifier
 ){
 
@@ -28,7 +31,7 @@ fun <T>BaseFilterChipRow(
             item {
                 FilterChip(
                     modifier = modifier,
-                    selected = items.none { isSelected(it) },
+                    selected =  anyChipIsSelected(),
                     onClick = { onAnyClick() },
                     label = { Text(text = anyChipLabel, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) }
                 )
@@ -42,6 +45,16 @@ fun <T>BaseFilterChipRow(
                     selected = isSelected(item),
                     onClick = { onItemToggle(item) },
                     label = { Text(text= labelProvider(item), textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) }
+                )
+            }
+        }
+
+        if(hasSelectOtherButton){
+            item {
+                FilterChip(
+                    selected = false,
+                    onClick = { onSelectOtherClick() },
+                    label = { Text("Select other")},
                 )
             }
         }
