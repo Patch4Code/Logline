@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog
+package com.patch4code.loglinemovieapp.features.core.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,7 +15,6 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,12 +22,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+import com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog.customVerticalScrollbar
 
 @Composable
-fun SortOptionDropdown(
-    tempSelectedSortOption: MutableState<SortOption>,
-    sortOptions: List<SortOption>
+fun <T> BaseDropdown(
+    selectedItem: T,
+    items: List<T>,
+    labelProvider: (T) -> String,
+    onItemSelected: (T) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
@@ -36,13 +37,12 @@ fun SortOptionDropdown(
     val dropdownHeight = 300.dp
     val dropdownItemHeight = 48.dp
 
-
     Box {
         FilterChip(
             modifier = Modifier.width(260.dp),
             label = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(tempSelectedSortOption.value.label, modifier = Modifier.weight(1f))
+                    Text(labelProvider(selectedItem), modifier = Modifier.weight(1f))
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Expand Menu")
                 }
             },
@@ -54,30 +54,28 @@ fun SortOptionDropdown(
                 .heightIn(max = dropdownHeight)
                 .customVerticalScrollbar(
                     state = scrollState,
-                    contentHeight = dropdownItemHeight * sortOptions.size,
+                    contentHeight = dropdownItemHeight * items.size,
                     containerHeight = dropdownHeight,
                     alwaysShowScrollbar = true
-            ),
+                ),
             expanded = expanded,
             onDismissRequest = { expanded = false },
             scrollState = scrollState,
         ) {
             Box {
                 Column {
-                    sortOptions.forEach { sortOption ->
-
+                    items.forEach { item ->
                         DropdownMenuItem(
                             modifier = Modifier.height(dropdownItemHeight).width(235.dp),
                             onClick = {
-                                tempSelectedSortOption.value = sortOption
+                                onItemSelected(item)
                                 expanded = false
                             },
-                            text = { Text(text = sortOption.label) }
+                            text = { Text(text = labelProvider(item)) }
                         )
                     }
                 }
             }
-
         }
     }
 }

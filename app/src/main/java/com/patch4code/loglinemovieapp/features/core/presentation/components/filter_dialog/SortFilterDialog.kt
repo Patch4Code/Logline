@@ -100,36 +100,13 @@ fun SortFilterDialog(
                 Column(modifier = Modifier.fillMaxSize().padding(16.dp).weight(1f)) {
 
                     Text("Sort by")
-                    SortOptionDropdown(tempSelectedSortOption, sortOptions)
+                    FilterSortDropdown(tempSelectedSortOption, sortOptions)
 
                     Spacer(modifier = Modifier.padding(8.dp))
 
                     Text("Genre")
+                    FilterGenreSelection(availableGenres, selectedGenres)
 
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        item {
-                            FilterChip(
-                                selected = selectedGenres.isEmpty(),
-                                onClick = {selectedGenres.clear()},
-                                label = { Text("Any Genre")},
-                            )
-                        }
-                        availableGenres.forEach{genreMap ->
-                            item {
-                                FilterChip(
-                                    label = {Text(genreMap.value)},
-                                    selected = selectedGenres.contains(genreMap.key),
-                                    onClick = {
-                                        if (selectedGenres.contains(genreMap.key)) {
-                                            selectedGenres.remove(genreMap.key)
-                                        } else {
-                                            selectedGenres.add(genreMap.key)
-                                        }
-                                    }
-                                )
-                            }
-                        }
-                    }
                     Spacer(modifier = Modifier.padding(8.dp))
                     Text("Decade/Year")
 

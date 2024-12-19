@@ -61,7 +61,10 @@ fun DiscoverOptionSelection(
 
     Column {
 
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp).weight(1f)) {
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .weight(1f)) {
             item {
                 Text("Sort by")
                 DiscoverSortDropdown(discoverOptions, discoverSortOptions)
@@ -69,40 +72,11 @@ fun DiscoverOptionSelection(
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 Text("Genre")
-
                 //only Exact genre match
-
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    item {
-                        FilterChip(
-                            selected = discoverOptions.value.genres.isEmpty(),
-                            onClick = {
-                                discoverOptions.value = discoverOptions.value.copy(genres = emptyList())
-                            },
-                            label = { Text("Any Genre")},
-                        )
-                    }
-                    availableGenres.forEach{genreMap ->
-                        item {
-                            val hasGenre = discoverOptions.value.genres.contains(genreMap.key)
-                            FilterChip(
-                                label = {Text(genreMap.value)},
-                                selected = hasGenre,
-                                onClick = {
-                                    val updatedGenres = discoverOptions.value.genres.toMutableList()
-                                    if (hasGenre) {
-                                        updatedGenres.remove(genreMap.key)
-                                    } else {
-                                        updatedGenres.add(genreMap.key)
-                                    }
-                                    discoverOptions.value = discoverOptions.value.copy(genres = updatedGenres)
-                                }
-                            )
-                        }
-                    }
-                }
+                DiscoverGenreSelection(availableGenres, discoverOptions)
 
                 Spacer(modifier = Modifier.padding(8.dp))
+
                 Text("Decade/Year")
 
                 FilterChip(
@@ -215,7 +189,9 @@ fun DiscoverOptionSelection(
             }
         }
         Box(modifier = Modifier){
-            Row(modifier = Modifier.fillMaxWidth().padding(20.dp),
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
                 horizontalArrangement = Arrangement.Center)  {
                 TextButton(onClick = {
                     discoverOptions.value = DiscoverOptions()
