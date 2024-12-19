@@ -3,7 +3,7 @@ package com.patch4code.loglinemovieapp.features.core.presentation.components.fil
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
-import com.patch4code.loglinemovieapp.features.core.presentation.components.BaseDropdown
+import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseDropdown
 
 @Composable
 fun FilterSortDropdown(

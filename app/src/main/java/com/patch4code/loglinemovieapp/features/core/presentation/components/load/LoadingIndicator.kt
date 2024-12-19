@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.core.presentation.components
+package com.patch4code.loglinemovieapp.features.core.presentation.components.load
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
-import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
+import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.LoglineReview
 
 /**

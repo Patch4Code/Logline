@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
-import com.patch4code.loglinemovieapp.features.core.presentation.components.BaseFilterChipRow
+import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 
 @Composable
 fun FilterLanguageSection(selectedLanguages: SnapshotStateList<String>){

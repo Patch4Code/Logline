@@ -3,7 +3,7 @@ package com.patch4code.loglinemovieapp.features.core.presentation.components.fil
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieGenres
-import com.patch4code.loglinemovieapp.features.core.presentation.components.BaseFilterChipRow
+import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 
 @Composable
 fun FilterGenreSelection(selectedGenres: SnapshotStateList<Int>){

@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.search.presentation.components.discover
+package com.patch4code.loglinemovieapp.features.search.presentation.components.discover.results
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
@@ -21,9 +21,9 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
-import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadErrorDisplay
-import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieBrowseCard
+import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
+import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.DiscoverViewModel
 

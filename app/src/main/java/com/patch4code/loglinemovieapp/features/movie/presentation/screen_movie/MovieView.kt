@@ -17,8 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadErrorDisplay
-import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
+import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
+import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.JSONHelper.toJson
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieMapper
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.MovieContent

@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.core.presentation.components
+package com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth

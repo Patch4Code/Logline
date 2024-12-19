@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.core.presentation.components
+package com.patch4code.loglinemovieapp.features.core.presentation.components.modifier
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

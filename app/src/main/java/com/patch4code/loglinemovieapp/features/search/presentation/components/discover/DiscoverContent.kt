@@ -11,6 +11,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
+import com.patch4code.loglinemovieapp.features.search.presentation.components.discover.options.DiscoverOptionSelection
+import com.patch4code.loglinemovieapp.features.search.presentation.components.discover.results.DiscoveredMoviesContent
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.DiscoverViewModel
 
 @Composable

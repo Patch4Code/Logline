@@ -20,8 +20,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadErrorDisplay
-import com.patch4code.loglinemovieapp.features.core.presentation.components.LoadingIndicator
+import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
+import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.search.presentation.components.search.history.SearchHistoryColumn
 import com.patch4code.loglinemovieapp.features.search.presentation.components.search.results.NoSearchResultText
 import com.patch4code.loglinemovieapp.features.search.presentation.components.search.results.SearchResultsList

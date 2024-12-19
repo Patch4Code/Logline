@@ -10,7 +10,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieYears
-import com.patch4code.loglinemovieapp.features.core.presentation.components.BaseFilterChipRow
+import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 
 @Composable
 fun FilterDecadeYearSelection(

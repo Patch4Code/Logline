@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.search.presentation.components.discover
+package com.patch4code.loglinemovieapp.features.search.presentation.components.discover.results
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

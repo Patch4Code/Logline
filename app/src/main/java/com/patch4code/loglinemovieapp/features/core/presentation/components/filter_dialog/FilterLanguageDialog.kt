@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
-import com.patch4code.loglinemovieapp.features.core.presentation.components.BaseLanguageSelectionDialog
+import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseLanguageSelectionDialog
 
 @Composable
 fun FilterLanguageDialog(

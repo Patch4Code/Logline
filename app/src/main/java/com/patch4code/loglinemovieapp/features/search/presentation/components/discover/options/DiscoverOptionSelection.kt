@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.search.presentation.components.discover
+package com.patch4code.loglinemovieapp.features.search.presentation.components.discover.options
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

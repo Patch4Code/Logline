@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.search.presentation.components.discover
+package com.patch4code.loglinemovieapp.features.search.presentation.components.discover.options
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -10,7 +10,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieYears
-import com.patch4code.loglinemovieapp.features.core.presentation.components.BaseFilterChipRow
+import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
 @Composable

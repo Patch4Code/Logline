@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.core.presentation.components
+package com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.features.core.presentation.components.modifier.customVerticalScrollbar
 
 @Composable
 fun <T> BaseDropdown(
