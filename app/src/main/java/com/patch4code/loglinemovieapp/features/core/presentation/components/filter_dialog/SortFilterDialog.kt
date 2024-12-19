@@ -240,6 +240,6 @@ fun SortFilterDialog(
             }
         }
 
-        LanguageSelectionDialog(showLanguageDialog, selectedLanguages)
+        FilterLanguageDialog(showLanguageDialog, selectedLanguages)
     }
 }

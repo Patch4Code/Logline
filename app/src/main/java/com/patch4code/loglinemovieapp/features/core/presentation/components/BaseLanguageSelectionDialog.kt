@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog
+package com.patch4code.loglinemovieapp.features.core.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -16,25 +16,26 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
 
 @Composable
-fun LanguageSelectionDialog(
+fun BaseLanguageSelectionDialog(
     showDialog: MutableState<Boolean>,
-    selectedLanguages: SnapshotStateList<String>,
-    languages: Map<String, String> = MovieLanguages.getAllLanguages()
+    items: Map<String, String>,
+    title: String = "Select a Language",
+    isSelected: (String) -> Boolean,
+    onItemToggle: (String) -> Unit,
+    onClose: () -> Unit
 ) {
-
     if (!showDialog.value) return
 
-    Dialog(onDismissRequest = { showDialog.value = false },
+    Dialog(
+        onDismissRequest = { onClose() },
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
         Surface(
@@ -44,31 +45,27 @@ fun LanguageSelectionDialog(
         ) {
             Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                 Text(
-                    text = "Select a Language",
+                    text = title,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
                 LazyColumn(modifier = Modifier.fillMaxWidth().weight(1f)) {
-                    val sortedLanguages = languages.entries.sortedBy { it.value }
-                    sortedLanguages.forEach { language ->
+                    val sortedItems = items.entries.sortedBy { it.value }
+                    sortedItems.forEach { item ->
                         item {
                             LanguageItem(
-                                language = language,
-                                isSelected = selectedLanguages.contains(language.key),
-                                onSelect = {
-                                    if (selectedLanguages.contains(language.key)) {
-                                        selectedLanguages.remove(language.key)
-                                    } else {
-                                        selectedLanguages.add(language.key)
-                                    }
-                                }
+                                language = item,
+                                isSelected = isSelected(item.key),
+                                onSelect = { onItemToggle(item.key) }
                             )
                         }
                     }
                 }
-                Button(onClick = { showDialog.value = false }, modifier = Modifier.fillMaxWidth()
-                ){
+                Button(
+                    onClick = onClose,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Text("Close")
                 }
             }
@@ -79,7 +76,10 @@ fun LanguageSelectionDialog(
 @Composable
 fun LanguageItem(language: Map.Entry<String, String>, isSelected: Boolean, onSelect: () -> Unit
 ) {
-    Row(modifier = Modifier.fillMaxWidth().clickable(onClick = onSelect).padding(8.dp),
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .clickable(onClick = onSelect)
+        .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(text = language.value, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
