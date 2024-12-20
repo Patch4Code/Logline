@@ -6,13 +6,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 import com.patch4code.loglinemovieapp.features.search.presentation.components.discover.options.DiscoverOptionSelection
 import com.patch4code.loglinemovieapp.features.search.presentation.components.discover.results.DiscoveredMoviesContent
+import com.patch4code.loglinemovieapp.features.search.presentation.components.utils.DiscoverOptionsSaver
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.DiscoverViewModel
 
 @Composable
@@ -23,7 +23,7 @@ fun DiscoverContent(
     discoverViewModel: DiscoverViewModel = viewModel()
 ){
 
-    val discoverOptions = remember { mutableStateOf(DiscoverOptions()) }
+    val discoverOptions = rememberSaveable(stateSaver = DiscoverOptionsSaver.saver) { mutableStateOf(DiscoverOptions()) }
 
     val isLoading = discoverViewModel.isLoading.observeAsState().value
     val hasError = discoverViewModel.hasLoadError.observeAsState().value

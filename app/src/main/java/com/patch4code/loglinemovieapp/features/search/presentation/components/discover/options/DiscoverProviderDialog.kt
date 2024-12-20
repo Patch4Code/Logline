@@ -152,7 +152,6 @@ fun ProviderItem(movieProvider: Provider, isSelected: Boolean, onClick:() -> Uni
                 modifier = Modifier.alpha(if(isSelected) 1.0F else 0.0F)
             )
         }
-
         Spacer(Modifier.padding(bottom = 8.dp))
     }
 }
