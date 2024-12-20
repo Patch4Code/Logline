@@ -30,6 +30,7 @@ class DiscoverViewModel(): ViewModel(){
     private var highestLoadedPage = 1
     private var pageAmount = 1
 
+
     fun loadDiscoveredMovies(discoverOptions: DiscoverOptions){
         viewModelScope.launch {
             try {
@@ -45,7 +46,7 @@ class DiscoverViewModel(): ViewModel(){
                     originCountry = discoverOptions.originCountry,
                     originalLanguage = discoverOptions.originalLanguage,
                     watchRegion = discoverOptions.watchRegion,
-                    watchProviders = discoverOptions.watchProviders,
+                    watchProviders = discoverOptions.getWatchProvidersAsString("|"),
                     runtimeGte = discoverOptions.runtimeGte,
                     runtimeLte = discoverOptions.runtimeLte,
                     voteAverageGte = discoverOptions.voteAverageGte,
@@ -88,7 +89,7 @@ class DiscoverViewModel(): ViewModel(){
                         originCountry = discoverOptions.originCountry,
                         originalLanguage = discoverOptions.originalLanguage,
                         watchRegion = discoverOptions.watchRegion,
-                        watchProviders = discoverOptions.watchProviders,
+                        watchProviders = discoverOptions.getWatchProvidersAsString("|"),
                         runtimeGte = discoverOptions.runtimeGte,
                         runtimeLte = discoverOptions.runtimeLte,
                         voteAverageGte = discoverOptions.voteAverageGte,

@@ -9,7 +9,7 @@ data class DiscoverOptions(
     val originCountry: String? = null,
     var originalLanguage: String? = null,
     val watchRegion: String? = null,
-    val watchProviders: String? = null,
+    var watchProviders: Map<Int, String> = emptyMap(),
     val runtimeGte: Int? = null,
     val runtimeLte: Int? = null,
     val voteAverageGte: Float? = null,
@@ -20,6 +20,9 @@ data class DiscoverOptions(
 ) {
     fun getGenresAsString(separator: String = ","): String {
         return genres.joinToString(separator)
+    }
+    fun getWatchProvidersAsString(separator: String = "|"): String {
+        return watchProviders.keys.joinToString(separator)
     }
     fun clearAllPrimaryReleases():DiscoverOptions  {
         return this.copy(

@@ -56,7 +56,7 @@ fun BaseCountryLanguageSelectionDialog(
                     val sortedItems = items.entries.sortedBy { it.value }
                     sortedItems.forEach { item ->
                         item {
-                            LanguageItem(
+                            CountryLanguageItem(
                                 language = item,
                                 isSelected = isSelected(item.key),
                                 onSelect = { onItemToggle(item.key) }
@@ -76,7 +76,7 @@ fun BaseCountryLanguageSelectionDialog(
 }
 
 @Composable
-fun LanguageItem(language: Map.Entry<String, String>, isSelected: Boolean, onSelect: () -> Unit
+fun CountryLanguageItem(language: Map.Entry<String, String>, isSelected: Boolean, onSelect: () -> Unit
 ) {
     Row(modifier = Modifier
         .fillMaxWidth()

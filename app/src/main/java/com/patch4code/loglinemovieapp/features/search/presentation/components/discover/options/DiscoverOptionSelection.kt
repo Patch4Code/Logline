@@ -56,7 +56,11 @@ fun DiscoverOptionSelection(
                 Text("Original Language")
                 DiscoverLanguageSection(discoverOptions)
 
+                Spacer(modifier = Modifier.padding(8.dp))
+
                 //Service
+                Text("Movie Providers")
+                DiscoverProviderSection(discoverOptions)
 
                 //Length
 

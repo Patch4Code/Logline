@@ -10,6 +10,7 @@ import com.patch4code.loglinemovieapp.features.movie.domain.model.WatchProvides
 import com.patch4code.loglinemovieapp.features.movie_public_reviews.domain.model.TmdbReviewResponse
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetails
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonMovieCredits
+import com.patch4code.loglinemovieapp.features.search.domain.model.MovieProvidersForCountry
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -138,4 +139,11 @@ interface TmdbApiService {
         @Query("with_companies") companies: String? = null,
         @Query("api_key") apiKey: String = TmdbCredentials.getApiKey(),
     ): Response<MoviePage>
+
+    @GET("watch/providers/movie")
+    suspend fun getMovieProvidersForCountry(
+        @Query("language") language: String = "en-US",
+        @Query("watch_region") watchRegion: String?,
+        @Query("api_key") apiKey: String = TmdbCredentials.getApiKey()
+    ): Response<MovieProvidersForCountry>
 }
