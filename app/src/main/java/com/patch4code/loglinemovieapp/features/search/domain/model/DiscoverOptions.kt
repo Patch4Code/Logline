@@ -6,7 +6,7 @@ data class DiscoverOptions(
     var primaryReleaseYear: Int? = null,
     var primaryReleaseDateGte: String? = null,
     var primaryReleaseDateLte: String? = null,
-    val originalCountry: String? = null,
+    val originCountry: String? = null,
     var originalLanguage: String? = null,
     val watchRegion: String? = null,
     val watchProviders: String? = null,

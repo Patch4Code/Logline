@@ -9,9 +9,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.base
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
 @Composable
-fun DiscoverLanguageSection(
-    discoverOptions: MutableState<DiscoverOptions>,
-){
+fun DiscoverLanguageSection(discoverOptions: MutableState<DiscoverOptions>){
 
     val showLanguageDialog = remember { mutableStateOf(false) }
 

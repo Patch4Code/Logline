@@ -24,10 +24,10 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 @Composable
-fun BaseLanguageSelectionDialog(
+fun BaseCountryLanguageSelectionDialog(
     showDialog: MutableState<Boolean>,
     items: Map<String, String>,
-    title: String = "Select a Language",
+    title: String,
     isSelected: (String) -> Boolean,
     onItemToggle: (String) -> Unit,
     onClose: () -> Unit

@@ -3,7 +3,7 @@ package com.patch4code.loglinemovieapp.features.search.presentation.components.d
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
-import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseLanguageSelectionDialog
+import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseCountryLanguageSelectionDialog
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
 @Composable
@@ -12,9 +12,10 @@ fun DiscoverLanguageDialog(
     discoverOptions: MutableState<DiscoverOptions>,
     languages: Map<String, String> = MovieLanguages.getAllLanguages()
 ){
-    BaseLanguageSelectionDialog(
+    BaseCountryLanguageSelectionDialog(
         showDialog = showDialog,
         items = languages,
+        title = "Select a Language",
         isSelected = { languageKey->
             discoverOptions.value.originalLanguage == languageKey
         },

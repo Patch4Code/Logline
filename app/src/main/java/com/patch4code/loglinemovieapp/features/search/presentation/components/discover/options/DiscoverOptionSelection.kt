@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -26,10 +27,7 @@ fun DiscoverOptionSelection(
 ){
 
     Column {
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .weight(1f)
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp).weight(1f)
         ) {
             item {
                 Text("Sort by")
@@ -46,7 +44,11 @@ fun DiscoverOptionSelection(
                 Text("Decade/Year")
                 DiscoverDecadeYearSelection(discoverOptions)
 
+                Spacer(modifier = Modifier.padding(8.dp))
+
                 //Origin Country
+                Text("Origin Country")
+                DiscoverCountrySection(discoverOptions)
 
                 Spacer(modifier = Modifier.padding(8.dp))
 
@@ -66,9 +68,10 @@ fun DiscoverOptionSelection(
             }
         }
         Box(modifier = Modifier){
+            HorizontalDivider()
             Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(6.dp),
                 horizontalArrangement = Arrangement.Center)  {
                 TextButton(onClick = {
                     discoverOptions.value = DiscoverOptions()
