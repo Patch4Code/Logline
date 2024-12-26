@@ -53,7 +53,8 @@ fun CountryPickerDialog(openCountryPickerDialog: MutableState<Boolean>, selected
 
                 LazyColumn(modifier = Modifier.height(400.dp)){
                     item{
-                        settingsViewModel.getCountriesList().forEach {country->
+                        val sortedCountries =  settingsViewModel.getCountriesList().sortedBy { it.countryName }
+                        sortedCountries.forEach {country->
                             Row (verticalAlignment = Alignment.CenterVertically) {
                                 RadioButton(
                                     selected = country.countryCode == selectedCountryCode,
