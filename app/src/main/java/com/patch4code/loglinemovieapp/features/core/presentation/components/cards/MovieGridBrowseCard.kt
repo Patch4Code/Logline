@@ -25,7 +25,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelp
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 @Composable
-fun MovieBrowseCard(navController: NavController, movie: Movie){
+fun MovieGridBrowseCard(navController: NavController, movie: Movie){
 
     val movieId = movie.id.toString()
     val title = movie.title

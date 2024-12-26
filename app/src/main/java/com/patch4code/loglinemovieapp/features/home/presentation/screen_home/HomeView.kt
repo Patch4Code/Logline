@@ -1,5 +1,8 @@
 package com.patch4code.loglinemovieapp.features.home.presentation.screen_home
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,9 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieRowBrowseCard
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
-import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
 
@@ -51,20 +54,27 @@ fun HomeView(navController: NavController, homeViewModel: HomeViewModel = viewMo
             homeMoviesMap?.forEach { (groupName, movies) ->
                 item {
                     // row title
-                    Text(text = groupName.asString(),
-                        modifier = Modifier.padding(top = 16.dp, start = 16.dp),
-                        fontWeight = FontWeight.Bold)
+                    Text(
+                        text = groupName.asString(),
+                        modifier = Modifier.padding(top = 16.dp, bottom = 16.dp, start = 16.dp),
+                        fontWeight = FontWeight.Bold
+                    )
                     // lazy row of movies based on given list
-                    LazyRow {
+                    LazyRow(modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        item { Spacer(Modifier.padding(4.dp)) }
                         itemsIndexed(movies) { index, movie ->
-                            MovieHomeBrowseCard(navController, movie)
+                            MovieRowBrowseCard(navController, movie)
 
                             // Load more movies when the last item in the row is reached
                             if (index == movies.lastIndex - 1) {
                                 homeViewModel.loadMoreMovies(groupName)
                             }
                         }
+                        item { Spacer(Modifier.padding(4.dp)) }
                     }
+                    Spacer(Modifier.padding(8.dp))
                 }
             }
         }

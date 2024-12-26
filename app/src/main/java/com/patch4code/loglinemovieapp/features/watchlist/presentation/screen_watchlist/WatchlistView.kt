@@ -16,7 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
-import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieBrowseCard
+import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieGridBrowseCard
 import com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog.SortFilterDialog
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.FilterOptionsSaver
@@ -73,7 +73,7 @@ fun WatchlistView(
             content = {
                 watchlistItems.forEach{ userData ->
                     item {
-                        userData.movie?.let { MovieBrowseCard(navController, it) }
+                        userData.movie?.let { MovieGridBrowseCard(navController, it) }
                     }
                 }
             }

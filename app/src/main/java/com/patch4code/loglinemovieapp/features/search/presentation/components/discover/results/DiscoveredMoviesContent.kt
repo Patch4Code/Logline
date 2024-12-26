@@ -21,7 +21,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
-import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieBrowseCard
+import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieGridBrowseCard
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
@@ -83,7 +83,7 @@ fun DiscoveredMoviesContent(
                     content = {
                         discoveredMovies.forEachIndexed {index, movie ->
                             item {
-                                MovieBrowseCard(navController, movie)
+                                MovieGridBrowseCard(navController, movie)
                                 if(index == discoveredMovies.lastIndex - 2){
                                     discoverViewModel.loadMoreDiscoveredMovies(discoverOptions)
                                 }

@@ -36,11 +36,11 @@ import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.components.ExpandableText
+import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieRowBrowseCard
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.SortOptionSaver
-import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarBackNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarSortActions
@@ -133,15 +133,17 @@ fun PersonDetailsView(
                 // person movie credits grouped by department
                 personCreditsMap?.forEach { (groupName, movies) ->
                     Text(text = groupName,
-                        modifier = Modifier.padding(top = 16.dp),
+                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
                         fontWeight = FontWeight.Bold)
 
                     val lazyRowState = lazyRowStates.getOrPut(groupName) { LazyListState() }
                     LazyRow(state = lazyRowState) {
                         items(movies) { movie ->
-                            MovieHomeBrowseCard(navController, movie)
+                            MovieRowBrowseCard(navController, movie)
+                            Spacer(modifier = Modifier.padding(4.dp))
                         }
                     }
+                    Spacer(Modifier.padding(8.dp))
                 }
             }
         }
