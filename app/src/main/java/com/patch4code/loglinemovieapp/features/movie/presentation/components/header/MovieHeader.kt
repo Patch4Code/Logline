@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.movie.presentation.components.header
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -48,9 +47,9 @@ fun MovieHeader(
 
     Row{
         //Poster
-        Card (modifier = Modifier.height(200.dp).width(133.dp)
-            .clickable { onPosterClick() },
-            colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
+        Card (modifier = Modifier.height(200.dp).width(133.dp),
+            onClick = {onPosterClick()},
+            colors = CardDefaults.cardColors(containerColor = Color.Transparent)
         ) {
             AsyncImage(
                 model = moviePosterUrl,

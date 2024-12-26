@@ -107,10 +107,8 @@ fun PersonDetailsView(
             item{
                 Row(modifier = Modifier.padding(bottom = 16.dp)){
                     // person image
-                    Card (modifier = Modifier
-                        .height(200.dp)
-                        .width(133.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
+                    Card (modifier = Modifier.height(200.dp).width(133.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
                     ) {
                         AsyncImage(
                             model = MovieHelper.processPosterUrl(personDetails?.profilePath),
