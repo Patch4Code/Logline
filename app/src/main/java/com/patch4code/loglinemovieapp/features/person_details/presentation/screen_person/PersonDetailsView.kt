@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -16,10 +17,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -30,17 +34,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.components.ExpandableText
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.SortOptionSaver
 import com.patch4code.loglinemovieapp.features.home.presentation.components.MovieHomeBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarBackNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
-import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetailsSortOption
 import com.patch4code.loglinemovieapp.features.person_details.presentation.components.PersonDetailsSortBottomSheet
+import com.patch4code.loglinemovieapp.features.person_details.presentation.utils.LazyRowStatesSaver
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -60,8 +66,12 @@ fun PersonDetailsView(
 
     val personId = id?: -1
 
-    val selectedSortOption = remember { mutableStateOf(PersonDetailsSortOption.ByPopularityDesc) }
+    val selectedSortOption : MutableState<SortOption> =
+        rememberSaveable(stateSaver = SortOptionSaver.saver) { mutableStateOf(SortOption.ByPopularityDesc) }
     val showBottomSheet = remember { mutableStateOf(false)  }
+
+    val pageListState = rememberSaveable(saver = LazyListState.Saver) { LazyListState() }
+    val lazyRowStates = rememberSaveable(saver = LazyRowStatesSaver.saver) { SnapshotStateMap() }
 
     LaunchedEffect(Unit) {
         personDetailsViewModel.loadPersonDetails(personId)
@@ -93,7 +103,7 @@ fun PersonDetailsView(
         LoadErrorDisplay(onReload = { personDetailsViewModel.loadPersonDetails(personId) })
     }
     else{
-        LazyColumn(modifier = Modifier.padding(16.dp)){
+        LazyColumn(modifier = Modifier.padding(16.dp), state = pageListState){
             item{
                 Row(modifier = Modifier.padding(bottom = 16.dp)){
                     // person image
@@ -125,7 +135,9 @@ fun PersonDetailsView(
                     Text(text = groupName,
                         modifier = Modifier.padding(top = 16.dp),
                         fontWeight = FontWeight.Bold)
-                    LazyRow {
+
+                    val lazyRowState = lazyRowStates.getOrPut(groupName) { LazyListState() }
+                    LazyRow(state = lazyRowState) {
                         items(movies) { movie ->
                             MovieHomeBrowseCard(navController, movie)
                         }

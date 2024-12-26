@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.search.presentation.components.discover
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,7 +29,8 @@ fun DiscoverContent(
     val isLoading = discoverViewModel.isLoading.observeAsState().value
     val hasError = discoverViewModel.hasLoadError.observeAsState().value
     val discoveredMovies = discoverViewModel.discoveredMovies.observeAsState().value
-    val gridState = rememberSaveable(saver = LazyGridState.Saver) { LazyGridState() }
+    val discoveredMoviesGridState = rememberSaveable(saver = LazyGridState.Saver) { LazyGridState() }
+    val discoverOptionsListState = rememberSaveable(saver = LazyListState.Saver) { LazyListState() }
 
     if (selectedTabIndex != 1) return
 
@@ -45,12 +47,13 @@ fun DiscoverContent(
             discoverOptions = discoverOptions.value,
             discoverViewModel = discoverViewModel,
             navController = navController,
-            gridState = gridState
+            gridState = discoveredMoviesGridState
         )
     }else{
         DiscoverOptionSelection(
             discoverViewModel = discoverViewModel,
-            discoverOptions = discoverOptions
+            discoverOptions = discoverOptions,
+            listState = discoverOptionsListState
         )
     }
 }

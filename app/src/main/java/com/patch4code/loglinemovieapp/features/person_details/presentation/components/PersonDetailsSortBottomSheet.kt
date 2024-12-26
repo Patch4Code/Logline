@@ -19,6 +19,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetailsSortOption
 import com.patch4code.loglinemovieapp.features.person_details.presentation.screen_person.PersonDetailsViewModel
 
@@ -26,7 +27,7 @@ import com.patch4code.loglinemovieapp.features.person_details.presentation.scree
 @Composable
 fun PersonDetailsSortBottomSheet(
     showBottomSheet: MutableState<Boolean>,
-    selectedSortOption: MutableState<PersonDetailsSortOption>,
+    selectedSortOption: MutableState<SortOption>,
     mainDepartment: String,
     personDetailsViewModel: PersonDetailsViewModel
 
@@ -39,7 +40,7 @@ fun PersonDetailsSortBottomSheet(
         scrimColor = Color.Transparent
     ){
 
-        val sortOptions = PersonDetailsSortOption.entries
+        val sortOptions = PersonDetailsSortOption.options
 
         Column (modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)){
             Text(text = "Sort by", style = MaterialTheme.typography.titleLarge)

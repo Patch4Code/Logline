@@ -8,10 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.api.RetrofitHelper
 import com.patch4code.loglinemovieapp.api.TmdbApiService
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
+import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieMapper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetails
-import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetailsSortOption
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonMovieCredits
 import kotlinx.coroutines.launch
 
@@ -65,7 +65,7 @@ class PersonDetailsViewModel: ViewModel() {
     }
 
     // Loads the movie credits of the person with the given id from TMDB api
-    fun loadPersonMovieCredits(personId: Int, mainDepartment: String, sortOption: PersonDetailsSortOption){
+    fun loadPersonMovieCredits(personId: Int, mainDepartment: String, sortOption: SortOption){
         viewModelScope.launch {
             try {
                 _isLoading.value = true
@@ -84,7 +84,7 @@ class PersonDetailsViewModel: ViewModel() {
     }
 
     //formats data for displaying by creating a map with department name and associated list of films
-    private fun createSortedPersonCreditsMap(mainDepartment: String, sortOption: PersonDetailsSortOption): Map<String, List<Movie>> {
+    private fun createSortedPersonCreditsMap(mainDepartment: String, sortOption: SortOption): Map<String, List<Movie>> {
 
         // Initialize a temp mutable map to store department names and associated movie lists
         val tempPersonCreditsMap: MutableMap<String, List<Movie>> = mutableMapOf()
@@ -119,16 +119,20 @@ class PersonDetailsViewModel: ViewModel() {
     }
 
     // Creates a list of cast movies sorted by popularity
-    private fun createCastMoviesList(sortOption: PersonDetailsSortOption): List<Movie> {
+    private fun createCastMoviesList(sortOption: SortOption): List<Movie> {
         return _personMovieCredits.value?.cast
             ?.sortedWith(
                 when (sortOption) {
-                    PersonDetailsSortOption.ByPopularityDesc -> compareByDescending { it.popularity }
-                    PersonDetailsSortOption.ByPopularityAsc -> compareBy { it.popularity }
-                    PersonDetailsSortOption.ByTitleAsc -> compareBy { it.title }
-                    PersonDetailsSortOption.ByTitleDesc -> compareByDescending { it.title }
-                    PersonDetailsSortOption.ByReleaseDateDesc -> compareByDescending { it.releaseDate }
-                    PersonDetailsSortOption.ByReleaseDateAsc -> compareBy { it.releaseDate }
+                    SortOption.ByPopularityDesc -> compareByDescending { it.popularity }
+                    SortOption.ByPopularityAsc -> compareBy { it.popularity }
+                    SortOption.ByVoteAverageDesc -> compareByDescending{it.voteAverage}
+                    SortOption.ByVoteAverageAsc -> compareBy{it.voteAverage}
+                    SortOption.ByTitleAsc -> compareBy { it.title }
+                    SortOption.ByTitleDesc -> compareByDescending { it.title }
+                    SortOption.ByReleaseDateDesc -> compareByDescending { it.releaseDate }
+                    SortOption.ByReleaseDateAsc -> compareBy { it.releaseDate }
+
+                    else -> {compareByDescending { it.popularity }}
                 }
             )
             ?.map {movieAsCastMember->
@@ -145,18 +149,22 @@ class PersonDetailsViewModel: ViewModel() {
     }
 
     // Creates a list of crew movies sorted by popularity
-    private fun createCrewMoviesList(department: String, sortOption: PersonDetailsSortOption): List<Movie>{
+    private fun createCrewMoviesList(department: String, sortOption: SortOption): List<Movie>{
         return _personMovieCredits.value?.crew
             ?.filter {it.department == department}
             ?.distinctBy { it.id }
             ?.sortedWith(
                 when (sortOption) {
-                    PersonDetailsSortOption.ByPopularityDesc -> compareByDescending { it.popularity }
-                    PersonDetailsSortOption.ByPopularityAsc -> compareBy { it.popularity }
-                    PersonDetailsSortOption.ByTitleAsc -> compareBy { it.title }
-                    PersonDetailsSortOption.ByTitleDesc -> compareByDescending { it.title }
-                    PersonDetailsSortOption.ByReleaseDateDesc -> compareByDescending { it.releaseDate }
-                    PersonDetailsSortOption.ByReleaseDateAsc -> compareBy { it.releaseDate }
+                    SortOption.ByPopularityDesc -> compareByDescending { it.popularity }
+                    SortOption.ByPopularityAsc -> compareBy { it.popularity }
+                    SortOption.ByVoteAverageDesc -> compareByDescending{it.voteAverage}
+                    SortOption.ByVoteAverageAsc -> compareBy{it.voteAverage}
+                    SortOption.ByTitleAsc -> compareBy { it.title }
+                    SortOption.ByTitleDesc -> compareByDescending { it.title }
+                    SortOption.ByReleaseDateDesc -> compareByDescending { it.releaseDate }
+                    SortOption.ByReleaseDateAsc -> compareBy { it.releaseDate }
+
+                    else -> {compareByDescending { it.popularity }}
                 }
             )
             ?.map{movieAsCrewMember->
@@ -164,7 +172,7 @@ class PersonDetailsViewModel: ViewModel() {
             } ?: emptyList()
     }
 
-    fun updateSortingForPersonMovieCredits(mainDepartment: String, sortOption: PersonDetailsSortOption) {
+    fun updateSortingForPersonMovieCredits(mainDepartment: String, sortOption: SortOption) {
         _personCreditsMap.value = createSortedPersonCreditsMap(mainDepartment, sortOption)
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -23,11 +24,13 @@ import com.patch4code.loglinemovieapp.features.search.presentation.screen_search
 @Composable
 fun DiscoverOptionSelection(
     discoverViewModel: DiscoverViewModel,
-    discoverOptions: MutableState<DiscoverOptions>
+    discoverOptions: MutableState<DiscoverOptions>,
+    listState: LazyListState
 ){
 
     Column {
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp).weight(1f)
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp).weight(1f),
+            state = listState
         ) {
             item {
                 Text("Sort by")
