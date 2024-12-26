@@ -16,13 +16,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieGridBrowseCard
 import com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog.SortFilterDialog
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.FilterOptionsSaver
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.sort_filter.SortOptionSaver
 import com.patch4code.loglinemovieapp.features.my_movies.domain.model.MyMoviesSortOptions
 import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.EmptyMyMoviesText
-import com.patch4code.loglinemovieapp.features.my_movies.presentation.components.MovieRatedBrowseCard
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarBackNavigationIcon
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarSortFilterActions
@@ -71,9 +71,9 @@ fun MyMoviesView(
             modifier = Modifier.padding(8.dp),
             columns = GridCells.Fixed(3),
             content = {
-                watchedMoviesItems.forEach{
+                watchedMoviesItems.forEach{userMovie->
                     item {
-                        MovieRatedBrowseCard(navController, it)
+                        MovieGridBrowseCard(navController, userMovie.movie, userMovie.rating)
                     }
                 }
             }
