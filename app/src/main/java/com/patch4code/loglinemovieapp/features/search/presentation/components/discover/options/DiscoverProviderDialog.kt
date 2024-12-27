@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -49,11 +50,14 @@ fun DiscoverProviderDialog(
     discoverOptions: MutableState<DiscoverOptions>,
     providerForCountryViewModel: ProviderForCountryViewModel = viewModel()
 ) {
-    if (!showDialog.value) return
 
+    // preload watchCountry from preferences datastore
     val context = LocalContext.current
     val dataSettingsStore = remember { StoreSettings(context) }
     val watchCountry = dataSettingsStore.getWatchProvidersCountry.collectAsState(initial = "").value
+
+
+    if (!showDialog.value) return
 
     LaunchedEffect(watchCountry){
         if(!watchCountry.isNullOrEmpty()){
@@ -79,11 +83,14 @@ fun DiscoverProviderDialog(
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)) {
-                Text(
-                    text = "Select Movie Providers",
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+                Row(modifier = Modifier.padding(bottom = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Select Movie Providers ", style = MaterialTheme.typography.titleLarge)
+                    if (!watchCountry.isNullOrEmpty()) {
+                        Text("($watchCountry)", fontStyle = FontStyle.Italic, style = MaterialTheme.typography.titleMedium)
+                    }
+                }
 
                 when{
                     isLoading == true -> LoadingIndicator()
@@ -92,7 +99,9 @@ fun DiscoverProviderDialog(
                     )
                     else ->
                         LazyColumn(
-                            modifier = Modifier.fillMaxWidth().weight(1f),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
                         ){
                             movieProvidersForCountry?.forEach { movieProvider ->
                                 item {
@@ -125,14 +134,17 @@ fun DiscoverProviderDialog(
 @Composable
 fun ProviderItem(movieProvider: Provider, isSelected: Boolean, onClick:() -> Unit) {
 
-    Column(modifier = Modifier.fillMaxWidth()
+    Column(modifier = Modifier
+        .fillMaxWidth()
         .clickable(onClick = { onClick() })
     ) {
         Spacer(Modifier.padding(top = 8.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Spacer(Modifier.padding(top = 8.dp))
-            Card(modifier = Modifier.height(30.dp).width(30.dp),) {
+            Card(modifier = Modifier
+                .height(30.dp)
+                .width(30.dp),) {
                 AsyncImage(
                     model = TmdbCredentials.OTHER_IMAGE_URL + movieProvider.logoPath,
                     modifier = Modifier.fillMaxHeight(),
@@ -143,7 +155,9 @@ fun ProviderItem(movieProvider: Provider, isSelected: Boolean, onClick:() -> Uni
             Text(
                 text = movieProvider.providerName,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(start= 12.dp).weight(1f)
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .weight(1f)
             )
             Icon(
                 imageVector = Icons.Default.Check,
