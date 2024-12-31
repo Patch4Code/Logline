@@ -10,11 +10,11 @@ data class DiscoverOptions(
     var originalLanguage: String? = null,
     val watchRegion: String? = null,
     var watchProviders: Map<Int, String> = emptyMap(),
-    val runtimeGte: Int? = null,
-    val runtimeLte: Int? = null,
-    val voteAverageGte: Float? = null,
-    val voteAverageLte: Float? = null,
-    val voteCountGte: Int? = 100,
+    val withKeywords: String? = null,
+    val withoutKeywords: String? = null,
+    val voteAverageGte: Float? = 0f,
+    val voteAverageLte: Float? = 10f,
+    val voteCountGte: Float? = 100f,
     val people: String? = null,
     val companies: String? = null
 ) {

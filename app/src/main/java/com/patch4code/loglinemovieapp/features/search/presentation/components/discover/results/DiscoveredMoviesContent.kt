@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
@@ -26,6 +27,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.load
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.DiscoverViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,8 +41,13 @@ fun DiscoveredMoviesContent(
     gridState: LazyGridState
 ){
 
+    val scope = rememberCoroutineScope()
+
     BackHandler {
         discoverViewModel.clearDiscoveredMovies()
+        scope.launch {
+            gridState.scrollToItem(0)
+        }
     }
 
 

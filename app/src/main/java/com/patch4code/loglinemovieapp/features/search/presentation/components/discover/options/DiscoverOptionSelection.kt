@@ -65,13 +65,21 @@ fun DiscoverOptionSelection(
                 Text("Movie Providers")
                 DiscoverProviderSection(discoverOptions)
 
+                Spacer(modifier = Modifier.padding(8.dp))
+
                 //Length
+                Text("Length")
+                DiscoverLengthSection(discoverOptions)
+
+                Spacer(modifier = Modifier.padding(8.dp))
 
                 //TMDB-Rating
+                DiscoverRatingSection(discoverOptions)
+
+                Spacer(modifier = Modifier.padding(8.dp))
 
                 //Vote Count
-
-
+                DiscoverVoteCountSection(discoverOptions)
             }
         }
         Box(modifier = Modifier){

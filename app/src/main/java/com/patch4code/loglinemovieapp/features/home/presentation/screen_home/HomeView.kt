@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
@@ -12,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -22,6 +25,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.load
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
+import com.patch4code.loglinemovieapp.features.person_details.presentation.utils.LazyRowStatesSaver
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -44,13 +48,16 @@ fun HomeView(navController: NavController, homeViewModel: HomeViewModel = viewMo
     val hasLoadError by homeViewModel.hasLoadError.observeAsState(initial = false)
     val homeMoviesMap = homeViewModel.homeMoviesMap.observeAsState().value
 
+    val lazyColumnState = rememberSaveable(saver = LazyListState.Saver) { LazyListState() }
+    val lazyRowStates = rememberSaveable(saver = LazyRowStatesSaver.saver) { SnapshotStateMap() }
+
     if(isLoading){
         LoadingIndicator()
     }else if(hasLoadError){
         LoadErrorDisplay(onReload = { homeViewModel.loadHomeViewData() })
     }
     else{
-        LazyColumn {
+        LazyColumn(state = lazyColumnState) {
             homeMoviesMap?.forEach { (groupName, movies) ->
                 item {
                     // row title
@@ -59,9 +66,11 @@ fun HomeView(navController: NavController, homeViewModel: HomeViewModel = viewMo
                         modifier = Modifier.padding(top = 16.dp, bottom = 16.dp, start = 16.dp),
                         fontWeight = FontWeight.Bold
                     )
+                    val lazyRowState = lazyRowStates.getOrPut(groupName.asString()) { LazyListState() }
                     // lazy row of movies based on given list
-                    LazyRow(modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    LazyRow(state = lazyRowState,
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         item { Spacer(Modifier.padding(4.dp)) }
                         itemsIndexed(movies) { index, movie ->

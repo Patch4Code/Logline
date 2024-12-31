@@ -52,34 +52,40 @@ class HomeViewModel : ViewModel(){
 
     // Loads data for popular, top-rated, and upcoming movies from the TMDB API and updates loading status
     fun loadHomeViewData(){
-        viewModelScope.launch {
-            try {
-                _isLoading.value = true
-                _hasLoadError.value = false
 
-                val popularResponse = tmdbApiService.getPopularMovies()
-                if(popularResponse.isSuccessful){
-                    _popularMovies.value = popularResponse.body()?.results
-                    popularMoviesPageAmount = popularResponse.body()?.totalPages ?: 1
-                }
+        if (_popularMovies.value.isNullOrEmpty() &&
+            _topRatedMovies.value.isNullOrEmpty() &&
+            _upcomingMovies.value.isNullOrEmpty()
+        ) {
+            viewModelScope.launch {
+                try {
+                    _isLoading.value = true
+                    _hasLoadError.value = false
 
-                val topRatedResponse = tmdbApiService.getTopRated()
-                if(topRatedResponse.isSuccessful){
-                    _topRatedMovies.value = topRatedResponse.body()?.results
-                    topRatedMoviesPageAmount = topRatedResponse.body()?.totalPages ?: 1
-                }
+                    val popularResponse = tmdbApiService.getPopularMovies()
+                    if(popularResponse.isSuccessful){
+                        _popularMovies.value = popularResponse.body()?.results
+                        popularMoviesPageAmount = popularResponse.body()?.totalPages ?: 1
+                    }
 
-                val upcomingResponse = tmdbApiService.getUpcoming()
-                if(upcomingResponse.isSuccessful){
-                    _upcomingMovies.value = upcomingResponse.body()?.results
-                    upcomingMoviesPageAmount = upcomingResponse.body()?.totalPages ?: 1
+                    val topRatedResponse = tmdbApiService.getTopRated()
+                    if(topRatedResponse.isSuccessful){
+                        _topRatedMovies.value = topRatedResponse.body()?.results
+                        topRatedMoviesPageAmount = topRatedResponse.body()?.totalPages ?: 1
+                    }
+
+                    val upcomingResponse = tmdbApiService.getUpcoming()
+                    if(upcomingResponse.isSuccessful){
+                        _upcomingMovies.value = upcomingResponse.body()?.results
+                        upcomingMoviesPageAmount = upcomingResponse.body()?.totalPages ?: 1
+                    }
+                    _isLoading.value = false
+                    updateHomeMovieMap()
+                } catch (e: Exception) {
+                    _isLoading.value = false
+                    _hasLoadError.value = true
+                    Log.e("HomeViewModel", "Error loading data", e)
                 }
-                _isLoading.value = false
-                updateHomeMovieMap()
-            } catch (e: Exception) {
-                _isLoading.value = false
-                _hasLoadError.value = true
-                Log.e("HomeViewModel", "Error loading data", e)
             }
         }
     }

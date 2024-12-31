@@ -29,6 +29,7 @@ fun DiscoverContent(
     val isLoading = discoverViewModel.isLoading.observeAsState().value
     val hasError = discoverViewModel.hasLoadError.observeAsState().value
     val discoveredMovies = discoverViewModel.discoveredMovies.observeAsState().value
+
     val discoveredMoviesGridState = rememberSaveable(saver = LazyGridState.Saver) { LazyGridState() }
     val discoverOptionsListState = rememberSaveable(saver = LazyListState.Saver) { LazyListState() }
 
