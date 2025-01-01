@@ -25,7 +25,6 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
-import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_reviews.ReviewDetailsViewModel
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -40,8 +39,7 @@ import com.patch4code.loglinemovieapp.features.reviews.presentation.screen_revie
 @Composable
 fun ReviewDetailsInfoAndActions(
     reviewedLog: LoggedMovie,
-    navController: NavController,
-    reviewDetailsViewModel: ReviewDetailsViewModel
+    navController: NavController
 ){
 
     val movieTitle = reviewedLog.movie.title

@@ -30,15 +30,6 @@ sealed class Screen(val route: String, var title: UiText) {
     data object ListsTableScreen : Screen("lists_screen", UiText.StringResource(R.string.lists_text))
     data object ListScreen : Screen("list_screen", UiText.StringResource(R.string.list_text))
     data object ProfileEditScreen : Screen("profile_edit_screen", UiText.StringResource(R.string.profile_edit_text))
-    //object SocialScreen : Screen("social_screen",UiText.StringResource(R.string.social_text))
-    //object PublicProfilesTableScreen: Screen("public_profiles_table_screen", UiText.StringResource(R.string.public_profiles_text))
-    data object PublicProfileScreen: Screen("public_profile_screen", UiText.StringResource(R.string.public_profile_text))
-    //object PublicProfileReviewsScreen: Screen("public_profile_reviews_screen", UiText.StringResource(R.string.public_profile_reviews_text))
-    //object PublicProfileListsScreen: Screen("public_profile_lists_screen", UiText.StringResource(R.string.public_profile_lists_text))
-    //object PublicReviewsScreen: Screen("public_reviews_screen", UiText.StringResource(R.string.public_reviews_text))
-    //object PublicReviewDetailsScreen: Screen("public_review_details_screen", UiText.StringResource(R.string.public_review_details_text))
-    //object PublicListsTableScreen: Screen("public_lists_table_screen", UiText.StringResource(R.string.public_lists_text))
-    //object PublicListScreen: Screen("public_list_screen", UiText.StringResource(R.string.public_list_text))
     data object SettingsScreen : Screen("settings_screen", UiText.StringResource(R.string.settings_text))
 
     //helper to attach data for navigation

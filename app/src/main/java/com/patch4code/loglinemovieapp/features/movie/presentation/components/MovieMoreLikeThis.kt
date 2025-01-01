@@ -31,7 +31,7 @@ fun MovieMoreLikeThis(navController: NavController, collectionMovies: List<Movie
 
         Text(text = stringResource(id = R.string.more_like_this_title), modifier = Modifier.padding(bottom = 12.dp),style = MaterialTheme.typography.titleSmall)
 
-        LazyRow() {
+        LazyRow {
             items(collectionMovies) { movie ->
                 if (movie.title != currentMovieTitle) {
                     MovieRowBrowseCard(navController, movie)

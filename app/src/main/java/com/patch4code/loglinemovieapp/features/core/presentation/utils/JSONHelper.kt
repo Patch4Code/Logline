@@ -3,7 +3,6 @@ package com.patch4code.loglinemovieapp.features.core.presentation.utils
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.ToNumberPolicy
-import java.lang.reflect.Type
 import java.time.LocalDateTime
 
 /**
@@ -24,11 +23,6 @@ object JSONHelper {
 
     // Deserializes JSON string to an object
     inline fun <reified T> fromJson(json: String?): T = gson.fromJson(json, T::class.java)
-
-    // Deserializes JSON string to an object based on given type
-    inline fun <reified T> fromJsonWithType(json: String?, typeToken: Type): T {
-        return gson.fromJson<T>(json, typeToken)
-    }
 
     // Serializes an object into a JSON string
     fun Any.toJson(): String = gson.toJson(this)

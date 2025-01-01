@@ -11,7 +11,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Provider
 import kotlinx.coroutines.launch
 
-class ProviderForCountryViewModel(): ViewModel(){
+class ProviderForCountryViewModel: ViewModel(){
 
     private val tmdbApiService: TmdbApiService by lazy {
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)

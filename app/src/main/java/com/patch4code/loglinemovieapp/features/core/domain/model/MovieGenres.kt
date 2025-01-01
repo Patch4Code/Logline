@@ -25,10 +25,4 @@ object MovieGenres {
     fun getAllGenres(): Map<Int, String>{
         return genres
     }
-    fun getGenreNameById(id: Int): String? {
-        return genres[id]
-    }
-    fun getGenreIdByName(name: String): Int? {
-        return genres.entries.find { it.value.equals(name, ignoreCase = true) }?.key
-    }
 }

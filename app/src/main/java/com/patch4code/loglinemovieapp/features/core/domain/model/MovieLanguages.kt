@@ -210,8 +210,4 @@ object MovieLanguages {
     fun getAllLanguages(): Map<String, String>{
         return allLanguages
     }
-
-    fun getEnglishName(iso: String): String? {
-        return allLanguages[iso]
-    }
 }

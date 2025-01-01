@@ -112,7 +112,7 @@ fun ListView(
         }
     }
     //Dialogs and BottomSheet
-    AddMovieToListDialog(openAddMovieDialog, listViewModel, selectedSortOption.value, selectedFilterOptions.value, )
+    AddMovieToListDialog(openAddMovieDialog, listViewModel, selectedSortOption.value, selectedFilterOptions.value )
 
     ListSettingsBottomSheet(showBottomSheet = showListSettingsBottomSheet.value,
         onClose = {showListSettingsBottomSheet.value = false},

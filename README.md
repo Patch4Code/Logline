@@ -1,4 +1,4 @@
-<img align="left" width="80" height="80" src="readme/LoglineLogo.svg" alt="App icon">
+<img "left" width="80" height="80" src="readme/LoglineLogo.svg" alt="App icon">
 
 # Logline - MovieApp
 

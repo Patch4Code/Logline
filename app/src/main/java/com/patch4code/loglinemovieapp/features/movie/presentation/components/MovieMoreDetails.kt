@@ -68,7 +68,7 @@ fun MovieMoreDetails(movieDetails: MovieDetails?
         modifier = Modifier
             .animateContentSize(animationSpec = tween(100))
             .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.DarkGray,),
+        colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
     ){
         Row (modifier = Modifier.padding(8.dp).fillMaxWidth()){
             Text(text = stringResource(id = R.string.more_details_title), modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)

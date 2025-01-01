@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.screen_public_reviews
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,7 +35,6 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.component
  *
  * @author Patch4Code
  */
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MoviePublicReviewsView(
     navController: NavController,

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
+import java.util.Locale
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -22,7 +23,7 @@ import com.patch4code.loglinemovieapp.R
 @Composable
 fun MovieRatings(voteAverage: Double?){
 
-    val voteAverageTmdb: String = String.format("%.1f", voteAverage)
+    val voteAverageTmdb: String = String.format(Locale.getDefault(), "%.1f", voteAverage)
 
     Column {
         Text(text = stringResource(id = R.string.average_rating_title), modifier = Modifier.padding(bottom = 4.dp),style = MaterialTheme.typography.titleSmall)

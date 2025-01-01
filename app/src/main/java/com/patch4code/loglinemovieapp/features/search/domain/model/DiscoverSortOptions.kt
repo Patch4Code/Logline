@@ -8,10 +8,4 @@ enum class DiscoverSortOptions(val queryParam: String, val label: String){
     RELEASE_DATE_DESC("primary_release_date.desc", "Release Date (Newest first)"),
     RELEASE_DATE_ASC("primary_release_date.asc", "Release Date (Oldest first)"),
     REVENUE_DESC("revenue.desc", "Revenue");
-
-    companion object {
-        fun getLabelFromQuery(title: String): String {
-            return entries.find { it.queryParam == title }?.label.toString()
-        }
-    }
 }

@@ -12,7 +12,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 import kotlinx.coroutines.launch
 
-class DiscoverViewModel(): ViewModel(){
+class DiscoverViewModel: ViewModel(){
 
     private val tmdbApiService: TmdbApiService by lazy {
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)

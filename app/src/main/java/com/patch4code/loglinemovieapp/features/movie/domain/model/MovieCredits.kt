@@ -1,3 +1,5 @@
+@file:Suppress("unused", "unused", "unused", "unused")
+
 package com.patch4code.loglinemovieapp.features.movie.domain.model
 
 import com.google.gson.annotations.SerializedName
@@ -16,6 +18,7 @@ data class MovieCredits(
 )
 
 // Represents a cast member of a movie from TMDB
+@Suppress("unused")
 data class Cast(
     @SerializedName("id") val id: Int = -1,
     @SerializedName("name") val name: String = "",

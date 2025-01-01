@@ -8,7 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 @Composable
-fun KeyboardVisibilityObserver(onKeyboardOpened:()->Unit = {}, onKeyboardClosed:()->Unit,){
+fun KeyboardVisibilityObserver(onKeyboardOpened:()->Unit = {}, onKeyboardClosed:()->Unit){
 
     val view = LocalView.current
     val viewTreeObserver = view.viewTreeObserver

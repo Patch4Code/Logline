@@ -62,7 +62,7 @@ fun ReviewDetailsView(
                             reviewedLog.movie.id.toString()))
                         }
                     )
-                    ReviewDetailsInfoAndActions(reviewedLog, navController, reviewDetailsViewModel)
+                    ReviewDetailsInfoAndActions(reviewedLog, navController)
                 }
             }
             //Review Text
