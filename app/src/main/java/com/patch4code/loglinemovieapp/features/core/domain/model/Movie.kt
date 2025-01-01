@@ -20,6 +20,8 @@ data class Movie(
     @SerializedName("original_language") val originalLanguage: String = "N/A",
     @SerializedName("original_title") val originalTitle: String = "N/A",
     @SerializedName("popularity") val popularity: Double = 0.0,
-    @SerializedName("vote_average") val voteAverage: Double = 0.0
+    @SerializedName("vote_average") val voteAverage: Double = 0.0,
+
+    val runtime: Int? = null
 )
 

@@ -92,7 +92,8 @@ fun MovieView(
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(onClick = {
-                    val movieToLog = MovieMapper.mapToMovie(movieDetails)
+                    var movieToLog = MovieMapper.mapToMovie(movieDetails)
+                    movieToLog = movieToLog.copy(runtime = movieDetails?.runtime)
                     val jsonMovie = movieToLog.toJson()
                     val encodedJsonMovie = URLEncoder.encode(jsonMovie, "UTF-8")
                     navController.navigate(Screen.MovieLogScreen.withArgs(encodedJsonMovie))

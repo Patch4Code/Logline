@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.search.presentation.components.discover.options
 
-import android.util.Log
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,10 +30,6 @@ fun DiscoverVoteCountSection(discoverOptions: MutableState<DiscoverOptions>) {
         if (discoverOptions.value.voteCountGte == 100f){
             sliderPosition = 1f
         }
-    }
-
-    LaunchedEffect(Unit) {
-        Log.e("DiscoverVoteCountSection", "sliderPosition: $sliderPosition, count: ${discoverOptions.value.voteCountGte}")
     }
 
     Text("VoteCount (${formatNumber(discoverOptions.value.voteCountGte?.toInt())}+)")

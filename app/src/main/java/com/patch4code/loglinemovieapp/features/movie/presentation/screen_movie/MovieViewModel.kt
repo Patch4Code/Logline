@@ -131,7 +131,8 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
 
     // Updates the user rating for a movie by accessing the db.
     fun changeRating(rating: Int){
-        val movie = MovieMapper.mapToMovie(_detailsData.value)
+        var movie = MovieMapper.mapToMovie(_detailsData.value)
+        movie = movie.copy(runtime = _detailsData.value?.runtime)
 
         viewModelScope.launch {
             dao.updateOrInsertRating(movie, rating)
@@ -141,7 +142,8 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
 
     // Updates the watchlist status for a movie by accessing the db.
     fun changeOnWatchlist(newOnWatchlistState: Boolean){
-        val movie = MovieMapper.mapToMovie(_detailsData.value)
+        var movie = MovieMapper.mapToMovie(_detailsData.value)
+        movie = movie.copy(runtime = _detailsData.value?.runtime)
 
         viewModelScope.launch {
             dao.updateOrInsertOnWatchlist(movie, newOnWatchlistState)
