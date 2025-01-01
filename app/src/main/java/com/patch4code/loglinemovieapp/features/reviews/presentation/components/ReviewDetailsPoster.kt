@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.reviews.presentation.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
@@ -27,11 +26,9 @@ fun ReviewDetailsPoster(movieTitle: String, posterPath: String, onPosterPressed:
 
     val moviePosterUrl: String = MovieHelper.processPosterUrl(posterPath)
 
-    Card (modifier = Modifier
-        .height(200.dp)
-        .width(133.dp)
-        .clickable { onPosterPressed() },
-        colors = CardDefaults.cardColors(containerColor = Color.DarkGray)
+    Card (modifier = Modifier.height(200.dp).width(133.dp),
+        onClick = {onPosterPressed()},
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         AsyncImage(
             model = moviePosterUrl,
