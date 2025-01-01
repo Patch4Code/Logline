@@ -8,6 +8,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.DateHelper
@@ -28,7 +29,7 @@ fun DiaryEditDatePickerDialog(watchDateTime: LocalDateTime, openDatePickerDialog
     if (openDatePickerDialog){
         val watchDateConverted = DateHelper.convertDateTimeToLong(watchDateTime)
         val datePickerState = rememberDatePickerState(watchDateConverted)
-        val confirmEnabled = derivedStateOf { datePickerState.selectedDateMillis != null }
+        val confirmEnabled = remember { derivedStateOf { datePickerState.selectedDateMillis != null } }
 
         DatePickerDialog(
             onDismissRequest = { onCancel() },

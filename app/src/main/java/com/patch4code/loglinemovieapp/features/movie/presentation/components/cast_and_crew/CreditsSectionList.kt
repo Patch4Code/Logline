@@ -14,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,12 +33,12 @@ import kotlinx.coroutines.delay
  * @author Patch4Code
  */
 @Composable
-fun <T> CreditsSectionList(title: String, items: List<T>, content: @Composable (T) -> Unit) {
+fun <T> CreditsSectionList(title: String, items: List<T>?, content: @Composable (T) -> Unit) {
 
     // If the list is empty or null, return early
     if(items.isNullOrEmpty()) return
 
-    var maxIndex by remember { mutableStateOf(5) }
+    var maxIndex by remember { mutableIntStateOf(5) }
     val scrollState = rememberScrollState()
 
     Column(modifier = Modifier.padding(top = 16.dp)

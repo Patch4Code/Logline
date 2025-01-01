@@ -21,6 +21,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -52,7 +53,7 @@ fun MoviePosterPopup(openPosterPopup: Boolean, movieDetails: MovieDetails?, onPo
 
         // State variables to control the visibility of the close button and track touch events
         var isButtonVisible by remember { mutableStateOf(true) }
-        var touchTime by remember { mutableStateOf(System.currentTimeMillis()) }
+        var touchTime by remember { mutableLongStateOf(System.currentTimeMillis()) }
 
         // Animate the close button based on its visibility state
         val translateY by animateFloatAsState(

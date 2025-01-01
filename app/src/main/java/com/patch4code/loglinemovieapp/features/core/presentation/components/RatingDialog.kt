@@ -20,7 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -54,7 +54,7 @@ fun DiaryEditRatingDialog(
     if(!openRatingDialog) return
 
     // State to track the selected rating
-    var movieRating by remember { mutableStateOf(if(rating > 0) rating else 0) }
+    var movieRating by remember { mutableIntStateOf(if(rating > 0) rating else 0) }
 
     AlertDialog(
         onDismissRequest = { onCancel() },

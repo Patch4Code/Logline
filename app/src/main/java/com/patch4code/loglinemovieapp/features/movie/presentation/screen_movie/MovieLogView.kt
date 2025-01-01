@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -72,7 +73,7 @@ fun MovieLogView(
 
     val toastText = stringResource(id = R.string.movie_log_toast)
 
-    var rating by remember { mutableStateOf(0) }
+    var rating by remember { mutableIntStateOf(0) }
     var watchDateTime by remember { mutableStateOf(LocalDateTime.now()) }
     var review by remember { mutableStateOf("") }
 
