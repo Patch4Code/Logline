@@ -103,6 +103,7 @@
 
     <!-- List Strings -->
         <!-- ListsTableView Strings -->
+        <string name="list_table_empty">No Lists created yet.</string>
         <string name="list_table_add_list_description_text">Add new list</string>
         <string name="list_add_movie_description_text">Add new movie to list</string>
         <string name="add_list_dialog_title">New List</string>
@@ -111,6 +112,8 @@
         <string name="delete_list_dialog_text">Are you sure you want to delete the list?</string>
         <string name="delete_list_text">Delete List</string>
         <!-- ListView Strings -->
+        <string name="list_no_filter_match_text">No items match your current filters.</string>
+        <string name="list_empty_text">This List is empty.</string>
         <string name="list_settings_icon_description">Open List Settings</string>
         <string name="list_add_movie_dialog_title">Search Movie to add to list</string>
         <string name="list_add_movie_dialog_confirm">Add Movie</string>

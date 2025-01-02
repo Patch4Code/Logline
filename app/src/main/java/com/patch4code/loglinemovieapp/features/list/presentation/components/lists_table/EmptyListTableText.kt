@@ -8,8 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -26,7 +28,7 @@ fun EmptyListTableText(){
         contentAlignment = Alignment.Center
     ){
         Text(
-            text = "No Lists created yet.",
+            text = stringResource(id = R.string.list_table_empty),
             textAlign = TextAlign.Center,
             color = Color.White
         )
