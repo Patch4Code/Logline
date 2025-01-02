@@ -208,12 +208,9 @@
     <string name="rating_text">Rating</string>
 
     <!-- Reviews Strings -->
-    <string name="review_publish_success_toast">Review published</string>
-    <string name="review_publish_error_toast">Error publishing this Review:</string>
-    <string name="review_publish_dialog_title">Publish this Review</string>
-    <string name="review_publish_dialog_text">Are you sure you want to publish this Review? Please note that if this review has been previously published, the existing version will be overwritten.</string>
+    <string name="reviews_no_filter_match_text">No items match your current filters.</string>
+    <string name="reviews_empty_text">Your have not written any reviews yet.</string>
     <string name="edit_review_icon_description">Edit Review</string>
-    <string name="publish_review_icon_description">Make Review public</string>
 
 
     <!-- Search Strings -->

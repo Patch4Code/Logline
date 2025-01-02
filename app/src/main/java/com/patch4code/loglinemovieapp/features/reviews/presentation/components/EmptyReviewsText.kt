@@ -8,9 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * EmptyReviewsText - Composable function to display a text when reviews are empty.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun EmptyReviewsText(filtersActive: Boolean){
 
@@ -21,9 +30,9 @@ fun EmptyReviewsText(filtersActive: Boolean){
         Text(
             text =
             if(filtersActive)
-                "No items match your current filters."
+                stringResource(id = R.string.reviews_no_filter_match_text)
             else
-                "Your have not written any reviews yet.",
+                stringResource(id = R.string.reviews_empty_text),
             textAlign = TextAlign.Center,
             color = Color.White
         )
