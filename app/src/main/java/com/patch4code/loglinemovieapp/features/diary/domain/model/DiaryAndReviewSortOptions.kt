@@ -2,6 +2,14 @@ package com.patch4code.loglinemovieapp.features.diary.domain.model
 
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiaryAndReviewSortOptions - utility object containing
+ * predefined sorting options for diary entries and reviews.
+ *
+ * @author Patch4Code
+ */
 object DiaryAndReviewSortOptions {
     val options = listOf(
         SortOption.ByAddedDesc,

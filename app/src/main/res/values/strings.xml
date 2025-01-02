@@ -72,6 +72,10 @@
 
 
     <!-- Diary Strings -->
+        <!-- Empty Diary Strings -->
+        <string name="diary_no_filter_match_text">No items match your current filters.</string>
+        <string name="diary_empty_text">Your Diary is currently empty.</string>
+
         <!-- Diary Dialog Strings -->
         <string name="diary_discard_changes_dialog_title">Discard Changes?</string>
         <string name="diary_discard_changes_dialog_text">When you continue, changes will be lost.</string>
