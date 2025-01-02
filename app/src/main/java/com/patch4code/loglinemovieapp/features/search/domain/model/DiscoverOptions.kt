@@ -1,5 +1,12 @@
 package com.patch4code.loglinemovieapp.features.search.domain.model
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverOptions - Data class representing filtering and sorting options for movie discovery.
+ *
+ * @author Patch4Code
+ */
 data class DiscoverOptions(
     var sortBy: String = "popularity.desc",
     var genres: List<Int> = emptyList(),

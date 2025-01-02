@@ -18,6 +18,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.search.domain.model.SearchHistoryItem
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SearchHistoryItem - Composable for displaying a search history item.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SearchHistoryItem(searchHistoryItem: SearchHistoryItem,onItemClick:()->Unit, onDeleteClick:()->Unit){
 
@@ -36,5 +43,4 @@ fun SearchHistoryItem(searchHistoryItem: SearchHistoryItem,onItemClick:()->Unit,
             Icon(imageVector = Icons.Default.Close, contentDescription = null)
         }
     }
-
 }

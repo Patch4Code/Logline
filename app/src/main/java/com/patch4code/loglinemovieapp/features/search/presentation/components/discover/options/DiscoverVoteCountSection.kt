@@ -9,11 +9,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 import com.patch4code.loglinemovieapp.features.search.presentation.components.utils.DiscoverHelper.formatNumber
 import kotlin.math.round
 import kotlin.math.roundToInt
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverVoteCountSection - Composable function
+ * for selecting a minimum vote count in the discovery filter.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiscoverVoteCountSection(discoverOptions: MutableState<DiscoverOptions>) {
 
@@ -32,7 +42,7 @@ fun DiscoverVoteCountSection(discoverOptions: MutableState<DiscoverOptions>) {
         }
     }
 
-    Text("VoteCount (${formatNumber(discoverOptions.value.voteCountGte?.toInt())}+)")
+    Text("${stringResource(id = R.string.vote_count_text)} (${formatNumber(discoverOptions.value.voteCountGte?.toInt())}+)")
 
     Slider(
         value = sliderPosition,

@@ -5,6 +5,14 @@ package com.patch4code.loglinemovieapp.features.search.presentation.components.u
 import androidx.compose.runtime.saveable.Saver
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverOptionsSaver - Provides a `Saver` implementation for saving and restoring
+ * `DiscoverOptions` state in a Compose environment.
+ *
+ * @author Patch4Code
+ */
 object DiscoverOptionsSaver {
     val saver = Saver<DiscoverOptions, Map<String, Any?>>(
         save = {discoverOptions->

@@ -6,6 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SearchResultsList - Composable for displaying a list of search results.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SearchResultsList(
     searchResult: List<Movie>,

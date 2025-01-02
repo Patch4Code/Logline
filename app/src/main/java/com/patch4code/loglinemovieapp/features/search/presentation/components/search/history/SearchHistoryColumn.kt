@@ -11,6 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SearchHistoryColumn - Composable for displaying a column of search history items.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SearchHistoryColumn(
     searchViewModel: SearchViewModel,

@@ -6,11 +6,21 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieCountries
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseCountryLanguageSelectionDialog
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverCountrySection - composable function to
+ * manage and display country selection for discovery filters.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiscoverCountrySection(discoverOptions: MutableState<DiscoverOptions>) {
 
@@ -36,7 +46,7 @@ fun DiscoverCountrySection(discoverOptions: MutableState<DiscoverOptions>) {
         },
         hasAnyChip = true,
         anyChipIsSelected = { discoverOptions.value.originCountry == null },
-        anyChipLabel = "Any Country",
+        anyChipLabel = stringResource(id = R.string.any_country_label),
         onAnyClick = { discoverOptions.value = discoverOptions.value.copy(originCountry = null) },
         hasSelectOtherButton = true,
         onSelectOtherClick = { showCountryDialog.value = true },
@@ -55,7 +65,7 @@ fun DiscoverCountryDialog(
     BaseCountryLanguageSelectionDialog(
         showDialog = showDialog,
         items = countries,
-        title = "Select a Country",
+        title = stringResource(id = R.string.select_country_label),
         isSelected = { countryKey->
             discoverOptions.value.originCountry == countryKey
         },

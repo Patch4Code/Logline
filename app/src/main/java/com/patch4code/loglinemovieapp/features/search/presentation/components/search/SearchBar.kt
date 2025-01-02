@@ -25,6 +25,13 @@ import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.search.presentation.utils.KeyboardVisibilityObserver
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SearchBar - Composable for displaying a search input field.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SearchBar(
     textInput: MutableState<TextFieldValue>,

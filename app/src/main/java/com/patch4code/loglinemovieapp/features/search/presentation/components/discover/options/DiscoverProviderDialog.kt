@@ -30,12 +30,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
@@ -44,6 +46,13 @@ import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptio
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.ProviderForCountryViewModel
 import com.patch4code.loglinemovieapp.preferences_datastore.StoreSettings
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverProviderDialog - Composable function for selecting movie providers for discovery filters.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiscoverProviderDialog(
     showDialog: MutableState<Boolean>,
@@ -86,9 +95,9 @@ fun DiscoverProviderDialog(
                 Row(modifier = Modifier.padding(bottom = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Select Movie Providers ", style = MaterialTheme.typography.titleLarge)
+                    Text(text = stringResource(id = R.string.select_providers_text), style = MaterialTheme.typography.titleLarge)
                     if (!watchCountry.isNullOrEmpty()) {
-                        Text("($watchCountry)", fontStyle = FontStyle.Italic, style = MaterialTheme.typography.titleMedium)
+                        Text(" ($watchCountry)", fontStyle = FontStyle.Italic, style = MaterialTheme.typography.titleMedium)
                     }
                 }
 
@@ -124,7 +133,7 @@ fun DiscoverProviderDialog(
                 Button(onClick = { showDialog.value = false },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Close")
+                    Text(stringResource(id = R.string.close_button_text))
                 }
             }
         }
@@ -161,7 +170,7 @@ fun ProviderItem(movieProvider: Provider, isSelected: Boolean, onClick:() -> Uni
             )
             Icon(
                 imageVector = Icons.Default.Check,
-                contentDescription = "Selected",
+                contentDescription = stringResource(id = R.string.selected_description),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.alpha(if(isSelected) 1.0F else 0.0F)
             )

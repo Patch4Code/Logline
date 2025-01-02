@@ -8,11 +8,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieYears
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieYears
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverDecadeYearSelection - composable function for
+ * selecting decades and years in discovery filters.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiscoverDecadeYearSelection(discoverOptions: MutableState<DiscoverOptions>){
 
@@ -29,7 +39,7 @@ fun DiscoverDecadeYearSelection(discoverOptions: MutableState<DiscoverOptions>){
         onClick = {
             discoverOptions.value = discoverOptions.value.clearAllPrimaryReleases()
         },
-        label = { Text("Any Year") }
+        label = { Text(stringResource(id = R.string.any_year_label)) }
     )
 
     Spacer(modifier = Modifier.padding(4.dp))

@@ -7,6 +7,13 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * KeyboardVisibilityObserver - Composable function that observes the keyboard's visibility state.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun KeyboardVisibilityObserver(onKeyboardOpened:()->Unit = {}, onKeyboardClosed:()->Unit){
 

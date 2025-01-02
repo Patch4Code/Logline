@@ -3,10 +3,20 @@ package com.patch4code.loglinemovieapp.features.search.presentation.components.d
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseCountryLanguageSelectionDialog
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverLanguageDialog - Composable function for selecting
+ * a language in dialog for discovery filters.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiscoverLanguageDialog(
     showDialog: MutableState<Boolean>,
@@ -17,7 +27,7 @@ fun DiscoverLanguageDialog(
     BaseCountryLanguageSelectionDialog(
         showDialog = showDialog,
         items = languages,
-        title = "Select a Language",
+        title = stringResource(id = R.string.select_language_label),
         isSelected = { languageKey->
             discoverOptions.value.originalLanguage == languageKey
         },

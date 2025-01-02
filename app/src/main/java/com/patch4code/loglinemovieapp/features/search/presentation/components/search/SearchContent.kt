@@ -33,7 +33,13 @@ import com.patch4code.loglinemovieapp.features.search.presentation.utils.HandleF
 import com.patch4code.loglinemovieapp.features.search.presentation.utils.SearchExtensions.triggerSearch
 import com.patch4code.loglinemovieapp.room_database.LoglineDatabase
 
-
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SearchContent - Composable function managing the search functionality UI.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SearchContent(
     navController: NavController,

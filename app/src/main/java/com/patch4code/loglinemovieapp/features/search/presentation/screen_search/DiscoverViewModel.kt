@@ -12,6 +12,14 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverViewModel - ViewModel responsible for handling the business logic
+ * and state management for discovering movies.
+ *
+ * @author Patch4Code
+ */
 class DiscoverViewModel: ViewModel(){
 
     private val tmdbApiService: TmdbApiService by lazy {

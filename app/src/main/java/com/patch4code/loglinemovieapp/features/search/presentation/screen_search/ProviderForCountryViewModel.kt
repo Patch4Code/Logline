@@ -11,6 +11,14 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCrede
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Provider
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProviderForCountryViewModel - ViewModel for managing the state and data
+ * related to movie providers available in a specific country.
+ *
+ * @author Patch4Code
+ */
 class ProviderForCountryViewModel: ViewModel(){
 
     private val tmdbApiService: TmdbApiService by lazy {

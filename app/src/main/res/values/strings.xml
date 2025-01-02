@@ -218,6 +218,11 @@
     <string name="search_icon_description">Search</string>
     <string name="search_load_error_text">Error Loading search result.</string>
     <string name="no_search_result_text">No Search Result</string>
+    <string name="no_search_result_text_longer">No Movies found.\n Adjust your search and try again.</string>
+    <string name="search_history_title">Search History</string>
+    <string name="clear_history_title">Clear History</string>
+    <string name="clear_history_text">Do you want to clear the Search History?</string>
+    <string name="clear_label">Clear</string>
 
 
     <!-- Settings Strings -->
@@ -240,9 +245,10 @@
     <string name="country_title">Country for Watch Providers</string>
     <string name="country_text">Select your country to access streaming, rental, and purchase options customized specifically for this location on the movie page.</string>
 
-    <!-- Sort/Filter Stings -->
+    <!-- Sort/Filter/Discover Strings -->
     <string name="sort_filter_title">Sort and Filter</string>
     <string name="reset_label">reset</string>
+    <string name="reset_capital_label">Reset</string>
     <string name="sort_by_text">Sort by</string>
     <string name="genre_text">Genre</string>
     <string name="decade_year_text">Decade/Year</string>
@@ -254,6 +260,23 @@
     <string name="any_genre_label">Any Genre</string>
     <string name="any_Language_label">Any Language</string>
     <string name="select_language_label">Select a Language</string>
+    <string name="any_country_label">Any Country</string>
+    <string name="select_country_label">Select a Country</string>
+    <string name="length_label">Length</string>
+    <string name="any_length_label">Any Length</string>
+    <string name="feature_film_label">Feature film</string>
+    <string name="short_film_label">Short film</string>
+    <string name="origin_country_label">Origin Country</string>
+    <string name="movie_providers_label">Movie Providers</string>
+    <string name="discover_movies_label">Discover Movies</string>
+    <string name="select_providers_text">Select Movie Providers</string>
+    <string name="any_provider_label">Any Provider</string>
+    <string name="vote_count_text">Vote Count</string>
+    <string name="discovered_movies_title">Discovered Movies</string>
+    <string name="discovered_movies_empty_text">No Movies match your current discover options.</string>
+    <string name="rating_title">Rating</string>
+
+
 
 
     <!-- Countries -->
@@ -737,6 +760,7 @@
     <string name="sort_by_time_updated">When updated</string>
     <string name="sort_by_list_name_asc">List name (A-Z)</string>
     <string name="sort_by_list_name_desc">List name (Z-A)</string>
+    <string name="sort_by_revenue_desc">Revenue</string>
 
     //stringResource(id = R.string.)
 

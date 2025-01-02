@@ -4,10 +4,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
-
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverProviderSection - Composable function
+ * for managing movie provider selections in the discovery filter.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiscoverProviderSection(discoverOptions: MutableState<DiscoverOptions>) {
 
@@ -26,7 +35,7 @@ fun DiscoverProviderSection(discoverOptions: MutableState<DiscoverOptions>) {
         },
         hasAnyChip = true,
         anyChipIsSelected = { discoverOptions.value.watchProviders.isEmpty() },
-        anyChipLabel =  "Any Provider",
+        anyChipLabel =  stringResource(id = R.string.any_provider_label),
         onAnyClick = { discoverOptions.value = discoverOptions.value.copy(watchProviders= emptyMap()) },
         hasSelectOtherButton = true,
         onSelectOtherClick = { showProviderDialog.value = true },

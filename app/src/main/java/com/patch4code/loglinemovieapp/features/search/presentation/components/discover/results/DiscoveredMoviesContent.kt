@@ -19,8 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieGridBrowseCard
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
@@ -29,6 +31,14 @@ import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptio
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.DiscoverViewModel
 import kotlinx.coroutines.launch
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoveredMoviesContent - Displays discovered movies in a grid layout
+ * with support for loading, error handling, and navigation.
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiscoveredMoviesContent(
@@ -58,13 +68,15 @@ fun DiscoveredMoviesContent(
         TopAppBar(
             title = {
                 Text(
-                    text = "Discovered Movies",
+                    text = stringResource(id = R.string.discovered_movies_title),
                     style = MaterialTheme.typography.titleSmall
                 )
             },
             navigationIcon = {
                 IconButton(onClick = { discoverViewModel.clearDiscoveredMovies() }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.back_icon_description)
+                    )
                 }
             },
             colors = TopAppBarDefaults.topAppBarColors(

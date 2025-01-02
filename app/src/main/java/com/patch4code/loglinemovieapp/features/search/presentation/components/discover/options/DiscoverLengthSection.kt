@@ -2,15 +2,25 @@ package com.patch4code.loglinemovieapp.features.search.presentation.components.d
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverLengthSection - Composable function
+ * for managing film length selection in discovery filters.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiscoverLengthSection(discoverOptions: MutableState<DiscoverOptions>) {
 
     val tmdbShortFilmKeywordId = "263548"
 
-    val itemList = listOf("Feature film", "Short film")
+    val itemList = listOf(stringResource(id = R.string.feature_film_label), stringResource(id = R.string.short_film_label))
 
     BaseFilterChipRow(
         items = itemList,
@@ -32,7 +42,7 @@ fun DiscoverLengthSection(discoverOptions: MutableState<DiscoverOptions>) {
         },
         hasAnyChip = true,
         anyChipIsSelected = { discoverOptions.value.withKeywords.isNullOrEmpty() && discoverOptions.value.withoutKeywords.isNullOrEmpty()},
-        anyChipLabel =  "Any Length",
+        anyChipLabel =  stringResource(id = R.string.any_length_label),
         onAnyClick = { discoverOptions.value = discoverOptions.value.copy(withKeywords = null, withoutKeywords = null) },
     )
 }

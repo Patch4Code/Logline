@@ -16,6 +16,13 @@ import com.patch4code.loglinemovieapp.features.search.presentation.components.di
 import com.patch4code.loglinemovieapp.features.search.presentation.components.utils.DiscoverOptionsSaver
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.DiscoverViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * DiscoverContent - Main composable for managing the Discover screen content.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun DiscoverContent(
     navController: NavController,

@@ -9,6 +9,13 @@ import androidx.compose.ui.res.stringResource
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.search.presentation.screen_search.SearchViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ClearHistoryDialog - Composable for displaying a dialog to clear search history.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ClearHistoryDialog(searchViewModel: SearchViewModel, openClearHistoryDialog: MutableState<Boolean>){
 
@@ -16,14 +23,14 @@ fun ClearHistoryDialog(searchViewModel: SearchViewModel, openClearHistoryDialog:
 
     AlertDialog(
         onDismissRequest = { openClearHistoryDialog.value = false },
-        title = { Text("Clear History") },
-        text = { Text(text = "Do you want to clear the Search History?") },
+        title = { Text(stringResource(id = R.string.clear_history_title)) },
+        text = { Text(text = stringResource(id = R.string.clear_history_text)) },
         confirmButton = {
             Button(onClick = {
                 openClearHistoryDialog.value = false
                 searchViewModel.clearSearchHistory()
             }) {
-                Text(text = "Clear")
+                Text(text = stringResource(id = R.string.clear_label))
             }
         },
         dismissButton = {
