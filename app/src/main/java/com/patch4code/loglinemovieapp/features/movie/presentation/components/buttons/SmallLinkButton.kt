@@ -13,6 +13,13 @@ import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SmallLinkButton - composable function for displaying a small, styled button that opens a URL link.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun SmallLinkButton(name: String, url: String, enabled: Boolean, uriHandler: UriHandler){
     FilledTonalButton(
@@ -29,5 +36,4 @@ fun SmallLinkButton(name: String, url: String, enabled: Boolean, uriHandler: Uri
             style = MaterialTheme.typography.titleSmall.copy(fontSize = 12.sp)
         )
     }
-
 }

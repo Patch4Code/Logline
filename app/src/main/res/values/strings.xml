@@ -159,6 +159,7 @@
     <string name="add_to_list_dialog_toast">Movie added to List</string>
     <string name="stream_title">Stream</string>
     <string name="rent_buy_title">Rent/Buy</string>
+    <string name="other_sites_title">Other Sites</string>
 
 
     <!-- MoviePublicReviews Strings -->

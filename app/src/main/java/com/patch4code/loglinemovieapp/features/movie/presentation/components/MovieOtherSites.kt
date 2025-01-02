@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.presentation.components.buttons.SmallLinkButton
 
@@ -29,7 +31,10 @@ fun MovieOtherSites(movieDetails: MovieDetails?){
 
     HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 8.dp))
     Column {
-        Text(text = "Other Sites", modifier = Modifier.padding(bottom = 4.dp, top = 4.dp),style = MaterialTheme.typography.titleSmall)
+        Text(text = stringResource(id = R.string.other_sites_title),
+            modifier = Modifier.padding(bottom = 4.dp, top = 4.dp),
+            style = MaterialTheme.typography.titleSmall
+        )
         Row {
             urls.forEach{ (name, url) ->
                 SmallLinkButton(
