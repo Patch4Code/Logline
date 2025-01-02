@@ -1,5 +1,0 @@
-package com.patch4code.loglinemovieapp.features.watchlist.presentation.components
-
-//noinspection UsingMaterialAndMaterial3Libraries
-//noinspection UsingMaterialAndMaterial3Libraries
-

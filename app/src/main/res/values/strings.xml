@@ -76,6 +76,11 @@
     <string name="tmdb_api_terms_of_use_button_text">TMDB API Terms of Use</string>
 
 
+    <!-- Watchlist Strings -->
+    <string name="watchlist_no_filter_match_text">No items match your current filters.</string>
+    <string name="watchlist_empty_text">Your watchlist is currently empty.</string>
+
+
     <!-- Diary Strings -->
         <!-- Empty Diary Strings -->
         <string name="diary_no_filter_match_text">No items match your current filters.</string>
