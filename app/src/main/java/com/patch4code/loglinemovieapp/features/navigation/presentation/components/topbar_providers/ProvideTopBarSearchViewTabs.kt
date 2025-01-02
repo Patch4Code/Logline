@@ -9,15 +9,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.TopBarViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ProvideTopBarSearchViewTabs - Composable function for
+ * displaying top bar tabs with search and discover options.
+ *
+ * @author Patch4Code
+ */
 @Composable
 fun ProvideTopBarSearchViewTabs(selectedTabIndex: MutableIntState){
 
-    val tabItems = listOf("Search", "Discover")
+    val tabItems = listOf(stringResource(id = R.string.search_text), stringResource(id = R.string.discover_text))
 
     val viewModelStoreOwner = LocalViewModelStoreOwner.current
     (viewModelStoreOwner as? NavBackStackEntry)?.let { owner ->

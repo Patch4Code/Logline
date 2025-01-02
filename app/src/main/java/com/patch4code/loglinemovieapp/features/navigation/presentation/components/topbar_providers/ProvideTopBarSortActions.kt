@@ -7,9 +7,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.navigation.presentation.screen_navigation.TopBarViewModel
 
 /**
@@ -34,7 +36,7 @@ fun ProvideTopBarSortActions(onClickAction: () -> Unit) {
                 IconButton(onClick = {onClickAction()}) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.Sort,
-                        contentDescription = "Add",
+                        contentDescription = stringResource(id = R.string.sort_icon_description),
                         tint = Color.White
                     )
                 }
