@@ -1,2 +1,0 @@
-package com.patch4code.loglinemovieapp.features.movie_public_reviews.presentation.components
-

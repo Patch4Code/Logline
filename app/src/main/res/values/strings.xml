@@ -191,6 +191,12 @@
     <string name="name_updated_toast">Profile Name was updated</string>
     <string name="search_fav_movie_dialog_title">Search Favourite Movie</string>
 
+
+    <!-- MyMovies Strings -->
+    <string name="my_movies_no_filter_match_text">No items match your current filters.</string>
+    <string name="my_movies_empty_text">No watched movies yet.</string>
+
+
     <!-- Ratings Strings -->
     <string name="change_rating_text">Change Rating</string>
     <string name="no_text">No</string>
