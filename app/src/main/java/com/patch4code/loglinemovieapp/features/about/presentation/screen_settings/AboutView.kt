@@ -34,7 +34,6 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.component
  *
  * @author Patch4Code
  */
-
 @Composable
 fun AboutView(navController: NavController){
 

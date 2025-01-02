@@ -23,6 +23,14 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetailsSortOption
 import com.patch4code.loglinemovieapp.features.person_details.presentation.screen_person.PersonDetailsViewModel
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * PersonDetailsSortBottomSheet - composable function for
+ * displaying a bottom sheet to sort person details.
+ *
+ * @author Patch4Code
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PersonDetailsSortBottomSheet(

@@ -46,7 +46,7 @@ import com.patch4code.loglinemovieapp.features.navigation.presentation.component
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarSortActions
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
 import com.patch4code.loglinemovieapp.features.person_details.presentation.components.PersonDetailsSortBottomSheet
-import com.patch4code.loglinemovieapp.features.person_details.presentation.utils.LazyRowStatesSaver
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.LazyRowStatesSaver
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
