@@ -6,6 +6,15 @@ import androidx.compose.ui.platform.LocalContext
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseDropdown
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * FilterSortDropdown - Composable function for displaying
+ * a dropdown menu to select a sorting option.
+ *
+ * @author Patch4Code
+ */
+
 @Composable
 fun FilterSortDropdown(
     tempSelectedSortOption: MutableState<SortOption>,

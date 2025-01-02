@@ -7,8 +7,22 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * BaseFilterChipRow - A reusable composable function for displaying a row of filter chips
+ * with customizable behavior.
+ *
+ * This component supports selectable chips for filtering or categorization,
+ * with optional "Any" and "Select other" chips.
+ *
+ * @author Patch4Code
+ */
 
 @Composable
 fun <T>BaseFilterChipRow(
@@ -18,7 +32,7 @@ fun <T>BaseFilterChipRow(
     onItemToggle:(T) -> Unit,
     hasAnyChip: Boolean = false,
     anyChipIsSelected: () -> Boolean = {false},
-    anyChipLabel: String = "Any",
+    anyChipLabel: String = stringResource(id = R.string.any_label),
     onAnyClick: () -> Unit = {},
     hasSelectOtherButton: Boolean = false,
     onSelectOtherClick:() -> Unit = {},
@@ -54,7 +68,7 @@ fun <T>BaseFilterChipRow(
                 FilterChip(
                     selected = false,
                     onClick = { onSelectOtherClick() },
-                    label = { Text("Select other")},
+                    label = { Text(stringResource(id = R.string.select_other_label))},
                 )
             }
         }

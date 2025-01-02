@@ -13,11 +13,21 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * SortFilterDialog - Composable function for displaying a dialog to sort and filter movies.
+ *
+ * @author Patch4Code
+ */
 
 @Composable
 fun SortFilterDialog(
@@ -58,22 +68,22 @@ fun SortFilterDialog(
 
                 Column(modifier = Modifier.fillMaxSize().padding(16.dp).weight(1f)) {
 
-                    Text("Sort by")
+                    Text(stringResource(id = R.string.sort_by_text))
                     FilterSortDropdown(tempSelectedSortOption, sortOptions)
 
                     Spacer(modifier = Modifier.padding(8.dp))
 
-                    Text("Genre")
+                    Text(stringResource(id = R.string.genre_text))
                     FilterGenreSelection(selectedGenres)
 
                     Spacer(modifier = Modifier.padding(8.dp))
 
-                    Text("Decade/Year")
+                    Text(stringResource(id = R.string.decade_year_text))
                     FilterDecadeYearSelection(selectedDecades, selectedYears)
 
                     Spacer(modifier = Modifier.padding(8.dp))
 
-                    Text("Original Language")
+                    Text(stringResource(id = R.string.orig_language_text))
                     FilterLanguageSection(selectedLanguages)
                 }
 

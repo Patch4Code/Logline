@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,14 @@ import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MovieRowBrowseCard - Composable function for displaying a movie card for a row.
+ *
+ * @author Patch4Code
+ */
 
 @Composable
 fun MovieRowBrowseCard(navController: NavController, movie: Movie){
@@ -46,7 +55,7 @@ fun MovieRowBrowseCard(navController: NavController, movie: Movie){
         ) {
             AsyncImage(
                 model = posterUrl,
-                contentDescription = "$title-Poster",
+                contentDescription = stringResource(R.string.poster_content_description, title),
                 error = painterResource(id = R.drawable.movie_poster_placeholder)
             )
 

@@ -8,9 +8,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieYears
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieYears
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * FilterDecadeYearSelection - Composable function for selecting decades and years as filter criteria.
+ *
+ * @author Patch4Code
+ */
 
 @Composable
 fun FilterDecadeYearSelection(
@@ -30,7 +40,7 @@ fun FilterDecadeYearSelection(
             selectedDecades.clear()
             selectedYears.clear()
         },
-        label = { Text("Any Year") }
+        label = { Text(stringResource(id = R.string.any_year_label)) }
     )
     
     Spacer(modifier = Modifier.padding(4.dp))

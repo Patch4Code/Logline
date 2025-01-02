@@ -5,8 +5,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * FilterLanguageSection - Composable function for displaying a language selection section
+ * with primary languages and an option to select more.
+ *
+ * @author Patch4Code
+ */
 
 @Composable
 fun FilterLanguageSection(selectedLanguages: SnapshotStateList<String>){
@@ -32,7 +43,7 @@ fun FilterLanguageSection(selectedLanguages: SnapshotStateList<String>){
         },
         hasAnyChip = true,
         anyChipIsSelected = { selectedLanguages.isEmpty() },
-        anyChipLabel = "Any Language",
+        anyChipLabel = stringResource(id = R.string.any_Language_label),
         onAnyClick = { selectedLanguages.clear() },
         hasSelectOtherButton = true,
         onSelectOtherClick = { showLanguageDialog.value = true },

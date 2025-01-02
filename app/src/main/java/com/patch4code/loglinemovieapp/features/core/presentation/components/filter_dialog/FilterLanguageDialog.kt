@@ -4,8 +4,19 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.res.stringResource
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseCountryLanguageSelectionDialog
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * FilterLanguageDialog - Composable function for displaying a dialog to select languages
+ * as filter criteria.
+ *
+ * @author Patch4Code
+ */
 
 @Composable
 fun FilterLanguageDialog(
@@ -17,7 +28,7 @@ fun FilterLanguageDialog(
     BaseCountryLanguageSelectionDialog(
         showDialog = showDialog,
         items = languages,
-        title = "Select a Language",
+        title = stringResource(id = R.string.select_language_label),
         isSelected = {languageKey->
             selectedLanguages.contains(languageKey)
         },

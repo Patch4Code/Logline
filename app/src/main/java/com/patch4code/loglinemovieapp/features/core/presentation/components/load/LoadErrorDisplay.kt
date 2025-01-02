@@ -17,9 +17,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import kotlinx.coroutines.delay
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * LoadErrorDisplay - composable function for displaying a loading indicator
+ * followed by an error message with a retry option.
+ *
+ * @author Patch4Code
+ */
 
 @Composable
 fun LoadErrorDisplay(
@@ -38,19 +49,19 @@ fun LoadErrorDisplay(
         }else{
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "Load Error",
+                    text = (stringResource(id = R.string.load_error_title)),
                     style = MaterialTheme.typography.titleLarge,
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Something went wrong. Please check your internet connection or try again later.",
+                    text = stringResource(id = R.string.load_error_text),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(onClick = { onReload() }){
-                    Text(text = "Try again")
+                    Text(text = stringResource(id = R.string.try_again_text))
                 }
             }
         }

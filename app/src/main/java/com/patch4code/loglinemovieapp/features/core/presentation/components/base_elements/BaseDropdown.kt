@@ -21,8 +21,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.modifier.customVerticalScrollbar
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * BaseDropdown - Composable function for creating a customizable dropdown menu
+ * with a scrollable list of items. Displays a filter chip as the dropdown trigger
+ * and allows item selection from a provided list.
+ *
+ * @author Patch4Code
+ */
 
 @Composable
 fun <T> BaseDropdown(
@@ -43,7 +55,7 @@ fun <T> BaseDropdown(
             label = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(labelProvider(selectedItem), modifier = Modifier.weight(1f))
-                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Expand Menu")
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = stringResource(id = R.string.expand_menu_description))
                 }
             },
             selected = true,

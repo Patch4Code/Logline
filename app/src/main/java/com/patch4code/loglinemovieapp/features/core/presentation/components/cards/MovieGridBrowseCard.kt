@@ -31,6 +31,14 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MovieGridBrowseCard - Composable function for displaying a movie card for a grid layout.
+ *
+ * @author Patch4Code
+ */
+
 @Composable
 fun MovieGridBrowseCard(navController: NavController, movie: Movie?, rating: Int? = null){
 

@@ -13,6 +13,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * Modifier.customVerticalScrollbar - Custom composable modifier
+ * to add a vertical scrollbar to scrollable content.
+ *
+ * @author Patch4Code
+ */
+
 @Composable
 fun Modifier.customVerticalScrollbar(
     state: ScrollState,
