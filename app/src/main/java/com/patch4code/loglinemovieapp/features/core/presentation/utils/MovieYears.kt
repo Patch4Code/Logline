@@ -1,7 +1,15 @@
-package com.patch4code.loglinemovieapp.features.core.domain.model
+package com.patch4code.loglinemovieapp.features.core.presentation.utils
 
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverDecade
 import java.time.Year
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * MovieYears - Utility object for generating lists of years and decades related to movie data.
+ *
+ * @author Patch4Code
+ */
 
 object MovieYears {
 
@@ -32,7 +40,6 @@ object MovieYears {
         }
         return discoverDecades
     }
-
 
     fun getYears(): List<String> {
         val currentYear = Year.now().value

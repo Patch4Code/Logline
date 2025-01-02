@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.platform.LocalContext
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 
@@ -12,7 +13,8 @@ fun FilterLanguageSection(selectedLanguages: SnapshotStateList<String>){
 
     val showLanguageDialog = remember { mutableStateOf(false) }
 
-    val primaryLanguages = MovieLanguages.getPrimaryLanguages()
+    val context = LocalContext.current
+    val primaryLanguages = MovieLanguages.getPrimaryLanguages(context)
     val sortedLanguages = primaryLanguages.entries.sortedBy { it.value }
 
     BaseFilterChipRow(
@@ -36,5 +38,5 @@ fun FilterLanguageSection(selectedLanguages: SnapshotStateList<String>){
         onSelectOtherClick = { showLanguageDialog.value = true },
     )
 
-    FilterLanguageDialog(showLanguageDialog, selectedLanguages)
+    FilterLanguageDialog(showLanguageDialog, selectedLanguages, context)
 }

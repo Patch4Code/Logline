@@ -2,13 +2,15 @@ package com.patch4code.loglinemovieapp.features.core.presentation.components.fil
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.platform.LocalContext
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieGenres
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 
 @Composable
 fun FilterGenreSelection(selectedGenres: SnapshotStateList<Int>){
 
-    val availableGenres:  Map<Int, String> = MovieGenres.getAllGenres()
+    val context = LocalContext.current
+    val availableGenres:  Map<Int, String> = MovieGenres.getAllGenres(context)
 
     BaseFilterChipRow(
         items = availableGenres.entries,

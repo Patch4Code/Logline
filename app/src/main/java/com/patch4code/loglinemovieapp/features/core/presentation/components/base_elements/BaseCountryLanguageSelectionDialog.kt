@@ -19,9 +19,21 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.patch4code.loglinemovieapp.R
+
+/**
+ * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * BaseCountryLanguageSelectionDialog - Composable function for displaying a dialog to select
+ * countries or languages. Allows toggling selection, displays a customizable title, and includes
+ * a close button.
+ *
+ * @author Patch4Code
+ */
 
 @Composable
 fun BaseCountryLanguageSelectionDialog(
@@ -68,7 +80,7 @@ fun BaseCountryLanguageSelectionDialog(
                     onClick = onClose,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Close")
+                    Text(stringResource(id = R.string.close_button_text))
                 }
             }
         }
@@ -87,7 +99,7 @@ fun CountryLanguageItem(language: Map.Entry<String, String>, isSelected: Boolean
         Text(text = language.value, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
         Icon(
             imageVector = Icons.Default.Check,
-            contentDescription = "Selected",
+            contentDescription = stringResource(id = R.string.selected_description),
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.alpha(if(isSelected) 1.0F else 0.0F)
         )

@@ -2,6 +2,7 @@ package com.patch4code.loglinemovieapp.features.search.presentation.components.d
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.platform.LocalContext
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieGenres
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
@@ -9,7 +10,8 @@ import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptio
 @Composable
 fun DiscoverGenreSelection(discoverOptions: MutableState<DiscoverOptions>){
 
-    val availableGenres:  Map<Int, String> = MovieGenres.getAllGenres()
+    val context = LocalContext.current
+    val availableGenres:  Map<Int, String> = MovieGenres.getAllGenres(context)
 
     BaseFilterChipRow(
         items = availableGenres.entries,

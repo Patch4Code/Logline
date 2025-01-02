@@ -55,7 +55,7 @@ fun PersonDetailsSortBottomSheet(
                             personDetailsViewModel.updateSortingForPersonMovieCredits(mainDepartment, selectedSortOption.value)
                         }
                     ){
-                        Text(text = sortOption.label, modifier = Modifier.weight(1f))
+                        Text(text = sortOption.label.asString(), modifier = Modifier.weight(1f))
                         if (sortOption == selectedSortOption.value) {
                             Icon(imageVector = Icons.Default.Check, contentDescription = null)
                         }

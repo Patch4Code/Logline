@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieLanguages
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
@@ -13,7 +14,8 @@ fun DiscoverLanguageSection(discoverOptions: MutableState<DiscoverOptions>){
 
     val showLanguageDialog = remember { mutableStateOf(false) }
 
-    val primaryLanguages = MovieLanguages.getPrimaryLanguages()
+    val context = LocalContext.current
+    val primaryLanguages = MovieLanguages.getPrimaryLanguages(context)
     val sortedLanguages = primaryLanguages.entries.sortedBy { it.value }
 
     BaseFilterChipRow(
@@ -37,5 +39,5 @@ fun DiscoverLanguageSection(discoverOptions: MutableState<DiscoverOptions>){
         onSelectOtherClick = { showLanguageDialog.value = true},
     )
 
-    DiscoverLanguageDialog(showLanguageDialog, discoverOptions)
+    DiscoverLanguageDialog(showLanguageDialog, discoverOptions, context)
 }

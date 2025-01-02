@@ -1,9 +1,11 @@
 package com.patch4code.loglinemovieapp.features.search.presentation.components.discover.options
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieCountries
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseCountryLanguageSelectionDialog
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseFilterChipRow
@@ -14,7 +16,8 @@ fun DiscoverCountrySection(discoverOptions: MutableState<DiscoverOptions>) {
 
     val showCountryDialog = remember { mutableStateOf(false) }
 
-    val primaryCountries = MovieCountries.getPrimaryCountries()
+    val context = LocalContext.current
+    val primaryCountries = MovieCountries.getPrimaryCountries(context)
     val sortedPrimaryCountries = primaryCountries.entries.sortedBy { it.value }
 
     BaseFilterChipRow(
@@ -39,14 +42,15 @@ fun DiscoverCountrySection(discoverOptions: MutableState<DiscoverOptions>) {
         onSelectOtherClick = { showCountryDialog.value = true },
     )
 
-    DiscoverCountryDialog(showCountryDialog, discoverOptions)
+    DiscoverCountryDialog(showCountryDialog, discoverOptions, context)
 }
 
 @Composable
 fun DiscoverCountryDialog(
     showDialog: MutableState<Boolean>,
     discoverOptions: MutableState<DiscoverOptions>,
-    countries: Map<String, String> = MovieCountries.geAllCountries()
+    context: Context,
+    countries: Map<String, String> = MovieCountries.geAllCountries(context)
 ) {
     BaseCountryLanguageSelectionDialog(
         showDialog = showDialog,

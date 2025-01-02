@@ -1,5 +1,6 @@
 package com.patch4code.loglinemovieapp.features.core.presentation.components.filter_dialog
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -10,7 +11,8 @@ import com.patch4code.loglinemovieapp.features.core.presentation.components.base
 fun FilterLanguageDialog(
     showDialog: MutableState<Boolean>,
     selectedLanguages: SnapshotStateList<String>,
-    languages: Map<String, String> = MovieLanguages.getAllLanguages()
+    context: Context,
+    languages: Map<String, String> = MovieLanguages.getAllLanguages(context)
 ) {
     BaseCountryLanguageSelectionDialog(
         showDialog = showDialog,

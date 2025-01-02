@@ -2,6 +2,7 @@ package com.patch4code.loglinemovieapp.features.core.presentation.components.fil
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.platform.LocalContext
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.components.base_elements.BaseDropdown
 
@@ -11,10 +12,11 @@ fun FilterSortDropdown(
     sortOptions: List<SortOption>
 ) {
 
+    val context = LocalContext.current
     BaseDropdown(
         selectedItem = tempSelectedSortOption.value,
         items = sortOptions,
-        labelProvider = { it.label },
+        labelProvider = { it.label.asString(context) },
         onItemSelected = {selectedOption ->
             tempSelectedSortOption.value = selectedOption }
     )
