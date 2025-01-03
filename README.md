@@ -41,7 +41,14 @@ alt="Get it on F-Droid" height="80">](https://f-droid.org/en/packages/com.patch4
 
 ## Screenshots
 
-...
+[<img src="readme/home.jpeg" width=160>](readme/home.jpeg)
+[<img src="readme/search.jpeg" width=160>](readme/search.jpeg)
+[<img src="readme/discover.jpeg" width=160>](readme/discover.jpeg)
+[<img src="readme/watchlist.jpeg" width=160>](readme/watchlist.jpeg)
+[<img src="readme/movie_page.jpeg" width=160>](readme/movie_page.jpeg)
+[<img src="readme/profile.jpeg" width=160>](readme/profile.jpeg)
+[<img src="readme/my_movies.jpeg" width=160>](readme/my_movies.jpeg)
+[<img src="readme/diary.jpeg" width=160>](readme/diary.jpeg)
+[<img src="readme/reviews.jpeg" width=160>](readme/reviews.jpeg)
+[<img src="readme/list_table.jpeg" width=160>](readme/list_table.jpeg)
 
-
-## Used Services and ...
