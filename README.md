@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Logline - MovieApp</h1>
 
-[<img src="https://img.shields.io/github/v/release/patch4code/logline?logo=github"
+[<img src="https://img.shields.io/github/tag-date/patch4code/logline.svg?color=blue&label=release"
 alt="Github release">](https://github.com/Patch4Code/Logline/releases)
 [<img src="https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.patch4code.logline"
 alt="IzzyOnDroid release">](https://apt.izzysoft.de/fdroid/index/apk/com.patch4code.logline)
@@ -36,11 +36,6 @@ alt="Get it on F-Droid" height="80">](https://f-droid.org/en/packages/com.patch4
 - **Watchlist**: Organize your movies by adding them to a personal watchlist.
 - **Activity Tracking**: Keep a personal log of your watched movies.
 - **Privacy First**: Local data storage ensures full control of your personal information.
-
-
-## Download
-
-Still in development
 
 
 
