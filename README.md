@@ -30,7 +30,7 @@ alt="Get it on F-Droid" height="80">](https://f-droid.org/en/packages/com.patch4
 
 
 ## Features
-- **Browse Movies**: Explore popular, top-rated, and upcoming movies.
+- **Discover Movies**: Explore popular, top-rated, and upcoming movies.
 - **Search Functionality**: Find your favorite movies quickly.
 - **Detailed Movie Information**: Access details about movies.
 - **Watchlist**: Organize your movies by adding them to a personal watchlist.
