@@ -1,4 +1,11 @@
-<img "left" width="80" height="80" src="readme/LoglineLogo.svg" alt="App icon">
+<p align="center">
+   <img alt="Logline App-Logo" src="readme/LoglineLogo.svg" width="92" />
+</p>
+<h1 align="center">Logline - MovieApp</h1>
+
+
+<!-- <img align="left" width="80" height="80" src="readme/LoglineLogo.svg" alt="App icon"> -->
+
 
 # Logline - MovieApp
 
