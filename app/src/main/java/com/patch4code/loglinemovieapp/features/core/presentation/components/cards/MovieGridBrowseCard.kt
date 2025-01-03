@@ -4,15 +4,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.StarRate
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,7 +40,6 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  *
  * @author Patch4Code
  */
-
 @Composable
 fun MovieGridBrowseCard(navController: NavController, movie: Movie?, rating: Int? = null){
 
@@ -49,25 +50,27 @@ fun MovieGridBrowseCard(navController: NavController, movie: Movie?, rating: Int
     val year = MovieHelper.extractYear(movie.releaseDate)
     val posterUrl = MovieHelper.processPosterUrl(movie.posterUrl)
 
-    val cardHeight = if (rating != null && rating >= 0) 245.dp else 220.dp
+    val textColumnHeight = if (rating != null && rating >= 0) 75.dp else 55.dp
 
     Card(
-        modifier = Modifier .padding(4.dp).height(cardHeight).width(110.dp),
+        modifier = Modifier.padding(4.dp),
         onClick = {navController.navigate(Screen.MovieScreen.withArgs(movieId))}
     ) {
 
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
+                modifier = Modifier.aspectRatio(2/3f),
                 model = posterUrl,
-                contentDescription = "$title-Poster",
+                contentDescription = stringResource(R.string.poster_content_description, title),
                 error = painterResource(id = R.drawable.movie_poster_placeholder)
             )
+
             Column(
-                modifier = Modifier.padding(4.dp),
+                modifier = Modifier.padding(4.dp).height(textColumnHeight),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -76,7 +79,7 @@ fun MovieGridBrowseCard(navController: NavController, movie: Movie?, rating: Int
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Center,
-                    fontSize = 13.sp,
+                    style = MaterialTheme.typography.bodySmall,
                     lineHeight = 16.sp
                 )
                 Text(
@@ -101,10 +104,10 @@ fun MovieGridBrowseCard(navController: NavController, movie: Movie?, rating: Int
                                 .size(14.dp)
                                 .align(Alignment.CenterVertically)
                         )
-                        androidx.compose.material.Text(
+                        Text(
                             text = "$rating",
                             color = Color.White,
-                            fontSize = 14.sp,
+                            style = MaterialTheme.typography.bodySmall,
                             modifier = Modifier.align(Alignment.CenterVertically)
                         )
                     }
