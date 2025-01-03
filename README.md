@@ -33,7 +33,7 @@ alt="Get it on F-Droid" height="80">](https://f-droid.org/en/packages/com.patch4
 - **Discover new Movies**: Explore popular, top-rated, and upcoming movies.
   Use advanced filters to find exactly what you're looking for, from genres to release years and more.
 - **Search Functionality**: Find your favorite movies quickly.
-- **Detailed Movie Information**: Access details about movies (including cast, synopsis, release information and more).
+- **Detailed Movie Information**: Access details about movies (including cast, release information and more).
 - **Watchlist**: Organize your movies by adding them to a personal watchlist.
 - **Rate Movies**: Privately rate movies you’ve watched.
 - **Activity Tracking**: Keep a personal log of your watched movies.
