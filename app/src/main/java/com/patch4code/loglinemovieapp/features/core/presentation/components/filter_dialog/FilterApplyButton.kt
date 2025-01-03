@@ -20,8 +20,9 @@ import com.patch4code.loglinemovieapp.R
 
 @Composable
 fun FilterApplyButton(onClick:() -> Unit){
+
     Button(
-        modifier = Modifier.fillMaxWidth().padding(32.dp),
+        modifier = Modifier.fillMaxWidth().padding(bottom = 48.dp, start = 32.dp, end = 32.dp),
         onClick = { onClick() },
         content = { Text(stringResource(id = R.string.apply_filters_label)) }
     )
