@@ -19,6 +19,16 @@ alt="GPLv3 License">](https://www.gnu.org/licenses/gpl-3.0)
 The app offers core functionality to discover, organize, and rate movies while ensuring that user data remains under their control.
 
 
+## Download
+
+[<img src="readme/get-it-on-github.png"
+alt="Get it on Github" height="80">](https://github.com/Patch4Code/Logline/releases)
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
+alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.patch4code.logline)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+alt="Get it on F-Droid" height="80">](https://f-droid.org/en/packages/com.patch4code.logline)
+
+
 ## Features
 - **Browse Movies**: Explore popular, top-rated, and upcoming movies.
 - **Search Functionality**: Find your favorite movies quickly.
