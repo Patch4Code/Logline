@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
-import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
+import com.patch4code.loglinemovieapp.features.core.domain.model.MovieWithUserData
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
@@ -24,8 +24,8 @@ import kotlinx.coroutines.launch
  */
 class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
 
-    private val _watchlistItems = MutableLiveData<List<MovieUserData>>()
-    val watchlistItems: LiveData<List<MovieUserData>> get() = _watchlistItems
+    private val _watchlistItems = MutableLiveData<List<MovieWithUserData>>()
+    val watchlistItems: LiveData<List<MovieWithUserData>> get() = _watchlistItems
 
     fun loadWatchlistItems(sortOption: SortOption, filterOptions: FilterOptions) {
         if (sortOption !in WatchlistSortOptions.options) {
@@ -51,7 +51,7 @@ class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
         }
     }
 
-    private fun filterWatchlistItems(items: List<MovieUserData>, filterOptions: FilterOptions): List<MovieUserData> {
+    private fun filterWatchlistItems(items: List<MovieWithUserData>, filterOptions: FilterOptions): List<MovieWithUserData> {
         return items.filter { item ->
             val movie = item.movie
             matchesGenre(movie?.genreIds, filterOptions.selectedGenres) &&

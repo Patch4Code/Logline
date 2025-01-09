@@ -11,6 +11,12 @@ import androidx.room.Entity
  */
 @Entity(primaryKeys = ["movieListId", "movieId"])
 data class MovieInList(
+    /*
+    val movieListId: String,
+    val movieId: Int,
+    val position: Int,
+     */
+
     val movieListId: String,
     val position: Int,
     val movieId: Int,
@@ -23,4 +29,5 @@ data class MovieInList(
     val originalTitle: String = "N/A",
     val popularity: Double = 0.0,
     val voteAverage: Double = 0.0,
+
 )

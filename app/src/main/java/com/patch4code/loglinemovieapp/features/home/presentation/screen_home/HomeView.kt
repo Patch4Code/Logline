@@ -23,9 +23,9 @@ import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.presentation.components.cards.MovieRowBrowseCard
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
+import com.patch4code.loglinemovieapp.features.core.presentation.utils.LazyRowStatesSaver
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 import com.patch4code.loglinemovieapp.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.LazyRowStatesSaver
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)

@@ -71,9 +71,11 @@ fun MyMoviesView(
             modifier = Modifier.padding(8.dp),
             columns = GridCells.Fixed(3),
             content = {
-                watchedMoviesItems.forEach{userMovie->
+                watchedMoviesItems.forEach{movieWithUserData->
+                    val movie = movieWithUserData.movie
+                    val rating = movieWithUserData.userData.rating
                     item {
-                        MovieGridBrowseCard(navController, userMovie.movie, userMovie.rating)
+                        MovieGridBrowseCard(navController, movie, rating)
                     }
                 }
             }

@@ -15,6 +15,16 @@ import java.util.UUID
  */
 @Entity
 data class LoggedMovie(
+    /*
+    @PrimaryKey
+    val id: String = UUID.randomUUID().toString(),
+    val movieId: Int,
+    var date: LocalDateTime,
+    var rating: Int,
+    var review: String = ""
+
+     */
+
     @PrimaryKey
     val id: String = UUID.randomUUID().toString(),
     val movie: Movie,

@@ -7,6 +7,7 @@ import androidx.room.Transaction
 import androidx.room.Upsert
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
+import com.patch4code.loglinemovieapp.features.core.domain.model.MovieWithUserData
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -22,6 +23,9 @@ interface MovieUserDataDao {
     @Upsert
     suspend fun upsertMovieUserData(movieUserData: MovieUserData)
 
+    @Upsert
+    suspend fun upsertMovie(movie: Movie)
+
     @Delete
     suspend fun deleteMovieUserData(movieUserData: MovieUserData)
 
@@ -32,10 +36,14 @@ interface MovieUserDataDao {
         // If an entry exists and has neither a rating nor is on the watchlist, delete the entry
         if(existingEntry != null && rating < 0 && !existingEntry.onWatchlist){
             deleteMovieUserData(existingEntry)
+            deleteMovieById(existingEntry.movieId)
         }else{
+            // update or insert movie
+            upsertMovie(movie)
+
             // Otherwise, update or insert the entry as usual
             val updatedEntry = existingEntry
-                ?: MovieUserData(movie = movie, addedToWatchedTime = System.currentTimeMillis())
+                ?: MovieUserData(movieId = movie.id, addedToWatchedTime = System.currentTimeMillis())
             updatedEntry.rating = rating
             if(updatedEntry.addedToWatchedTime == 0L)updatedEntry.addedToWatchedTime = System.currentTimeMillis()
             upsertMovieUserData(updatedEntry)
@@ -49,65 +57,249 @@ interface MovieUserDataDao {
         // If an entry exists and is neither on the watchlist nor has a rating, delete the entry
         if (existingEntry != null && !onWatchlist && existingEntry.rating < 0) {
             deleteMovieUserData(existingEntry)
+            deleteMovieById(existingEntry.movieId)
         } else {
+            // update or insert movie
+            upsertMovie(movie)
+
             // Otherwise, update or insert the entry as usual
             val updatedEntry = existingEntry
-                ?: MovieUserData(movie = movie, addedToWatchlistTime = System.currentTimeMillis())
+                ?: MovieUserData(movieId = movie.id, addedToWatchlistTime = System.currentTimeMillis())
             updatedEntry.onWatchlist = onWatchlist
             updatedEntry.addedToWatchlistTime = System.currentTimeMillis()
             upsertMovieUserData(updatedEntry)
         }
     }
 
-    @Query("SELECT * FROM movieUserData WHERE id = :movieId LIMIT 1")
+    @Query("SELECT * FROM movieUserData WHERE movieId = :movieId LIMIT 1")
     suspend fun getMovieUserDataByMovieId(movieId: Int): MovieUserData?
 
-    // MyMovies Queries
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY addedToWatchedTime ASC")
-    suspend fun getWatchedMoviesOrderedByAddedAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY addedToWatchedTime DESC")
-    suspend fun getWatchedMoviesOrderedByAddedDesc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.title') ASC")
-    suspend fun getWatchedMoviesOrderedByTitleAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.title') DESC")
-    suspend fun getWatchedMoviesOrderedByTitleDesc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.release_date') ASC")
-    suspend fun getWatchedMoviesOrderedByReleaseDateAsc() : List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.release_date') DESC")
-    suspend fun getWatchedMoviesOrderedByReleaseDateDesc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY rating ASC")
-    suspend fun getWatchedMoviesOrderedByRatingAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY rating DESC")
-    suspend fun getWatchedMoviesOrderedByRatingDesc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.popularity') ASC")
-    suspend fun getWatchedMoviesOrderedByPopularityAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.popularity') DESC")
-    suspend fun getWatchedMoviesOrderedByPopularityDesc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.vote_average') ASC")
-    suspend fun getWatchedMoviesOrderedByVoteAverageAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE rating >= 0 ORDER BY json_extract(movie, '\$.vote_average') DESC")
-    suspend fun getWatchedMoviesOrderedByVoteAverageDesc(): List<MovieUserData>
+    @Query("DELETE FROM Movie WHERE id = :movieId")
+    suspend fun deleteMovieById(movieId: Int)
 
-    // Watchlist Queries
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY addedToWatchlistTime ASC")
-    suspend fun getWatchlistItemsOrderedByAddedAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY addedToWatchlistTime DESC")
-    suspend fun getWatchlistItemsOrderedByAddedDesc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.title') ASC")
-    suspend fun getWatchlistItemsOrderedByTitleAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.title') DESC")
-    suspend fun getWatchlistItemsOrderedByTitleDesc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.release_date') ASC")
-    suspend fun getWatchlistItemsOrderedByReleaseDateAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.release_date') DESC")
-    suspend fun getWatchlistItemsOrderedByReleaseDateDesc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.popularity') ASC")
-    suspend fun getWatchlistItemsOrderedByPopularityAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.popularity') DESC")
-    suspend fun getWatchlistItemsOrderedByPopularityDesc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.vote_average') ASC")
-    suspend fun getWatchlistItemsOrderedByVoteAverageAsc(): List<MovieUserData>
-    @Query("SELECT * FROM movieUserData WHERE onWatchlist = 1 ORDER BY json_extract(movie, '\$.vote_average') DESC")
-    suspend fun getWatchlistItemsOrderedByVoteAverageDesc(): List<MovieUserData>
+    // MyMovies Queries ----------------------------------------------------------------------------
 
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY mud.addedToWatchedTime ASC
+    """)
+    suspend fun getWatchedMoviesOrderedByAddedAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY mud.addedToWatchedTime DESC
+    """)
+    suspend fun getWatchedMoviesOrderedByAddedDesc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY m.title ASC
+    """)
+    suspend fun getWatchedMoviesOrderedByTitleAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY m.title DESC
+    """)
+    suspend fun getWatchedMoviesOrderedByTitleDesc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY m.releaseDate ASC
+    """)
+    suspend fun getWatchedMoviesOrderedByReleaseDateAsc() : List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY m.releaseDate DESC
+    """)
+    suspend fun getWatchedMoviesOrderedByReleaseDateDesc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY mud.rating ASC
+    """)
+    suspend fun getWatchedMoviesOrderedByRatingAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY mud.rating DESC
+    """)
+    suspend fun getWatchedMoviesOrderedByRatingDesc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY m.popularity ASC
+    """)
+    suspend fun getWatchedMoviesOrderedByPopularityAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY m.popularity DESC
+    """)
+    suspend fun getWatchedMoviesOrderedByPopularityDesc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY m.voteAverage ASC
+    """)
+    suspend fun getWatchedMoviesOrderedByVoteAverageAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.rating >= 0
+        ORDER BY m.voteAverage DESC
+    """)
+    suspend fun getWatchedMoviesOrderedByVoteAverageDesc(): List<MovieWithUserData>
+
+
+
+    // Watchlist Queries----------------------------------------------------------------------------
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY mud.addedToWatchlistTime ASC
+    """)
+    suspend fun getWatchlistItemsOrderedByAddedAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY mud.addedToWatchlistTime DESC
+    """)
+    suspend fun getWatchlistItemsOrderedByAddedDesc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY m.title ASC
+    """)
+    suspend fun getWatchlistItemsOrderedByTitleAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY m.title DESC
+    """)
+    suspend fun getWatchlistItemsOrderedByTitleDesc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY m.releaseDate ASC
+    """)
+    suspend fun getWatchlistItemsOrderedByReleaseDateAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY m.releaseDate DESC
+    """)
+    suspend fun getWatchlistItemsOrderedByReleaseDateDesc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY m.popularity ASC
+    """)
+    suspend fun getWatchlistItemsOrderedByPopularityAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY m.popularity DESC
+    """)
+    suspend fun getWatchlistItemsOrderedByPopularityDesc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY m.voteAverage ASC
+    """)
+    suspend fun getWatchlistItemsOrderedByVoteAverageAsc(): List<MovieWithUserData>
+
+    @Transaction
+    @Query("""
+        SELECT mud.*, m.* 
+        FROM MovieUserData mud
+        INNER JOIN Movie m ON mud.movieId = m.id
+        WHERE mud.onWatchlist = 1
+        ORDER BY m.voteAverage DESC
+    """)
+    suspend fun getWatchlistItemsOrderedByVoteAverageDesc(): List<MovieWithUserData>
 }

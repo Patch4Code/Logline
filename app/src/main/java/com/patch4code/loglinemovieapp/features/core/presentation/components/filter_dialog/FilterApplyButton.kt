@@ -17,12 +17,11 @@ import com.patch4code.loglinemovieapp.R
  *
  * @author Patch4Code
  */
-
 @Composable
-fun FilterApplyButton(onClick:() -> Unit){
+fun FilterApplyButton(modifier: Modifier = Modifier, onClick:() -> Unit){
 
     Button(
-        modifier = Modifier.fillMaxWidth().padding(bottom = 48.dp, start = 32.dp, end = 32.dp),
+        modifier = Modifier.fillMaxWidth().padding(32.dp),//Modifier.fillMaxWidth().padding(bottom = 48.dp, start = 32.dp, end = 32.dp)
         onClick = { onClick() },
         content = { Text(stringResource(id = R.string.apply_filters_label)) }
     )

@@ -71,9 +71,10 @@ fun WatchlistView(
             modifier = Modifier.padding(8.dp),
             columns = GridCells.Fixed(3),
             content = {
-                watchlistItems.forEach{ userData ->
+                watchlistItems.forEach{ movieWithUserData ->
+                    val movie = movieWithUserData.movie
                     item {
-                        userData.movie?.let { MovieGridBrowseCard(navController, it) }
+                        MovieGridBrowseCard(navController, movie)
                     }
                 }
             }

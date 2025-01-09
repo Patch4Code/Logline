@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
-import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
+import com.patch4code.loglinemovieapp.features.core.domain.model.MovieWithUserData
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
@@ -24,8 +24,8 @@ import kotlinx.coroutines.launch
  */
 class MyMoviesViewModel(private val dao: MovieUserDataDao): ViewModel() {
 
-    private val _myMoviesItems = MutableLiveData<List<MovieUserData>>()
-    val myMoviesItems: LiveData<List<MovieUserData>> get() = _myMoviesItems
+    private val _myMoviesItems = MutableLiveData<List<MovieWithUserData>>()
+    val myMoviesItems: LiveData<List<MovieWithUserData>> get() = _myMoviesItems
 
     fun loadWatchedMovies(sortOption: SortOption, filterOptions: FilterOptions) {
         if (sortOption !in MyMoviesSortOptions.options) {
@@ -54,13 +54,13 @@ class MyMoviesViewModel(private val dao: MovieUserDataDao): ViewModel() {
         }
     }
 
-    private fun filterMyMoviesItems(items: List<MovieUserData>, filterOptions: FilterOptions): List<MovieUserData> {
+    private fun filterMyMoviesItems(items: List<MovieWithUserData>, filterOptions: FilterOptions): List<MovieWithUserData> {
         return items.filter { item ->
             val movie = item.movie
-            matchesGenre(movie?.genreIds, filterOptions.selectedGenres) &&
-                    matchesDecade(movie?.releaseDate, filterOptions.selectedDecades) &&
-                    matchesYear(movie?.releaseDate, filterOptions.selectedYears) &&
-                    matchesLanguage(movie?.originalLanguage, filterOptions.selectedLanguages)
+            matchesGenre(movie.genreIds, filterOptions.selectedGenres) &&
+                    matchesDecade(movie.releaseDate, filterOptions.selectedDecades) &&
+                    matchesYear(movie.releaseDate, filterOptions.selectedYears) &&
+                    matchesLanguage(movie.originalLanguage, filterOptions.selectedLanguages)
         }
     }
 

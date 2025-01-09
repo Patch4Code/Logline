@@ -70,7 +70,7 @@ fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: Prof
                 // remove fav movie button (little x in the right upper corner of the poster)
                 if(movieId >= 0){
                     FilledTonalIconButton(
-                        onClick = { profileViewModel.setFavMovieAtIndex(index, Movie()) },
+                        onClick = { profileViewModel.setFavMovieAtIndex(index, Movie(-1)) },
                         modifier = Modifier.align(Alignment.TopEnd).padding(2.dp).size(20.dp)
                     ) {
                         Icon(imageVector = Icons.Default.Close, contentDescription = stringResource(id = R.string.delete_fav_movie_icon_description))

@@ -1,6 +1,8 @@
 package com.patch4code.loglinemovieapp.features.core.domain.model
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
@@ -11,13 +13,21 @@ import androidx.room.PrimaryKey
  * @author Patch4Code
  */
 
-@Entity
+@Entity(
+    foreignKeys = [
+        ForeignKey(
+            entity = Movie::class,
+            parentColumns = ["id"],
+            childColumns = ["movieId"],
+            onDelete = ForeignKey.RESTRICT // Verhindert Löschen, wenn Referenzen bestehen
+        )
+    ],
+    indices = [Index("movieId")]
+)
 data class MovieUserData(
-    val movie: Movie? = null,
+    @PrimaryKey val movieId: Int,
     var onWatchlist: Boolean = false,
     var rating: Int = -1,
     var addedToWatchlistTime: Long = 0,
     var addedToWatchedTime: Long = 0,
-    @PrimaryKey(autoGenerate = false)
-    val id: Int = movie?.id ?: -1
 )

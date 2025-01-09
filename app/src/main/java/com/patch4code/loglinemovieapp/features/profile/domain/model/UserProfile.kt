@@ -13,6 +13,18 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
  */
 @Entity
 data class UserProfile(
+    /*
+    @PrimaryKey val id:Int = 1,
+    var username: String = "Anonymous",
+    var profileImagePath: String = "",
+    var bannerImagePath: String = "",
+    var bioText: String = "",
+    var favouriteMovieId1: Int? = null,
+    var favouriteMovieId2: Int? = null,
+    var favouriteMovieId3: Int? = null,
+    var favouriteMovieId4: Int? = null,
+     */
+
     var username: String = DEFAULT_USERNAME,
     var profileImagePath: String = "",
     var bannerImagePath: String = "",
@@ -23,6 +35,6 @@ data class UserProfile(
 ){
     companion object {
         const val DEFAULT_USERNAME = "Anonymous"
-        val EMPTY_MOVIE_LIST = listOf(Movie(), Movie(), Movie(), Movie())
+        val EMPTY_MOVIE_LIST = listOf(Movie(-1), Movie(-1), Movie(-1), Movie(-1))
     }
 }
