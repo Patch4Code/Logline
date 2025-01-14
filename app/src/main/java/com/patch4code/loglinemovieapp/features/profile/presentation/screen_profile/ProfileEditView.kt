@@ -50,7 +50,7 @@ fun ProfileEditView(
     ProvideTopBarBackNavigationIcon(navController)
 
 
-    val userProfile = profileViewModel.userProfileData.observeAsState().value
+    val userProfileData = profileViewModel.userProfileData.observeAsState().value
 
     val openEditProfileNameDialog = remember { mutableStateOf(false)  }
     val openEditBioDialog = remember { mutableStateOf(false)  }
@@ -58,16 +58,16 @@ fun ProfileEditView(
     LazyColumn(modifier = Modifier.padding(16.dp))
     {
         item {
-            ProfileEditNameSection(openEditProfileNameDialog, userProfile?.username)
-            ProfileEditBioSection(openEditBioDialog, userProfile?.bioText)
+            ProfileEditNameSection(openEditProfileNameDialog, userProfileData?.userProfile?.username)
+            ProfileEditBioSection(openEditBioDialog, userProfileData?.userProfile?.bioText)
 
             Row {
-                ProfileEditImageSection(userProfile, profileViewModel, navController)
-                ProfileEditBannerSection(userProfile, profileViewModel, navController)
+                ProfileEditImageSection(userProfileData?.userProfile, profileViewModel, navController)
+                ProfileEditBannerSection(userProfileData?.userProfile, profileViewModel, navController)
             }
-            ProfileEditFavMoviesSection(userProfile, profileViewModel)
+            ProfileEditFavMoviesSection(userProfileData?.favouriteMovies ?: emptyList(), profileViewModel)
         }
     }
-    EditProfileNameDialog(openEditProfileNameDialog, userProfile?.username, profileViewModel)
-    EditBioDialog(openEditBioDialog, userProfile?.bioText, profileViewModel)
+    EditProfileNameDialog(openEditProfileNameDialog, userProfileData?.userProfile?.username, profileViewModel)
+    EditBioDialog(openEditBioDialog, userProfileData?.userProfile?.bioText, profileViewModel)
 }

@@ -8,6 +8,7 @@ import androidx.room.Upsert
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieUserData
 import com.patch4code.loglinemovieapp.features.core.domain.model.MovieWithUserData
+import com.patch4code.loglinemovieapp.room_database.utils.Queries
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -36,7 +37,10 @@ interface MovieUserDataDao {
         // If an entry exists and has neither a rating nor is on the watchlist, delete the entry
         if(existingEntry != null && rating < 0 && !existingEntry.onWatchlist){
             deleteMovieUserData(existingEntry)
-            deleteMovieById(existingEntry.movieId)
+
+            if(countMovieReferences(existingEntry.movieId) < 1){
+                deleteMovieById(existingEntry.movieId)
+            }
         }else{
             // update or insert movie
             upsertMovie(movie)
@@ -57,7 +61,10 @@ interface MovieUserDataDao {
         // If an entry exists and is neither on the watchlist nor has a rating, delete the entry
         if (existingEntry != null && !onWatchlist && existingEntry.rating < 0) {
             deleteMovieUserData(existingEntry)
-            deleteMovieById(existingEntry.movieId)
+
+            if(countMovieReferences(existingEntry.movieId) < 1){
+                deleteMovieById(existingEntry.movieId)
+            }
         } else {
             // update or insert movie
             upsertMovie(movie)
@@ -73,6 +80,9 @@ interface MovieUserDataDao {
 
     @Query("SELECT * FROM movieUserData WHERE movieId = :movieId LIMIT 1")
     suspend fun getMovieUserDataByMovieId(movieId: Int): MovieUserData?
+
+    @Query(Queries.COUNT_MOVIE_REFERENCES)
+    suspend fun countMovieReferences(movieId: Int?): Int
 
     @Query("DELETE FROM Movie WHERE id = :movieId")
     suspend fun deleteMovieById(movieId: Int)

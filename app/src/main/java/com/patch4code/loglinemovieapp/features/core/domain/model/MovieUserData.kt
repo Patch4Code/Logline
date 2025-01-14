@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
             entity = Movie::class,
             parentColumns = ["id"],
             childColumns = ["movieId"],
-            onDelete = ForeignKey.RESTRICT // Verhindert Löschen, wenn Referenzen bestehen
+            onDelete = ForeignKey.RESTRICT
         )
     ],
     indices = [Index("movieId")]

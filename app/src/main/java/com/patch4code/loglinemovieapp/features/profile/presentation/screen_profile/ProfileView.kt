@@ -53,12 +53,12 @@ fun ProfileView(
     // TopBar config
     ProvideTopBarTitle(title = Screen.ProfileScreen.title.asString())
 
-    val userProfile = profileViewModel.userProfileData.observeAsState().value
+    val userProfileData = profileViewModel.userProfileData.observeAsState().value
 
     //Profile Layout
     Column(horizontalAlignment = CenterHorizontally)
     {
-        ProfileHead(userProfile)
+        ProfileHead(userProfileData?.userProfile)
 
         //Edit Button
         IconButton(modifier = Modifier.align(End), onClick = { navController.navigate(Screen.ProfileEditScreen.route) }
@@ -69,7 +69,7 @@ fun ProfileView(
         Spacer(modifier = Modifier.padding(10.dp))
 
         //Username
-        Text(text = userProfile?.username ?: "Anonymous", modifier = Modifier.align(CenterHorizontally), fontWeight = FontWeight.Bold)
+        Text(text = userProfileData?.userProfile?.username ?: "Anonymous", modifier = Modifier.align(CenterHorizontally), fontWeight = FontWeight.Bold)
 
 
         Spacer(modifier = Modifier.padding(4.dp))
@@ -78,9 +78,9 @@ fun ProfileView(
 
         LazyColumn(modifier = Modifier.padding(start = 16.dp, end = 16.dp)){
             item{
-                ExpandableBio(text = userProfile?.bioText ?: "")
+                ExpandableBio(text = userProfileData?.userProfile?.bioText ?: "")
                 Spacer(modifier = Modifier.padding(8.dp))
-                MovieFavouriteRow(navController, userProfile?.favouriteMovies ?: emptyList(), profileViewModel)
+                MovieFavouriteRow(navController, userProfileData?.favouriteMovies ?: emptyList(), profileViewModel)
             }
         }
     }

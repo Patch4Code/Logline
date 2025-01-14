@@ -1,5 +1,7 @@
 package com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit
 
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -27,7 +29,6 @@ import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
-import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
 import com.patch4code.loglinemovieapp.features.profile.presentation.components.profile_edit.dialogs.SelectFavMovieDialog
 import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile.ProfileViewModel
 
@@ -39,7 +40,7 @@ import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profi
  * @author Patch4Code
  */
 @Composable
-fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: ProfileViewModel){
+fun ProfileEditFavMoviesSection(movies: List<Movie?>?, profileViewModel: ProfileViewModel){
 
     val openSelectFavMovieDialog = remember { mutableStateOf(false)  }
     val favMovieClickedIndex = remember { mutableIntStateOf(-1 ) }
@@ -51,32 +52,41 @@ fun ProfileEditFavMoviesSection(userProfile:UserProfile?, profileViewModel: Prof
         .fillMaxWidth()
         .padding(top = 8.dp, bottom = 8.dp),
     ){
-        userProfile?.favouriteMovies?.forEachIndexed { index, movie ->
-            val movieId = movie.id
-            val moviePosterUrl = TmdbCredentials.POSTER_URL + movie.posterUrl
-            Box(modifier = Modifier.weight(1f)){
-                // movie poster, if no movie is selected open SelectFavMovieDialog on click
-                AsyncImage(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable(enabled = movieId < 0) {
-                            favMovieClickedIndex.intValue = index
-                            openSelectFavMovieDialog.value = true
-                        },
-                    model = moviePosterUrl,
-                    contentDescription = movie.title,
-                    error = painterResource(id = R.drawable.add_favourite_movie)
-                )
-                // remove fav movie button (little x in the right upper corner of the poster)
-                if(movieId >= 0){
+
+        movies?.forEachIndexed { index, movie ->
+            Log.e("Profile", "movie_index: $movie $index")
+            if (movie != null){
+                val moviePosterUrl = TmdbCredentials.POSTER_URL + movie.posterUrl
+                Box(modifier = Modifier.weight(1f)){
+                    // movie poster, if no movie is selected open SelectFavMovieDialog on click
+                    AsyncImage(
+                        modifier = Modifier.fillMaxWidth(),
+                        model = moviePosterUrl,
+                        contentDescription = movie.title,
+                        error = painterResource(id = R.drawable.movie_poster_placeholder)
+                    )
+                    // remove fav movie button (little x in the right upper corner of the poster)
                     FilledTonalIconButton(
-                        onClick = { profileViewModel.setFavMovieAtIndex(index, Movie(-1)) },
+                        onClick = { profileViewModel.setFavMovieAtIndex(index, null) },
                         modifier = Modifier.align(Alignment.TopEnd).padding(2.dp).size(20.dp)
                     ) {
                         Icon(imageVector = Icons.Default.Close, contentDescription = stringResource(id = R.string.delete_fav_movie_icon_description))
                     }
                 }
+            } else{
+                Image(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .clickable {
+                            favMovieClickedIndex.intValue = index
+                            openSelectFavMovieDialog.value = true
+                        },
+                    painter = painterResource(id = R.drawable.add_favourite_movie),
+                    contentDescription = null,
+                )
             }
+
             Spacer(modifier = Modifier.padding(4.dp))
         }
     }

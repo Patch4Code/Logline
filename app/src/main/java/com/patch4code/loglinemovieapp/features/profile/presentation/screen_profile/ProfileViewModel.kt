@@ -1,6 +1,5 @@
 package com.patch4code.loglinemovieapp.features.profile.presentation.screen_profile
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfile
+import com.patch4code.loglinemovieapp.features.profile.domain.model.UserProfileWithFavouriteMovies
 import com.patch4code.loglinemovieapp.room_database.UserProfileDao
 import kotlinx.coroutines.launch
 
@@ -21,21 +21,21 @@ import kotlinx.coroutines.launch
  */
 class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
 
-    private val _userProfileData = MutableLiveData<UserProfile>()
-    val userProfileData: LiveData<UserProfile> get() = _userProfileData
+    private val _userProfileData = MutableLiveData<UserProfileWithFavouriteMovies>()
+    val userProfileData: LiveData<UserProfileWithFavouriteMovies> get() = _userProfileData
 
     // Retrieves user profile data from the database.
     // If no user profile exists yet, create a new profile.
     fun getUserProfileData(){
         viewModelScope.launch {
-            val tempUserProfile = dao.getUserProfile()
+            val tempUserProfile = dao.getUserProfileWithFavouriteMovies()
             if(tempUserProfile == null){
                 dao.upsertUserProfile(UserProfile())
-                _userProfileData.value = UserProfile()
+                _userProfileData.value = UserProfileWithFavouriteMovies(UserProfile(), emptyList())
             }else{
                 _userProfileData.value = tempUserProfile!!
             }
-            Log.e("ProfileViewModel", "_userProfileData: ${_userProfileData.value}")
+            //Log.e("ProfileViewModel", "_userProfileData: ${_userProfileData.value}")
         }
     }
 
@@ -43,7 +43,7 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     fun updateProfileName(profileName: String){
         viewModelScope.launch {
             dao.updateProfileName(profileName)
-            _userProfileData.value = dao.getUserProfile()
+            _userProfileData.value = dao.getUserProfileWithFavouriteMovies()
         }
     }
 
@@ -51,7 +51,7 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     fun updateBioText(bioText: String){
         viewModelScope.launch {
             dao.updateBio(bioText)
-            _userProfileData.value = dao.getUserProfile()
+            _userProfileData.value = dao.getUserProfileWithFavouriteMovies()
         }
     }
 
@@ -59,7 +59,7 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     fun setProfileImagePath(path: String){
         viewModelScope.launch {
             dao.setProfileImagePath(path)
-            _userProfileData.value = dao.getUserProfile()
+            _userProfileData.value = dao.getUserProfileWithFavouriteMovies()
         }
     }
 
@@ -67,15 +67,20 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     fun setBannerImagePath(path: String){
         viewModelScope.launch {
             dao.setBannerImagePath(path)
-            _userProfileData.value = dao.getUserProfile()
+            _userProfileData.value = dao.getUserProfileWithFavouriteMovies()
         }
     }
 
     // Sets a favorite movie at a specified index in the db
-    fun setFavMovieAtIndex(index: Int, movie: Movie){
+    fun setFavMovieAtIndex(index: Int, movie: Movie?){
         viewModelScope.launch {
-            dao.setFavMovieAtIndex(index, movie)
-            _userProfileData.value = dao.getUserProfile()
+            if (movie != null){
+                dao.setFavMovieAtIndex(index, movie)
+            } else{
+                dao.deleteFavMovieAtIndex(index)
+            }
+
+            _userProfileData.value = dao.getUserProfileWithFavouriteMovies()
         }
     }
 }

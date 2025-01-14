@@ -54,10 +54,10 @@ class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
     private fun filterWatchlistItems(items: List<MovieWithUserData>, filterOptions: FilterOptions): List<MovieWithUserData> {
         return items.filter { item ->
             val movie = item.movie
-            matchesGenre(movie?.genreIds, filterOptions.selectedGenres) &&
-                    matchesDecade(movie?.releaseDate, filterOptions.selectedDecades) &&
-                    matchesYear(movie?.releaseDate, filterOptions.selectedYears) &&
-                    matchesLanguage(movie?.originalLanguage, filterOptions.selectedLanguages)
+            matchesGenre(movie.genreIds, filterOptions.selectedGenres) &&
+                    matchesDecade(movie.releaseDate, filterOptions.selectedDecades) &&
+                    matchesYear(movie.releaseDate, filterOptions.selectedYears) &&
+                    matchesLanguage(movie.originalLanguage, filterOptions.selectedLanguages)
         }
     }
 

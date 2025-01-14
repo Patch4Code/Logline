@@ -1,6 +1,8 @@
 package com.patch4code.loglinemovieapp.features.profile.presentation.components.profile
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,40 +37,49 @@ import com.patch4code.loglinemovieapp.features.profile.presentation.screen_profi
 @Composable
 fun MovieFavouriteRow(
     navController: NavController,
-    movies: List<Movie>,
+    movies: List<Movie?>?,
     profileViewModel: ProfileViewModel
 ){
 
     val openSelectFavMovieDialog = remember { mutableStateOf(false)  }
     val favMovieClickedIndex = remember { mutableIntStateOf(-1 ) }
 
-
     Text(text = stringResource(id = R.string.favourite_movies_title))
 
     Row (modifier = Modifier
         .fillMaxWidth()
         .padding(top = 8.dp, bottom = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ){
-        movies.forEachIndexed {index, movie->
-
-            val movieId = movie.id
-            val moviePosterUrl = TmdbCredentials.POSTER_URL + movie.posterUrl
-            AsyncImage(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .clickable {
-                        if (movie.id >= 0){
+        movies?.forEachIndexed { index, movie->
+            if (movie != null){
+                val movieId = movie.id
+                val moviePosterUrl = TmdbCredentials.POSTER_URL + (movie.posterUrl)
+                AsyncImage(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .clickable {
                             navController.navigate(Screen.MovieScreen.withArgs(movieId.toString()))
-                        }else{
+                        },
+                    model = moviePosterUrl,
+                    contentDescription = movie.title,
+                    error = painterResource(id = R.drawable.movie_poster_placeholder)
+                )
+            } else{
+                Image(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .clickable {
                             favMovieClickedIndex.intValue = index
                             openSelectFavMovieDialog.value = true
-                        }
-                    },
-                model = moviePosterUrl,
-                contentDescription = movie.title,
-                error = painterResource(id = R.drawable.add_favourite_movie)
-            )
+                        },
+                    painter = painterResource(id = R.drawable.add_favourite_movie),
+                    contentDescription = null,
+                )
+            }
+
             Spacer(modifier = Modifier.padding(4.dp))
         }
     }
