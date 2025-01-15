@@ -32,9 +32,14 @@ class MovieLogViewModel(
         viewModelScope.launch {
             val adjustedDateTime = adjustedDateTime(date)
             //Log.e("MovieLogViewModel", "adjustedDateTime: $adjustedDateTime")
-            val loggedElement = LoggedMovie(movie = movie, date = adjustedDateTime, rating = rating, review = review)
+            val loggedElement = LoggedMovie(
+                movieId = movie.id,
+                date = adjustedDateTime,
+                rating = rating,
+                review = review
+            )
 
-            loggedMovieDao.upsertLoggedMovie(loggedElement)
+            loggedMovieDao.addNewMovieLog(loggedElement, movie)
         }
         updateRating(movie, rating)
         removeFromWatchlist(movie)

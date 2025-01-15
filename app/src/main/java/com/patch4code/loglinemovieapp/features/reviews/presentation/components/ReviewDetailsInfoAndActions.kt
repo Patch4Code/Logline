@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
+import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
@@ -38,14 +38,15 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  */
 @Composable
 fun ReviewDetailsInfoAndActions(
-    reviewedLog: LoggedMovie,
+    reviewedLog: MovieWithLog,
     navController: NavController
 ){
 
+    val logId = reviewedLog.loggedMovie.id
     val movieTitle = reviewedLog.movie.title
     val movieYear = MovieHelper.extractYear(reviewedLog.movie.releaseDate)
-    val rating = reviewedLog.rating.toString()
-    val formatedDate = MovieHelper.formatDate(reviewedLog.date)
+    val rating = reviewedLog.loggedMovie.rating
+    val formatedDate = MovieHelper.formatDate(reviewedLog.loggedMovie.date)
 
     val comingFromDiaryView = navController.previousBackStackEntry?.destination?.route == Screen.DiaryScreen.route
 
@@ -53,13 +54,13 @@ fun ReviewDetailsInfoAndActions(
         Text(text = movieTitle, style = MaterialTheme.typography.titleMedium, maxLines = 2)
         Text(text = movieYear, style = MaterialTheme.typography.bodyMedium)
 
-        if(reviewedLog.rating > 0){
+        if(rating > 0){
             Row (
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.Bottom
             ){
-                Text(text = rating, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.align(
+                Text(text = "$rating", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.align(
                     Alignment.CenterVertically))
                 Icon(
                     imageVector = Icons.Default.StarRate,
@@ -77,7 +78,7 @@ fun ReviewDetailsInfoAndActions(
 
         
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()){
-            IconButton(onClick = { navController.navigate("${Screen.DiaryEditElementScreen.route}/${reviewedLog.id}/$comingFromDiaryView") }) {
+            IconButton(onClick = { navController.navigate("${Screen.DiaryEditElementScreen.route}/${logId}/$comingFromDiaryView") }) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = stringResource(id = R.string.edit_review_icon_description))
             }
         }

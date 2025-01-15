@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
+import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
 import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
 import kotlinx.coroutines.launch
 
@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
  */
 class ReviewDetailsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
 
-    private val _currentReviewedLog = MutableLiveData<LoggedMovie>()
-    val currentReviewedLog: LiveData<LoggedMovie> get() = _currentReviewedLog
+    private val _currentReviewedLog = MutableLiveData<MovieWithLog>()
+    val currentReviewedLog: LiveData<MovieWithLog> get() = _currentReviewedLog
 
     // Retrieves log data for a given logId by accessing the db
     fun setCurrentReviewedLog(reviewedLogId: String){

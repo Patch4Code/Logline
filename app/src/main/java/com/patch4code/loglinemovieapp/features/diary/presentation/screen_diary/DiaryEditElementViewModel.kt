@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
+import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
 import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -23,8 +23,8 @@ import java.time.ZoneOffset
  */
 class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
 
-    private val _diaryEntry = MutableLiveData<LoggedMovie>()
-    val diaryEntry: LiveData<LoggedMovie> get() = _diaryEntry
+    private val _diaryEntry = MutableLiveData<MovieWithLog>()
+    val diaryEntry: LiveData<MovieWithLog> get() = _diaryEntry
 
     // initial function to set diary entry based on diaryEntryId from db
     fun setDiaryEntryToEdit(diaryEntryId: String?){
@@ -36,8 +36,8 @@ class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): Vie
     // function to update the current diary entry (rating, watch-date, review) in db
     fun updatedDiaryEntry(rating: Int, watchDate: LocalDateTime, review: String){
         viewModelScope.launch {
-            _diaryEntry.value?.id?.let { diaryEntryId ->
-                loggedMovieDao.updateLoggedMovie(diaryEntryId, rating, watchDate, review) }
+            val diaryEntryId = _diaryEntry.value?.loggedMovie?.id ?: return@launch
+            loggedMovieDao.updateLoggedMovie(diaryEntryId, rating, watchDate, review)
         }
     }
 
@@ -65,7 +65,7 @@ class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): Vie
     // function to delete the current diary entry from db
     fun deleteDiaryEntry(){
         viewModelScope.launch {
-            _diaryEntry.value?.let { loggedMovieDao.deleteLoggedMovie(it) }
+            _diaryEntry.value?.let { loggedMovieDao.deleteDiaryEntry(it) }
         }
     }
 }

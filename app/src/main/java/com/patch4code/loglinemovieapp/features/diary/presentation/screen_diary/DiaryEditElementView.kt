@@ -78,9 +78,9 @@ fun DiaryEditElementView(
     // Set initial values when diaryEntry is available
     DisposableEffect(diaryEntry) {
         if (diaryEntry != null) {
-            rating = diaryEntry.rating
-            watchDateTime = diaryEntry.date
-            review = diaryEntry.review
+            rating = diaryEntry.loggedMovie.rating
+            watchDateTime = diaryEntry.loggedMovie.date
+            review = diaryEntry.loggedMovie.review
         }
         onDispose {}
     }

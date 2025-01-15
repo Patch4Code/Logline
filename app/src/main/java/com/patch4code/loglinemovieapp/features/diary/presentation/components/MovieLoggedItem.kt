@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
+import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
@@ -41,27 +41,27 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  * @author Patch4Code
  */
 @Composable
-fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
+fun MovieLoggedItem(navController: NavController, movieWithLog: MovieWithLog) {
 
-    val movieId = loggedElement.movie.id.toString()
-    val movieTitle = loggedElement.movie.title
-    val movieYear = MovieHelper.extractYear(loggedElement.movie.releaseDate)
-    val moviePosterUrl = MovieHelper.processPosterUrl(loggedElement.movie.posterUrl)
+    val movieId = movieWithLog.movie.id.toString()
+    val movieTitle = movieWithLog.movie.title
+    val movieYear = MovieHelper.extractYear(movieWithLog.movie.releaseDate)
+    val moviePosterUrl = MovieHelper.processPosterUrl(movieWithLog.movie.posterUrl)
 
-    val loggedItemHasReview = loggedElement.review.isNotEmpty()
+    val loggedItemHasReview = movieWithLog.loggedMovie.review.isNotEmpty()
 
     Row(modifier = Modifier.fillMaxWidth().height(120.dp).padding(8.dp)
             .clickable {
                 // navigation based on if a review is available or not
                 if(loggedItemHasReview){
-                    navController.navigate(Screen.ReviewDetailScreen.withArgs(loggedElement.id))
+                    navController.navigate(Screen.ReviewDetailScreen.withArgs(movieWithLog.loggedMovie.id))
                 }else{
                     navController.navigate(Screen.MovieScreen.withArgs(movieId))
                 }
             }
     ){
         // date
-        val parsedDate = MovieHelper.formatDate(dateTime = loggedElement.date)
+        val parsedDate = MovieHelper.formatDate(dateTime = movieWithLog.loggedMovie.date)
         Column (modifier = Modifier.padding(end = 16.dp)){
             parsedDate[1]?.let { Text(text = it, style = MaterialTheme.typography.titleMedium) }
             parsedDate[0]?.let { Text(text = it, style = MaterialTheme.typography.headlineLarge) }
@@ -75,7 +75,7 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
         )
         // movie title, release-date, review-icon if review is available and rating
         Column (modifier = Modifier.padding(start = 8.dp, end = 8.dp).width(140.dp)){
-            Text(text = loggedElement.movie.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Text(text = movieTitle, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
             Spacer(modifier = Modifier.height(4.dp))
 
             Row {
@@ -87,7 +87,7 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            if(loggedElement.rating > 0){
+            if(movieWithLog.loggedMovie.rating > 0){
                 Row (modifier = Modifier.padding(4.dp, bottom = 8.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.Bottom
@@ -97,7 +97,7 @@ fun MovieLoggedItem(navController: NavController, loggedElement: LoggedMovie) {
                         tint = Color.Yellow,
                         modifier = Modifier.size(15.dp).align(Alignment.CenterVertically)
                     )
-                    Text(text = "${loggedElement.rating}",
+                    Text(text = "${movieWithLog.loggedMovie.rating}",
                         modifier = Modifier.align(Alignment.CenterVertically),
                         style = MaterialTheme.typography.bodyMedium
                     )

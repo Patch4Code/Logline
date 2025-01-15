@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
+import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
@@ -42,9 +42,10 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
+fun ReviewItem(loggedItem: MovieWithLog, navController: NavController){
 
-    val loggedItemId = loggedItem.id
+    val loggedItemId = loggedItem.loggedMovie.id
+    val rating = loggedItem.loggedMovie.rating
 
     Column (modifier = Modifier
         .fillMaxSize()
@@ -60,7 +61,7 @@ fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
             Spacer(modifier = Modifier.padding(start = 8.dp))
 
             // rating if available
-            if(loggedItem.rating > 0){
+            if(rating > 0){
                 Row{
                     Icon(
                         imageVector = Icons.Default.StarRate,
@@ -70,7 +71,7 @@ fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
                             .size(15.dp)
                             .align(Alignment.CenterVertically)
                     )
-                    Text(text = "${loggedItem.rating}", style = MaterialTheme.typography.bodyMedium,
+                    Text(text = "$rating", style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.align(Alignment.CenterVertically))
                 }
             }
@@ -87,7 +88,7 @@ fun ReviewItem(loggedItem: LoggedMovie, navController: NavController){
             Spacer(modifier = Modifier.padding(8.dp))
             // review text with max 7 lines
             Text(
-                text = loggedItem.review,
+                text = loggedItem.loggedMovie.review,
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 7,
                 overflow = TextOverflow.Ellipsis

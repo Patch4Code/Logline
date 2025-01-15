@@ -49,7 +49,7 @@ fun ReviewDetailsView(
 
 
     val reviewedLog = reviewDetailsViewModel.currentReviewedLog.observeAsState().value
-    val review: String = reviewedLog?.review ?: ""
+    val review: String = reviewedLog?.loggedMovie?.review ?: ""
 
     LazyColumn (modifier = Modifier.padding(16.dp)){
         item {

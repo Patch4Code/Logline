@@ -1,6 +1,9 @@
 package com.patch4code.loglinemovieapp.features.diary.domain.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import java.time.LocalDateTime
@@ -13,21 +16,22 @@ import java.util.UUID
  *
  * @author Patch4Code
  */
-@Entity
+@Entity(
+    foreignKeys = [
+        ForeignKey(
+            entity = Movie::class,
+            parentColumns = ["id"],
+            childColumns = ["movieId"],
+            onDelete = ForeignKey.RESTRICT
+        )
+    ],
+    indices = [Index("movieId")]
+)
 data class LoggedMovie(
-    /*
     @PrimaryKey
+    @ColumnInfo(name = "log_id")
     val id: String = UUID.randomUUID().toString(),
     val movieId: Int,
-    var date: LocalDateTime,
-    var rating: Int,
-    var review: String = ""
-
-     */
-
-    @PrimaryKey
-    val id: String = UUID.randomUUID().toString(),
-    val movie: Movie,
     var date: LocalDateTime,
     var rating: Int,
     var review: String = ""

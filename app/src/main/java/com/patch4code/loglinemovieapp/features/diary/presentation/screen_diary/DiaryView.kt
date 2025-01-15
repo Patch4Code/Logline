@@ -73,16 +73,16 @@ fun DiaryView(
         LazyColumn(modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)) {
-            items(diaryLogs) { loggedItem ->
+            items(diaryLogs) { movieWithLog ->
 
                 SwipeToEditContainer(
-                    item = loggedItem,
+                    item = movieWithLog,
                     onEdit = {
                         // navigate to DiaryEditElementScreen on swipe (parameters: loggedElementId and comingFromDiaryView (boolean))
-                        navController.navigate("${Screen.DiaryEditElementScreen.route}/${loggedItem.id}/${true}")
+                        navController.navigate("${Screen.DiaryEditElementScreen.route}/${movieWithLog.loggedMovie.id}/${true}")
                     }
                 ){
-                    MovieLoggedItem(navController, loggedItem)
+                    MovieLoggedItem(navController, movieWithLog)
                 }
             }
         }
