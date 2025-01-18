@@ -17,6 +17,7 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.FilterOptions
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainer
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieWithListItem
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.dialogs.DeleteMovieFromListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.list.items.ListItem
 import com.patch4code.loglinemovieapp.features.list.presentation.screen_list.ListViewModel
@@ -33,7 +34,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialo
  */
 @Composable
 fun ListContent(
-    moviesInList: List<MovieInList>,
+    movieWithListItems: List<MovieWithListItem>,
     navController: NavController,
     listViewModel: ListViewModel,
     selectedSortOption: SortOption,
@@ -42,28 +43,28 @@ fun ListContent(
 
     val openDeleteMovieDialog = remember { mutableStateOf(false)  }
     val movieToDelete = remember { mutableStateOf<MovieInList?>(null) }
-    val deletingStates = remember { mutableStateMapOf<MovieInList, Boolean>() }
+    val deletingStates = remember { mutableStateMapOf<MovieWithListItem, Boolean>() }
 
     LazyColumn(modifier = Modifier.fillMaxSize().padding(8.dp)
     ){
         itemsIndexed(
-            items = moviesInList,
+            items = movieWithListItems,
             key = { _, item -> item.hashCode() }
-        ) { index, movieInList ->
-            val isDeleting = deletingStates[movieInList] ?: false
+        ) { index, movieWithListItem ->
+            val isDeleting = deletingStates[movieWithListItem] ?: false
 
             SwipeToDeleteContainer(
-                item = movieInList,
+                item = movieWithListItem,
                 isDeleting = isDeleting,
                 onDelete = {
-                    movieToDelete.value = movieInList
+                    movieToDelete.value = movieWithListItem.movieInList
                     openDeleteMovieDialog.value = true
-                    deletingStates[movieInList] = true
+                    deletingStates[movieWithListItem] = true
                 }
             ){_, deleting ->
-                ListItem(navController, movieInList, Modifier.alpha(if (deleting) 0f else 1f))
+                ListItem(navController, movieWithListItem, Modifier.alpha(if (deleting) 0f else 1f))
             }
-            if(index < moviesInList.lastIndex + 1){
+            if(index < movieWithListItems.lastIndex + 1){
                 HorizontalDivider()
             }
         }
@@ -72,8 +73,11 @@ fun ListContent(
     DeleteMovieFromListDialog(openDeleteMovieDialog = openDeleteMovieDialog.value,
         onDelete = { listViewModel.onDeleteMovieFromList(movieToDelete, openDeleteMovieDialog, selectedSortOption, selectedFilterOptions) },
         onCancel = {
-            movieToDelete.value?.let {
-                deletingStates[it] = false
+            movieToDelete.value?.let { movieToDelete ->
+                val key = deletingStates.keys.find { it.movieInList == movieToDelete }
+                if (key != null) {
+                    deletingStates[key] = false
+                }
             }
             openDeleteMovieDialog.value = false
         }

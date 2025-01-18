@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieWithListItem
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
@@ -28,7 +28,7 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 fun ListsTableItem(
     navController: NavController,
     list: MovieList,
-    moviesInSpecificList :List<MovieInList>?,
+    moviesInSpecificList :List<MovieWithListItem>?,
     modifier: Modifier
 ){
 

@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListTableSortOptions
-import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieWithListItem
 import com.patch4code.loglinemovieapp.room_database.MovieInListDao
 import com.patch4code.loglinemovieapp.room_database.MovieListDao
 import kotlinx.coroutines.launch
@@ -27,8 +27,8 @@ class ListsTableViewModel(private val movieListDao: MovieListDao, private val mo
     private val _userMovieLists = MutableLiveData<List<MovieList>>()
     val userMovieLists: LiveData<List<MovieList>> get() = _userMovieLists
 
-    private val _moviesInLists = MutableLiveData<List<MovieInList>>()
-    val moviesInLists: LiveData<List<MovieInList>> get() = _moviesInLists
+    private val _moviesInLists = MutableLiveData<List<MovieWithListItem>>()
+    val moviesInLists: LiveData<List<MovieWithListItem>> get() = _moviesInLists
 
     // Gets the list of user movie lists from the database.
     fun getMovieLists(sortOption: SortOption){
@@ -50,7 +50,7 @@ class ListsTableViewModel(private val movieListDao: MovieListDao, private val mo
     }
     fun getMoviesInLists(){
         viewModelScope.launch {
-            _moviesInLists.value = movieInListDao.getAllMoviesInLists()
+            _moviesInLists.value = movieInListDao.getAllMovieWithListItems()
         }
     }
 

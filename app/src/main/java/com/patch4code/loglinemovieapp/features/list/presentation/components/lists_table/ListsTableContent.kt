@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.components.swipe.SwipeToDeleteContainer
-import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieWithListItem
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.AddListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.DeleteListDialog
 import com.patch4code.loglinemovieapp.features.list.presentation.components.lists_table.dialogs.ListTableSortBottomSheet
@@ -37,7 +37,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListsTabl
 @Composable
 fun ListsTableContent(
     myUserMovieLists: List<MovieList>?,
-    moviesInLists: List<MovieInList>?,
+    moviesWithListItems: List<MovieWithListItem>?,
     openAddListDialog: MutableState<Boolean>,
     navController: NavController,
     listsTableViewModel: ListsTableViewModel,
@@ -71,7 +71,7 @@ fun ListsTableContent(
                         deletingStates[list] = true
                     }
                 ){_, deleting ->
-                    val moviesInSpecificList = moviesInLists?.filter { it.movieListId == list.id}
+                    val moviesInSpecificList = moviesWithListItems?.filter { it.movieInList.movieListId == list.id}
                     ListsTableItem(navController, list, moviesInSpecificList, Modifier.alpha(if (deleting) 0f else 1f))
                 }
             }

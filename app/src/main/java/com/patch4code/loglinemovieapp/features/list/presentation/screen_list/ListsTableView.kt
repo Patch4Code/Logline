@@ -63,7 +63,7 @@ fun ListsTableView(
 
 
     val myUserMovieLists = listsTableViewModel.userMovieLists.observeAsState().value
-    val moviesInLists = listsTableViewModel.moviesInLists.observeAsState().value
+    val moviesWithListItems = listsTableViewModel.moviesInLists.observeAsState().value
 
     Scaffold (
         floatingActionButton = {
@@ -75,7 +75,7 @@ fun ListsTableView(
         content = {
             ListsTableContent(
                 myUserMovieLists = myUserMovieLists,
-                moviesInLists = moviesInLists,
+                moviesWithListItems = moviesWithListItems,
                 openAddListDialog = openAddListDialog,
                 navController = navController,
                 listsTableViewModel = listsTableViewModel,

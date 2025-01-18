@@ -10,10 +10,10 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieInListMapper
 import com.patch4code.loglinemovieapp.features.list.domain.model.ListSortOptions
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieInList
 import com.patch4code.loglinemovieapp.features.list.domain.model.MovieList
+import com.patch4code.loglinemovieapp.features.list.domain.model.MovieWithListItem
 import com.patch4code.loglinemovieapp.room_database.MovieInListDao
 import com.patch4code.loglinemovieapp.room_database.MovieListDao
 import kotlinx.coroutines.launch
@@ -32,8 +32,8 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
     private val _movieList = MutableLiveData<MovieList>()
     val movieList: LiveData<MovieList> get() = _movieList
 
-    private val _moviesInList = MutableLiveData<List<MovieInList>>()
-    val moviesInList: LiveData<List<MovieInList>> get() = _moviesInList
+    private val _moviesInList = MutableLiveData<List<MovieWithListItem>>()
+    val moviesInList: LiveData<List<MovieWithListItem>> get() = _moviesInList
 
     // Sets the movie list data based on id by calling the db and ordering with kotlin
     fun loadList(listId: String, sortOption: SortOption, filterOptions: FilterOptions) {
@@ -62,12 +62,15 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
         }
     }
 
-    private fun filterList(items: List<MovieInList>, filterOptions: FilterOptions): List<MovieInList> {
-        return items.filter { movieInList ->
-            matchesGenre(movieInList.genreIds, filterOptions.selectedGenres) &&
-                    matchesDecade(movieInList.releaseDate, filterOptions.selectedDecades) &&
-                    matchesYear(movieInList.releaseDate, filterOptions.selectedYears) &&
-                    matchesLanguage(movieInList.originalLanguage, filterOptions.selectedLanguages)
+    private fun filterList(items: List<MovieWithListItem>, filterOptions: FilterOptions): List<MovieWithListItem> {
+        return items.filter { movieWithListItem ->
+
+            val movie = movieWithListItem.movie
+
+            matchesGenre(movie.genreIds, filterOptions.selectedGenres) &&
+                    matchesDecade(movie.releaseDate, filterOptions.selectedDecades) &&
+                    matchesYear(movie.releaseDate, filterOptions.selectedYears) &&
+                    matchesLanguage(movie.originalLanguage, filterOptions.selectedLanguages)
         }
     }
 
@@ -97,13 +100,13 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
         viewModelScope.launch {
             val highestListPosition = movieInListDao.getHighestPositionInList(listId) ?: -1
 
-            val newMovieInList = MovieInListMapper.mapToMovieInListFromMovie(
+            val newMovieInList =  MovieInList(
                 movieListId = listId,
+                movieId = movie.id,
                 position = highestListPosition + 1,
                 timeAdded = System.currentTimeMillis(),
-                movie = movie
             )
-            movieInListDao.upsertMovieInList(newMovieInList)
+            movieInListDao.addMovieToList(newMovieInList, movie)
             movieListDao.updateListTimeUpdated(listId, System.currentTimeMillis())
 
             //Update
@@ -113,7 +116,7 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
     // Checks if a movie is already on the current list
     fun isMovieAlreadyOnList(movie: Movie): Boolean{
         val currentMoviesInList = _moviesInList.value ?: emptyList()
-        return currentMoviesInList.any { it.movieId == movie.id }
+        return currentMoviesInList.any { it.movie.id == movie.id }
     }
     // Removes a movie from the movie list calling the db
     fun removeMovieFromList(movieId: Int, sortOption: SortOption, filterOptions: FilterOptions) {
