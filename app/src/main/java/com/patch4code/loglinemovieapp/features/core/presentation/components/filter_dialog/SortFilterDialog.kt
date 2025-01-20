@@ -3,7 +3,6 @@ package com.patch4code.loglinemovieapp.features.core.presentation.components.fil
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -87,7 +86,7 @@ fun SortFilterDialog(
                     FilterLanguageSection(selectedLanguages)
                 }
 
-                FilterApplyButton(modifier = Modifier.navigationBarsPadding()){//.navigationBarsPadding()
+                FilterApplyButton{
                     showFilterDialog.value = false
                     selectedSortOption.value = tempSelectedSortOption.value
                     selectedFilterOptions.value = selectedFilterOptions.value.copy(
