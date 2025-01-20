@@ -1,4 +1,4 @@
-package com.patch4code.loglinemovieapp.features.list.domain.model
+package com.patch4code.loglinemovieapp.features.diary.domain.model
 
 import androidx.room.Embedded
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
@@ -6,13 +6,13 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
- * MovieWithListItem - Data class combining a Movie entity with its associated movieInList data.
+ * MovieWithLoggedData - Data class combining a Movie entity with its associated log-data.
  * This class is used to fetch data from the database, combining information stored in separate
- * database tables (Movie and MovieInList) into a single unified object.
+ * database tables (Movie and LoggedMovie) into a single unified object.
  *
  * @author Patch4Code
  */
-data class MovieWithListItem(
+data class MovieWithLoggedData(
     @Embedded val movie: Movie,
-    @Embedded val movieInList: MovieInList
+    @Embedded val loggedMovie: LoggedMovie
 )

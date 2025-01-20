@@ -27,8 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
+import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
@@ -42,10 +43,10 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ReviewItem(loggedItem: MovieWithLog, navController: NavController){
+fun ReviewItem(reviewedLogItem: LoggedMovie, movie: Movie, navController: NavController){
 
-    val loggedItemId = loggedItem.loggedMovie.id
-    val rating = loggedItem.loggedMovie.rating
+    val loggedItemId = reviewedLogItem.id
+    val rating = reviewedLogItem.rating
 
     Column (modifier = Modifier
         .fillMaxSize()
@@ -56,7 +57,7 @@ fun ReviewItem(loggedItem: MovieWithLog, navController: NavController){
         ){
             // movie-title and release-year
             Text(
-                text = "${loggedItem.movie.title} (${MovieHelper.extractYear(loggedItem.movie.releaseDate)})",
+                text = "${movie.title} (${MovieHelper.extractYear(movie.releaseDate)})",
                 style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.padding(start = 8.dp))
 
@@ -80,7 +81,7 @@ fun ReviewItem(loggedItem: MovieWithLog, navController: NavController){
         Row (modifier = Modifier.height(150.dp)){
             // movie-poster
             AsyncImage(
-                model = MovieHelper.processPosterUrl(loggedItem.movie.posterUrl),
+                model = MovieHelper.processPosterUrl(movie.posterUrl),
                 contentDescription = stringResource(id = R.string.poster_description),
                 error = painterResource(id = R.drawable.movie_poster_placeholder)
             )
@@ -88,7 +89,7 @@ fun ReviewItem(loggedItem: MovieWithLog, navController: NavController){
             Spacer(modifier = Modifier.padding(8.dp))
             // review text with max 7 lines
             Text(
-                text = loggedItem.loggedMovie.review,
+                text = reviewedLogItem.review,
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 7,
                 overflow = TextOverflow.Ellipsis

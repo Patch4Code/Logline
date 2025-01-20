@@ -34,7 +34,7 @@ import com.patch4code.loglinemovieapp.features.list.presentation.utils.ListDialo
  */
 @Composable
 fun ListContent(
-    movieWithListItems: List<MovieWithListItem>,
+    movieListItems: List<MovieWithListItem>,
     navController: NavController,
     listViewModel: ListViewModel,
     selectedSortOption: SortOption,
@@ -48,23 +48,27 @@ fun ListContent(
     LazyColumn(modifier = Modifier.fillMaxSize().padding(8.dp)
     ){
         itemsIndexed(
-            items = movieWithListItems,
+            items = movieListItems,
             key = { _, item -> item.hashCode() }
-        ) { index, movieWithListItem ->
-            val isDeleting = deletingStates[movieWithListItem] ?: false
+        ) { index, movieListItem ->
+            val isDeleting = deletingStates[movieListItem] ?: false
 
             SwipeToDeleteContainer(
-                item = movieWithListItem,
+                item = movieListItems,
                 isDeleting = isDeleting,
                 onDelete = {
-                    movieToDelete.value = movieWithListItem.movieInList
+                    movieToDelete.value = movieListItem.movieInList
                     openDeleteMovieDialog.value = true
-                    deletingStates[movieWithListItem] = true
+                    deletingStates[movieListItem] = true
                 }
             ){_, deleting ->
-                ListItem(navController, movieWithListItem, Modifier.alpha(if (deleting) 0f else 1f))
+                ListItem(
+                    navController,
+                    movieListItem.movie,
+                    Modifier.alpha(if (deleting) 0f else 1f)
+                )
             }
-            if(index < movieWithListItems.lastIndex + 1){
+            if(index < movieListItems.lastIndex + 1){
                 HorizontalDivider()
             }
         }

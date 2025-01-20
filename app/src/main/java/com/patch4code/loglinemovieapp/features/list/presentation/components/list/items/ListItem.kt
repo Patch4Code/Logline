@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.list.domain.model.MovieWithListItem
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
@@ -32,12 +32,12 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  * @author Patch4Code
  */
 @Composable
-fun ListItem(navController: NavController, movieWithListItem: MovieWithListItem, modifier: Modifier){
+fun ListItem(navController: NavController, movie: Movie, modifier: Modifier){
 
-    val movieId = movieWithListItem.movie.id.toString()
-    val movieTitle = movieWithListItem.movie.title
-    val movieYear = MovieHelper.extractYear(movieWithListItem.movie.releaseDate)
-    val moviePosterUrl = MovieHelper.processPosterUrl(movieWithListItem.movie.posterUrl)
+    val movieId = movie.id.toString()
+    val movieTitle = movie.title
+    val movieYear = MovieHelper.extractYear(movie.releaseDate)
+    val moviePosterUrl = MovieHelper.processPosterUrl(movie.posterUrl)
 
     Column(modifier = modifier) {
         Row(

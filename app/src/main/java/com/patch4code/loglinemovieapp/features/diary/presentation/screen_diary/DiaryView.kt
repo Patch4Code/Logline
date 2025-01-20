@@ -82,7 +82,7 @@ fun DiaryView(
                         navController.navigate("${Screen.DiaryEditElementScreen.route}/${movieWithLog.loggedMovie.id}/${true}")
                     }
                 ){
-                    MovieLoggedItem(navController, movieWithLog)
+                    MovieLoggedItem(navController, movieWithLog.loggedMovie, movieWithLog.movie)
                 }
             }
         }

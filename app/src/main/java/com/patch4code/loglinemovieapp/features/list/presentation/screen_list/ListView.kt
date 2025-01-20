@@ -78,7 +78,7 @@ fun ListView(
     }
 
     val movieList = listViewModel.movieList.observeAsState().value
-    val moviesInList = listViewModel.moviesInList.observeAsState().value
+    val movieListItems = listViewModel.moviesInList.observeAsState().value
 
     val openAddMovieDialog = remember { mutableStateOf(false)  }
     val openEditListDialog = remember { mutableStateOf(false)  }
@@ -104,10 +104,10 @@ fun ListView(
         Column {
             Text(text = movieList?.name ?: "N/A", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
 
-            if (moviesInList.isNullOrEmpty()){
+            if (movieListItems.isNullOrEmpty()){
                 EmptyListText(FilterHelper.isAnyFilterApplied(selectedFilterOptions.value))
             }else{
-                ListContent(moviesInList, navController, listViewModel, selectedSortOption.value, selectedFilterOptions.value)
+                ListContent(movieListItems, navController, listViewModel, selectedSortOption.value, selectedFilterOptions.value)
             }
         }
     }

@@ -7,7 +7,7 @@ import androidx.room.Transaction
 import androidx.room.Upsert
 import com.patch4code.loglinemovieapp.features.core.domain.model.Movie
 import com.patch4code.loglinemovieapp.features.diary.domain.model.LoggedMovie
-import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
+import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLoggedData
 import com.patch4code.loglinemovieapp.room_database.utils.Queries
 import java.time.LocalDateTime
 
@@ -32,264 +32,6 @@ interface LoggedMovieDao {
     suspend fun deleteLoggedMovie(loggedMovie: LoggedMovie)
 
 
-    // Diary Queries-------------------------------------------------------------------------------
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY log.date ASC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByDateAsc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY log.date DESC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByDateDesc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY log.rating ASC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByRatingAsc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY log.rating DESC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByRatingDesc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY m.title ASC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByTitleAsc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY m.title DESC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByTitleDesc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY m.releaseDate ASC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByReleaseDateAsc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY m.releaseDate DESC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByReleaseDateDesc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY m.popularity ASC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByPopularityAsc(): List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY m.popularity DESC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByPopularityDesc(): List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY m.voteAverage ASC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByVoteAverageAsc(): List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        ORDER BY m.voteAverage DESC
-    """
-    )
-    suspend fun getLoggedMoviesOrderedByVoteAverageDesc(): List<MovieWithLog>
-
-
-    // Reviews Queries-----------------------------------------------------------------------------
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY log.date ASC
-    """
-    )
-    suspend fun getReviewsOrderedByDateAsc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY log.date DESC
-    """
-    )
-    suspend fun getReviewsOrderedByDateDesc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY log.rating ASC
-    """
-    )
-    suspend fun getReviewsOrderedByRatingAsc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY log.rating DESC
-    """
-    )
-    suspend fun getReviewsOrderedByRatingDesc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY m.title ASC
-    """
-    )
-    suspend fun getReviewsOrderedByTitleAsc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY m.title DESC
-    """
-    )
-    suspend fun getReviewsOrderedByTitleDesc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY m.releaseDate ASC
-    """
-    )
-    suspend fun getReviewsOrderedByReleaseDateAsc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY m.releaseDate DESC
-    """
-    )
-    suspend fun getReviewsOrderedByReleaseDateDesc() : List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY m.popularity ASC
-    """
-    )
-    suspend fun getReviewsOrderedByPopularityAsc(): List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY m.popularity DESC
-    """
-    )
-    suspend fun getReviewsOrderedByPopularityDesc(): List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY m.voteAverage ASC
-    """
-    )
-    suspend fun getReviewsOrderedByVoteAverageAsc(): List<MovieWithLog>
-
-    @Transaction
-    @Query("""
-        SELECT log.*, m.*
-        FROM LoggedMovie log
-        INNER JOIN Movie m on log.movieId = m.id
-        WHERE log.review IS NOT NULL AND log.review != ''
-        ORDER BY m.voteAverage DESC
-    """
-    )
-    suspend fun getReviewsOrderedByVoteAverageDesc(): List<MovieWithLog>
-
-
     //Movie Log actions---------------------------------------------------------------------------
 
     @Transaction
@@ -297,6 +39,7 @@ interface LoggedMovieDao {
         upsertLoggedMovie(loggedElement)
         upsertMovie(movie)
     }
+
 
     //Diary Edit Queries and Actions---------------------------------------------------------------
 
@@ -312,7 +55,7 @@ interface LoggedMovieDao {
         LIMIT 1
         """
     )
-    suspend fun getLoggedMovieById(logId: String?): MovieWithLog?
+    suspend fun getLoggedMovieById(logId: String?): MovieWithLoggedData?
 
     @Transaction
     suspend fun updateLoggedMovie(logId: String, rating: Int, watchDate: LocalDateTime, review: String) {
@@ -327,10 +70,10 @@ interface LoggedMovieDao {
     }
 
     @Transaction
-    suspend fun deleteDiaryEntry(movieWithLog: MovieWithLog){
-        deleteLoggedMovie(movieWithLog.loggedMovie)
+    suspend fun deleteDiaryEntry(movieWithLoggedData: MovieWithLoggedData){
+        deleteLoggedMovie(movieWithLoggedData.loggedMovie)
 
-        val movieId = movieWithLog.movie.id
+        val movieId = movieWithLoggedData.movie.id
         if(countMovieReferences(movieId) < 1){
             deleteMovieById(movieId)
         }
@@ -341,4 +84,262 @@ interface LoggedMovieDao {
 
     @Query("DELETE FROM Movie WHERE id = :movieId")
     suspend fun deleteMovieById(movieId: Int)
+
+
+    // Diary Queries-------------------------------------------------------------------------------
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY log.date ASC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByDateAsc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY log.date DESC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByDateDesc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY log.rating ASC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByRatingAsc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY log.rating DESC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByRatingDesc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY m.title ASC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByTitleAsc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY m.title DESC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByTitleDesc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY m.releaseDate ASC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByReleaseDateAsc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY m.releaseDate DESC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByReleaseDateDesc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY m.popularity ASC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByPopularityAsc(): List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY m.popularity DESC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByPopularityDesc(): List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY m.voteAverage ASC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByVoteAverageAsc(): List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        ORDER BY m.voteAverage DESC
+    """
+    )
+    suspend fun getLoggedMoviesOrderedByVoteAverageDesc(): List<MovieWithLoggedData>
+
+
+    // Reviews Queries-----------------------------------------------------------------------------
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY log.date ASC
+    """
+    )
+    suspend fun getReviewsOrderedByDateAsc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY log.date DESC
+    """
+    )
+    suspend fun getReviewsOrderedByDateDesc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY log.rating ASC
+    """
+    )
+    suspend fun getReviewsOrderedByRatingAsc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY log.rating DESC
+    """
+    )
+    suspend fun getReviewsOrderedByRatingDesc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY m.title ASC
+    """
+    )
+    suspend fun getReviewsOrderedByTitleAsc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY m.title DESC
+    """
+    )
+    suspend fun getReviewsOrderedByTitleDesc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY m.releaseDate ASC
+    """
+    )
+    suspend fun getReviewsOrderedByReleaseDateAsc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY m.releaseDate DESC
+    """
+    )
+    suspend fun getReviewsOrderedByReleaseDateDesc() : List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY m.popularity ASC
+    """
+    )
+    suspend fun getReviewsOrderedByPopularityAsc(): List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY m.popularity DESC
+    """
+    )
+    suspend fun getReviewsOrderedByPopularityDesc(): List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY m.voteAverage ASC
+    """
+    )
+    suspend fun getReviewsOrderedByVoteAverageAsc(): List<MovieWithLoggedData>
+
+    @Transaction
+    @Query("""
+        SELECT log.*, m.*
+        FROM LoggedMovie log
+        INNER JOIN Movie m on log.movieId = m.id
+        WHERE log.review IS NOT NULL AND log.review != ''
+        ORDER BY m.voteAverage DESC
+    """
+    )
+    suspend fun getReviewsOrderedByVoteAverageDesc(): List<MovieWithLoggedData>
 }

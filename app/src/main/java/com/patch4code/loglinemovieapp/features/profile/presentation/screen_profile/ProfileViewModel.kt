@@ -30,8 +30,9 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
         viewModelScope.launch {
             val tempUserProfile = dao.getUserProfileWithFavouriteMovies()
             if(tempUserProfile == null){
+                val defaultEmptyFavMovies = List(4) { null as Movie? }
                 dao.upsertUserProfile(UserProfile())
-                _userProfileData.value = UserProfileWithFavouriteMovies(UserProfile(), emptyList())
+                _userProfileData.value = UserProfileWithFavouriteMovies(UserProfile(), defaultEmptyFavMovies)
             }else{
                 _userProfileData.value = tempUserProfile!!
             }

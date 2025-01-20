@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
+import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLoggedData
 import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -23,8 +23,8 @@ import java.time.ZoneOffset
  */
 class DiaryEditElementViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
 
-    private val _diaryEntry = MutableLiveData<MovieWithLog>()
-    val diaryEntry: LiveData<MovieWithLog> get() = _diaryEntry
+    private val _diaryEntry = MutableLiveData<MovieWithLoggedData>()
+    val diaryEntry: LiveData<MovieWithLoggedData> get() = _diaryEntry
 
     // initial function to set diary entry based on diaryEntryId from db
     fun setDiaryEntryToEdit(diaryEntryId: String?){

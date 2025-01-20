@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
-import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
+import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLoggedData
 import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
 
 /**
@@ -38,7 +38,7 @@ import com.patch4code.loglinemovieapp.features.navigation.domain.model.Screen
  */
 @Composable
 fun ReviewDetailsInfoAndActions(
-    reviewedLog: MovieWithLog,
+    reviewedLog: MovieWithLoggedData,
     navController: NavController
 ){
 

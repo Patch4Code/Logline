@@ -71,8 +71,8 @@ fun ReviewsView(
     }else{
         LazyColumn(modifier = Modifier.padding(16.dp)) {
             items(reviewedLogs)
-            { loggedItem ->
-                ReviewItem(loggedItem, navController)
+            { movieWithLog ->
+                ReviewItem(movieWithLog.loggedMovie, movieWithLog.movie, navController)
             }
         }
     }

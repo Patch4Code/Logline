@@ -10,7 +10,7 @@ import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.FilterHelper
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelper
 import com.patch4code.loglinemovieapp.features.diary.domain.model.DiaryAndReviewSortOptions
-import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLog
+import com.patch4code.loglinemovieapp.features.diary.domain.model.MovieWithLoggedData
 import com.patch4code.loglinemovieapp.room_database.LoggedMovieDao
 import kotlinx.coroutines.launch
 
@@ -25,8 +25,8 @@ import kotlinx.coroutines.launch
  */
 class DiaryViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
 
-    private val _diaryLogs = MutableLiveData<List<MovieWithLog>>()
-    val diaryLogs: LiveData<List<MovieWithLog>> get() = _diaryLogs
+    private val _diaryLogs = MutableLiveData<List<MovieWithLoggedData>>()
+    val diaryLogs: LiveData<List<MovieWithLoggedData>> get() = _diaryLogs
 
     // function to get all diary entry's from the db
     fun loadDiaryLogs(sortOption: SortOption, filterOptions: FilterOptions){
@@ -55,7 +55,7 @@ class DiaryViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
         }
     }
 
-    private fun filterDiaryLogs(items: List<MovieWithLog>, filterOptions: FilterOptions): List<MovieWithLog> {
+    private fun filterDiaryLogs(items: List<MovieWithLoggedData>, filterOptions: FilterOptions): List<MovieWithLoggedData> {
         return items.filter { item ->
             val movie = item.movie
             matchesGenre(movie.genreIds, filterOptions.selectedGenres) &&
