@@ -17,7 +17,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.patch4code.loglinemovieapp.features.core.domain.model.SortOption
 import com.patch4code.loglinemovieapp.features.person_details.domain.model.PersonDetailsSortOption
@@ -45,7 +44,6 @@ fun PersonDetailsSortBottomSheet(
     ModalBottomSheet(
         onDismissRequest = {showBottomSheet.value = false},
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        scrimColor = Color.Transparent
     ){
 
         val sortOptions = PersonDetailsSortOption.options
