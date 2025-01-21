@@ -16,6 +16,7 @@ import com.patch4code.loglinemovieapp.features.movie.domain.model.CountryProvide
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieCredits
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieDetails
 import com.patch4code.loglinemovieapp.features.movie.domain.model.MovieVideo
+import com.patch4code.loglinemovieapp.room_database.MovieDao
 import com.patch4code.loglinemovieapp.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
 
@@ -24,10 +25,13 @@ import kotlinx.coroutines.launch
  *
  * MovieViewModel - ViewModel responsible for managing movie data locally and from TMDB api.
  *
- * @param dao The DAO for accessing movie user data from the db.
+ * @param movieUserDataDao The DAO for accessing movie user data from the db.
  * @author Patch4Code
  */
-class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
+class MovieViewModel(
+    private val movieUserDataDao: MovieUserDataDao,
+    private val movieDao: MovieDao
+): ViewModel(){
 
     private val tmdbApiService: TmdbApiService by lazy {
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)
@@ -118,7 +122,7 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
     fun loadRatingAndWatchlistStatusById(id: Int){
         var movieUserData: MovieUserData?
         viewModelScope.launch {
-            movieUserData = dao.getMovieUserDataByMovieId(id)
+            movieUserData = movieUserDataDao.getMovieUserDataByMovieId(id)
             if (movieUserData != null){
                 _myRating.value = movieUserData!!.rating
                 _onWatchlist.value = movieUserData!!.onWatchlist
@@ -129,13 +133,28 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         }
     }
 
+    fun updateMovieInDatabase(movieDetails: MovieDetails){
+        viewModelScope.launch {
+            val existingMovie = movieDao.getMovieById(movieDetails.id)
+            if(existingMovie != null){
+                val movie = existingMovie.copy(
+                    posterUrl = movieDetails.posterPath,
+                    popularity = movieDetails.popularity,
+                    voteAverage = movieDetails.voteAverage,
+                    runtime = movieDetails.runtime
+                )
+                movieDao.upsertMovie(movie)
+            }
+        }
+    }
+
     // Updates the user rating for a movie by accessing the db.
     fun changeRating(rating: Int){
         var movie = MovieMapper.mapToMovie(_detailsData.value)
         movie = movie.copy(runtime = _detailsData.value?.runtime)
 
         viewModelScope.launch {
-            dao.updateOrInsertRating(movie, rating)
+            movieUserDataDao.updateOrInsertRating(movie, rating)
         }
         _myRating.value = rating
     }
@@ -146,18 +165,18 @@ class MovieViewModel(private val dao: MovieUserDataDao): ViewModel(){
         movie = movie.copy(runtime = _detailsData.value?.runtime)
 
         viewModelScope.launch {
-            dao.updateOrInsertOnWatchlist(movie, newOnWatchlistState)
+            movieUserDataDao.updateOrInsertOnWatchlist(movie, newOnWatchlistState)
         }
         _onWatchlist.value = newOnWatchlistState
     }
 }
 
 // Factory-class for creating MovieViewModel instances to manage access to the database
-class MovieViewModelFactory(private val dao: MovieUserDataDao) : ViewModelProvider.Factory {
+class MovieViewModelFactory(private val movieUserDataDao: MovieUserDataDao, private val movieDao: MovieDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MovieViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MovieViewModel(dao) as T
+            return MovieViewModel(movieUserDataDao, movieDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -45,7 +45,7 @@ fun MovieView(
     db: LoglineDatabase,
     id: String?,
     movieViewModel: MovieViewModel = viewModel(
-        factory = MovieViewModelFactory(db.movieUserDataDao)
+        factory = MovieViewModelFactory(db.movieUserDataDao, db.movieDao)
     )
 ){
 
@@ -77,6 +77,9 @@ fun MovieView(
     DisposableEffect(movieDetails) {
         if(!watchCountry.isNullOrEmpty()){
             movieViewModel.loadMovieProviders(movieId, watchCountry)
+        }
+        if(movieDetails != null){
+            movieViewModel.updateMovieInDatabase(movieDetails)
         }
         onDispose {}
     }
