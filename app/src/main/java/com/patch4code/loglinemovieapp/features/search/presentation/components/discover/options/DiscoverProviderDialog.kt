@@ -40,6 +40,7 @@ import coil.compose.AsyncImage
 import com.patch4code.loglinemovieapp.R
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadErrorDisplay
 import com.patch4code.loglinemovieapp.features.core.presentation.components.load.LoadingIndicator
+import com.patch4code.loglinemovieapp.features.core.presentation.components.modifier.setPaddingBasedOnApiLvl
 import com.patch4code.loglinemovieapp.features.core.presentation.utils.TmdbCredentials
 import com.patch4code.loglinemovieapp.features.movie.domain.model.Provider
 import com.patch4code.loglinemovieapp.features.search.domain.model.DiscoverOptions
@@ -131,7 +132,9 @@ fun DiscoverProviderDialog(
                         }
                 }
                 Button(onClick = { showDialog.value = false },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = setPaddingBasedOnApiLvl(64.dp))
                 ) {
                     Text(stringResource(id = R.string.close_button_text))
                 }

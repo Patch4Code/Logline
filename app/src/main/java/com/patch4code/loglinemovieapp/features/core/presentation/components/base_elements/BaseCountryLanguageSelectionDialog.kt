@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.patch4code.loglinemovieapp.R
+import com.patch4code.loglinemovieapp.features.core.presentation.components.modifier.setPaddingBasedOnApiLvl
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -78,7 +79,9 @@ fun BaseCountryLanguageSelectionDialog(
                 }
                 Button(
                     onClick = onClose,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = setPaddingBasedOnApiLvl(64.dp))
                 ) {
                     Text(stringResource(id = R.string.close_button_text))
                 }
