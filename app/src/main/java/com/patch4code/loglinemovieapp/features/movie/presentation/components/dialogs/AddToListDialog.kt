@@ -3,7 +3,7 @@ package com.patch4code.loglinemovieapp.features.movie.presentation.components.di
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -75,7 +75,7 @@ fun AddToListDialog(
     val selectedList = remember { mutableStateOf<MovieList?>(null) }
 
     AlertDialog(
-        modifier = Modifier.height(450.dp),
+        modifier = Modifier.heightIn(min = 200.dp, max = 450.dp),
         onDismissRequest = { openAddToListDialog.value = false  },
         title = { Text(text = stringResource(id = R.string.add_to_list_dialog_title)) },
         text = {
