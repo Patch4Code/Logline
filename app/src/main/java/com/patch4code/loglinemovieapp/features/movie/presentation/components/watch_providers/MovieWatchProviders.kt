@@ -3,6 +3,7 @@ package com.patch4code.loglinemovieapp.features.movie.presentation.components.wa
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +37,7 @@ fun MovieWatchProviders(
 
     val uriHandler = LocalUriHandler.current
 
-    Row (modifier = Modifier
+    Row (modifier = Modifier.fillMaxWidth()
         .clickable { uriHandler.openUri("https://www.themoviedb.org/movie/$movieId/watch?locale=$watchCountry") }
     ){
         ProviderSection(movieProviders.flatrate, stringResource(id = R.string.stream_title))
