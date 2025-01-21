@@ -8,7 +8,6 @@
     <string name="poster_description_appendage">-Poster</string>
     <string name="poster_description">Poster</string>
     <string name="star_icon_description">StarRate</string>
-    <string name="make_public_text">Make Public</string>
     <string name="menu_icon_description">Open Navigation Drawer</string>
     <string name="selected_description">Selected</string>
     <string name="expand_menu_description">Expand Menu</string>
@@ -36,7 +35,6 @@
     <string name="movies_text">Movies</string>
     <string name="movie_log_text">Add Diary-Entry</string>
     <string name="my_movies_text">Movies</string>
-    <string name="movie_public_reviews_text">Public Reviews</string>
     <string name="diary_text">Diary</string>
     <string name="diary_edit_element_text">Edit Diary-Entry</string>
     <string name="reviews_text">Reviews</string>
@@ -44,15 +42,6 @@
     <string name="lists_text">Lists</string>
     <string name="list_text">List</string>
     <string name="profile_edit_text">Edit Profile</string>
-    <string name="social_text">Social</string>
-    <string name="public_profiles_text">Public Profiles</string>
-    <string name="public_profile_text">Public Profile</string>
-    <string name="public_profile_reviews_text">Profile Reviews</string>
-    <string name="public_profile_lists_text">Profile Lists</string>
-    <string name="public_reviews_text">Public Reviews</string>
-    <string name="public_review_details_text">Public Review</string>
-    <string name="public_lists_text">Public Lists</string>
-    <string name="public_list_text">Public List</string>
     <string name="settings_text">Settings</string>
     <string name="empty_text"> </string>
 
@@ -63,7 +52,6 @@
     <string name="discard_button_text">Discard</string>
     <string name="delete_button_text">Delete</string>
     <string name="cancel_button_text">Cancel</string>
-    <string name="confirm_button_text">Confirm</string>
     <string name="close_button_text">Close</string>
 
 
@@ -124,7 +112,6 @@
         <!-- ListView Strings -->
         <string name="list_no_filter_match_text">No items match your current filters.</string>
         <string name="list_empty_text">This List is empty.</string>
-        <string name="list_settings_icon_description">Open List Settings</string>
         <string name="list_add_movie_dialog_title">Search Movie to add to list</string>
         <string name="list_add_movie_dialog_confirm">Add Movie</string>
         <string name="toast_movie_already_on_list">Movie already on the list!</string>
@@ -133,10 +120,6 @@
         <string name="list_delete_movie_dialog_confirm">Delete Movie</string>
         <string name="edit_list_text">Edit List</string>
         <string name="list_bottom_sheet_title">List Settings</string>
-        <string name="list_publish_dialog_success_toast">List published</string>
-        <string name="list_publish_dialog_error_toast">Error publishing this List:</string>
-        <string name="list_publish_dialog_title">Publish this List</string>
-        <string name="list_publish_dialog_text">Are you sure you want to publish this List? Please note that if this list has been previously published, the existing version will be overwritten.</string>
 
 
     <!-- Movie Strings -->
@@ -279,8 +262,6 @@
     <string name="vote_count_text">Vote Count</string>
     <string name="discovered_movies_title">Discovered Movies</string>
     <string name="discovered_movies_empty_text">No Movies match your current discover options.</string>
-    <string name="rating_title">Rating</string>
-
 
 
 
