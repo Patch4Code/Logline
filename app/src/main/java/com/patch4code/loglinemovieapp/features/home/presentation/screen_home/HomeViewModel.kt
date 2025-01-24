@@ -68,17 +68,18 @@ class HomeViewModel : ViewModel(){
                         popularMoviesPageAmount = popularResponse.body()?.totalPages ?: 1
                     }
 
+                    val upcomingResponse = tmdbApiService.getUpcoming()
+                    if(upcomingResponse.isSuccessful){
+                        _upcomingMovies.value = upcomingResponse.body()?.results
+                        upcomingMoviesPageAmount = upcomingResponse.body()?.totalPages ?: 1
+                    }
+
                     val topRatedResponse = tmdbApiService.getTopRated()
                     if(topRatedResponse.isSuccessful){
                         _topRatedMovies.value = topRatedResponse.body()?.results
                         topRatedMoviesPageAmount = topRatedResponse.body()?.totalPages ?: 1
                     }
 
-                    val upcomingResponse = tmdbApiService.getUpcoming()
-                    if(upcomingResponse.isSuccessful){
-                        _upcomingMovies.value = upcomingResponse.body()?.results
-                        upcomingMoviesPageAmount = upcomingResponse.body()?.totalPages ?: 1
-                    }
                     _isLoading.value = false
                     updateHomeMovieMap()
                 } catch (e: Exception) {
@@ -93,14 +94,15 @@ class HomeViewModel : ViewModel(){
     // creates homeMoviesMap from the loaded data
     private fun updateHomeMovieMap() {
         val popularMovies = _popularMovies.value ?: emptyList()
-        val topRatedMovies = _topRatedMovies.value ?: emptyList()
         val upcomingMovies = _upcomingMovies.value ?: emptyList()
+        val topRatedMovies = _topRatedMovies.value ?: emptyList()
+
 
         // Combine individual lists into a map
         val newMovieMap = mapOf(
             UiText.StringResource(R.string.popular_movies_title) to popularMovies,
-            UiText.StringResource(R.string.top_rated_movies_title) to topRatedMovies,
-            UiText.StringResource(R.string.upcoming_movies_title) to upcomingMovies
+            UiText.StringResource(R.string.upcoming_movies_title) to upcomingMovies,
+            UiText.StringResource(R.string.top_rated_movies_title) to topRatedMovies
         )
         _homeMoviesMap.value = newMovieMap
     }
@@ -121,17 +123,6 @@ class HomeViewModel : ViewModel(){
                             }
                         }
                     }
-                    UiText.StringResource(R.string.top_rated_movies_title).resId -> {
-                        if(topRatedMoviesHighestLoadedPage < topRatedMoviesPageAmount){
-                            val nextPage = topRatedMoviesHighestLoadedPage + 1
-                            val response = tmdbApiService.getTopRated(page = nextPage)
-                            if (response.isSuccessful) {
-                                val newMovies = response.body()?.results.orEmpty()
-                                _topRatedMovies.value = (_topRatedMovies.value.orEmpty() + newMovies)
-                                topRatedMoviesHighestLoadedPage = nextPage
-                            }
-                        }
-                    }
                     UiText.StringResource(R.string.upcoming_movies_title).resId -> {
                         if(upcomingMoviesHighestLoadedPage < upcomingMoviesPageAmount){
                             val nextPage = upcomingMoviesHighestLoadedPage + 1
@@ -140,6 +131,17 @@ class HomeViewModel : ViewModel(){
                                 val newMovies = response.body()?.results.orEmpty()
                                 _upcomingMovies.value = (_upcomingMovies.value.orEmpty() + newMovies)
                                 upcomingMoviesHighestLoadedPage = nextPage
+                            }
+                        }
+                    }
+                    UiText.StringResource(R.string.top_rated_movies_title).resId -> {
+                        if(topRatedMoviesHighestLoadedPage < topRatedMoviesPageAmount){
+                            val nextPage = topRatedMoviesHighestLoadedPage + 1
+                            val response = tmdbApiService.getTopRated(page = nextPage)
+                            if (response.isSuccessful) {
+                                val newMovies = response.body()?.results.orEmpty()
+                                _topRatedMovies.value = (_topRatedMovies.value.orEmpty() + newMovies)
+                                topRatedMoviesHighestLoadedPage = nextPage
                             }
                         }
                     }
