@@ -22,7 +22,7 @@ import com.patch4code.loglinemovieapp.features.core.presentation.utils.MovieHelp
  * @author Patch4Code
  */
 @Composable
-fun ReviewDetailsPoster(movieTitle: String, posterPath: String, onPosterPressed:()->Unit){
+fun ReviewDetailsPoster(movieTitle: String, posterPath: String?, onPosterPressed:()->Unit){
 
     val moviePosterUrl: String = MovieHelper.processPosterUrl(posterPath)
 

@@ -11,13 +11,12 @@ import com.google.gson.annotations.SerializedName
  *
  * @author Patch4Code
  */
-
 @Entity
 data class Movie(
     @PrimaryKey @SerializedName("id") val id: Int,
     @SerializedName("title") val title: String = "N/A",
     @SerializedName("release_date") val releaseDate: String = "N/A-date",
-    @SerializedName("poster_path") val posterUrl: String = "",
+    @SerializedName("poster_path") val posterUrl: String? = null,
     @SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
     @SerializedName("original_language") val originalLanguage: String = "N/A",
     @SerializedName("original_title") val originalTitle: String = "N/A",
@@ -25,4 +24,3 @@ data class Movie(
     @SerializedName("vote_average") val voteAverage: Double = 0.0,
     val runtime: Int? = null
 )
-
