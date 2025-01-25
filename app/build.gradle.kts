@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-val bundleId = "com.patch4code.loglinemovieapp"
+val bundleId = "com.patch4code.logline"
 
 android {
     namespace = bundleId
