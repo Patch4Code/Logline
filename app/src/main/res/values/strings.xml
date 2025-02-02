@@ -262,6 +262,7 @@
     <string name="vote_count_text">Vote Count</string>
     <string name="discovered_movies_title">Discovered Movies</string>
     <string name="discovered_movies_empty_text">No Movies match your current discover options.</string>
+    <string name="rating_title">Rating</string>
 
 
 
