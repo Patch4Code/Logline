@@ -65,8 +65,12 @@ fun WatchlistView(
     val watchlistItems = watchlistViewModel.watchlistItems.observeAsState().value
 
     if (watchlistItems.isNullOrEmpty()){
+        ProvideTopBarTitle(title = Screen.WatchlistScreen.title.asString())
         EmptyWatchlistText(FilterHelper.isAnyFilterApplied(selectedFilterOptions.value))
     }else{
+        val updatedTopBarTitle = "${Screen.WatchlistScreen.title.asString()} (${watchlistItems.size})"
+        ProvideTopBarTitle(title = updatedTopBarTitle)
+
         LazyVerticalGrid(
             modifier = Modifier.padding(8.dp),
             columns = GridCells.Fixed(3),

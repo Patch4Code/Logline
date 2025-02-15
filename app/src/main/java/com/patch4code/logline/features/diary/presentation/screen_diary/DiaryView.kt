@@ -68,8 +68,12 @@ fun DiaryView(
     val diaryLogs = diaryViewModel.diaryLogs.observeAsState().value
 
     if(diaryLogs.isNullOrEmpty()){
+        ProvideTopBarTitle(title = Screen.DiaryScreen.title.asString())
         EmptyDiaryText(FilterHelper.isAnyFilterApplied(selectedFilterOptions.value))
     }else{
+        val updatedTopBarTitle = "${Screen.DiaryScreen.title.asString()} (${diaryLogs.size})"
+        ProvideTopBarTitle(title = updatedTopBarTitle)
+
         LazyColumn(modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)) {

@@ -65,8 +65,12 @@ fun MyMoviesView(
     val watchedMoviesItems = myMoviesViewModel.myMoviesItems.observeAsState().value
 
     if(watchedMoviesItems.isNullOrEmpty()){
+        ProvideTopBarTitle(title = Screen.MyMoviesScreen.title.asString())
         EmptyMyMoviesText(FilterHelper.isAnyFilterApplied(selectedFilterOptions.value))
     }else{
+        val updatedTopBarTitle = "${Screen.MyMoviesScreen.title.asString()} (${watchedMoviesItems.size})"
+        ProvideTopBarTitle(title = updatedTopBarTitle)
+
         LazyVerticalGrid(
             modifier = Modifier.padding(8.dp),
             columns = GridCells.Fixed(3),
