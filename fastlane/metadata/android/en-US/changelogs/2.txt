@@ -1,0 +1,7 @@
+Fixed
+- unknown string resource in discover
+
+Development
+- enabled minify
+- added monochrome icon
+- added movie count to top bar title
