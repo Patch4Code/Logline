@@ -27,6 +27,10 @@ alt="Get it on Github" height="80">](https://github.com/Patch4Code/Logline/relea
 alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.patch4code.logline)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
 alt="Get it on F-Droid" height="80">](https://f-droid.org/en/packages/com.patch4code.logline)
+[<img src="https://www.openapk.net/images/openapk-badge.png"
+alt="OpenAPK" height="80">](https://www.openapk.net/logline-movieapp/com.patch4code.logline)
+[<img src="https://www.androidfreeware.net/images/androidfreeware-badge.png"
+alt="OpenAPK" height="80">](https://www.androidfreeware.net/download-logline-movieapp-apk.html)
 
 
 ## Features
