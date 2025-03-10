@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -65,25 +66,27 @@ fun SortFilterDialog(
                     }
                 )
 
-                Column(modifier = Modifier.fillMaxSize().padding(16.dp).weight(1f)) {
+                LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp).weight(1f)) {
+                    item{
+                        Text(stringResource(id = R.string.sort_by_text))
+                        FilterSortDropdown(tempSelectedSortOption, sortOptions)
 
-                    Text(stringResource(id = R.string.sort_by_text))
-                    FilterSortDropdown(tempSelectedSortOption, sortOptions)
+                        Spacer(modifier = Modifier.padding(8.dp))
 
-                    Spacer(modifier = Modifier.padding(8.dp))
+                        Text(stringResource(id = R.string.genre_text))
+                        FilterGenreSelection(selectedGenres)
 
-                    Text(stringResource(id = R.string.genre_text))
-                    FilterGenreSelection(selectedGenres)
+                        Spacer(modifier = Modifier.padding(8.dp))
 
-                    Spacer(modifier = Modifier.padding(8.dp))
+                        Text(stringResource(id = R.string.decade_year_text))
+                        FilterDecadeYearSelection(selectedDecades, selectedYears)
 
-                    Text(stringResource(id = R.string.decade_year_text))
-                    FilterDecadeYearSelection(selectedDecades, selectedYears)
+                        Spacer(modifier = Modifier.padding(8.dp))
 
-                    Spacer(modifier = Modifier.padding(8.dp))
+                        Text(stringResource(id = R.string.orig_language_text))
+                        FilterLanguageSection(selectedLanguages)
 
-                    Text(stringResource(id = R.string.orig_language_text))
-                    FilterLanguageSection(selectedLanguages)
+                    }
                 }
 
                 FilterApplyButton{

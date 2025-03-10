@@ -1,10 +1,13 @@
 package com.patch4code.logline.features.diary.presentation.screen_diary
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -15,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -97,21 +101,23 @@ fun DiaryEditElementView(
         openDiscardDialog.value = true
     }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Box(modifier = Modifier.fillMaxSize()){
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)){
+            item{
+                DiaryEditHeader(
+                    movieTitle = diaryEntry?.movie?.title ?: "N/A",
+                    moviePosterUrl = MovieHelper.processPosterUrl(diaryEntry?.movie?.posterUrl),
+                    movieYear = MovieHelper.extractYear(diaryEntry?.movie?.releaseDate)
+                )
+                Spacer(modifier = Modifier.padding(8.dp))
 
-        DiaryEditHeader(
-            movieTitle = diaryEntry?.movie?.title ?: "N/A",
-            moviePosterUrl = MovieHelper.processPosterUrl(diaryEntry?.movie?.posterUrl),
-            movieYear = MovieHelper.extractYear(diaryEntry?.movie?.releaseDate)
-        )
-        Spacer(modifier = Modifier.padding(8.dp))
-
-        DiaryEditRatingSection(rating = rating, onButtonPressed = { openRatingDialog.value = true })
-        DiaryEditDateSection(watchDateTime = watchDateTime, onButtonPressed = {openDatePickerDialog.value = true})
-        DiaryEditReviewSection(reviewText = review, onEditReviewPressed = {openEditReviewDialog.value = true})
-        DiaryEditDeleteSection(onButtonPressed = {openDeleteDialog.value = true})
-
-        Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.weight(1f)){
+                DiaryEditRatingSection(rating = rating, onButtonPressed = { openRatingDialog.value = true })
+                DiaryEditDateSection(watchDateTime = watchDateTime, onButtonPressed = {openDatePickerDialog.value = true})
+                DiaryEditReviewSection(reviewText = review, onEditReviewPressed = {openEditReviewDialog.value = true})
+                DiaryEditDeleteSection(onButtonPressed = {openDeleteDialog.value = true})
+            }
+        }
+        Column(modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).padding(16.dp)) {
             DiaryEditSaveChangesSection(
                 onSaveChanges = {
                     diaryEditElementViewModel.updatedDiaryEntry(rating, watchDateTime, review)
@@ -120,51 +126,51 @@ fun DiaryEditElementView(
                 onDiscardChanges = {openDiscardDialog.value = true}
             )
         }
-
-        //Dialog Elements
-        DiaryEditRatingDialog(
-            rating = rating,
-            openRatingDialog = openRatingDialog.value,
-            onAccept = { newRating->
-                openRatingDialog.value = false
-                rating = newRating
-            },
-            onCancel = {openRatingDialog.value = false}
-        )
-        DiaryEditDatePickerDialog(
-            watchDateTime = watchDateTime,
-            openDatePickerDialog = openDatePickerDialog.value,
-            onAccept = { date->
-                openDatePickerDialog.value = false
-                scope.launch {
-                    watchDateTime = diaryEditElementViewModel.adjustedDateTime(date)
-                }
-            },
-            onCancel = { openDatePickerDialog.value = false }
-        )
-        DiaryEditReviewDialog(
-            openEditReviewDialog = openEditReviewDialog.value,
-            review = review,
-            onSave = { editedReview->
-                openEditReviewDialog.value = false
-                review = editedReview
-            },
-            onCancel = { openEditReviewDialog.value = false }
-        )
-        DiaryEditDiscardDialog(
-            openDiscardDialog = openDiscardDialog.value,
-            onDiscard = { openDiscardDialog.value = false
-                        navController.popBackStack()
-            },
-            onCancel = { openDiscardDialog.value = false }
-        )
-        DiaryEditDeleteDialog(
-            openDeleteDialog = openDeleteDialog.value,
-            onDelete = { openDeleteDialog.value = false
-                diaryEditElementViewModel.deleteDiaryEntry()
-                navController.navigateOnDiaryEntryDelete(comingFromDiaryView = comingFromDiaryView)
-            },
-            onCancel = {openDeleteDialog.value = false}
-        )
     }
+
+    //Dialog Elements
+    DiaryEditRatingDialog(
+        rating = rating,
+        openRatingDialog = openRatingDialog.value,
+        onAccept = { newRating->
+            openRatingDialog.value = false
+            rating = newRating
+        },
+        onCancel = {openRatingDialog.value = false}
+    )
+    DiaryEditDatePickerDialog(
+        watchDateTime = watchDateTime,
+        openDatePickerDialog = openDatePickerDialog.value,
+        onAccept = { date->
+            openDatePickerDialog.value = false
+            scope.launch {
+                watchDateTime = diaryEditElementViewModel.adjustedDateTime(date)
+            }
+        },
+        onCancel = { openDatePickerDialog.value = false }
+    )
+    DiaryEditReviewDialog(
+        openEditReviewDialog = openEditReviewDialog.value,
+        review = review,
+        onSave = { editedReview->
+            openEditReviewDialog.value = false
+            review = editedReview
+        },
+        onCancel = { openEditReviewDialog.value = false }
+    )
+    DiaryEditDiscardDialog(
+        openDiscardDialog = openDiscardDialog.value,
+        onDiscard = { openDiscardDialog.value = false
+            navController.popBackStack()
+        },
+        onCancel = { openDiscardDialog.value = false }
+    )
+    DiaryEditDeleteDialog(
+        openDeleteDialog = openDeleteDialog.value,
+        onDelete = { openDeleteDialog.value = false
+            diaryEditElementViewModel.deleteDiaryEntry()
+            navController.navigateOnDiaryEntryDelete(comingFromDiaryView = comingFromDiaryView)
+        },
+        onCancel = {openDeleteDialog.value = false}
+    )
 }

@@ -1,6 +1,7 @@
 package com.patch4code.logline.features.diary.presentation.components.editelement
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.patch4code.logline.R
+import com.patch4code.logline.ui.theme.ChineseBlack
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -35,7 +37,7 @@ fun DiaryEditSaveChangesSection(isEdit: Boolean = true, onSaveChanges: () -> Uni
 
     HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
 
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(modifier = Modifier.fillMaxWidth().background(ChineseBlack), horizontalArrangement = Arrangement.SpaceBetween) {
         // discard DiaryEdit changes button
         IconButton(onClick = { onDiscardChanges() }) {
             Icon(imageVector = Icons.Default.Close, contentDescription = stringResource(id = R.string.diary_edit_exit_description_text))

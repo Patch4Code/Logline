@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
@@ -45,29 +46,34 @@ fun DrawerContent(
         modifier = Modifier.width(300.dp)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-        DrawerNavigationItem().getDrawerNavigationItems(context).forEach { drawerNavigationItem ->
-            NavigationDrawerItem(
-                label = { Text(text = drawerNavigationItem.title) },
-                selected = drawerNavigationItem.route == currentRoute,
-                onClick = {
-                    scope.launch{
-                        drawerState.close()
-                    }
-                    navController.navigate(drawerNavigationItem.route){
-                        popUpTo(drawerNavigationItem.route) { inclusive = true }
-                    }
 
-                },
-                icon = {
-                    Icon(
-                        imageVector = if(drawerNavigationItem.route == currentRoute) {
-                            drawerNavigationItem.selectedIcon
-                        } else {drawerNavigationItem.unselectedIcon},
-                        contentDescription = drawerNavigationItem.title
+        LazyColumn() {
+            DrawerNavigationItem().getDrawerNavigationItems(context).forEach { drawerNavigationItem ->
+                item {
+                    NavigationDrawerItem(
+                        label = { Text(text = drawerNavigationItem.title) },
+                        selected = drawerNavigationItem.route == currentRoute,
+                        onClick = {
+                            scope.launch{
+                                drawerState.close()
+                            }
+                            navController.navigate(drawerNavigationItem.route){
+                                popUpTo(drawerNavigationItem.route) { inclusive = true }
+                            }
+
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = if(drawerNavigationItem.route == currentRoute) {
+                                    drawerNavigationItem.selectedIcon
+                                } else {drawerNavigationItem.unselectedIcon},
+                                contentDescription = drawerNavigationItem.title
+                            )
+                        },
+                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
-                },
-                modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-            )
+                }
+            }
         }
     }
 }
