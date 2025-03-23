@@ -3,9 +3,7 @@
 
     <style name="Logline">
         <item name="android:windowBackground">@color/ic_launcher_background</item>
-
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
     </style>
 </resources>
