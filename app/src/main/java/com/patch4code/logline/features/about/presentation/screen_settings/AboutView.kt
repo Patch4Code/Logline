@@ -52,7 +52,7 @@ fun AboutView(navController: NavController){
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Icon(painter = painterResource(id = R.drawable.loglinelogo_v5), contentDescription = null)
+                Icon(painter = painterResource(id = R.drawable.logline_logo), contentDescription = null)
             }
 
             // Logline Movie App info text
