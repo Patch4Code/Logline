@@ -39,6 +39,7 @@ import com.patch4code.logline.features.core.presentation.components.ExpandableTe
 import com.patch4code.logline.features.core.presentation.components.cards.MovieRowBrowseCard
 import com.patch4code.logline.features.core.presentation.components.load.LoadErrorDisplay
 import com.patch4code.logline.features.core.presentation.components.load.LoadingIndicator
+import com.patch4code.logline.features.core.presentation.utils.LazyRowStatesSaver
 import com.patch4code.logline.features.core.presentation.utils.MovieHelper
 import com.patch4code.logline.features.core.presentation.utils.sort_filter.SortOptionSaver
 import com.patch4code.logline.features.navigation.domain.model.Screen
@@ -46,7 +47,6 @@ import com.patch4code.logline.features.navigation.presentation.components.topbar
 import com.patch4code.logline.features.navigation.presentation.components.topbar_providers.ProvideTopBarSortActions
 import com.patch4code.logline.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
 import com.patch4code.logline.features.person_details.presentation.components.PersonDetailsSortBottomSheet
-import com.patch4code.logline.features.core.presentation.utils.LazyRowStatesSaver
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
