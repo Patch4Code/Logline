@@ -5,23 +5,18 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-val bundleId = "com.patch4code.logline"
-
 android {
-    namespace = bundleId
+    namespace = "com.patch4code.logline"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = bundleId
+        applicationId = "com.patch4code.logline"
         minSdk = 26
         targetSdk = 35
         versionCode = 3
         versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -32,12 +27,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
         }
-    }
-
-    dependenciesInfo {
-        includeInApk = false
     }
 
     compileOptions {
@@ -53,14 +43,8 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
-    }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+    dependenciesInfo {
+        includeInApk = false
     }
 }
 
