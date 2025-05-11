@@ -1,56 +1,64 @@
 [versions]
 agp = "8.10.0"
 kotlin = "2.1.20"
+ksp = "2.1.20-2.0.1"
 coreKtx = "1.16.0"
 lifecycleRuntimeKtx = "2.9.0"
+
 activityCompose = "1.10.1"
 composeBom = "2025.05.00"
+navigationCompose = "2.9.0"
 
-ksp = "2.1.20-2.0.1"
-coilCompose = "2.4.0"
-converterGson = "2.9.0"
-datastorePreferences = "1.1.6"
-gson = "2.11.0"
-lifecycleLivedataKtx = "2.9.0"
-material = "1.8.1"
-materialIconsExtendedAndroid = "1.7.8"
-navVersion = "2.9.0"
-parse = "1.26.0"
-retrofit = "2.9.0"
-roomCompiler = "2.7.1"
 roomKtx = "2.7.1"
+roomCompiler = "2.7.1"
+
+datastorePreferences = "1.1.6"
+
+coilCompose = "2.4.0"
+
+gson = "2.11.0"
+
+retrofit = "2.9.0"
+converterGson = "2.9.0"
+
+lifecycleLivedataKtx = "2.9.0"
 runtimeLivedata = "1.8.1"
-ui = "1.8.1"
-uiToolingPreview = "1.8.1"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended-android"}
+
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
-androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
-androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
-androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }
-androidx-material-icons-extended-android = { module = "androidx.compose.material:material-icons-extended-android", version.ref = "materialIconsExtendedAndroid" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navVersion" }
-androidx-room-compiler-v250 = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
-androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
+
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
-parse = { module = "com.github.parse-community.Parse-SDK-Android:parse", version.ref = "parse" }
+
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

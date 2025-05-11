@@ -49,53 +49,44 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
+
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+
     implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.ui)
-    implementation(libs.androidx.material)
-    implementation(libs.ui.tooling.preview)
-
-    //Room Database
+    // room database
     implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler.v250)
+    ksp(libs.androidx.room.compiler)
 
-    //back4app dependencies
-    implementation(libs.parse)
-
-    // Preferences DataStore (SharedPreferences like APIs)
+    // preferences datastore
     implementation(libs.androidx.datastore.preferences)
 
-    //Load Images from URL
+    // load images from url
     implementation(libs.coil.compose)
 
-    //Json module
+    // json module
     implementation(libs.gson)
 
-    //More Icons
-    //noinspection GradleDependency
-    implementation(libs.androidx.material.icons.extended.android)
-
-    // Retrofit for API calls and Json to Kotlin object mapping
+    // retrofit for api calls and json to kotlin object mapping
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-    //Image Loading
-    implementation(libs.coil.compose)
-
-    //view Model lifecycle and live data
+    // view model lifecycle and live data
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.runtime.livedata)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-
+    // debug
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
