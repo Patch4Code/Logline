@@ -17,7 +17,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import com.patch4code.logline.R
 import com.patch4code.logline.features.movie.domain.model.MovieDetails
@@ -71,7 +70,7 @@ fun MovieFeaturesBar(movieVideo: MovieVideo?, movieDetails: MovieDetails?, navCo
         Spacer(modifier = Modifier.padding(4.dp))
 
         // Share-Button
-        FilledTonalButton(onClick = {  startActivity(context, shareIntent, null) }) {
+        FilledTonalButton(onClick = {  context.startActivity(shareIntent, null) }) {
             Icon(imageVector = Icons.Default.Share, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.padding(4.dp))
             Text(text = stringResource(id = R.string.share_button_text))

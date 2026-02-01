@@ -12,3 +12,5 @@
 -keep public class * {
     public *;
 }
+
+-dontwarn javax.lang.model.element.Modifier
