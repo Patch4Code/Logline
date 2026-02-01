@@ -19,29 +19,30 @@ import kotlinx.coroutines.launch
  * @property dao UserProfileDao for accessing user profile data from the db.
  * @author Patch4Code
  */
-class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
+
+class ProfileViewModel(private val dao: UserProfileDao) : ViewModel() {
 
     private val _userProfileData = MutableLiveData<UserProfileWithFavouriteMovies>()
     val userProfileData: LiveData<UserProfileWithFavouriteMovies> get() = _userProfileData
 
     // Retrieves user profile data from the database.
     // If no user profile exists yet, create a new profile.
-    fun getUserProfileData(){
+    fun getUserProfileData() {
         viewModelScope.launch {
             val tempUserProfile = dao.getUserProfileWithFavouriteMovies()
-            if(tempUserProfile == null){
+            if (tempUserProfile == null) {
                 val defaultEmptyFavMovies = List(4) { null as Movie? }
                 dao.upsertUserProfile(UserProfile())
                 _userProfileData.value = UserProfileWithFavouriteMovies(UserProfile(), defaultEmptyFavMovies)
-            }else{
-                _userProfileData.value = tempUserProfile!!
+            } else {
+                _userProfileData.value = tempUserProfile
             }
             //Log.e("ProfileViewModel", "_userProfileData: ${_userProfileData.value}")
         }
     }
 
     // Updates the profile name in the db
-    fun updateProfileName(profileName: String){
+    fun updateProfileName(profileName: String) {
         viewModelScope.launch {
             dao.updateProfileName(profileName)
             _userProfileData.value = dao.getUserProfileWithFavouriteMovies()
@@ -49,7 +50,7 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     }
 
     // Updates the bio text in the db
-    fun updateBioText(bioText: String){
+    fun updateBioText(bioText: String) {
         viewModelScope.launch {
             dao.updateBio(bioText)
             _userProfileData.value = dao.getUserProfileWithFavouriteMovies()
@@ -57,7 +58,7 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     }
 
     // Sets the profile image path in the db
-    fun setProfileImagePath(path: String){
+    fun setProfileImagePath(path: String) {
         viewModelScope.launch {
             dao.setProfileImagePath(path)
             _userProfileData.value = dao.getUserProfileWithFavouriteMovies()
@@ -65,7 +66,7 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     }
 
     // Sets the banner image path in the db
-    fun setBannerImagePath(path: String){
+    fun setBannerImagePath(path: String) {
         viewModelScope.launch {
             dao.setBannerImagePath(path)
             _userProfileData.value = dao.getUserProfileWithFavouriteMovies()
@@ -73,11 +74,11 @@ class ProfileViewModel(private val dao: UserProfileDao): ViewModel() {
     }
 
     // Sets a favorite movie at a specified index in the db
-    fun setFavMovieAtIndex(index: Int, movie: Movie?){
+    fun setFavMovieAtIndex(index: Int, movie: Movie?) {
         viewModelScope.launch {
-            if (movie != null){
+            if (movie != null) {
                 dao.setFavMovieAtIndex(index, movie)
-            } else{
+            } else {
                 dao.deleteFavMovieAtIndex(index)
             }
 
