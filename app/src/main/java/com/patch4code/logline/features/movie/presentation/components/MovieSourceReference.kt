@@ -10,6 +10,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
@@ -30,28 +31,40 @@ import kotlinx.coroutines.launch
  *
  * @author Patch4Code
  */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieSourceReference(){
-
+fun MovieSourceReference() {
     val scope = rememberCoroutineScope()
     val tooltipState = rememberTooltipState(isPersistent = true)
 
     HorizontalDivider(modifier = Modifier.padding(top = 8.dp, bottom = 8.dp))
-    Row(verticalAlignment = Alignment.CenterVertically){
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Text(text = stringResource(id = R.string.source_title))
         Text(text = "TMDB", fontStyle = FontStyle.Italic)
         TooltipBox(
-            positionProvider =  TooltipDefaults.rememberPlainTooltipPositionProvider(),
+            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above, 4.dp),
             tooltip = {
-                Card (modifier = Modifier.padding(8.dp)){
-                    Text(text = stringResource(id = R.string.tmdb_credits_text),
-                        modifier = Modifier.padding(8.dp)) }
-                },
+                Card(
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.tmdb_credits_text),
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+            },
             state = tooltipState
         ) {
-            IconButton(onClick = { scope.launch { tooltipState.show() } }) {
-                Icon(imageVector = Icons.Outlined.Info, contentDescription = stringResource(id = R.string.source_tooltip_description))
+            IconButton(
+                onClick = {
+                    scope.launch { tooltipState.show() }
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Info,
+                    contentDescription = stringResource(id = R.string.source_tooltip_description)
+                )
             }
         }
     }
