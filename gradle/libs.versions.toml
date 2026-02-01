@@ -1,28 +1,28 @@
 [versions]
-agp = "8.10.0"
-kotlin = "2.1.20"
+agp = "8.13.2"
+kotlin = "2.3.0"
 ksp = "2.1.20-2.0.1"
-coreKtx = "1.16.0"
-lifecycleRuntimeKtx = "2.9.0"
+coreKtx = "1.17.0"
+lifecycleRuntimeKtx = "2.10.0"
 
-activityCompose = "1.10.1"
-composeBom = "2025.05.00"
-navigationCompose = "2.9.0"
+activityCompose = "1.12.3"
+composeBom = "2026.01.01"
+navigationCompose = "2.9.7"
 
-roomKtx = "2.7.1"
-roomCompiler = "2.7.1"
+roomKtx = "2.8.4"
+roomCompiler = "2.8.4"
 
-datastorePreferences = "1.1.6"
+datastorePreferences = "1.2.0"
 
-coilCompose = "2.4.0"
+coilCompose = "2.7.0"
 
-gson = "2.11.0"
+gson = "2.13.2"
 
-retrofit = "2.9.0"
-converterGson = "2.9.0"
+retrofit = "3.0.0"
+converterGson = "3.0.0"
 
-lifecycleLivedataKtx = "2.9.0"
-runtimeLivedata = "1.8.1"
+lifecycleLivedataKtx = "2.10.0"
+runtimeLivedata = "1.10.2"
 
 
 [libraries]
