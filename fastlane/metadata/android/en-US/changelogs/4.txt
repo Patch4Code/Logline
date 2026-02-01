@@ -1,0 +1,10 @@
+Updated
+- added predictive back gestures
+
+Fixed:
+- fixed export for older android versions (9 and lower)
+- small material 3 theme improvements
+
+Development
+- target sdk 36
+- updated dependencies
