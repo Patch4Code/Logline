@@ -221,6 +221,7 @@
     <string name="export_data_dialog_title">Export App Data</string>
     <string name="export_data_dialog_text">Export your App data as backup or to transfer it to another device. You can find the exported zip file in the download folder of your device.</string>
     <string name="export_data_toast">Data was exported</string>
+    <string name="export_data_error_toast">Export failed! Try to allow storage access.</string>
     <string name="export_button_text">Export</string>
     <string name="export_title">Export Data</string>
     <string name="export_text">Export your Logline App data locally as a ZIP file containing up to three separate .db files. Retrieve the file from your downloads folder and utilize it for backup purposes or to transfer your data to another device.</string>

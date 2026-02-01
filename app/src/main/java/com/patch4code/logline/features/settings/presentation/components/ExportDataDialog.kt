@@ -26,7 +26,8 @@ fun ExportDataDialog(openExportDataDialog: MutableState<Boolean>){
 
     val context = LocalContext.current
 
-    val toastText = stringResource(id = R.string.export_data_toast)
+    val toastSuccessText = stringResource(id = R.string.export_data_toast)
+    val toastErrorText = stringResource(id = R.string.export_data_error_toast)
 
     AlertDialog(
         onDismissRequest = { openExportDataDialog.value = false },
@@ -35,8 +36,12 @@ fun ExportDataDialog(openExportDataDialog: MutableState<Boolean>){
         confirmButton = {
             Button(onClick = {
                 openExportDataDialog.value = false
-                SettingsExtensions.exportDatabaseFile(context)
-                Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
+                val exportSuccess = SettingsExtensions.exportDatabaseFile(context)
+                Toast.makeText(
+                    context,
+                    if(exportSuccess) toastSuccessText else toastErrorText,
+                    Toast.LENGTH_SHORT
+                ).show()
             }) {
                 Text(text = stringResource(id = R.string.export_button_text))
             }

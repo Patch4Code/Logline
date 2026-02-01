@@ -30,8 +30,8 @@ object SettingsExtensions {
     }
 
     // Export the database files to a zip file
-    fun exportDatabaseFile(context: Context) {
-        try {
+    fun exportDatabaseFile(context: Context): Boolean {
+         return try {
             // Defines the directory to save the zip file (downloads directory of the device)
             val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
@@ -80,9 +80,13 @@ object SettingsExtensions {
                     input.close()
                     zipOutputStream.closeEntry()
                 }
+
+                // verify that the exported file exists
+                zipFile.exists() && zipFile.length() > 0L
             }
         } catch (e: Exception) {
             Log.e("SettingsHelper", "Export Error: ", e)
+            false
         }
     }
 
