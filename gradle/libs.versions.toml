@@ -1,12 +1,12 @@
 [versions]
-agp = "8.13.2"
-kotlin = "2.3.0"
+agp = "9.0.1"
+kotlin = "2.3.10"
 ksp = "2.3.4"
 coreKtx = "1.17.0"
 lifecycleRuntimeKtx = "2.10.0"
 
-activityCompose = "1.12.3"
-composeBom = "2026.01.01"
+activityCompose = "1.12.4"
+composeBom = "2026.02.01"
 navigationCompose = "2.9.7"
 
 roomKtx = "2.8.4"
@@ -22,7 +22,7 @@ retrofit = "3.0.0"
 converterGson = "3.0.0"
 
 lifecycleLivedataKtx = "2.10.0"
-runtimeLivedata = "1.10.2"
+runtimeLivedata = "1.10.4"
 
 
 [libraries]
@@ -62,6 +62,5 @@ androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedat
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
