@@ -13,12 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import com.patch4code.logline.R
 import com.patch4code.logline.features.profile.domain.model.UserProfile
+import java.io.File
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -29,14 +32,24 @@ import com.patch4code.logline.features.profile.domain.model.UserProfile
  * @author Patch4Code
  */
 @Composable
-fun ProfileHead(userProfile: UserProfile?){
+fun ProfileHead(userProfile: UserProfile?) {
+    val context = LocalContext.current
 
-    val profileImagePath = userProfile?.profileImagePath
-    val bannerImagePath = userProfile?.bannerImagePath
+    val bannerFile = userProfile?.bannerImagePath
+        ?.let { path ->
+            val fileName = path.toUri().lastPathSegment ?: path
+            File(context.filesDir, fileName)
+        }
+
+    val profileFile = userProfile?.profileImagePath
+        ?.let { path ->
+            val fileName = path.toUri().lastPathSegment ?: path
+            File(context.filesDir, fileName)
+        }
 
     Box {
         AsyncImage(
-            model = bannerImagePath,
+            model = bannerFile,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(125.dp),
@@ -46,7 +59,7 @@ fun ProfileHead(userProfile: UserProfile?){
         )
 
         AsyncImage(
-            model = profileImagePath,
+            model = profileFile,
             modifier = Modifier
                 .height(120.dp)
                 .width(120.dp)
