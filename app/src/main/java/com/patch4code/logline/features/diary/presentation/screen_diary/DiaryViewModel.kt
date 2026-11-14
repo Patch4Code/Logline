@@ -9,6 +9,7 @@ import com.patch4code.logline.features.core.domain.model.FilterOptions
 import com.patch4code.logline.features.core.domain.model.SortOption
 import com.patch4code.logline.features.core.presentation.utils.FilterHelper
 import com.patch4code.logline.features.core.presentation.utils.MovieHelper
+import com.patch4code.logline.features.core.presentation.utils.MovieSyncHelper
 import com.patch4code.logline.features.diary.domain.model.DiaryAndReviewSortOptions
 import com.patch4code.logline.features.diary.domain.model.MovieWithLoggedData
 import com.patch4code.logline.room_database.LoggedMovieDao
@@ -52,6 +53,20 @@ class DiaryViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel() {
            }
             val filteredAndSortedDiaryLogs = filterDiaryLogs(sortedItems, filterOptions)
             _diaryLogs.value = filteredAndSortedDiaryLogs
+
+            viewModelScope.launch {
+                MovieSyncHelper.syncMissingPosters(
+                    movies = filteredAndSortedDiaryLogs.map { it.movie },
+                    upsertMovie = { loggedMovieDao.upsertMovie(it) }
+                ) { updatedMovie ->
+                    val currentList = _diaryLogs.value?.toMutableList() ?: return@syncMissingPosters
+                    val index = currentList.indexOfFirst { it.movie.id == updatedMovie.id }
+                    if (index != -1) {
+                        currentList[index] = currentList[index].copy(movie = updatedMovie)
+                        _diaryLogs.value = currentList
+                    }
+                }
+            }
         }
     }
 

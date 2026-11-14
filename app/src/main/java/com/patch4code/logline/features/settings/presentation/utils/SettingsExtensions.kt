@@ -18,9 +18,6 @@ import java.time.ZonedDateTime
 import com.patch4code.logline.room_database.LoglineDatabase
 import com.patch4code.logline.features.core.domain.model.Movie
 import com.patch4code.logline.features.diary.domain.model.LoggedMovie
-import com.patch4code.logline.api.RetrofitHelper
-import com.patch4code.logline.api.TmdbApiService
-import com.patch4code.logline.features.core.presentation.utils.TmdbCredentials
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -184,10 +181,6 @@ object SettingsExtensions {
             val inputStream = contentResolver.openInputStream(importCsvFileUri) ?: throw Exception("Cannot open file")
             val reader = BufferedReader(InputStreamReader(inputStream))
 
-            val tmdbApiService = RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(
-                TmdbApiService::class.java
-            )
-
             val header = reader.readLine()
             if (header == null) {
                 onImportError("Empty file")
@@ -207,24 +200,13 @@ object SettingsExtensions {
 
                     if (tmdbId != null) {
                         val voteAverage = ratingStr.toDoubleOrNull() ?: 0.0
-                        var movie = Movie(
+                        val movie = Movie(
                             id = tmdbId,
                             title = title,
                             releaseDate = releaseDate.split("T").firstOrNull() ?: releaseDate,
                             voteAverage = voteAverage
                         )
                         val userRating = userRatingStr.toDoubleOrNull()?.toInt() ?: -1
-
-                        try {
-                            val response = tmdbApiService.getMovieDetails(tmdbId)
-                            if (response.isSuccessful) {
-                                response.body()?.let { details ->
-                                    movie = movie.copy(posterUrl = details.posterPath)
-                                }
-                            }
-                        } catch (e: Exception) {
-                            Log.e("ImportTmdb", "Error fetching movie details for tmdbId $tmdbId", e)
-                        }
 
                         if (userRating != -1) {
                             db.movieUserDataDao.updateOrInsertRating(movie, userRating)

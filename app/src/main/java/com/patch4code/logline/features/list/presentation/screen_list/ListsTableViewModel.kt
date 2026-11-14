@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.patch4code.logline.features.core.domain.model.SortOption
+import com.patch4code.logline.features.core.presentation.utils.MovieSyncHelper
 import com.patch4code.logline.features.list.domain.model.ListTableSortOptions
 import com.patch4code.logline.features.list.domain.model.MovieList
 import com.patch4code.logline.features.list.domain.model.MovieWithListItem
@@ -51,6 +52,20 @@ class ListsTableViewModel(private val movieListDao: MovieListDao, private val mo
     fun getMoviesInLists(){
         viewModelScope.launch {
             _moviesInLists.value = movieInListDao.getAllMovieWithListItems()
+
+            viewModelScope.launch {
+                MovieSyncHelper.syncMissingPosters(
+                    movies = _moviesInLists.value?.map { it.movie } ?: emptyList(),
+                    upsertMovie = { movieInListDao.upsertMovie(it) }
+                ) { updatedMovie ->
+                    val currentList = _moviesInLists.value?.toMutableList() ?: return@syncMissingPosters
+                    val index = currentList.indexOfFirst { it.movie.id == updatedMovie.id }
+                    if (index != -1) {
+                        currentList[index] = currentList[index].copy(movie = updatedMovie)
+                        _moviesInLists.value = currentList
+                    }
+                }
+            }
         }
     }
 
