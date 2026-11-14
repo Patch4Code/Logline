@@ -248,7 +248,7 @@ fun Navigation(db: LoglineDatabase){
                     }
 
                     composable(route = Screen.SettingsScreen.route){
-                        SettingsView(navController = navController)
+                        SettingsView(navController = navController, db = db)
                     }
                 }
             }

@@ -36,8 +36,8 @@ interface LoggedMovieDao {
 
     @Transaction
     suspend fun addNewMovieLog(loggedElement: LoggedMovie, movie: Movie){
-        upsertLoggedMovie(loggedElement)
         upsertMovie(movie)
+        upsertLoggedMovie(loggedElement)
     }
 
 

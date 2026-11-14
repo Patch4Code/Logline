@@ -12,7 +12,9 @@ import com.patch4code.logline.features.navigation.presentation.components.topbar
 import com.patch4code.logline.features.settings.presentation.components.EditProfileButton
 import com.patch4code.logline.features.settings.presentation.components.ExportDataSection
 import com.patch4code.logline.features.settings.presentation.components.ImportDataSection
+import com.patch4code.logline.features.settings.presentation.components.ImportTmdbSection
 import com.patch4code.logline.features.settings.presentation.components.SelectCountrySection
+import com.patch4code.logline.room_database.LoglineDatabase
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -25,7 +27,7 @@ import com.patch4code.logline.features.settings.presentation.components.SelectCo
  * @author Patch4Code
  */
 @Composable
-fun SettingsView(navController: NavController, settingsViewModel: SettingsViewModel = viewModel()
+fun SettingsView(navController: NavController, db: LoglineDatabase, settingsViewModel: SettingsViewModel = viewModel()
 ){
 
     val context = LocalContext.current
@@ -44,6 +46,7 @@ fun SettingsView(navController: NavController, settingsViewModel: SettingsViewMo
             SelectCountrySection(settingsViewModel)
             ExportDataSection()
             ImportDataSection()
+            ImportTmdbSection(db)
         }
     }
 }

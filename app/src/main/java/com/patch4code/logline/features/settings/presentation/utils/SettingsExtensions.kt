@@ -12,6 +12,15 @@ import java.time.format.DateTimeFormatter
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.time.ZonedDateTime
+import com.patch4code.logline.room_database.LoglineDatabase
+import com.patch4code.logline.features.core.domain.model.Movie
+import com.patch4code.logline.features.diary.domain.model.LoggedMovie
+import com.patch4code.logline.api.RetrofitHelper
+import com.patch4code.logline.api.TmdbApiService
+import com.patch4code.logline.features.core.presentation.utils.TmdbCredentials
 
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
@@ -161,5 +170,103 @@ object SettingsExtensions {
             onImportError("Import Error: ${e.message}")
             Log.e("SettingsHelper", "Import Error: ", e)
         }
+    }
+
+    suspend fun importTmdbCsv(
+        context: Context,
+        importCsvFileUri: Uri,
+        db: LoglineDatabase,
+        onImportSuccess: () -> Unit,
+        onImportError: (errorMsg: String) -> Unit
+    ) {
+        try {
+            val contentResolver = context.contentResolver
+            val inputStream = contentResolver.openInputStream(importCsvFileUri) ?: throw Exception("Cannot open file")
+            val reader = BufferedReader(InputStreamReader(inputStream))
+
+            val tmdbApiService = RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(
+                TmdbApiService::class.java
+            )
+
+            val header = reader.readLine()
+            if (header == null) {
+                onImportError("Empty file")
+                return
+            }
+
+            var line: String? = reader.readLine()
+            while (line != null) {
+                val tokens = parseCsvLine(line)
+                if (tokens.size >= 10 && tokens[2] == "movie") {
+                    val tmdbId = tokens[0].toIntOrNull()
+                    val title = tokens[3]
+                    val releaseDate = tokens[4]
+                    val ratingStr = tokens[7]
+                    val userRatingStr = tokens[8]
+                    val dateRatedStr = tokens[9]
+
+                    if (tmdbId != null) {
+                        val voteAverage = ratingStr.toDoubleOrNull() ?: 0.0
+                        var movie = Movie(
+                            id = tmdbId,
+                            title = title,
+                            releaseDate = releaseDate.split("T").firstOrNull() ?: releaseDate,
+                            voteAverage = voteAverage
+                        )
+                        val userRating = userRatingStr.toDoubleOrNull()?.toInt() ?: -1
+
+                        try {
+                            val response = tmdbApiService.getMovieDetails(tmdbId)
+                            if (response.isSuccessful) {
+                                response.body()?.let { details ->
+                                    movie = movie.copy(posterUrl = details.posterPath)
+                                }
+                            }
+                        } catch (e: Exception) {
+                            Log.e("ImportTmdb", "Error fetching movie details for tmdbId $tmdbId", e)
+                        }
+
+                        if (userRating != -1) {
+                            db.movieUserDataDao.updateOrInsertRating(movie, userRating)
+                            if (dateRatedStr.isNotBlank()) {
+                                val dateRated = ZonedDateTime.parse(dateRatedStr).toLocalDateTime()
+                                val loggedElement = LoggedMovie(
+                                    movieId = tmdbId,
+                                    date = dateRated,
+                                    rating = userRating,
+                                    review = ""
+                                )
+                                db.loggedMovieDao.addNewMovieLog(loggedElement, movie)
+                            }
+                        } else {
+                            db.movieUserDataDao.updateOrInsertOnWatchlist(movie, true)
+                        }
+                    }
+                }
+                line = reader.readLine()
+            }
+            reader.close()
+            onImportSuccess()
+        } catch (e: Exception) {
+            onImportError(e.message ?: "Unknown error")
+        }
+    }
+
+    private fun parseCsvLine(line: String): List<String> {
+        val tokens = mutableListOf<String>()
+        val currentToken = StringBuilder()
+        var inQuotes = false
+        for (char in line) {
+            if (char == '\"') {
+                inQuotes = !inQuotes
+            } else if (char == ',' && !inQuotes) {
+                tokens.add(currentToken.toString().trim('\"'))
+                currentToken.clear()
+            } else {
+                currentToken.append(char)
+            }
+        }
+        tokens.add(currentToken.toString().trim('\"'))
+        return tokens
     }
 }
