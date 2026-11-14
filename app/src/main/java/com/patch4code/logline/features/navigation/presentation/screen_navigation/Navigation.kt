@@ -145,7 +145,15 @@ fun Navigation(db: LoglineDatabase){
                     ){
                         PersonDetailsView(
                             navController = navController,
+                            db = db,
                             id = it.arguments?.getInt("person_id")
+                        )
+                    }
+
+                    composable(route = Screen.FavoritePersonsScreen.route) {
+                        com.patch4code.logline.features.person_details.presentation.screen_favorite_persons.FavoritePersonsView(
+                            navController = navController,
+                            db = db
                         )
                     }
 

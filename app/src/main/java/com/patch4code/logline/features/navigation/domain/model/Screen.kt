@@ -20,6 +20,7 @@ sealed class Screen(val route: String, var title: UiText) {
     data object AboutScreen : Screen("about_screen", UiText.StringResource(R.string.about_text))
     data object MovieScreen : Screen("movie_screen", UiText.StringResource(R.string.empty_text))
     data object PersonDetailsScreen : Screen("person_details_screen",UiText.StringResource(R.string.empty_text))
+    data object FavoritePersonsScreen : Screen("favorite_persons_screen", UiText.DynamicString("Favorite Persons"))
     data object MovieLogScreen: Screen("movie_log_screen", UiText.StringResource(R.string.movie_log_text))
     data object MyMoviesScreen : Screen("my_movies_screen", UiText.StringResource(R.string.my_movies_text))
     data object MoviePublicReviewsScreen: Screen("movie_public_reviews_screen", UiText.StringResource(R.string.empty_text))

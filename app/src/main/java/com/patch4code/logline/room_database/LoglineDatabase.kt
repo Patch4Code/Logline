@@ -8,6 +8,7 @@ import com.patch4code.logline.features.core.domain.model.MovieUserData
 import com.patch4code.logline.features.diary.domain.model.LoggedMovie
 import com.patch4code.logline.features.list.domain.model.MovieInList
 import com.patch4code.logline.features.list.domain.model.MovieList
+import com.patch4code.logline.features.person_details.domain.model.FavoritePerson
 import com.patch4code.logline.features.profile.domain.model.UserProfile
 import com.patch4code.logline.features.search.domain.model.SearchHistoryItem
 
@@ -27,8 +28,9 @@ import com.patch4code.logline.features.search.domain.model.SearchHistoryItem
         MovieList::class,
         MovieInList::class,
         UserProfile::class,
-        SearchHistoryItem::class],
-    version = 1)
+        SearchHistoryItem::class,
+        FavoritePerson::class],
+    version = 2)
 @TypeConverters(RoomConverters::class)
 abstract class LoglineDatabase: RoomDatabase() {
 
@@ -39,4 +41,15 @@ abstract class LoglineDatabase: RoomDatabase() {
     abstract val movieInListDao: MovieInListDao
     abstract val userProfileDao: UserProfileDao
     abstract val searchHistoryDao: SearchHistoryDao
+    abstract val favoritePersonDao: FavoritePersonDao
+
+    companion object {
+        val MIGRATION_1_2 = object : androidx.room.migration.Migration(1, 2) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `favorite_persons` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `profilePath` TEXT, `knownForDepartment` TEXT NOT NULL, PRIMARY KEY(`id`))"
+                )
+            }
+        }
+    }
 }

@@ -16,6 +16,8 @@ sealed class SortOption(val label: UiText) {
     data object ByAddedAsc : SortOption(UiText.StringResource(R.string.sort_by_added_asc))
     data object ByTitleAsc : SortOption(UiText.StringResource(R.string.sort_by_title_asc))
     data object ByTitleDesc : SortOption(UiText.StringResource(R.string.sort_by_title_desc))
+    data object ByNameAsc : SortOption(UiText.StringResource(R.string.sort_by_name_asc))
+    data object ByNameDesc : SortOption(UiText.StringResource(R.string.sort_by_name_desc))
     data object ByReleaseDateDesc : SortOption(UiText.StringResource(R.string.sort_by_release_date_desc))
     data object ByReleaseDateAsc : SortOption(UiText.StringResource(R.string.sort_by_release_date_asc))
     data object ByRatingDesc : SortOption(UiText.StringResource(R.string.sort_by_rating_desc))

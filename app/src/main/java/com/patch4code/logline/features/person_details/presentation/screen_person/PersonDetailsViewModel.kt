@@ -15,6 +15,13 @@ import com.patch4code.logline.features.person_details.domain.model.PersonDetails
 import com.patch4code.logline.features.person_details.domain.model.PersonMovieCredits
 import kotlinx.coroutines.launch
 
+import androidx.lifecycle.ViewModelProvider
+import com.patch4code.logline.room_database.FavoritePersonDao
+import com.patch4code.logline.features.person_details.domain.model.FavoritePerson
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
@@ -23,7 +30,9 @@ import kotlinx.coroutines.launch
  *
  * @author Patch4Code
  */
-class PersonDetailsViewModel: ViewModel() {
+class PersonDetailsViewModel(
+    private val favoritePersonDao: FavoritePersonDao? = null
+): ViewModel() {
 
     private val tmdbApiService: TmdbApiService by lazy {
         RetrofitHelper.getInstance(TmdbCredentials.BASE_URL).create(TmdbApiService::class.java)
@@ -44,6 +53,8 @@ class PersonDetailsViewModel: ViewModel() {
     private val _personCreditsMap = MutableLiveData<Map<String, List<Movie>>>()
     val personCreditsMap: LiveData<Map<String, List<Movie>>> get() = _personCreditsMap
 
+    private val _isFavorite = MutableStateFlow(false)
+    val isFavorite: StateFlow<Boolean> = _isFavorite.asStateFlow()
 
     // Loads the details of the person with the given id from TMDB api
     fun loadPersonDetails(personId: Int){
@@ -55,6 +66,11 @@ class PersonDetailsViewModel: ViewModel() {
                 val personDetailsResponse = tmdbApiService.getPersonDetails(personId = personId)
                 if(personDetailsResponse.isSuccessful){
                     _personDetails.value = personDetailsResponse.body()
+                }
+                favoritePersonDao?.getFavoritePersonById(personId)?.let {
+                    _isFavorite.value = true
+                } ?: run {
+                    _isFavorite.value = false
                 }
             } catch (e: Exception) {
                 _isLoading.value = false
@@ -174,5 +190,35 @@ class PersonDetailsViewModel: ViewModel() {
 
     fun updateSortingForPersonMovieCredits(mainDepartment: String, sortOption: SortOption) {
         _personCreditsMap.value = createSortedPersonCreditsMap(mainDepartment, sortOption)
+    }
+
+    fun toggleFavorite(personId: Int) {
+        viewModelScope.launch {
+            val details = _personDetails.value ?: return@launch
+            if (_isFavorite.value) {
+                favoritePersonDao?.deleteFavoritePersonById(personId)
+                _isFavorite.value = false
+            } else {
+                favoritePersonDao?.insertFavoritePerson(
+                    FavoritePerson(
+                        id = personId,
+                        name = details.name,
+                        profilePath = details.profilePath,
+                        knownForDepartment = details.knownForDepartment
+                    )
+                )
+                _isFavorite.value = true
+            }
+        }
+    }
+}
+
+class PersonDetailsViewModelFactory(private val favoritePersonDao: FavoritePersonDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(PersonDetailsViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return PersonDetailsViewModel(favoritePersonDao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

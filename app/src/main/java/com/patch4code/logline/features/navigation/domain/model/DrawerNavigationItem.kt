@@ -22,6 +22,8 @@ import androidx.compose.material.icons.outlined.Reviews
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.WatchLater
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.patch4code.logline.R
 import com.patch4code.logline.features.core.presentation.utils.UiText
@@ -71,6 +73,12 @@ data class DrawerNavigationItem(
                 selectedIcon = Icons.Filled.Movie,
                 unselectedIcon = Icons.Outlined.Movie,
                 route = Screen.MyMoviesScreen.route,
+            ),
+            DrawerNavigationItem(
+                title = "Persons",
+                selectedIcon = Icons.Filled.Star,
+                unselectedIcon = Icons.Outlined.Star,
+                route = Screen.FavoritePersonsScreen.route,
             ),
             DrawerNavigationItem(
                 title = UiText.StringResource(R.string.diary_text).asString(context),

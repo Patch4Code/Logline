@@ -48,6 +48,14 @@ import com.patch4code.logline.features.navigation.presentation.components.topbar
 import com.patch4code.logline.features.navigation.presentation.components.topbar_providers.ProvideTopBarTitle
 import com.patch4code.logline.features.person_details.presentation.components.PersonDetailsSortBottomSheet
 
+import com.patch4code.logline.room_database.LoglineDatabase
+import androidx.compose.runtime.collectAsState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
+
 /**
  * GNU GENERAL PUBLIC LICENSE, VERSION 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  *
@@ -60,8 +68,11 @@ import com.patch4code.logline.features.person_details.presentation.components.Pe
 @Composable
 fun PersonDetailsView(
     navController: NavController,
-    personDetailsViewModel: PersonDetailsViewModel = viewModel(),
-    id: Int?
+    db: LoglineDatabase,
+    id: Int?,
+    personDetailsViewModel: PersonDetailsViewModel = viewModel(
+        factory = PersonDetailsViewModelFactory(db.favoritePersonDao)
+    )
 ){
 
     val personId = id?: -1
@@ -118,8 +129,17 @@ fun PersonDetailsView(
                     }
 
                     Column (modifier = Modifier.height(200.dp).padding(8.dp)){
-                        // person name and main department
-                        Text(text = personDetails?.name ?: "N/A", style = MaterialTheme.typography.headlineMedium)
+                        val isFavorite by personDetailsViewModel.isFavorite.collectAsState(initial = false)
+                        Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+                            Text(text = personDetails?.name ?: "N/A", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.weight(1f))
+                            IconButton(onClick = { personDetailsViewModel.toggleFavorite(personId) }) {
+                                Icon(
+                                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.Star,
+                                    contentDescription = "Toggle Favorite",
+                                    tint = if (isFavorite) Color.Yellow else MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
                         Text(text = "${stringResource(id = R.string.known_for_title)} ${personDetails?.knownForDepartment}")
                     }
                 }
