@@ -736,6 +736,8 @@
     <string name="sort_by_added_asc">Date Added (Oldest first)</string>
     <string name="sort_by_title_asc">Title (A-Z)</string>
     <string name="sort_by_title_desc">Title (Z-A)</string>
+    <string name="sort_by_name_asc">Name (A-Z)</string>
+    <string name="sort_by_name_desc">Name (Z-A)</string>
     <string name="sort_by_release_date_desc">Release Date (Newest first)</string>
     <string name="sort_by_release_date_asc">Release Date (Oldest first)</string>
     <string name="sort_by_rating_desc">Rating (10–1)</string>

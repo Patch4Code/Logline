@@ -29,7 +29,9 @@ class MainActivity : ComponentActivity() {
             context = applicationContext,
             klass = LoglineDatabase::class.java,
             name = "loglineData.db"
-        ).build()
+        )
+        .addMigrations(LoglineDatabase.MIGRATION_1_2)
+        .build()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
