@@ -10,6 +10,7 @@ import com.patch4code.logline.features.core.domain.model.MovieWithUserData
 import com.patch4code.logline.features.core.domain.model.SortOption
 import com.patch4code.logline.features.core.presentation.utils.FilterHelper
 import com.patch4code.logline.features.core.presentation.utils.MovieHelper
+import com.patch4code.logline.features.core.presentation.utils.MovieSyncHelper
 import com.patch4code.logline.features.watchlist.domain.model.WatchlistSortOptions
 import com.patch4code.logline.room_database.MovieUserDataDao
 import kotlinx.coroutines.launch
@@ -48,6 +49,20 @@ class WatchlistViewModel(private val dao: MovieUserDataDao): ViewModel() {
             }
             val filteredAndSortedWatchlistItems = filterWatchlistItems(sortedItems, filterOptions)
             _watchlistItems.value = filteredAndSortedWatchlistItems
+
+            viewModelScope.launch {
+                MovieSyncHelper.syncMissingPosters(
+                    movies = filteredAndSortedWatchlistItems.map { it.movie },
+                    upsertMovie = { dao.upsertMovie(it) }
+                ) { updatedMovie ->
+                    val currentList = _watchlistItems.value?.toMutableList() ?: return@syncMissingPosters
+                    val index = currentList.indexOfFirst { it.movie.id == updatedMovie.id }
+                    if (index != -1) {
+                        currentList[index] = currentList[index].copy(movie = updatedMovie)
+                        _watchlistItems.value = currentList
+                    }
+                }
+            }
         }
     }
 

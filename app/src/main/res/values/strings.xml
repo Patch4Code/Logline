@@ -231,6 +231,9 @@
     <string name="warning_icon_description">Warning</string>
     <string name="import_warning_text">Please note that the current app data will be permanently replaced after the import process is completed!</string>
     <string name="import_button_text">Import Data</string>
+    <string name="tmdb_import_title">Import from TMDb</string>
+    <string name="tmdb_import_text">Import your movie ratings from a TMDb CSV export file.</string>
+    <string name="tmdb_import_button_text">Import CSV</string>
     <string name="country_title">Country for Watch Providers</string>
     <string name="country_text">Select your country to access streaming, rental, and purchase options customized specifically for this location on the movie page.</string>
 

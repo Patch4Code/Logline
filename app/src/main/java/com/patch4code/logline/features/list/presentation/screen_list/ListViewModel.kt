@@ -10,6 +10,7 @@ import com.patch4code.logline.features.core.domain.model.Movie
 import com.patch4code.logline.features.core.domain.model.SortOption
 import com.patch4code.logline.features.core.presentation.utils.FilterHelper
 import com.patch4code.logline.features.core.presentation.utils.MovieHelper
+import com.patch4code.logline.features.core.presentation.utils.MovieSyncHelper
 import com.patch4code.logline.features.list.domain.model.ListSortOptions
 import com.patch4code.logline.features.list.domain.model.MovieInList
 import com.patch4code.logline.features.list.domain.model.MovieList
@@ -59,6 +60,20 @@ class ListViewModel(private val movieListDao: MovieListDao, private val movieInL
             }
             val filteredAndSortedListItems = filterList(sortedItems, filterOptions)
             _moviesInList.value = filteredAndSortedListItems
+
+            viewModelScope.launch {
+                MovieSyncHelper.syncMissingPosters(
+                    movies = filteredAndSortedListItems.map { it.movie },
+                    upsertMovie = { movieInListDao.upsertMovie(it) }
+                ) { updatedMovie ->
+                    val currentList = _moviesInList.value?.toMutableList() ?: return@syncMissingPosters
+                    val index = currentList.indexOfFirst { it.movie.id == updatedMovie.id }
+                    if (index != -1) {
+                        currentList[index] = currentList[index].copy(movie = updatedMovie)
+                        _moviesInList.value = currentList
+                    }
+                }
+            }
         }
     }
 

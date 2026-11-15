@@ -9,6 +9,7 @@ import com.patch4code.logline.features.core.domain.model.FilterOptions
 import com.patch4code.logline.features.core.domain.model.SortOption
 import com.patch4code.logline.features.core.presentation.utils.FilterHelper
 import com.patch4code.logline.features.core.presentation.utils.MovieHelper
+import com.patch4code.logline.features.core.presentation.utils.MovieSyncHelper
 import com.patch4code.logline.features.diary.domain.model.DiaryAndReviewSortOptions
 import com.patch4code.logline.features.diary.domain.model.MovieWithLoggedData
 import com.patch4code.logline.room_database.LoggedMovieDao
@@ -51,6 +52,20 @@ class ReviewsViewModel(private val loggedMovieDao: LoggedMovieDao): ViewModel(){
             }
             val filteredAndSortedReviews = filterReviews(sortedItems, filterOptions)
             _reviewedLogs.value = filteredAndSortedReviews
+
+            viewModelScope.launch {
+                MovieSyncHelper.syncMissingPosters(
+                    movies = filteredAndSortedReviews.map { it.movie },
+                    upsertMovie = { loggedMovieDao.upsertMovie(it) }
+                ) { updatedMovie ->
+                    val currentList = _reviewedLogs.value?.toMutableList() ?: return@syncMissingPosters
+                    val index = currentList.indexOfFirst { it.movie.id == updatedMovie.id }
+                    if (index != -1) {
+                        currentList[index] = currentList[index].copy(movie = updatedMovie)
+                        _reviewedLogs.value = currentList
+                    }
+                }
+            }
         }
     }
 
